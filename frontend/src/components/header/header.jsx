@@ -116,7 +116,7 @@ export default function Header() {
                         </ul>
                     </li>
                     <li>
-                        <a href="/product">laptop</a>
+                        <a href="/src/pages/product/[id]">laptop</a>
                         <ul id="sub-drop">
                             <li><img src="/header_img/drop-menu-mouse.webp" alt=""/>
                                 <a href="">mouse</a>

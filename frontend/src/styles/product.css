@@ -268,8 +268,6 @@
     background-color: #f3f3f3;
 }
 
-/* SERVICE */
-
 .service {
     margin-top: 20px;
     border: 1px solid lightgrey;
@@ -321,29 +319,15 @@
     background: lightgrey;
 }
 
-/* PRODUCT CONTENT */
-
 .product-content {
     margin: 50px 0;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
     width: 84%;
     padding: 10px 20px;
 }
 
-.product-content h1 {
-  font-size: 26px;
-  margin: 40px 0 20px 0;
-  font-weight: 600;
-}
-
-.product-content h2 {
-  font-size: 22px;
-  margin-bottom: 10px;
-  font-weight: 500;
-}
-
-/* SIMILAR PRODUCT */
-
-.similar-product {
+.recommended-accessories {
     text-align: center;
     margin: 50px auto;
     width: 90%;
@@ -351,13 +335,12 @@
     border-radius: 5px;
 }
 
-.similar-product .similar-product-header {
+.recommended-accessories .recommended-header {
     padding: 15px 0;
     font-size: 26px;
     font-weight: 600;
 }
 
-.similar-product-line,
 .recommended-accessories-line {
     height: 1px;
     width: 95%;
@@ -365,13 +348,13 @@
     background: lightgrey;
 }
 
-.similar-product-list {
+.recommended-list {
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
 }
 
-.similar-product-item {
+.recommended-item {
     display: flex;
     width: 25%;
     padding: 20px 0;
@@ -379,21 +362,20 @@
     text-align: center;
 }
 
-.similar-product-img {
+.recommended-img {
     width: 30%;
     margin-left: 15px;
 }
 
-.similar-product-img img {
+.recommended-img img {
     width: 100%;
 }
 
-.similar-product-content {
+.recommended-content {
     width: 70%;
 }
 
-.similar-product-content a,
-.recommended-accessories a{
+.recommended-content a {
     float: left;
     margin-left: 20px;
     text-decoration: none;
@@ -403,12 +385,11 @@
     text-align: left;
 }
 
-.similar-product-content a:hover,
-.recommended-accessories-content a:hover {
+.recommended-content a:hover {
     color: blue;
 }
 
-.similar-product-content button {
+.recommended-content button {
     float: left;
     margin: 10px 0 0 20px;
     text-decoration: none;
@@ -424,7 +405,7 @@
     transition: all 0.3s ease;
 }
 
-.similar-product-content button:hover {
+.recommended-content button:hover {
     background: #D0021C;
     color: white;
 }
@@ -457,126 +438,6 @@
         opacity: 0;
         display: none;
     }
-}
-
-/* RECOMMEND ACCESSORIES */
-.recommend-main-product {
-    display: flex;
-}
-
-.recommended-main-img {
-    height: 150px;
-    width: 70%;
-}
-
-.recommended-main-img img {
-    height: 100%;
-    padding-left: 20%;
-}
-
-.recommended-main-content {
-  padding-top: 25px;
-}
-
-.recommended-accessories-header {
-    font-weight: 700;
-    padding: 20px 0;
-}
-
-.recommended-accessories {
-    text-align: center;
-    margin: 50px auto;
-    border: 1px solid lightgrey;
-    border-radius: 5px;
-}
-
-.recommended-accessories-list {
-    list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.recommended-accessories-item {
-    box-sizing: border-box;
-    text-align: center;
-    display: flex;
-}
-
-.recommended-accessories-img {
-    width: 30%;
-    margin-left: 15px;
-}
-
-.recommended-accessories-img img {
-    width: 100%;
-}
-
-.recommended-accessories-content {
-    padding-top: 15px;
-    width: 70%;
-}
-
-.accessories-price {
-    width: 100%;
-    padding-left: 20px;
-    display: flex;
-}
-
-.accessories-price b {
-    color: #D0021C;
-}
-
-.money-unit {
-    padding-right: 10px;
-    font-size: 13px;
-    text-decoration: underline;
-}
-
-.accessories-price p {
-    color: #666666;
-    text-decoration: line-through;
-}
-
-.accessories-price-ratio {
-    font-size: 14px;
-    font-weight: 500;
-    color: #FF9200;
-    border: 1px solid #FF9200;
-    border-radius: 2px;
-    width: 80px;
-    margin: 5px 0 0 20px
-}
-
-.buy-recommend-btn {
-    background: #D0021C;
-    color: #fff;
-    width: 90%;
-    height: 35px;
-    border-radius: 5px;
-    font-size: 20px;
-    font-weight: 500;
-    margin: 20px 0;
-}
-
-.total-price {
-    display: flex;
-    justify-content: center;
-}
-
-.total-price b {
-    font-size: 22px;
-    color: #D0021C;
-}
-
-.total-price p,
-.total-price h1 {
-    padding: 5px 10px 0 0;
-}
-
-.total-price p {
-    color: #666666;
-    font-weight: 500;
-    text-decoration: line-through;
 }
 
 /* ORDER FORM */

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.product.entity.Product;
+import project.product.entity.ProductTest;
 
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class Blog {
     private Long id;
     @OneToMany(mappedBy = "blog")
     private List<BlogContent> blogContents;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product product;
+    private ProductTest product;
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
