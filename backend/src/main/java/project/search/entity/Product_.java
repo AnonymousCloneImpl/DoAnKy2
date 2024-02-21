@@ -1,8 +1,9 @@
-package project.product.entity;
+package project.search.entity;
 
 
 import jakarta.persistence.metamodel.SingularAttribute;
 import jakarta.persistence.metamodel.StaticMetamodel;
+import project.product.entity.Product;
 import project.order.entity.Address;
 
 import javax.annotation.processing.Generated;

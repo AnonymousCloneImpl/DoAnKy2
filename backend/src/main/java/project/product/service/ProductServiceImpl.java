@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.product.entity.Product;
 import project.product.entity.ProductDto;
-import project.product.entity.Product_;
+import project.search.entity.Product_;
 import project.product.repository.ProductRepository;
 
 import java.util.List;

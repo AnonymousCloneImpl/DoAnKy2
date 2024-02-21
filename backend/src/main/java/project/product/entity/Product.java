@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.oldEntity.Brand;
 import project.oldEntity.Color;
+import project.oldEntity.Model;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,13 +27,14 @@ public class Product {
     private int categoryId;
     @Column(nullable = false, name = "product_code")
     private String productCode;
-    @Column(nullable = false, name = "brand_id")
-    private long brandId;
-    @Column(nullable = false, name = "model_id")
-    private long modelId;
+    @ManyToOne
+    @JoinColumn(name = "brand_id")
+    private Brand brand;
+    @ManyToOne
+    @JoinColumn(name = "model_id")
+    private Model model;
     @Column(nullable = false, unique = true)
     private String name;
-    @JsonIgnore
     @OneToMany(mappedBy = "product")
     private List<Color> color;
     @Column(nullable = false, name = "blog_id")
