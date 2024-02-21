@@ -7,7 +7,7 @@ import '@/styles/product.css';
 
 const ProductComponent = ({productData}) => {
 
-    const data = productData;
+    const { data } = productData;
 
     const [mainImg, setMainImg] = useState('');
     const [activeIndex, setActiveIndex] = useState(0);
@@ -268,12 +268,12 @@ const ProductComponent = ({productData}) => {
 
                         <table className="detail-table">
                             <tbody>
-                            {/*{data && data.map((product) => (*/}
-                            <tr key={data.id}>
-                                <td className="left-tbl">Name</td>
-                                <td className="right-tbl">{data.data.data.id}</td>
-                            </tr>
-                            {/*))}*/}
+                            {Object.entries(JSON.parse(data.data.productDetail)).map(([key, value]) => (
+                                <tr key={key}>
+                                    <td>{key}</td>
+                                    <td>{value}</td>
+                                </tr>
+                            ))}
                             </tbody>
                         </table>
 
