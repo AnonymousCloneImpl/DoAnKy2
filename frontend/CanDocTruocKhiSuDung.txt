@@ -1,0 +1,15 @@
+Lệnh chạy frontend :
+
+    * cd frontend -> chuyển terminal vào thư mục frontend
+
+    1. cd ->
+	    * npm i -> cài module tại Product Environment
+	    * npm run build -> xây dựng sản phẩm cuối -> tối ưu performance hơn so với môi trường dev
+	    * npm run start -> khởi chạy sản phẩm, port mặc định : 3000
+
+    2. Dev Environment
+	    * npm i --dev -> cài module tại Dev Environment
+	    * npm run dev -> chạy server môi trường dev, port mặc định : 3000
+
+Doc next.js :
+https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app
