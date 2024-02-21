@@ -21,12 +21,24 @@ a {
     max-width: 90%;
 }
 
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background: black;
+    color: #fff;
+    height: 20px;
+    font-size: 12px;
+}
+
 .header_ {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #fff;
+    background: linear-gradient(to right, #FFBC06, #FFD400);
     transition: all 0.5s ease-in-out;
 }
 
@@ -38,7 +50,8 @@ header.sticky {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 5px 0;
+
 }
 
 .main-menu {
@@ -47,6 +60,7 @@ header.sticky {
 
 .main-menu-i {
     margin-top: 5px;
+    font-size: 20px;
     padding: 0 40%;
     color: black;
     transition: all 0.25s ease-in-out;
@@ -54,11 +68,23 @@ header.sticky {
 
 .main-menu-a {
     text-transform: uppercase;
-    padding: 10px 20px;
+    padding: 5px 20px;
     color: black;
     display: block;
     font-weight: bold;
+    font-size: 18px;
     transition: all 0.25s ease-in-out;
+    cursor: pointer;
+}
+
+.sub-menu-item {
+    display: flex;
+    justify-content: center;
+}
+
+.sub-menu-i {
+    font-size: 22px;
+    padding: 10px 10px 0 0;
 }
 
 ul#main-menu li:hover a,
@@ -69,7 +95,7 @@ ul#main-menu li:hover i {
 ul#sub-menu {
     display: flex;
     justify-content: space-around;
-    background-color: red;
+    background: orange;
 }
 
 ul#sub-menu a {
@@ -88,7 +114,7 @@ ul#sub-menu li {
 }
 
 ul#sub-menu li:hover {
-    background: green;
+    background: orangered;
 }
 
 #sub-drop {
@@ -131,15 +157,6 @@ ul#sub-menu li:hover ul#sub-drop {
     opacity: 1;
     visibility: visible;
     width: 100%;
-}
-
-.top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px;
-    background: black;
-    color: #fff;
 }
 
 .info-menu1 {
@@ -194,12 +211,12 @@ ul#sub-menu li:hover ul#sub-drop {
 .search-wrapper input[type="text"] {
     padding: 10px;
     border: none;
-    width: 300px;
+    width: 400px;
     border-radius: 5px;
     outline: none;
 }
 
-.fa-magnifying-glass {
+.magnifying-glass {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -208,10 +225,6 @@ ul#sub-menu li:hover ul#sub-drop {
     cursor: pointer;
     font-size: 18px;
     font-weight: bolder;
-}
-
-.fa-magnifying-glass:hover {
-    font-size: 20px;
 }
 
 #banner {
