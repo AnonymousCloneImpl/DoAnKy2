@@ -70,6 +70,7 @@ export default function Header() {
                 </nav>
             </div>
 
+            Lưu Nguyễn, [21/02/2024 5:18 CH]
             {/*INNER HEADER*/}
             <div className="inner-header container">
                 <a href="" id="logo">This is logo - nhờ Dev Dương design hộ</a>

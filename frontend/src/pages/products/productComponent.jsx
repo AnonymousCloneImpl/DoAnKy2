@@ -5,9 +5,9 @@ import { faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, 
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import '@/styles/product.css';
 
-const ProductComponent = ({ productData }) => {
+const ProductComponent = ({productData}) => {
 
-    const {data} = productData;
+    const { data } = productData;
 
     const [mainImg, setMainImg] = useState('');
     const [activeIndex, setActiveIndex] = useState(0);
@@ -132,9 +132,9 @@ const ProductComponent = ({ productData }) => {
             <div className="url">
                 <a href="#">Home </a>
                 <b> &#8250; </b>
-                <a href="#">Products</a>
+                <a href="#">Product</a>
                 <b> &#8250; </b>
-                <a href="#">{data.data.name}</a>
+                <a href="#">Laptop</a>
             </div>
 
             <div className="top-line"></div>
@@ -206,7 +206,7 @@ const ProductComponent = ({ productData }) => {
 
                 <div className="right-box">
                     <div className="right-box-top">
-                        <div className="pname">{data.data.name}</div>
+                        <div className="pname">Laptop Super vip</div>
                         <p className="sold">100 Sold</p>
 
                         <div className="right-box-top-child">
@@ -264,16 +264,16 @@ const ProductComponent = ({ productData }) => {
 
                     <div className="right-box-bottom">
                         {/* Detail table */}
-                        <h1 className="detail-name">Product Configuration Information</h1>
+                        <h1 className="detail-name">Laptop Super vip detail</h1>
 
                         <table className="detail-table">
                             <tbody>
-                                {Object.entries(JSON.parse(data.data.productDetail)).map(([key, value]) => (
-                                    <tr key={key}>
-                                        <td>{key}</td>
-                                        <td>{value}</td>
-                                        </tr>
-                                ))}
+                            {Object.entries(JSON.parse(data.data.productDetail)).map(([key, value]) => (
+                                <tr key={key}>
+                                    <td>{key}</td>
+                                    <td>{value}</td>
+                                </tr>
+                            ))}
                             </tbody>
                         </table>
 
@@ -309,6 +309,26 @@ const ProductComponent = ({ productData }) => {
                                         <input type="checkbox" className="product" defaultChecked />
                                     </div>
 
+                                    <div className="recommended-accessories-img">
+                                        <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
+                                    </div>
+                                    <div className="recommended-accessories-content">
+                                        <a href="#">Toy super vip pro</a>
+                                        <div className="accessories-price">
+                                            <b>900.000</b>
+                                            <b className="money-unit">đ</b>
+                                            <p>1.000.000</p>
+                                            <p className="money-unit">đ</p>
+                                        </div>
+                                        <div className="accessories-price-ratio">
+                                            <p>Down 20%</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li className="recommended-accessories-item">
+                                    <div className="recommended-accessories-checkbox">
+                                        <input type="checkbox" className="product" defaultChecked />
+                                    </div>
                                     <div className="recommended-accessories-img">
                                         <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
                                     </div>
@@ -459,7 +479,7 @@ const ProductComponent = ({ productData }) => {
                             <form className="order-form" onSubmit={handleFormSubmit}>
                                 <label htmlFor="customerName">Name</label>
                                 <input type="text" className="customerName" name="customerName" placeholder="example: Ngọc Trinh..."
-                                    id="customerName" required></input>
+                                       id="customerName" required></input>
 
                                 <label htmlFor="customerAddress">Address</label>
                                 <div className="address-selects">
@@ -487,7 +507,7 @@ const ProductComponent = ({ productData }) => {
 
                                 <label htmlFor="customerEmail">Email</label>
                                 <input type="email" className="customerEmail" name="customerEmail" placeholder="example@gmail.com"
-                                    id="customerEmail" required></input>
+                                       id="customerEmail" required></input>
 
                                 <button type="submit">Confirm Order</button>
                             </form>

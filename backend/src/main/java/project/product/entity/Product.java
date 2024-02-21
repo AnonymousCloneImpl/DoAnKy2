@@ -28,6 +28,9 @@ public class Product {
     private String description;
     private Long price;
     private Long imageId;
-    @OneToMany
+    private byte discountPercentage;
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Blog> blog;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<PurchaseComboItem> purchaseComboItemList;
 }
