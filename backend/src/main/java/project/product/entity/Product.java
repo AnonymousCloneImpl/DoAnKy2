@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "product_test")
+@Table(name = "product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +23,8 @@ public class Product {
     private String model;
     private String name;
     private String type;
-    private String product_detail;
+    @Column(name = "product_detail", columnDefinition = "TEXT")
+    private String productDetail;
     private String description;
     private Long price;
     private Long imageId;

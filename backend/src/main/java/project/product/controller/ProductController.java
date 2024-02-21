@@ -28,11 +28,11 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<ResponseObject> getById(@PathVariable Long id) {
+    ResponseEntity<Object> getById(@PathVariable Long id) {
         Optional<Product> product = productService.getById(id);
         if (product.isPresent()) {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("Ok", "Query product successfully", product)
+            return ResponseEntity.ok().body(
+                    product
             );
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(

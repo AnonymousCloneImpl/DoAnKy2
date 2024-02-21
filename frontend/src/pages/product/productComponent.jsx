@@ -5,48 +5,29 @@ import { faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, 
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import '@/styles/product.css';
 
-import result from "@/utils/fetchAPI.js";
-const url = `${process.env.DOMAIN}/product`;
+const ProductComponent = ({productData}) => {
 
-const ProductComponent = () => {
-    const {data, isLoading, isError} = result(url);
+    const data = productData;
 
     const [mainImg, setMainImg] = useState('');
-    const subImgItemsRef = useRef([]);
+    const [activeIndex, setActiveIndex] = useState(0);
     const [quantity, setQuantity] = useState(1);
 
+    const subImgItems = [
+        "https://hanoicomputer.net/wp-content/uploads/2022/08/Laptop-Dell-Inspiron-3501-3692BLK1..jpg",
+        "https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png",
+        "https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_8.png",
+        "https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_6.png",
+        "https://hanoicomputer.net/wp-content/uploads/2023/05/74484_laptop_dell_inspiron_3520__71003262___2_.jpg"
+    ];
+
     useEffect(() => {
-        const mainImage = document.querySelector('.main-img img');
-        if (mainImage) {
-            setMainImg(mainImage.src);
-        }
-
-        subImgItemsRef.current = Array.from(document.querySelectorAll('.sub-img-item'));
-    }, []);
-
-    const showMain = (pic) => {
-        setMainImg(pic);
-    };
+        setMainImg(subImgItems[activeIndex]);
+    }, [activeIndex]);
 
     const handleClick = (index) => {
-        console.log('handleClick called with index:', index);
-        const imgElement = subImgItemsRef.current[index]?.querySelector('img');
-        if (imgElement) {
-            showMain(imgElement.src);
-        }
+        setActiveIndex(index);
     };
-
-    useEffect(() => {
-        subImgItemsRef.current.forEach((item, index) => {
-            item.addEventListener('click', () => handleClick(index));
-        });
-
-        return () => {
-            subImgItemsRef.current.forEach((item, index) => {
-                item.removeEventListener('click', () => handleClick(index));
-            });
-        };
-    }, [subImgItemsRef]);
 
     const activeBtn = (button) => {
         let buttons = document.querySelectorAll('.pcolor');
@@ -161,38 +142,19 @@ const ProductComponent = () => {
             <div className="product-box">
                 <div className="left-box">
                     <div className="main-img">
-                        <img src="https://hanoicomputer.net/wp-content/uploads/2022/08/Laptop-Dell-Inspiron-3501-3692BLK1..jpg"
-                            alt="Main Image">
-                        </img>
+                        <img src={mainImg} alt="Main Image" />
                     </div>
 
                     <div className="sub-img-list">
-                        <div className="sub-img-item active">
-                            <img src="https://hanoicomputer.net/wp-content/uploads/2022/08/Laptop-Dell-Inspiron-3501-3692BLK1..jpg"
-                                onClick={() => showMain("https://hanoicomputer.net/wp-content/uploads/2022/08/Laptop-Dell-Inspiron-3501-3692BLK1..jpg")}
-                                alt="Sub-Image">
-                            </img>
-                        </div>
-                        <div className="sub-img-item">
-                            <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"
-                                onClick={() => showMain("https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png")}>
-                            </img>
-                        </div>
-                        <div className="sub-img-item">
-                            <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_8.png"
-                                onClick={() => showMain("https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_8.png")}>
-                            </img>
-                        </div>
-                        <div className="sub-img-item">
-                            <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_6.png"
-                                onClick={() => showMain("https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_6.png")}>
-                            </img>
-                        </div>
-                        <div className="sub-img-item">
-                            <img src="https://hanoicomputer.net/wp-content/uploads/2023/05/74484_laptop_dell_inspiron_3520__71003262___2_.jpg"
-                                onClick={() => showMain("https://hanoicomputer.net/wp-content/uploads/2023/05/74484_laptop_dell_inspiron_3520__71003262___2_.jpg")}>
-                            </img>
-                        </div>
+                        {subImgItems.map((imgSrc, index) => (
+                            <div
+                                key={index}
+                                className={`sub-img-item ${index === activeIndex ? 'active' : ''}`}
+                                onClick={() => handleClick(index)}
+                            >
+                                <img src={imgSrc} alt={`Sub-Image ${index + 1}`} />
+                            </div>
+                        ))}
                     </div>
 
                     <div className="service">
@@ -225,7 +187,15 @@ const ProductComponent = () => {
                     </div>
 
                     <div className="product-content">
+                        <div className="content-img">
+                            <img src='https://cdn.tgdd.vn/Products/Images/44/305769/Kit/hp-245-g9-r5-6l1n9pa-glr-note.jpg'></img>
+                        </div>
+
                         <h1>Product Detail</h1>
+
+                        <h2>Header Content 100 lineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                            eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee in DB</h2>
+
                         <p>Đây là content dài 1000000000000000000000000000000000000000000
                             dòngggggggggggggggggggggggggggggggggggggggggggg sds d đsd d dsdsd ds dsd sdsds ds
                             dsjvdjfsc dsbdjs vjxslv djjskvf ffsjf svjjvssv vjs sfjs scbshbv vcjdjdkcvjsvcsjv,m chbvhxbhkj
@@ -293,118 +263,193 @@ const ProductComponent = () => {
                     </div>
 
                     <div className="right-box-bottom">
+                        {/* Detail table */}
                         <h1 className="detail-name">Laptop Super vip detail</h1>
 
                         <table className="detail-table">
                             <tbody>
-                                {data && data.map((product) => (
-                                            <tr key={product.id}>
-                                                <td className="left-tbl">Name</td>
-                                                <td className="right-tbl">{product.name}</td>
-                                            </tr>
-                                ))}
+                            {/*{data && data.map((product) => (*/}
+                            <tr key={data.id}>
+                                <td className="left-tbl">Name</td>
+                                <td className="right-tbl">{data.data.data.id}</td>
+                            </tr>
+                            {/*))}*/}
                             </tbody>
                         </table>
+
+                        {/* Recommended Accessories */}
+                        <div className="recommended-accessories">
+                            <h1 className="recommended-accessories-header">ATTRACTIVE PROMOTIONS WHEN BUYING TOGETHER</h1>
+
+                            <div className="recommended-accessories-line"></div>
+
+                            <div className="recommend-main-product">
+                                <div className="recommended-main-img">
+                                    <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
+                                </div>
+                                <div className="recommended-main-content">
+                                    <h1>Toy super vip pro</h1>
+                                    <div className="accessories-price">
+                                        <b>9.500.000</b>
+                                        <b className="money-unit">đ</b>
+                                        <p>10.000.000</p>
+                                        <p className="money-unit">đ</p>
+                                    </div>
+                                    <div className="accessories-price-ratio">
+                                        <p>Down 5%</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="recommended-accessories-line"></div>
+
+                            <ul className="recommended-accessories-list">
+                                <li className="recommended-accessories-item">
+                                    <div className="recommended-accessories-checkbox">
+                                        <input type="checkbox" className="product" defaultChecked />
+                                    </div>
+
+                                    <div className="recommended-accessories-img">
+                                        <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
+                                    </div>
+                                    <div className="recommended-accessories-content">
+                                        <a href="#">Toy super vip pro</a>
+                                        <div className="accessories-price">
+                                            <b>900.000</b>
+                                            <b className="money-unit">đ</b>
+                                            <p>1.000.000</p>
+                                            <p className="money-unit">đ</p>
+                                        </div>
+                                        <div className="accessories-price-ratio">
+                                            <p>Down 20%</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li className="recommended-accessories-item">
+                                    <div className="recommended-accessories-checkbox">
+                                        <input type="checkbox" className="product" defaultChecked />
+                                    </div>
+                                    <div className="recommended-accessories-img">
+                                        <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
+                                    </div>
+                                    <div className="recommended-accessories-content">
+                                        <a href="#">Toy super vip pro</a>
+                                        <div className="accessories-price">
+                                            <b>900.000</b>
+                                            <b className="money-unit">đ</b>
+                                            <p>1.000.000</p>
+                                            <p className="money-unit">đ</p>
+                                        </div>
+                                        <div className="accessories-price-ratio">
+                                            <p>Down 20%</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li className="recommended-accessories-item">
+                                    <div className="recommended-accessories-checkbox">
+                                        <input type="checkbox" className="product" defaultChecked />
+                                    </div>
+                                    <div className="recommended-accessories-img">
+                                        <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
+                                    </div>
+                                    <div className="recommended-accessories-content">
+                                        <a href="#">Toy super vip pro</a>
+                                        <div className="accessories-price">
+                                            <b>900.000</b>
+                                            <b className="money-unit">đ</b>
+                                            <p>1.000.000</p>
+                                            <p className="money-unit">đ</p>
+                                        </div>
+                                        <div className="accessories-price-ratio">
+                                            <p>Down 20%</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li className="recommended-accessories-item">
+                                    <div className="recommended-accessories-checkbox">
+                                        <input type="checkbox" className="product" defaultChecked />
+                                    </div>
+                                    <div className="recommended-accessories-img">
+                                        <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
+                                    </div>
+                                    <div className="recommended-accessories-content">
+                                        <a href="#">Toy super vip pro</a>
+                                        <div className="accessories-price">
+                                            <b>900.000</b>
+                                            <b className="money-unit">đ</b>
+                                            <p>1.000.000</p>
+                                            <p className="money-unit">đ</p>
+                                        </div>
+                                        <div className="accessories-price-ratio">
+                                            <p>Down 20%</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                            <div className="recommended-accessories-line"></div>
+
+                            <div className="total-price">
+                                <h1>Total Price:</h1>
+                                <b>3.600.000</b>
+                                <b className="money-unit">đ</b>
+                                <p>4.000.000</p>
+                            </div>
+                            <div className="buy-recommend">
+                                <button className="buy-recommend-btn" onClick={openForm}>
+                                    <FontAwesomeIcon icon={faCreditCard} /> Buy Now
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
 
-            {/* Recommended Accessories */}
-            <div className="recommended-accessories">
-                <h1 className="recommended-header">Recommended Accessories</h1>
-
-                <div className="recommended-accessories-line"></div>
-
-                <ul className="recommended-list">
-                    <li className="recommended-item">
-                        <div className="recommended-img">
-                            <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-                        </div>
-                        <div className="recommended-content">
-                            <a href="#">Toy super vip pro</a>
-                            <button className="recommended-cart-btn" onClick={() => addToCart()}>
-                                <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
-                        </div>
-                    </li>
-                    <li className="recommended-item">
-                        <div className="recommended-img">
-                            <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-                        </div>
-                        <div className="recommended-content">
-                            <a href="#">Toy super vip pro</a>
-                            <button className="recommended-cart-btn" onClick={() => addToCart()}>
-                                <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
-                        </div>
-                    </li>
-                    <li className="recommended-item">
-                        <div className="recommended-img">
-                            <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-                        </div>
-                        <div className="recommended-content">
-                            <a href="#">Toy super vip pro</a>
-                            <button className="recommended-cart-btn" onClick={() => addToCart()}>
-                                <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
-                        </div>
-                    </li>
-                    <li className="recommended-item">
-                        <div className="recommended-img">
-                            <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-                        </div>
-                        <div className="recommended-content">
-                            <a href="#">Toy super vip pro</a>
-                            <button className="recommended-cart-btn" onClick={() => addToCart()}>
-                                <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-
-
             {/* Similar products */}
-            <div className="recommended-accessories">
-                <h1 className="recommended-header">Similar products</h1>
+            <div className="similar-product">
+                <h1 className="similar-product-header">Similar products</h1>
 
-                <div className="recommended-accessories-line"></div>
+                <div className="similar-product-line"></div>
 
-                <ul className="recommended-list">
-                    <li className="recommended-item">
-                        <div className="recommended-img">
+                <ul className="similar-product-list">
+                    <li className="similar-product-item">
+                        <div className="similar-product-img">
                             <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
                         </div>
-                        <div className="recommended-content">
+                        <div className="similar-product-content">
                             <a href="#">Toy super vip pro</a>
-                            <button className="recommended-cart-btn" onClick={() => addToCart()}>
+                            <button className="similar-product-cart-btn" onClick={() => addToCart()}>
                                 <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
                         </div>
                     </li>
-                    <li className="recommended-item">
-                        <div className="recommended-img">
+                    <li className="similar-product-item">
+                        <div className="similar-product-img">
                             <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
                         </div>
-                        <div className="recommended-content">
+                        <div className="similar-product-content">
                             <a href="#">Toy super vip pro</a>
-                            <button className="recommended-cart-btn" onClick={() => addToCart()}>
+                            <button className="similar-product-cart-btn" onClick={() => addToCart()}>
                                 <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
                         </div>
                     </li>
-                    <li className="recommended-item">
-                        <div className="recommended-img">
+                    <li className="similar-product-item">
+                        <div className="similar-product-img">
                             <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
                         </div>
-                        <div className="recommended-content">
+                        <div className="similar-product-content">
                             <a href="#">Toy super vip pro</a>
-                            <button className="recommended-cart-btn" onClick={() => addToCart()}>
+                            <button className="similar-product-cart-btn" onClick={() => addToCart()}>
                                 <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
                         </div>
                     </li>
-                    <li className="recommended-item">
-                        <div className="recommended-img">
+                    <li className="similar-product-item">
+                        <div className="similar-product-img">
                             <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
                         </div>
-                        <div className="recommended-content">
+                        <div className="similar-product-content">
                             <a href="#">Toy super vip pro</a>
-                            <button className="recommended-cart-btn" onClick={() => addToCart()}>
+                            <button className="similar-product-cart-btn" onClick={() => addToCart()}>
                                 <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
                         </div>
                     </li>
@@ -434,7 +479,7 @@ const ProductComponent = () => {
                             <form className="order-form" onSubmit={handleFormSubmit}>
                                 <label htmlFor="customerName">Name</label>
                                 <input type="text" className="customerName" name="customerName" placeholder="example: Ngọc Trinh..."
-                                    id="customerName" required></input>
+                                       id="customerName" required></input>
 
                                 <label htmlFor="customerAddress">Address</label>
                                 <div className="address-selects">
@@ -462,7 +507,7 @@ const ProductComponent = () => {
 
                                 <label htmlFor="customerEmail">Email</label>
                                 <input type="email" className="customerEmail" name="customerEmail" placeholder="example@gmail.com"
-                                    id="customerEmail" required></input>
+                                       id="customerEmail" required></input>
 
                                 <button type="submit">Confirm Order</button>
                             </form>
