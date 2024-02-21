@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.product.entity.Product;
-import project.product.entity.ProductTest;
 
 import java.util.List;
 
@@ -24,7 +23,7 @@ public class Blog {
     private List<BlogContent> blogContents;
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private ProductTest product;
+    private Product product;
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
