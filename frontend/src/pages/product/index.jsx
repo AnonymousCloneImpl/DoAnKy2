@@ -1,12 +1,12 @@
 import Header from "@/components/header/header";
+import RootLayout from "@/app/layout";
 
 export default function ProductPageA() {
     return (
-        <div>
-            <Header />
+        <RootLayout>
             <p>
                 Hello World!
             </p>
-        </div>
+        </RootLayout>
     )
 }

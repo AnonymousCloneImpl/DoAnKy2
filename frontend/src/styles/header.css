@@ -1,3 +1,145 @@
+Lưu Nguyễn, [21/02/2024 5:18 CH]
+"use client"
+import "@/styles/header.css";
+import { config, library } from '@fortawesome/fontawesome-svg-core';
+import {
+    faLaptop,
+    faKeyboard,
+    faScrewdriverWrench,
+    faLocationDot,
+    faEnvelope,
+    faPhone,
+    faFileSignature,
+    faCircleUser,
+    faCartShopping,
+    faMagnifyingGlass
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from "react";
+import SearchBar from "@/components/searchBar";
+
+library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
+
+config.autoAddCss = false;
+
+export default function Header() {
+const [searchVariable, setSearchVariable] = useState("");
+const [searchValue, setSearchValue] = useState([]);
+
+    const handleSearchChange = (e) => {
+    const value = e.target.value;
+setSearchVariable(value);
+};
+
+
+    return (
+    <header className="header_">
+{/*TOP HEADER*/}
+<div className="top-header">
+<nav>
+<ul className="info-menu1">
+<li className="info-menu1-li">
+<a className="info-menu1-a" href=""><p>Schedule A Repair</p></a>
+</li>
+<li className="info-menu1-li">
+<a className="info-menu1-a" href=""><p>About Us</p></a>
+</li>
+</ul>
+</nav>
+<nav>
+<ul className="info-menu2">
+<li className="info-menu2-li">
+<a
+href="https://www.google.com/maps/place/FPT+Aptech+H%C3%A0+N%E1%BB%99i+-+H%E1%BB%87+th%E1%BB%91ng+%C4%91%C3%A0o+t%E1%BA%A1o+l%E1%BA%ADp+tr%C3%ACnh+vi%C3%AAn+qu%E1%BB%91c+t%E1%BA%BF/@21.0288251,105.7797218,17z/data=!4m6!3m5!1s0x3135ab00954decbf:0xdb4ee23b49ad50c8!8m2!3d21.0288201!4d105.7822967!16s%2Fg%2F11vj7r6gkp?hl=vi&entry=ttu"
+className="info-menu2-li-a"
+>
+<FontAwesomeIcon icon={faLocationDot} className="info-menu2-li-i" />
+8A Tôn Thất Thuyết, Mỹ Đình, Nam Từ Liêm, Hà Nội
+</a>
+</li>
+<li className="info-menu2-li">
+<a href="mailto:mos98er@gmail.com" className="info-menu2-li-a">
+<FontAwesomeIcon icon={faEnvelope} className="info-menu2-li-i" />
+mos98er@gmail.com
+</a>
+</li>
+<li className="info-menu2-li">
+<FontAwesomeIcon icon={faPhone} className="fa-phone info-menu2-li-i" />
+<a href="tel:+84123456789" className="info-menu2-li-a">+84 123 456 789</a>
+</li>
+</ul>
+</nav>
+</div>
+
+Lưu Nguyễn, [21/02/2024 5:18 CH]
+{/*INNER HEADER*/}
+<div className="inner-header container">
+<a href="" id="logo">This is logo - nhờ Dev Dương design hộ</a>
+{/*       Search         */}
+<div className="search-wrapper">
+<input type="text" placeholder="Search..." id="searchInput"></input>
+<FontAwesomeIcon icon={faMagnifyingGlass} className="magnifying-glass" />
+</div>
+<nav>
+<ul className="main-menu">
+<li>
+<FontAwesomeIcon icon={faFileSignature} className="main-menu-i" />
+<a className="main-menu-a" href="">Check oder</a>
+</li>
+<li>
+<FontAwesomeIcon icon={faCartShopping} className="main-menu-i" />
+<a className="main-menu-a" href="">My cart</a>
+</li>
+</ul>
+</nav>
+</div>
+
+{/*SUB MENU*/}
+<nav id="sub-menu-nav">
+<ul id="sub-menu">
+<li>
+<div className="sub-menu-item">
+<FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />
+<a href="/src/pages/product/[id]">laptop</a>
+</div>
+<ul id="sub-drop">
+<li>
+<img src="/header_img/drop-menu-mouse.webp" alt="" />
+<a href="">mouse</a>
+</li>
+<li>
+<img id="fix" src="/header_img/drop-menu-keyboard.webp" alt="" />
+<a href="">keyboard</a>
+</li>
+</ul>
+</li>
+<li>
+<div className="sub-menu-item">
+<FontAwesomeIcon icon={faKeyboard} className="sub-menu-i" />
+<a href="">accessories</a>
+</div>
+<ul id="sub-drop">
+<li><img src="/header_img/drop-menu-mouse.webp" alt="" />
+<a href="">mouse</a>
+</li>
+<li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt="" /><a
+href="">keyboard</a></li>
+</ul>
+</li>
+<li>
+<div className="sub-menu-item">
+<FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
+<a href="">build your PC</a>
+</div>
+</li>
+</ul>
+</nav>
+
+</header>
+)
+}
+
+Lưu Nguyễn, [21/02/2024 5:18 CH]
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -21,12 +163,24 @@ a {
     max-width: 90%;
 }
 
+
+.top-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    background: black;
+    color: #fff;
+    height: 20px;
+    font-size: 12px;
+}
+
 .header_ {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #fff;
+    background: linear-gradient(to right, #FFBC06, #FFD400);
     transition: all 0.5s ease-in-out;
 }
 
@@ -38,7 +192,8 @@ header.sticky {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0;
+    padding: 5px 0;
+
 }
 
 .main-menu {
@@ -47,6 +202,7 @@ header.sticky {
 
 .main-menu-i {
     margin-top: 5px;
+    font-size: 20px;
     padding: 0 40%;
     color: black;
     transition: all 0.25s ease-in-out;
@@ -54,11 +210,23 @@ header.sticky {
 
 .main-menu-a {
     text-transform: uppercase;
-    padding: 10px 20px;
+    padding: 5px 20px;
     color: black;
     display: block;
     font-weight: bold;
+    font-size: 18px;
     transition: all 0.25s ease-in-out;
+    cursor: pointer;
+}
+
+.sub-menu-item {
+    display: flex;
+    justify-content: center;
+}
+
+.sub-menu-i {
+    font-size: 22px;
+    padding: 10px 10px 0 0;
 }
 
 ul#main-menu li:hover a,
@@ -69,7 +237,7 @@ ul#main-menu li:hover i {
 ul#sub-menu {
     display: flex;
     justify-content: space-around;
-    background-color: red;
+    background: orange;
 }
 
 ul#sub-menu a {
@@ -88,7 +256,7 @@ ul#sub-menu li {
 }
 
 ul#sub-menu li:hover {
-    background: green;
+    background: orangered;
 }
 
 #sub-drop {
@@ -131,15 +299,6 @@ ul#sub-menu li:hover ul#sub-drop {
     opacity: 1;
     visibility: visible;
     width: 100%;
-}
-
-.top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 5px;
-    background: black;
-    color: #fff;
 }
 
 .info-menu1 {
@@ -194,12 +353,12 @@ ul#sub-menu li:hover ul#sub-drop {
 .search-wrapper input[type="text"] {
     padding: 10px;
     border: none;
-    width: 300px;
+    width: 400px;
     border-radius: 5px;
     outline: none;
 }
 
-.fa-magnifying-glass {
+.magnifying-glass {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -208,10 +367,6 @@ ul#sub-menu li:hover ul#sub-drop {
     cursor: pointer;
     font-size: 18px;
     font-weight: bolder;
-}
-
-.fa-magnifying-glass:hover {
-    font-size: 20px;
 }
 
 #banner {
