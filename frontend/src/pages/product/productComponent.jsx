@@ -268,12 +268,12 @@ const ProductComponent = ({productData}) => {
 
                         <table className="detail-table">
                             <tbody>
-                            {Object.entries(JSON.parse(data.data.productDetail)).map(([key, value]) => (
-                                <tr key={key}>
-                                    <td>{key}</td>
-                                    <td>{value}</td>
-                                </tr>
-                            ))}
+                                {Object.entries(JSON.parse(data.productDetail)).map(([key, value]) => (
+                                    <tr key={key}>
+                                        <td>{key}</td>
+                                        <td>{value}</td>
+                                    </tr>
+                                ))}
                             </tbody>
                         </table>
 
@@ -304,13 +304,38 @@ const ProductComponent = ({productData}) => {
                             <div className="recommended-accessories-line"></div>
 
                             <ul className="recommended-accessories-list">
+                                {data.purchaseComboItemList.map((item) => (
+                                    <li className="recommended-accessories-item" key={item.id}>
+                                        <div className="recommended-accessories-checkbox">
+                                            <input type="checkbox" className="product" defaultChecked/>
+                                        </div>
+
+                                        <div className="recommended-accessories-img">
+                                            <img
+                                                src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
+                                        </div>
+                                        <div className="recommended-accessories-content">
+                                            <a href="#">{`${item.product.producer} ${item.product.model} ${item.product.name}`}</a>
+                                            <div className="accessories-price">
+                                                <b>{item.product.price - (item.product.price * item.discountPercentage / 100)}</b>
+                                                <b className="money-unit">đ</b>
+                                                <p>{item.product.price}</p>
+                                                <p className="money-unit">đ</p>
+                                            </div>
+                                            <div className="accessories-price-ratio">
+                                                <p>{`Down ${item.discountPercentage}%`}</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))};
                                 <li className="recommended-accessories-item">
                                     <div className="recommended-accessories-checkbox">
-                                        <input type="checkbox" className="product" defaultChecked />
+                                        <input type="checkbox" className="product" defaultChecked/>
                                     </div>
 
                                     <div className="recommended-accessories-img">
-                                        <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
+                                        <img
+                                            src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
                                     </div>
                                     <div className="recommended-accessories-content">
                                         <a href="#">Toy super vip pro</a>

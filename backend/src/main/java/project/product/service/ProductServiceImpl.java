@@ -8,7 +8,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.product.entity.Product;
 import project.product.entity.ProductDto;
-import project.search.entity.Product_;
 import project.product.repository.ProductRepository;
 
 import java.util.List;
@@ -68,6 +67,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Specification<Product> nameLike(String name) {
         return (root, query, criteriaBuilder)
-            -> criteriaBuilder.like(root.get(Product_.NAME), "%" + name + "%");
+                -> criteriaBuilder.like(root.get("name"), "%" + name + "%");
     }
 }
