@@ -285,6 +285,7 @@
 
 .service-item-child {
     width: 50%;
+    margin: 0 10px 0 0;
     display: flex;
 }
 
@@ -715,4 +716,53 @@
     color: rgb(116, 116, 116);
     border: 1px solid #a3a3a3;
     border-radius: 5px;
+}
+
+.scroll-to-top-button {
+  position: fixed;
+  bottom: 90px;
+  right: 30px;
+  background-color: #0070f3;
+  color: #fff;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 35px;
+}
+
+.scroll-to-top-button:hover {
+  background-color: #0056b3;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}
+
+.call-button {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #D0021C;
+  color: #fff;
+  font-size: 25px;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  animation: shake 0.5s infinite;
 }

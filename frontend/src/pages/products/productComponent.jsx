@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faCircleUp, faStar, faStarHalfStroke, faPhoneVolume, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import '@/styles/product.css';
 
@@ -11,13 +11,7 @@ const ProductComponent = ({data}) => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [quantity, setQuantity] = useState(1);
 
-    const subImgItems = [
-        "https://hanoicomputer.net/wp-content/uploads/2022/08/Laptop-Dell-Inspiron-3501-3692BLK1..jpg",
-        "https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png",
-        "https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_8.png",
-        "https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_6.png",
-        "https://hanoicomputer.net/wp-content/uploads/2023/05/74484_laptop_dell_inspiron_3520__71003262___2_.jpg"
-    ];
+    const subImgItems = data.imageList;
 
     useEffect(() => {
         setMainImg(subImgItems[activeIndex]);
@@ -124,6 +118,31 @@ const ProductComponent = ({data}) => {
         e.preventDefault();
         closeForm();
     };
+
+    const [isScrollVisible, setIsVisible] = useState(false);
+
+      const handleScroll = () => {
+        if (window.scrollY > 100) {
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
+      };
+
+      const scrollToTop = () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      };
+
+      useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+
     return (
         <div className="body-wrapper">
             <div className="url">
@@ -537,6 +556,20 @@ const ProductComponent = ({data}) => {
                     </div>
                 </>
             )}
+
+            <button className="call-button">
+                <a href="tel:+84123456789" className="info-menu2-li-a">
+                    <FontAwesomeIcon icon={faPhoneVolume} />
+                </a>
+            </button>
+
+            <div>
+                {isScrollVisible && (
+                    <button onClick={scrollToTop} className="scroll-to-top-button">
+                      <FontAwesomeIcon icon={faCircleUp} />
+                    </button>
+                )}
+            </div>
         </div>
     );
 
