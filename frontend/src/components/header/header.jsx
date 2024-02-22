@@ -70,7 +70,6 @@ export default function Header() {
                 </nav>
             </div>
 
-            Lưu Nguyễn, [21/02/2024 5:18 CH]
             {/*INNER HEADER*/}
             <div className="inner-header container">
                 <a href="" id="logo">This is logo - nhờ Dev Dương design hộ</a>
@@ -99,7 +98,7 @@ export default function Header() {
                     <li>
                         <div className="sub-menu-item">
                             <FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />
-                            <a href="/src/pages/product/[id]">laptop</a>
+                            <a href="/src/pages/products/[id]">laptop</a>
                         </div>
                         <ul id="sub-drop">
                             <li>

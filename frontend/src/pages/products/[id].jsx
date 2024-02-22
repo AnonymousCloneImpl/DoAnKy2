@@ -1,4 +1,4 @@
-import ProductComponent from '@/pages/product/productComponent';
+import ProductComponent from '@/pages/products/productComponent';
 import fetcher from '@/utils/fetchAPI';
 
 const ProductDetailPage = ({ productData }) => {
