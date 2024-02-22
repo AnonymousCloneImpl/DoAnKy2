@@ -213,20 +213,15 @@ const ProductComponent = ({data}) => {
                     </div>
 
                     <div className="product-content">
-                        <div className="content-img">
-                            <img src='https://cdn.tgdd.vn/Products/Images/44/305769/Kit/hp-245-g9-r5-6l1n9pa-glr-note.jpg'></img>
-                        </div>
-
                         <h1>Product Detail</h1>
 
-                        <h2>Header Content 100 lineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                            eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee in DB</h2>
+                        <div className="content-img">
+                            <img src={data.blog.image}></img>
+                        </div>
 
-                        <p>Đây là content dài 1000000000000000000000000000000000000000000
-                            dòngggggggggggggggggggggggggggggggggggggggggggg sds d đsd d dsdsd ds dsd sdsds ds
-                            dsjvdjfsc dsbdjs vjxslv djjskvf ffsjf svjjvssv vjs sfjs scbshbv vcjdjdkcvjsvcsjv,m chbvhxbhkj
-                            kkkv
-                            slvn jjvkvslkv kvsljvn jvks vvvshhff v vvsvhhv jjjsd</p>
+                        <h2>{data.blog.header}</h2>
+
+                        <p>{data.blog.content}</p>
                     </div>
                 </div>
 

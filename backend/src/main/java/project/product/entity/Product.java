@@ -1,5 +1,6 @@
 package project.product.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,8 +44,9 @@ public class Product {
         inverseJoinColumns = @JoinColumn(name = "color_id")
     )
     private List<Color> colorList;
-    @OneToMany(fetch = FetchType.EAGER)
-    private List<Blog> blogList;
+    @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Blog blog;
     @OneToMany(fetch = FetchType.EAGER)
     private List<PurchaseComboItem> purchaseComboItemList;
 }

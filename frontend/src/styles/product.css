@@ -362,18 +362,17 @@
 .product-content {
     margin: 50px 0;
     width: 84%;
-    padding: 10px 20px;
 }
 
 .product-content h1 {
     font-size: 26px;
-    margin: 40px 0 20px 0;
+    margin-bottom: 30px;
     font-weight: 600;
 }
 
 .product-content h2 {
     font-size: 22px;
-    margin-bottom: 10px;
+    margin: 30px 0;
     font-weight: 500;
 }
 
