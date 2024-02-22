@@ -17,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from "react";
 import fetcher from "@/utils/fetchAPI";
 import Link from "next/link";
+import Image from "next/image";
 
 library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
 
@@ -105,7 +106,9 @@ export default function Header() {
             <div className="inner-header">
                 <div className="inner-header-form">
                     <div className="logo-wrapper">
-                        <a href="" id="logo">This is logo - nhờ Dev Dương design hộ</a>
+                        <Link href="/" id="logo">
+                            <img src="/spirals.png" alt="logo" width="50" height="50" />
+                        </Link>
                     </div>
                     {/*       Search         */}
                     <div className="search-wrapper">

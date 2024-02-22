@@ -105,7 +105,7 @@ ul#main-menu li:hover i {
 ul#sub-menu {
     display: flex;
     justify-content: space-around;
-    background: orange;
+    background: #ffa507;
 }
 
 ul#sub-menu a {
@@ -124,7 +124,7 @@ ul#sub-menu li {
 }
 
 ul#sub-menu li:hover {
-    background: orangered;
+    background: #ec9800;
 }
 
 #sub-drop {
@@ -144,7 +144,7 @@ ul#sub-menu li:hover {
 }
 
 #sub-drop li:hover {
-    border-left: 10px solid green;
+    border-left: 10px solid #626161;
 }
 
 #sub-drop li img {

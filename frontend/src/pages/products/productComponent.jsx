@@ -143,15 +143,15 @@ const ProductComponent = ({data}) => {
         };
     }, []);
 
-      const formatPrice = (price) => {
-          const formattedPrice = price.toLocaleString('vi-VN', {
+    const formatPrice = (price) => {
+        const formattedPrice = price.toLocaleString('vi-VN', {
             style: 'currency',
             currency: 'VND',
-          });
-          return formattedPrice.replace(/[^\d.]/g, '');
-      };
+        });
+        return formattedPrice.replace(/[^\d.]/g, '');
+    };
 
-      const discountedPrice = data.price - (data.price * data.discountPercentage / 100);
+    const discountedPrice = data.price - (data.price * data.discountPercentage / 100);
 
     return (
         <div className="body-wrapper">
@@ -253,7 +253,7 @@ const ProductComponent = ({data}) => {
 
                             <div className="VAT">
                                 <div>VAT Included</div>
-                                <div>Genuine 24 Month Warranty</div>
+                                <div>{`Manufacturer's Warranty 24 Month`}</div>
                             </div>
 
                             <p className="color">Color</p>
