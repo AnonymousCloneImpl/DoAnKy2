@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.product.entity.Product;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -18,7 +20,6 @@ public class Color {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @ManyToMany(mappedBy = "colorList")
+    private List<Product> productList;
 }

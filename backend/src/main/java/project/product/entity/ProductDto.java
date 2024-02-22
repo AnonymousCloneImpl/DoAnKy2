@@ -14,8 +14,8 @@ public class ProductDto {
   private String name;
   private String type;
   private String product_detail;
-  private String description;
   private Long price;
-  private Long imageId;
+  private String image;
   private List<Blog> blog;
+  private List<PurchaseComboItem> purchaseComboItemList;
 }
