@@ -15,19 +15,52 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from "react";
-import SearchBar from "@/components/searchBar";
+import fetcher from "@/utils/fetchAPI";
 
 library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
 
 config.autoAddCss = false;
 
 export default function Header() {
-    const [searchVariable, setSearchVariable] = useState("");
-    const [searchValue, setSearchValue] = useState([]);
+    const [showResults, setShowResults] = useState(false);
+    const [results, setResults] = useState({});
 
-    const handleSearchChange = (e) => {
-        const value = e.target.value;
-        setSearchVariable(value);
+    const handleSearchChange = async (e) => {
+        const inputValue = e.target.value;
+
+        console.log(inputValue)
+
+        if (inputValue === "") {
+            setResults({
+                status: 205,
+                message: "input is empty",
+                data: []
+            });
+            setShowResults(true);
+        } else {
+            let url = `${process.env.DOMAIN}/search?keyword=${inputValue}`;
+
+            try {
+                const data = await fetcher(url);
+                if (data.data.length === 0 && data.status === 20) {
+                    setResults([]);
+                    setShowResults(true);
+                }
+                const searchResultElement = document.querySelector('.search_result');
+                if (searchResultElement) {
+                    searchResultElement.style.display = 'block';
+                }
+                setResults(data);
+                setShowResults(true);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    };
+
+
+    const handleBlur = () => {
+        setShowResults(false);
     };
 
 
@@ -52,18 +85,18 @@ export default function Header() {
                                 href="https://www.google.com/maps/place/FPT+Aptech+H%C3%A0+N%E1%BB%99i+-+H%E1%BB%87+th%E1%BB%91ng+%C4%91%C3%A0o+t%E1%BA%A1o+l%E1%BA%ADp+tr%C3%ACnh+vi%C3%AAn+qu%E1%BB%91c+t%E1%BA%BF/@21.0288251,105.7797218,17z/data=!4m6!3m5!1s0x3135ab00954decbf:0xdb4ee23b49ad50c8!8m2!3d21.0288201!4d105.7822967!16s%2Fg%2F11vj7r6gkp?hl=vi&entry=ttu"
                                 className="info-menu2-li-a"
                             >
-                                <FontAwesomeIcon icon={faLocationDot} className="info-menu2-li-i" />
+                                <FontAwesomeIcon icon={faLocationDot} className="info-menu2-li-i"/>
                                 8A Tôn Thất Thuyết, Mỹ Đình, Nam Từ Liêm, Hà Nội
                             </a>
                         </li>
                         <li className="info-menu2-li">
                             <a href="mailto:mos98er@gmail.com" className="info-menu2-li-a">
-                                <FontAwesomeIcon icon={faEnvelope} className="info-menu2-li-i" />
+                                <FontAwesomeIcon icon={faEnvelope} className="info-menu2-li-i"/>
                                 mos98er@gmail.com
                             </a>
                         </li>
                         <li className="info-menu2-li">
-                            <FontAwesomeIcon icon={faPhone} className="fa-phone info-menu2-li-i" />
+                            <FontAwesomeIcon icon={faPhone} className="fa-phone info-menu2-li-i"/>
                             <a href="tel:+84123456789" className="info-menu2-li-a">+84 123 456 789</a>
                         </li>
                     </ul>
@@ -71,25 +104,34 @@ export default function Header() {
             </div>
 
             {/*INNER HEADER*/}
-            <div className="inner-header container">
-                <a href="" id="logo">This is logo - nhờ Dev Dương design hộ</a>
-                {/*       Search         */}
-                <div className="search-wrapper">
-                    <input type="text" placeholder="Search..." id="searchInput"></input>
-                    <FontAwesomeIcon icon={faMagnifyingGlass} className="magnifying-glass" />
+            <div className="inner-header">
+                <div className="inner-header-form">
+                    <div className="logo-wrapper">
+                        <a href="" id="logo">This is logo - nhờ Dev Dương design hộ</a>
+                    </div>
+                    {/*       Search         */}
+                    <div className="search-wrapper">
+                        <div>
+                            <input type="text" placeholder="Search..." id="searchInput"
+                                   onBlur={handleBlur}
+                                   onInput={(e) => handleSearchChange(e)}
+                            />
+                            <FontAwesomeIcon icon={faMagnifyingGlass} className="magnifying-glass"/>
+                        </div>
+                    </div>
+                    <div className="main-menu-container">
+                        <ul className="main-menu">
+                            <li>
+                                <FontAwesomeIcon icon={faFileSignature} className="main-menu-i"/>
+                                <a className="main-menu-a" href="">Check oder</a>
+                            </li>
+                            <li>
+                                <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
+                                <a className="main-menu-a" href="">My cart</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-                <nav>
-                    <ul className="main-menu">
-                        <li>
-                            <FontAwesomeIcon icon={faFileSignature} className="main-menu-i" />
-                            <a className="main-menu-a" href="">Check oder</a>
-                        </li>
-                        <li>
-                            <FontAwesomeIcon icon={faCartShopping} className="main-menu-i" />
-                            <a className="main-menu-a" href="">My cart</a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
 
             {/*SUB MENU*/}
@@ -97,41 +139,57 @@ export default function Header() {
                 <ul id="sub-menu">
                     <li>
                         <div className="sub-menu-item">
-                            <FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />
+                            <FontAwesomeIcon icon={faLaptop} className="sub-menu-i"/>
                             <a href="/src/pages/products/[id]">laptop</a>
                         </div>
                         <ul id="sub-drop">
                             <li>
-                                <img src="/header_img/drop-menu-mouse.webp" alt="" />
+                                <img src="/header_img/drop-menu-mouse.webp" alt=""/>
                                 <a href="">mouse</a>
                             </li>
                             <li>
-                                <img id="fix" src="/header_img/drop-menu-keyboard.webp" alt="" />
+                                <img id="fix" src="/header_img/drop-menu-keyboard.webp" alt=""/>
                                 <a href="">keyboard</a>
                             </li>
                         </ul>
                     </li>
                     <li>
                         <div className="sub-menu-item">
-                            <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i" />
+                            <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i"/>
                             <a href="">accessories</a>
                         </div>
                         <ul id="sub-drop">
-                            <li><img src="/header_img/drop-menu-mouse.webp" alt="" />
+                            <li><img src="/header_img/drop-menu-mouse.webp" alt=""/>
                                 <a href="">mouse</a>
                             </li>
-                            <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt="" /><a
+                            <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt=""/><a
                                 href="">keyboard</a></li>
                         </ul>
                     </li>
                     <li>
                         <div className="sub-menu-item">
-                            <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
+                            <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
                             <a href="">build your PC</a>
                         </div>
                     </li>
                 </ul>
             </nav>
+
+            {showResults && (
+                <div className="search_result">
+                    {results.data.length > 0 ? (
+                        results.data.map((result) => (
+                            <div key={result.id}>
+                                <p>{result.name}</p>
+                                <p>{result.price}</p>
+                                <p>{result.discountPercentage}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No results found.</p>
+                    )}
+                </div>
+            )}
 
         </header>
     )
