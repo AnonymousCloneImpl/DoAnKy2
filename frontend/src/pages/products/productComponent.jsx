@@ -5,9 +5,7 @@ import { faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, 
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import '@/styles/product.css';
 
-const ProductComponent = ({productData}) => {
-
-    const { data } = productData;
+const ProductComponent = ({data}) => {
 
     const [mainImg, setMainImg] = useState('');
     const [activeIndex, setActiveIndex] = useState(0);
@@ -126,7 +124,6 @@ const ProductComponent = ({productData}) => {
         e.preventDefault();
         closeForm();
     };
-
     return (
         <div className="body-wrapper">
             <div className="url">
@@ -268,12 +265,12 @@ const ProductComponent = ({productData}) => {
 
                         <table className="detail-table">
                             <tbody>
-                                {Object.entries(JSON.parse(data.productDetail)).map(([key, value]) => (
-                                    <tr key={key}>
-                                        <td>{key}</td>
-                                        <td>{value}</td>
-                                    </tr>
-                                ))}
+                            {Object.entries(JSON.parse(data.productDetail)).map(([key, value]) => (
+                                <tr key={key}>
+                                    <td>{key}</td>
+                                    <td>{value}</td>
+                                </tr>
+                            ))}
                             </tbody>
                         </table>
 
@@ -496,9 +493,9 @@ const ProductComponent = ({productData}) => {
 
                     <div className="popup" ref={formRef}>
                         <div className="popup-content">
-                            <span className="close-form-btn" onClick={closeForm}>
-                                <FontAwesomeIcon icon={faCircleXmark} />
-                            </span>
+                        <span className="close-form-btn" onClick={closeForm}>
+                            <FontAwesomeIcon icon={faCircleXmark} />
+                        </span>
                             <h1>Order Form</h1>
 
                             <form className="order-form" onSubmit={handleFormSubmit}>
@@ -542,6 +539,7 @@ const ProductComponent = ({productData}) => {
             )}
         </div>
     );
+
 };
 
 export default ProductComponent;
