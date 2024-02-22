@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import project.product.entity.Product;
 import project.product.repository.ProductRepository;
 import project.search.SearchSpecification;
-import project.search.entity.ProductSearchDto;
+import project.search.dto.ProductSearchDto;
 
 import java.util.ArrayList;
 import java.util.List;

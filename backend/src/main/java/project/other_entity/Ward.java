@@ -1,4 +1,4 @@
-package project.order.entity;
+package project.other_entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,19 +6,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "address")
-public class Address {
+@Table(name = "ward")
+public class Ward {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "house_address")
-    private String houseAddress;
-    private String ward;
-    private String district;
-    private String province;
+    @Column(nullable = false)
+    private String name;
+    @OneToMany(fetch = FetchType.EAGER)
+    List<District> districtList;
 }

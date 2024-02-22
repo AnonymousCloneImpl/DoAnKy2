@@ -19,5 +19,6 @@ public class PurchaseComboItem {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+    @Column(name = "discount_percentage")
     private byte discountPercentage;
 }

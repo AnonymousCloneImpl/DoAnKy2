@@ -2,7 +2,7 @@ package project.product.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import project.oldEntity.Blog;
+import project.other_entity.Blog;
 import java.util.List;
 
 @Getter
@@ -14,8 +14,8 @@ public class ProductDto {
   private String name;
   private String type;
   private String product_detail;
-  private String description;
   private Long price;
-  private Long imageId;
+  private String image;
   private List<Blog> blog;
+  private List<PurchaseComboItem> purchaseComboItemList;
 }

@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.oldEntity.Blog;
+import project.other_entity.Blog;
+import project.other_entity.Color;
 
 import java.util.List;
 
@@ -19,18 +20,31 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(nullable = false, length = 20)
     private String producer;
+    @Column(nullable = false, length = 50)
     private String model;
+    @Column(nullable = false, length = 50)
     private String name;
+    @Column(nullable = false, length = 50)
     private String type;
-    @Column(name = "product_detail", columnDefinition = "TEXT")
-    private String productDetail;
-    private String description;
+    @Column(columnDefinition = "JSON")
+    private String product_detail;
+    @Column(nullable = false)
     private Long price;
-    private Long imageId;
+    @Column(nullable = false)
+    private String image;
+    @Column(nullable = false)
     private byte discountPercentage;
+    @ManyToMany
+    @JoinTable(
+        name = "product_color",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "color_id")
+    )
+    private List<Color> colorList;
     @OneToMany(fetch = FetchType.EAGER)
-    private List<Blog> blog;
+    private List<Blog> blogList;
     @OneToMany(fetch = FetchType.EAGER)
     private List<PurchaseComboItem> purchaseComboItemList;
 }

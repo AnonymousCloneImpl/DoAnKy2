@@ -1,11 +1,10 @@
-package project.oldEntity;
+package project.other_entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.product.entity.Product;
 
 import java.util.List;
 
@@ -14,17 +13,16 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "blog")
-public class Blog {
+@Table(name = "district")
+public class District {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(mappedBy = "blog")
-    private List<BlogContent> blogContents;
+    @Column(nullable = false)
+    private String name;
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-    @ManyToOne
-    @JoinColumn(name = "brand_id")
-    private Brand brand;
+    @JoinColumn(name = "ward_id")
+    private Ward ward;
+    @OneToMany(fetch = FetchType.EAGER)
+    List<Province> provinceList;
 }

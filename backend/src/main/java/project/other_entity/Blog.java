@@ -1,4 +1,4 @@
-package project.oldEntity;
+package project.other_entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,17 +7,20 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.product.entity.Product;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "color")
-public class Color {
+@Table(name = "blog")
+public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private String name;
+    private Long id;
+    @OneToMany(mappedBy = "blog")
+    private List<BlogContent> blogContents;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
