@@ -241,9 +241,9 @@ const ProductComponent = ({data}) => {
                             </div>
 
                             <div className="product-price">
-                                <b>{formatPrice(data.price)}</b>
+                                <b>{formatPrice(discountedPrice)}</b>
                                 <b className="main-money-unit">đ</b>
-                                <p>{formatPrice(discountedPrice)}</p>
+                                <p>{formatPrice(data.price)}</p>
                                 <p className="main-money-unit">đ</p>
                             </div>
 
@@ -325,9 +325,9 @@ const ProductComponent = ({data}) => {
                                 <div className="recommended-main-content">
                                     <h1>Toy super vip pro</h1>
                                     <div className="accessories-price">
-                                        <b>{formatPrice(data.price)}</b>
+                                        <b>{formatPrice(discountedPrice)}</b>
                                         <b className="money-unit">đ</b>
-                                        <p>{formatPrice(discountedPrice)}</p>
+                                        <p>{formatPrice(data.price)}</p>
                                         <p className="money-unit">đ</p>
                                     </div>
                                     <div className="accessories-price-ratio">
