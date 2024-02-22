@@ -11,7 +11,7 @@ export async function getServerSideProps(context) {
         const data = await fetcher(url);
         return {
             props: {
-                data,
+                data
             },
         };
     } catch (error) {
