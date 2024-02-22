@@ -28,19 +28,19 @@ public class Product {
     private String name;
     @Column(nullable = false, length = 50)
     private String type;
-    @Column(name = "product_detail", columnDefinition = "JSON")
+    @Column(name = "product_detail", columnDefinition = "TEXT")
     private String productDetail;
     @Column(nullable = false)
     private Long price;
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String image;
     @Column(nullable = false)
     private byte discountPercentage;
     @ManyToMany
     @JoinTable(
-            name = "product_color",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "color_id")
+        name = "product_color",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "color_id")
     )
     private List<Color> colorList;
     @OneToMany(fetch = FetchType.EAGER)

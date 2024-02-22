@@ -31,5 +31,5 @@ public class Order {
     @JoinColumn(name = "product_id")
     private List<OrderItem> orderItemList;
     @Column(nullable = false)
-    private int quantity;
+    private short quantity;
 }

@@ -6,8 +6,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import project.other_entity.Color;
 import project.product.entity.Product;
 import project.product.entity.ProductDto;
+import project.product.repository.BlogRepository;
+import project.product.repository.ColorRepository;
 import project.product.repository.ProductRepository;
 
 import java.util.List;
@@ -15,14 +18,14 @@ import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    private final ProductRepository productRepo;
-    private final ModelMapper modelMapper;
-
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepo, ModelMapper modelMapper) {
-        this.productRepo = productRepo;
-        this.modelMapper = modelMapper;
-    }
+    private ProductRepository productRepo;
+    @Autowired
+    private ColorRepository colorRepo;
+    @Autowired
+    private BlogRepository blogRepo;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<Product> getAll() {
@@ -30,8 +33,23 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> getById(long id) {
-        return productRepo.findById(id);
+    public Optional<ProductDto> getById(long id) {
+        Optional<Product> product = productRepo.findById(id);
+        ProductDto productDto = ProductDto.builder()
+          .id(product.get().getId())
+          .producer(product.get().getProducer())
+          .model(product.get().getModel())
+          .name(product.get().getName())
+          .type(product.get().getType())
+          .productDetail(product.get().getProductDetail())
+          .price(product.get().getPrice())
+          .imageList(List.of(product.get().getImage().split("\\|")))
+          .discountPercentage(product.get().getDiscountPercentage())
+          .colorList(product.get().getColorList())
+          .blogList(product.get().getBlogList())
+          .purchaseComboItemList(product.get().getPurchaseComboItemList())
+          .build();
+        return Optional.ofNullable(productDto);
     }
 
     @Override
