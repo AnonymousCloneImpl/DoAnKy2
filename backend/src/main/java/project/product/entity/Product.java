@@ -28,8 +28,8 @@ public class Product {
     private String name;
     @Column(nullable = false, length = 50)
     private String type;
-    @Column(columnDefinition = "JSON")
-    private String product_detail;
+    @Column(name = "product_detail", columnDefinition = "JSON")
+    private String productDetail;
     @Column(nullable = false)
     private Long price;
     @Column(nullable = false)
@@ -38,9 +38,9 @@ public class Product {
     private byte discountPercentage;
     @ManyToMany
     @JoinTable(
-        name = "product_color",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "color_id")
+            name = "product_color",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "color_id")
     )
     private List<Color> colorList;
     @OneToMany(fetch = FetchType.EAGER)
