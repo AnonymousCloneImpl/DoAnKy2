@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface ProductService {
     List<Product> getAll();
 
-    Optional<Product> getById(long id);
+    Optional<ProductDto> getById(long id);
 
     List<Product> getByName(Specification<Product> spec, String name);
 

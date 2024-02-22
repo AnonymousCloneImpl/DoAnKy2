@@ -29,11 +29,9 @@ public class ProductController {
 
     @GetMapping("/{id}")
     ResponseEntity<Object> getById(@PathVariable Long id) {
-        Optional<Product> product = productService.getById(id);
+        Optional<ProductDto> product = productService.getById(id);
         if (product.isPresent()) {
-            return ResponseEntity.ok().body(
-                    product
-            );
+            return ResponseEntity.ok().body(product);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
                 new ResponseObject("Failed", "Can't find product with id = " + id, "")
