@@ -8,16 +8,7 @@ const nextConfig = {
         return config;
     },
     images: {
-        remotePatterns: [
-            {
-                protocol: "https",
-                hostname: "hanoicomputer.net",
-            },
-            {
-                protocol: "https",
-                hostname: "hanoicomputercdn.com",
-            }
-        ]
+        domains: ['product.hstatic.net'],
     }
 }
 

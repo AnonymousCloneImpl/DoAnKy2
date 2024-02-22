@@ -2,6 +2,8 @@ package project.search.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -12,4 +14,5 @@ public class ProductSearchDto {
     private String name;
     private Long price;
     private byte discountPercentage;
+    private List<String> image;
 }

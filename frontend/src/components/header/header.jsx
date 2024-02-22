@@ -16,6 +16,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from "react";
 import fetcher from "@/utils/fetchAPI";
+import Link from "next/link";
 
 library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
 
@@ -27,8 +28,6 @@ export default function Header() {
 
     const handleSearchChange = async (e) => {
         const inputValue = e.target.value;
-
-        console.log(inputValue)
 
         if (inputValue === "") {
             setResults({
@@ -62,7 +61,6 @@ export default function Header() {
     const handleBlur = () => {
         setShowResults(false);
     };
-
 
     return (
         <header className="header_">
@@ -121,11 +119,11 @@ export default function Header() {
                     </div>
                     <div className="main-menu-container">
                         <ul className="main-menu">
-                            <li>
+                            <li className="main-menu-left">
                                 <FontAwesomeIcon icon={faFileSignature} className="main-menu-i"/>
                                 <a className="main-menu-a" href="">Check oder</a>
                             </li>
-                            <li>
+                            <li className="main-menu-right">
                                 <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
                                 <a className="main-menu-a" href="">My cart</a>
                             </li>
@@ -177,17 +175,29 @@ export default function Header() {
 
             {showResults && (
                 <div className="search_result">
-                    {results.data.length > 0 ? (
+                    {
+                        // results.data.length > 0 ? (
                         results.data.map((result) => (
-                            <div key={result.id}>
-                                <p>{result.name}</p>
-                                <p>{result.price}</p>
-                                <p>{result.discountPercentage}</p>
+                            <div className="search_result_item" key={result.id}>
+                                <div className="result_image">
+                                    <img className="result_image_item" src={result.image[0]} />
+                                </div>
+                                <div className="result_info">
+                                    <div className="top_result">
+                                        <a className="result_name" href={`/products/${result.id}`}>{`${result.name}`}</a>
+                                        <p className="result_price_ratio">{`-${result.discountPercentage}%`}</p>
+                                    </div>
+                                    <div className="bottom_result">
+                                        <b className="price_discount">{result.price - (result.price * result.discountPercentage / 100)}đ</b>
+                                        <p className="price">{result.price}đ</p>
+                                    </div>
+                                </div>
                             </div>
                         ))
-                    ) : (
-                        <p>No results found.</p>
-                    )}
+                        // ) : (
+                    //     <p>No results found.</p>
+                    // )
+                    }
                 </div>
             )}
 

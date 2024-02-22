@@ -121,27 +121,27 @@ const ProductComponent = ({data}) => {
 
     const [isScrollVisible, setIsVisible] = useState(false);
 
-      const handleScroll = () => {
+    const handleScroll = () => {
         if (window.scrollY > 100) {
-          setIsVisible(true);
+            setIsVisible(true);
         } else {
-          setIsVisible(false);
+            setIsVisible(false);
         }
-      };
+    };
 
-      const scrollToTop = () => {
+    const scrollToTop = () => {
         window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
+            top: 0,
+            behavior: 'smooth',
         });
-      };
+    };
 
-      useEffect(() => {
+    useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => {
-          window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('scroll', handleScroll);
         };
-      }, []);
+    }, []);
 
     return (
         <div className="body-wrapper">
@@ -566,7 +566,7 @@ const ProductComponent = ({data}) => {
             <div>
                 {isScrollVisible && (
                     <button onClick={scrollToTop} className="scroll-to-top-button">
-                      <FontAwesomeIcon icon={faCircleUp} />
+                        <FontAwesomeIcon icon={faCircleUp} />
                     </button>
                 )}
             </div>

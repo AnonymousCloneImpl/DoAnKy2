@@ -16,8 +16,6 @@ import java.util.List;
 public class SearchServiceImpl implements SearchService {
     @Autowired
     private ProductRepository productRepository;
-    @Autowired
-    private ModelMapper modelMapper;
 
     @Override
     public List<ProductSearchDto> findOnHeader(String str) {
@@ -32,6 +30,7 @@ public class SearchServiceImpl implements SearchService {
             p.setName(item.getProducer() + " " + item.getModel() + " " + item.getName());
             p.setPrice(item.getPrice());
             p.setDiscountPercentage(item.getDiscountPercentage());
+            p.setImage(List.of(item.getImage().split("\\|")));
             productSearchDtos.add(p);
         });
 
