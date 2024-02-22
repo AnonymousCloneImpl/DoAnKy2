@@ -3,7 +3,7 @@ package project.order.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.order.utils.AutoGenerateOderCodeUtils;
+import project.common.AutoGenerateOderCodeUtils;
 import project.const_.ORDER_STATUS;
 import project.order.entity.Order;
 import project.order.entity.OrderItem;

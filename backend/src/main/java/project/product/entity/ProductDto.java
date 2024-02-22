@@ -2,7 +2,7 @@ package project.product.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import project.oldEntity.Blog;
+import project.other_entity.Blog;
 import java.util.List;
 
 @Getter

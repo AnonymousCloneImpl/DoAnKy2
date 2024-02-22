@@ -1,24 +1,25 @@
-package project.oldEntity;
+package project.other_entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.product.entity.Product;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "blog_content")
-public class BlogContent {
+@Entity
+@Table(name = "stock")
+public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String title;
-    private String content;
-    @ManyToOne
-    @JoinColumn(name = "blog_id")
-    private Blog blog;
+    @OneToOne
+    private Product product;
+    @OneToOne
+    private Color color;
+    private int quantity;
 }

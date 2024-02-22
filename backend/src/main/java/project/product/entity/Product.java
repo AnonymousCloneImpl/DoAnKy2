@@ -5,8 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.oldEntity.Blog;
-import project.oldEntity.Color;
+import project.other_entity.Blog;
+import project.other_entity.Color;
 
 import java.util.List;
 
@@ -20,13 +20,21 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    @Column(nullable = false, length = 20)
     private String producer;
+    @Column(nullable = false, length = 50)
     private String model;
+    @Column(nullable = false, length = 50)
     private String name;
+    @Column(nullable = false, length = 50)
     private String type;
+    @Column(columnDefinition = "JSON")
     private String product_detail;
+    @Column(nullable = false)
     private Long price;
+    @Column(nullable = false)
     private String image;
+    @Column(nullable = false)
     private byte discountPercentage;
     @ManyToMany
     @JoinTable(

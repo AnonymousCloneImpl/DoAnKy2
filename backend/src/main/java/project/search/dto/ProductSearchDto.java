@@ -1,4 +1,4 @@
-package project.search.entity;
+package project.search.dto;
 
 import lombok.*;
 

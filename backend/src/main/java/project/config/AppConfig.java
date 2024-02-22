@@ -4,7 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import project.order.utils.AutoGenerateOderCodeUtils;
+import project.common.AutoGenerateOderCodeUtils;
 
 @Configuration
 public class AppConfig {

@@ -1,27 +1,24 @@
-package project.oldEntity;
+package project.other_entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.product.entity.Product;
-
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "blog")
-public class Blog {
+@Table(name = "province")
+public class Province {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(mappedBy = "blog")
-    private List<BlogContent> blogContents;
+    @Column(nullable = false)
+    private String name;
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "district_id")
+    private District district;
 }

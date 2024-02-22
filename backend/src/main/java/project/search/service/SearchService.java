@@ -1,8 +1,7 @@
 package project.search.service;
 
 import org.springframework.stereotype.Service;
-import project.product.entity.Product;
-import project.search.entity.ProductSearchDto;
+import project.search.dto.ProductSearchDto;
 
 import java.util.List;
 

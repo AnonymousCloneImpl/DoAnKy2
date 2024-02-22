@@ -1,27 +1,28 @@
-package project.order.entity;
+package project.other_entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.product.entity.Product;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order_item")
-public class OrderItem {
+@Table(name = "district")
+public class District {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
     @Column(nullable = false)
-    private int quantity;
-    @OneToOne
-    private Product product;
+    private String name;
+    @ManyToOne
+    @JoinColumn(name = "ward_id")
+    private Ward ward;
+    @OneToMany(fetch = FetchType.EAGER)
+    List<Province> provinceList;
 }

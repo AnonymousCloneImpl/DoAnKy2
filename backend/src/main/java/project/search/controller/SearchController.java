@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import project.common.ResponseObject;
-import project.product.entity.Product;
-import project.search.entity.ProductSearchDto;
+import project.search.dto.ProductSearchDto;
 import project.search.service.SearchService;
 
 import java.util.List;

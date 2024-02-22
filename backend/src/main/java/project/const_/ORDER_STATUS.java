@@ -1,10 +1,10 @@
 package project.const_;
 
 public enum ORDER_STATUS {
-    WAITING("Waiting for order confirmation"),
-    PREPARING("Preparing orders"),
+    WAITING("Waiting"),
+    PREPARING("Preparing"),
     DELIVERY("Delivery"),
-    COMPLETE("Complete the order");
+    COMPLETE("Complete");
     public final String val;
 
     ORDER_STATUS(String type) {

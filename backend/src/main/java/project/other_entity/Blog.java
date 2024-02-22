@@ -1,4 +1,4 @@
-package project.order.entity;
+package project.other_entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,21 +7,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.product.entity.Product;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order_item")
-public class OrderItem {
+@Table(name = "blog")
+public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @OneToMany(mappedBy = "blog")
+    private List<BlogContent> blogContents;
     @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
-    @Column(nullable = false)
-    private int quantity;
-    @OneToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 }
