@@ -143,6 +143,16 @@ const ProductComponent = ({data}) => {
         };
     }, []);
 
+      const formatPrice = (price) => {
+          const formattedPrice = price.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+          });
+          return formattedPrice.replace(/[^\d.]/g, '');
+      };
+
+      const discountedPrice = data.price - (data.price * data.discountPercentage / 100);
+
     return (
         <div className="body-wrapper">
             <div className="url">
@@ -203,26 +213,21 @@ const ProductComponent = ({data}) => {
                     </div>
 
                     <div className="product-content">
-                        <div className="content-img">
-                            <img src='https://cdn.tgdd.vn/Products/Images/44/305769/Kit/hp-245-g9-r5-6l1n9pa-glr-note.jpg'></img>
-                        </div>
-
                         <h1>Product Detail</h1>
 
-                        <h2>Header Content 100 lineeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                            eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee in DB</h2>
+                        <div className="content-img">
+                            <img src={data.blog.image}></img>
+                        </div>
 
-                        <p>Đây là content dài 1000000000000000000000000000000000000000000
-                            dòngggggggggggggggggggggggggggggggggggggggggggg sds d đsd d dsdsd ds dsd sdsds ds
-                            dsjvdjfsc dsbdjs vjxslv djjskvf ffsjf svjjvssv vjs sfjs scbshbv vcjdjdkcvjsvcsjv,m chbvhxbhkj
-                            kkkv
-                            slvn jjvkvslkv kvsljvn jvks vvvshhff v vvsvhhv jjjsd</p>
+                        <h2>{data.blog.header}</h2>
+
+                        <p>{data.blog.content}</p>
                     </div>
                 </div>
 
                 <div className="right-box">
                     <div className="right-box-top">
-                        <div className="pname">Laptop Super vip</div>
+                        <div className="pname">{data.name}</div>
                         <p className="sold">100 Sold</p>
 
                         <div className="right-box-top-child">
@@ -235,7 +240,21 @@ const ProductComponent = ({data}) => {
                                 <p>100 Evaluate</p>
                             </div>
 
-                            <div className="product-price">$500</div>
+                            <div className="product-price">
+                                <b>{formatPrice(discountedPrice)}</b>
+                                <b className="main-money-unit">đ</b>
+                                <p>{formatPrice(data.price)}</p>
+                                <p className="main-money-unit">đ</p>
+                            </div>
+
+                            <div className="product-price-ratio">
+                                <p>Down 10%</p>
+                            </div>
+
+                            <div className="VAT">
+                                <div>VAT Included</div>
+                                <div>Genuine 24 Month Warranty</div>
+                            </div>
 
                             <p className="color">Color</p>
 
@@ -280,7 +299,7 @@ const ProductComponent = ({data}) => {
 
                     <div className="right-box-bottom">
                         {/* Detail table */}
-                        <h1 className="detail-name">Laptop Super vip detail</h1>
+                        <h1 className="detail-name">Configuration Information</h1>
 
                         <table className="detail-table">
                             <tbody>
@@ -301,14 +320,14 @@ const ProductComponent = ({data}) => {
 
                             <div className="recommend-main-product">
                                 <div className="recommended-main-img">
-                                    <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
+                                    <img src={data.imageList[0]}></img>
                                 </div>
                                 <div className="recommended-main-content">
                                     <h1>Toy super vip pro</h1>
                                     <div className="accessories-price">
-                                        <b>9.500.000</b>
+                                        <b>{formatPrice(discountedPrice)}</b>
                                         <b className="money-unit">đ</b>
-                                        <p>10.000.000</p>
+                                        <p>{formatPrice(data.price)}</p>
                                         <p className="money-unit">đ</p>
                                     </div>
                                     <div className="accessories-price-ratio">
@@ -343,7 +362,7 @@ const ProductComponent = ({data}) => {
                                             </div>
                                         </div>
                                     </li>
-                                ))};
+                                ))}
                                 <li className="recommended-accessories-item">
                                     <div className="recommended-accessories-checkbox">
                                         <input type="checkbox" className="product" defaultChecked/>

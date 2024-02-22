@@ -22,6 +22,6 @@ public class ProductDto {
   private List<String> imageList;
   private byte discountPercentage;
   private List<Color> colorList;
-  private List<Blog> blogList;
+  private Blog blog;
   private List<PurchaseComboItem> purchaseComboItemList;
 }

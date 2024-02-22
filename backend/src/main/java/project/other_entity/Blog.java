@@ -19,9 +19,13 @@ public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToMany(mappedBy = "blog")
-    private List<BlogContent> blogContents;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String image;
+    @Column(nullable = false)
+    private String header;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String content;
 }

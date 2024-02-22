@@ -46,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
           .imageList(List.of(product.get().getImage().split("\\|")))
           .discountPercentage(product.get().getDiscountPercentage())
           .colorList(product.get().getColorList())
-          .blogList(product.get().getBlogList())
+          .blog(product.get().getBlog())
           .purchaseComboItemList(product.get().getPurchaseComboItemList())
           .build();
         return Optional.ofNullable(productDto);
