@@ -23,11 +23,9 @@ public class Product {
     private String model;
     private String name;
     private String type;
-    @Column(name = "product_detail", columnDefinition = "TEXT")
-    private String productDetail;
-    private String description;
+    private String product_detail;
     private Long price;
-    private Long imageId;
+    private String image;
     private byte discountPercentage;
     @OneToMany(fetch = FetchType.EAGER)
     private List<Blog> blog;
