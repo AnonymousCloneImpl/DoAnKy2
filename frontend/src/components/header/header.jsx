@@ -98,7 +98,7 @@ export default function Header() {
                     <li>
                         <div className="sub-menu-item">
                             <FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />
-                            <a href="/src/pages/product/[id]">laptop</a>
+                            <a href="/src/pages/products/[id]">laptop</a>
                         </div>
                         <ul id="sub-drop">
                             <li>
