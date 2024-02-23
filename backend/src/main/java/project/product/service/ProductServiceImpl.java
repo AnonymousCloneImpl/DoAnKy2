@@ -48,7 +48,6 @@ public class ProductServiceImpl implements ProductService {
 			blogDto.setContentList(List.of(BlogContentStr.split("\\|")));
 		}
 
-
 		Optional<Product> productOptional = productRepo.findById(id);
 		if (productOptional.isPresent()) {
 			Product product = productOptional.get();
@@ -57,8 +56,8 @@ public class ProductServiceImpl implements ProductService {
 
 			String imageString = product.getImage();
 			if (imageString != null) {
-			productDto.setImageList(List.of(imageString.split("\\|")));
-			productDto.setBlog(blogDto);
+				productDto.setImageList(List.of(imageString.split("\\|")));
+				productDto.setBlog(blogDto);
 			}
 			return Optional.of(productDto);
 		} else {

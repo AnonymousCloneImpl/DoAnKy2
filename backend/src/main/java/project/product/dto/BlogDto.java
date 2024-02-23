@@ -1,6 +1,8 @@
 package project.product.dto;
 
+import jakarta.persistence.*;
 import lombok.*;
+import project.product.entity.Product;
 
 import java.util.List;
 

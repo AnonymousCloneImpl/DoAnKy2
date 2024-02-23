@@ -1,8 +1,10 @@
 package project.product.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import project.other_entity.Color;
 import project.product.entity.Blog;
+import project.product.entity.Product;
 import project.product.entity.PurchaseComboItem;
 
 import java.util.List;
