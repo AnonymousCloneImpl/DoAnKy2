@@ -1,9 +1,9 @@
 package project.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import project.other_entity.Color;
-import project.product.entity.Blog;
 import project.product.entity.Product;
 import project.product.entity.PurchaseComboItem;
 
@@ -27,4 +27,6 @@ public class ProductDto {
     private List<Color> colorList;
     private BlogDto blog;
     private List<PurchaseComboItem> purchaseComboItemList;
+    @JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList"})
+    private List<Product> similarProductList;
 }

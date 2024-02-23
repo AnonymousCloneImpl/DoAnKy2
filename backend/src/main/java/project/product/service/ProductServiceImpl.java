@@ -5,6 +5,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.product.dto.BlogDto;
@@ -49,15 +50,18 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		Optional<Product> productOptional = productRepo.findById(id);
+		List<Product> similarProductList;
 		if (productOptional.isPresent()) {
 			Product product = productOptional.get();
 			ProductDto productDto = new ProductDto();
 			BeanUtils.copyProperties(product, productDto);
+			similarProductList = productRepo.findTop10SimilarByType(product.getType(), product.getId(), PageRequest.of(0, 10));
 
 			String imageString = product.getImage();
 			if (imageString != null) {
 				productDto.setImageList(List.of(imageString.split("\\|")));
 				productDto.setBlog(blogDto);
+				productDto.setSimilarProductList(similarProductList);
 			}
 			return Optional.of(productDto);
 		} else {

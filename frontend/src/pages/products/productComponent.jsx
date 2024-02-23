@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleUp, faStar, faStarHalfStroke, faPhoneVolume, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faCaretUp, faCaretDown, faCircleUp, faStar, faStarHalfStroke, faPhoneVolume, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import '@/styles/product.css';
 
@@ -10,7 +10,7 @@ const ProductComponent = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
-// set main image
+  // set main image
   const subImgItems = data.imageList;
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const ProductComponent = ({ data }) => {
   };
 
 
-// set choose product color
+  // set choose product color
   const activeBtn = (button) => {
     let buttons = document.querySelectorAll('.pcolor');
     buttons.forEach(function (btn) {
@@ -39,7 +39,7 @@ const ProductComponent = ({ data }) => {
     }
   }, []);
 
-// cart notification
+  // cart notification
   const [cartNotificationVisible, setCartNotificationVisible] = useState(false);
 
   const addToCart = () => {
@@ -50,7 +50,7 @@ const ProductComponent = ({ data }) => {
     }, 3000);
   };
 
-// Set quantity
+  // Set quantity
   useEffect(() => {
     const quantityInput = document.querySelector('.quantity-input');
     const decreaseButton = document.querySelector('.quantity-decrease');
@@ -108,7 +108,7 @@ const ProductComponent = ({ data }) => {
   };
 
 
-// Order form
+  // Order form
   const [isFormVisible, setFormVisible] = useState(false);
   const formRef = useRef(null);
 
@@ -125,7 +125,7 @@ const ProductComponent = ({ data }) => {
     closeForm();
   };
 
-// scrollToTop
+  // scrollToTop
   const [isScrollVisible, setIsVisible] = useState(false);
 
   const handleScroll = () => {
@@ -151,7 +151,7 @@ const ProductComponent = ({ data }) => {
   }, []);
 
 
-// set price
+  // set price
   const formatPrice = (price) => {
     const formattedPrice = price.toLocaleString('vi-VN', {
       style: 'currency',
@@ -163,7 +163,7 @@ const ProductComponent = ({ data }) => {
   const discountedPrice = data.price - (data.price * data.discountPercentage / 100);
 
 
-// Set price combo
+  // Set price combo
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
@@ -187,9 +187,9 @@ const ProductComponent = ({ data }) => {
 
   const [expanded, setExpanded] = useState(false);
 
-    const toggleContent = () => {
-      setExpanded(!expanded);
-    };
+  const toggleContent = () => {
+    setExpanded(!expanded);
+  };
 
   return (
     <div className="body-wrapper">
@@ -221,7 +221,7 @@ const ProductComponent = ({ data }) => {
             ))}
           </div>
 
-{/* service */}
+          {/* service */}
           <div className="service">
             <div className="service-item">
               <div className="service-item-child">
@@ -251,26 +251,27 @@ const ProductComponent = ({ data }) => {
             </div>
           </div>
 
-{/* blog list */}
-                <div className={`product-content ${expanded ? 'expanded' : ''}`}>
-                    <h2>{data.blog.header}</h2>
-                    {data.blog.contentList.map((content, index) => (
-                        <div key={index}>
-                    <p>{content}</p>
-                      {data.blog.imageList.length > index && (
-                        <div className="content-img">
-                          <img src={data.blog.imageList[index]} alt={`Image ${index}`} />
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                <button onClick={toggleContent} className="collapse-button">
-                  {expanded ? 'Thu gọn' : 'Mở rộng'}
-                </button>
+          {/* blog list */}
+          <div className={`product-content ${expanded ? 'expanded' : ''}`}>
+            <h2>{data.blog.header}</h2>
+            {data.blog.contentList.map((content, index) => (
+              <div key={index}>
+                <p>{content}</p>
+                {data.blog.imageList.length > index && (
+                  <div className="content-img">
+                    <img src={data.blog.imageList[index]} alt={`Image ${index}`} />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+          <button onClick={toggleContent} className="collapse-button">
+            {expanded ? 'Thu Gọn' : 'Mở Rộng'}
+            <FontAwesomeIcon icon={expanded ? faCaretUp : faCaretDown} className="collapse-chevron" />
+          </button>
         </div>
 
-{/* Right box top */}
+        {/* Right box top */}
         <div className="right-box">
           <div className="right-box-top">
             <div className="pname">{data.name}</div>
@@ -345,7 +346,7 @@ const ProductComponent = ({ data }) => {
 
           <div className="right-box-bottom">
 
-{/* Detail table */}
+            {/* Detail table */}
             <h1 className="detail-name">Thông Tin Chi Tiết</h1>
 
             <table className="detail-table">
@@ -359,7 +360,7 @@ const ProductComponent = ({ data }) => {
               </tbody>
             </table>
 
-{/* Recommended Accessories */}
+            {/* Recommended Accessories */}
             <div className="recommended-accessories">
               <h1 className="recommended-accessories-header">ATTRACTIVE PROMOTIONS WHEN BUYING TOGETHER</h1>
 
@@ -430,35 +431,54 @@ const ProductComponent = ({ data }) => {
       </div>
 
 
-{/* Similar products */}
+      {/* Similar products */}
       <div className="similar-product">
         <h1 className="similar-product-header">Sản Phẩm Tương Tự</h1>
 
         <div className="similar-product-line"></div>
 
-        <ul className="similar-product-list">
-          <li className="similar-product-item">
-            <div className="similar-product-img">
-              <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-            </div>
-            <div className="similar-product-content">
-              <a href="#">Toy super vip pro</a>
-              <button className="similar-product-cart-btn" onClick={() => addToCart()}>
-                <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
-            </div>
-          </li>
-        </ul>
+        {data.similarProductList.map((item) => (
+          <ul className="similar-product-list">
+            <li className="similar-product-item" key={item.id}>
+              <div className="similar-product-item-content">
+                <div className="similar-product-img">
+                  <img src={item.image.split('|')[0]} alt="First Image" />
+                </div>
+                <div className="similar-product-content">
+                  <a href={item.id}>{item.name}</a>
+                  <div className="similar-product-price">
+                    <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
+                    <b className="money-unit">đ</b>
+                    <p>{formatPrice(item.price)}</p>
+                    <p className="money-unit">đ</p>
+                  </div>
+                  <div className="similar-product-price-ratio">
+                    <p>{`Down ${item.discountPercentage}%`}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="similar-product-btn-box">
+                <button className="cart-btn" onClick={() => addToCart()}>
+                  <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
+                </button>
+                <button className="buy-btn" onClick={openForm}>
+                  <FontAwesomeIcon icon={faCreditCard} /> Buy Now
+                </button>
+              </div>
+            </li>
+          </ul>
+        ))}
       </div>
 
 
-{/* Cart notification */}
+      {/* Cart notification */}
       <div className="cart-notification" style={{ display: cartNotificationVisible ? 'block' : 'none' }}>
         <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
         The product has been added to Cart !
       </div>
 
 
-{/* FORM ORDER */}
+      {/* FORM ORDER */}
       {isFormVisible && (
         <>
           <div className="overlay" onClick={closeForm}></div>
@@ -510,7 +530,7 @@ const ProductComponent = ({ data }) => {
         </>
       )}
 
-{/* Scroll and Call button */}
+      {/* Scroll and Call button */}
       <button className="call-button">
         <a href="tel:+84123456789" className="info-menu2-li-a">
           <FontAwesomeIcon icon={faPhoneVolume} />
@@ -520,7 +540,7 @@ const ProductComponent = ({ data }) => {
       <div>
         {isScrollVisible && (
           <button onClick={scrollToTop} className="scroll-to-top-button">
-            <FontAwesomeIcon icon={faCircleUp} className="scroll-icon"/>
+            <FontAwesomeIcon icon={faCircleUp} className="scroll-icon" />
           </button>
         )}
       </div>
