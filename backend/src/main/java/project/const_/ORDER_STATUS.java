@@ -6,8 +6,8 @@ public enum ORDER_STATUS {
     DELIVERY("Delivery"),
     COMPLETE("Complete");
     public final String val;
-
+    
     ORDER_STATUS(String type) {
-        this.val = type;
+	this.val = type;
     }
 }

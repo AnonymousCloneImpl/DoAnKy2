@@ -8,16 +8,16 @@ import project.common.AutoGenerateOderCodeUtils;
 
 @Configuration
 public class AppConfig {
-  @Autowired
-  AutoGenerateOderCodeUtils autoGenerateOderCodeUtils;
-
-  @Bean
-  public String autoGenerateOrderCode() {
-    return autoGenerateOderCodeUtils.autoGenerateCode();
-  }
-
-  @Bean
-  public ModelMapper modelMapper() {
-    return new ModelMapper();
-  }
+    @Autowired
+    AutoGenerateOderCodeUtils autoGenerateOderCodeUtils;
+    
+    @Bean
+    public String autoGenerateOrderCode() {
+	return autoGenerateOderCodeUtils.autoGenerateCode();
+    }
+    
+    @Bean
+    public ModelMapper modelMapper() {
+	return new ModelMapper();
+    }
 }
