@@ -1,5 +1,4 @@
 "use client"
-import "@/styles/header.css";
 import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
     faLaptop,
@@ -17,7 +16,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from "react";
 import fetcher from "@/utils/fetchAPI";
 import Link from "next/link";
-import Image from "next/image";
 
 library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
 
