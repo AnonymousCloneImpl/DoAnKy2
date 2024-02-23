@@ -107,6 +107,8 @@ export default function Header() {
                         <Link href="/" id="logo">
                             <img src="/spirals.png" alt="logo" width="50" height="50" />
                         </Link>
+                        <p>Thế Giới Manh Động</p>
+                        <b>.com</b>
                     </div>
                     {/*       Search         */}
                     <div className="search-wrapper">

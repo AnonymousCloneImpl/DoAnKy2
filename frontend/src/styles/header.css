@@ -33,8 +33,21 @@ header.sticky {
 }
 
 .logo-wrapper {
+    display: flex;
     width: 33.33%;
     height: 100%;
+}
+
+.logo-wrapper p {
+    margin : 5px 0 auto 10px;
+    font-size: 25px;
+    font-weight: 900;
+    font-style: italic;
+}
+
+.logo-wrapper b {
+    margin : 32px 0 auto -41px;
+    font-size: 12px;
 }
 
 .inner-header {

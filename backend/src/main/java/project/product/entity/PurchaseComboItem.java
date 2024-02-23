@@ -1,5 +1,6 @@
 package project.product.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class PurchaseComboItem {
     private long id;
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList"})
     private Product product;
     @Column(name = "discount_percentage")
     private byte discountPercentage;

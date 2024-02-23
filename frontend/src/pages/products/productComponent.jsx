@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleUp, faStar, faStarHalfStroke, faPhoneVolume, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faCaretUp, faCaretDown, faCircleUp, faStar, faStarHalfStroke, faPhoneVolume, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 
 const ProductComponent = ({ data }) => {
-
   const [mainImg, setMainImg] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
+  // set main image
   const subImgItems = data.imageList;
 
   useEffect(() => {
@@ -20,6 +20,8 @@ const ProductComponent = ({ data }) => {
     setActiveIndex(index);
   };
 
+
+  // set choose product color
   const activeBtn = (button) => {
     let buttons = document.querySelectorAll('.pcolor');
     buttons.forEach(function (btn) {
@@ -36,6 +38,7 @@ const ProductComponent = ({ data }) => {
     }
   }, []);
 
+  // cart notification
   const [cartNotificationVisible, setCartNotificationVisible] = useState(false);
 
   const addToCart = () => {
@@ -46,6 +49,7 @@ const ProductComponent = ({ data }) => {
     }, 3000);
   };
 
+  // Set quantity
   useEffect(() => {
     const quantityInput = document.querySelector('.quantity-input');
     const decreaseButton = document.querySelector('.quantity-decrease');
@@ -102,6 +106,8 @@ const ProductComponent = ({ data }) => {
     }
   };
 
+
+  // Order form
   const [isFormVisible, setFormVisible] = useState(false);
   const formRef = useRef(null);
 
@@ -118,6 +124,7 @@ const ProductComponent = ({ data }) => {
     closeForm();
   };
 
+  // scrollToTop
   const [isScrollVisible, setIsVisible] = useState(false);
 
   const handleScroll = () => {
@@ -142,6 +149,8 @@ const ProductComponent = ({ data }) => {
     };
   }, []);
 
+
+  // set price
   const formatPrice = (price) => {
     const formattedPrice = price.toLocaleString('vi-VN', {
       style: 'currency',
@@ -151,6 +160,35 @@ const ProductComponent = ({ data }) => {
   };
 
   const discountedPrice = data.price - (data.price * data.discountPercentage / 100);
+
+
+  // Set price combo
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  useEffect(() => {
+    const calculatedTotalPrice = data.purchaseComboItemList.reduce((accumulator, item) => {
+      const discountedPrice = item.product.price - (item.product.price * item.discountPercentage / 100);
+      return accumulator + discountedPrice;
+    }, 0);
+
+    setTotalPrice(calculatedTotalPrice + discountedPrice);
+  }, [data.purchaseComboItemList]);
+
+  const [totalOriginalPrice, setTotalOriginalPrice] = useState(0);
+
+  useEffect(() => {
+    const calculatedTotalOriginalPrice = data.purchaseComboItemList.reduce((accumulator, item) => {
+      return accumulator + item.product.price;
+    }, 0);
+
+    setTotalOriginalPrice(calculatedTotalOriginalPrice + data.price);
+  }, [data.purchaseComboItemList]);
+
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleContent = () => {
+    setExpanded(!expanded);
+  };
 
   return (
     <div className="body-wrapper">
@@ -182,6 +220,7 @@ const ProductComponent = ({ data }) => {
             ))}
           </div>
 
+          {/* service */}
           <div className="service">
             <div className="service-item">
               <div className="service-item-child">
@@ -211,13 +250,12 @@ const ProductComponent = ({ data }) => {
             </div>
           </div>
 
-          <div className="product-content">
+          {/* blog list */}
+          <div className={`product-content ${expanded ? 'expanded' : ''}`}>
             <h2>{data.blog.header}</h2>
-
             {data.blog.contentList.map((content, index) => (
               <div key={index}>
                 <p>{content}</p>
-
                 {data.blog.imageList.length > index && (
                   <div className="content-img">
                     <img src={data.blog.imageList[index]} alt={`Image ${index}`} />
@@ -226,8 +264,13 @@ const ProductComponent = ({ data }) => {
               </div>
             ))}
           </div>
+          <button onClick={toggleContent} className="collapse-button">
+            {expanded ? 'Thu Gọn' : 'Mở Rộng'}
+            <FontAwesomeIcon icon={expanded ? faCaretUp : faCaretDown} className="collapse-chevron" />
+          </button>
         </div>
 
+        {/* Right box top */}
         <div className="right-box">
           <div className="right-box-top">
             <div className="pname">{data.name}</div>
@@ -251,12 +294,12 @@ const ProductComponent = ({ data }) => {
               </div>
 
               <div className="product-price-ratio">
-                <p>Down 10%</p>
+                <p>{`Down ${data.discountPercentage}%`}</p>
               </div>
 
               <div className="VAT">
-                <div>VAT Included</div>
-                <div>{`Manufacturer's Warranty 24 Month`}</div>
+                <div>Đã bao gồm VAT</div>
+                <div>Bảo Hành Chính Hãng 12 Tháng</div>
               </div>
 
               <p className="color">Color</p>
@@ -301,8 +344,9 @@ const ProductComponent = ({ data }) => {
           </div>
 
           <div className="right-box-bottom">
+
             {/* Detail table */}
-            <h1 className="detail-name">Configuration Information</h1>
+            <h1 className="detail-name">Thông Tin Chi Tiết</h1>
 
             <table className="detail-table">
               <tbody>
@@ -326,7 +370,7 @@ const ProductComponent = ({ data }) => {
                   <img src={data.imageList[0]}></img>
                 </div>
                 <div className="recommended-main-content">
-                  <h1>Toy super vip pro</h1>
+                  <h1>{data.name}</h1>
                   <div className="accessories-price">
                     <b>{formatPrice(discountedPrice)}</b>
                     <b className="money-unit">đ</b>
@@ -334,7 +378,7 @@ const ProductComponent = ({ data }) => {
                     <p className="money-unit">đ</p>
                   </div>
                   <div className="accessories-price-ratio">
-                    <p>Down 5%</p>
+                    <p>{`Down ${data.discountPercentage}%`}</p>
                   </div>
                 </div>
               </div>
@@ -349,15 +393,14 @@ const ProductComponent = ({ data }) => {
                     </div>
 
                     <div className="recommended-accessories-img">
-                      <img
-                        src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
+                      <img src={item.product.image.split('|')[0]} alt="First Image" />
                     </div>
                     <div className="recommended-accessories-content">
-                      <a href="#">{`${item.product.producer} ${item.product.model} ${item.product.name}`}</a>
+                      <a href={item.product.id}>{item.product.name}</a>
                       <div className="accessories-price">
-                        <b>{item.product.price - (item.product.price * item.discountPercentage / 100)}</b>
+                        <b>{formatPrice(item.product.price - (item.product.price * item.discountPercentage / 100))}</b>
                         <b className="money-unit">đ</b>
-                        <p>{item.product.price}</p>
+                        <p>{formatPrice(item.product.price)}</p>
                         <p className="money-unit">đ</p>
                       </div>
                       <div className="accessories-price-ratio">
@@ -366,97 +409,15 @@ const ProductComponent = ({ data }) => {
                     </div>
                   </li>
                 ))}
-                <li className="recommended-accessories-item">
-                  <div className="recommended-accessories-checkbox">
-                    <input type="checkbox" className="product" defaultChecked />
-                  </div>
-
-                  <div className="recommended-accessories-img">
-                    <img
-                      src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-                  </div>
-                  <div className="recommended-accessories-content">
-                    <a href="#">Toy super vip pro</a>
-                    <div className="accessories-price">
-                      <b>900.000</b>
-                      <b className="money-unit">đ</b>
-                      <p>1.000.000</p>
-                      <p className="money-unit">đ</p>
-                    </div>
-                    <div className="accessories-price-ratio">
-                      <p>Down 20%</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="recommended-accessories-item">
-                  <div className="recommended-accessories-checkbox">
-                    <input type="checkbox" className="product" defaultChecked />
-                  </div>
-                  <div className="recommended-accessories-img">
-                    <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-                  </div>
-                  <div className="recommended-accessories-content">
-                    <a href="#">Toy super vip pro</a>
-                    <div className="accessories-price">
-                      <b>900.000</b>
-                      <b className="money-unit">đ</b>
-                      <p>1.000.000</p>
-                      <p className="money-unit">đ</p>
-                    </div>
-                    <div className="accessories-price-ratio">
-                      <p>Down 20%</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="recommended-accessories-item">
-                  <div className="recommended-accessories-checkbox">
-                    <input type="checkbox" className="product" defaultChecked />
-                  </div>
-                  <div className="recommended-accessories-img">
-                    <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-                  </div>
-                  <div className="recommended-accessories-content">
-                    <a href="#">Toy super vip pro</a>
-                    <div className="accessories-price">
-                      <b>900.000</b>
-                      <b className="money-unit">đ</b>
-                      <p>1.000.000</p>
-                      <p className="money-unit">đ</p>
-                    </div>
-                    <div className="accessories-price-ratio">
-                      <p>Down 20%</p>
-                    </div>
-                  </div>
-                </li>
-                <li className="recommended-accessories-item">
-                  <div className="recommended-accessories-checkbox">
-                    <input type="checkbox" className="product" defaultChecked />
-                  </div>
-                  <div className="recommended-accessories-img">
-                    <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-                  </div>
-                  <div className="recommended-accessories-content">
-                    <a href="#">Toy super vip pro</a>
-                    <div className="accessories-price">
-                      <b>900.000</b>
-                      <b className="money-unit">đ</b>
-                      <p>1.000.000</p>
-                      <p className="money-unit">đ</p>
-                    </div>
-                    <div className="accessories-price-ratio">
-                      <p>Down 20%</p>
-                    </div>
-                  </div>
-                </li>
               </ul>
 
               <div className="recommended-accessories-line"></div>
 
               <div className="total-price">
                 <h1>Total Price:</h1>
-                <b>3.600.000</b>
+                <b>{formatPrice(totalPrice)}</b>
                 <b className="money-unit">đ</b>
-                <p>4.000.000</p>
+                <p>{formatPrice(totalOriginalPrice)}</p>
               </div>
               <div className="buy-recommend">
                 <button className="buy-recommend-btn" onClick={openForm}>
@@ -471,52 +432,41 @@ const ProductComponent = ({ data }) => {
 
       {/* Similar products */}
       <div className="similar-product">
-        <h1 className="similar-product-header">Similar products</h1>
+        <h1 className="similar-product-header">Sản Phẩm Tương Tự</h1>
 
         <div className="similar-product-line"></div>
 
-        <ul className="similar-product-list">
-          <li className="similar-product-item">
-            <div className="similar-product-img">
-              <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-            </div>
-            <div className="similar-product-content">
-              <a href="#">Toy super vip pro</a>
-              <button className="similar-product-cart-btn" onClick={() => addToCart()}>
-                <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
-            </div>
-          </li>
-          <li className="similar-product-item">
-            <div className="similar-product-img">
-              <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-            </div>
-            <div className="similar-product-content">
-              <a href="#">Toy super vip pro</a>
-              <button className="similar-product-cart-btn" onClick={() => addToCart()}>
-                <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
-            </div>
-          </li>
-          <li className="similar-product-item">
-            <div className="similar-product-img">
-              <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-            </div>
-            <div className="similar-product-content">
-              <a href="#">Toy super vip pro</a>
-              <button className="similar-product-cart-btn" onClick={() => addToCart()}>
-                <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
-            </div>
-          </li>
-          <li className="similar-product-item">
-            <div className="similar-product-img">
-              <img src="https://hanoicomputercdn.com/media/product/71741_lenovo_ideapad_slim_5_pro_10.png"></img>
-            </div>
-            <div className="similar-product-content">
-              <a href="#">Toy super vip pro</a>
-              <button className="similar-product-cart-btn" onClick={() => addToCart()}>
-                <FontAwesomeIcon icon={faCartShopping} /> Add to Cart</button>
-            </div>
-          </li>
-        </ul>
+        {data.similarProductList.map((item) => (
+          <ul className="similar-product-list">
+            <li className="similar-product-item" key={item.id}>
+              <div className="similar-product-item-content">
+                <div className="similar-product-img">
+                  <img src={item.image.split('|')[0]} alt="First Image" />
+                </div>
+                <div className="similar-product-content">
+                  <a href={item.id}>{item.name}</a>
+                  <div className="similar-product-price">
+                    <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
+                    <b className="money-unit">đ</b>
+                    <p>{formatPrice(item.price)}</p>
+                    <p className="money-unit">đ</p>
+                  </div>
+                  <div className="similar-product-price-ratio">
+                    <p>{`Down ${item.discountPercentage}%`}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="similar-product-btn-box">
+                <button className="cart-btn" onClick={() => addToCart()}>
+                  <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
+                </button>
+                <button className="buy-btn" onClick={openForm}>
+                  <FontAwesomeIcon icon={faCreditCard} /> Buy Now
+                </button>
+              </div>
+            </li>
+          </ul>
+        ))}
       </div>
 
 
@@ -579,6 +529,7 @@ const ProductComponent = ({ data }) => {
         </>
       )}
 
+      {/* Scroll and Call button */}
       <button className="call-button">
         <a href="tel:+84123456789" className="info-menu2-li-a">
           <FontAwesomeIcon icon={faPhoneVolume} />
@@ -588,13 +539,12 @@ const ProductComponent = ({ data }) => {
       <div>
         {isScrollVisible && (
           <button onClick={scrollToTop} className="scroll-to-top-button">
-            <FontAwesomeIcon icon={faCircleUp} />
+            <FontAwesomeIcon icon={faCircleUp} className="scroll-icon" />
           </button>
         )}
       </div>
     </div>
   );
-
 };
 
 export default ProductComponent;
