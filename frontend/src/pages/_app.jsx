@@ -1,6 +1,7 @@
 import '@/styles/global.css';
 import "@/styles/header.css";
-import "@/styles/slider.css"
+import '@/styles/product.css';
+import '@/styles/homepage.css';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import Layout from '../components/layout';
 export default function MyApp({ Component, pageProps }) {

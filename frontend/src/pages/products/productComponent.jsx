@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleUp, faStar, faStarHalfStroke, faPhoneVolume, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
-import '@/styles/product.css';
 
 const ProductComponent = ({ data }) => {
 

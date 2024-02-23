@@ -1,5 +1,3 @@
-import '@fortawesome/fontawesome-svg-core/styles.css';
-
 export default function ProductPageA() {
     return (
         <div>
