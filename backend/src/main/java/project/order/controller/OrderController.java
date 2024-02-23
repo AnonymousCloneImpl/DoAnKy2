@@ -10,10 +10,10 @@ import project.order.service.OrderService;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-  @Autowired
-  private OrderService orderService;
-  @Autowired
-  private ModelMapper modelMapper;
-  @Autowired
-  private AutoGenerateOderCodeUtils autoGenerateOrderCodeUtils;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private ModelMapper modelMapper;
+    @Autowired
+    private AutoGenerateOderCodeUtils autoGenerateOrderCodeUtils;
 }

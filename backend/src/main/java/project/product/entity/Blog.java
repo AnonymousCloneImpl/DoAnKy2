@@ -1,13 +1,12 @@
-package project.other_entity;
+package project.product.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.product.entity.Product;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -19,9 +18,6 @@ public class Blog {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product product;
     @Column(columnDefinition = "TEXT", nullable = false)
     private String image;
     @Column(nullable = false)

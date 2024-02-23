@@ -1,12 +1,10 @@
 package project.product.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.other_entity.Blog;
 import project.other_entity.Color;
 
 import java.util.List;
@@ -21,9 +19,9 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String producer;
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String model;
     @Column(nullable = false, length = 50)
     private String name;
@@ -39,13 +37,13 @@ public class Product {
     private byte discountPercentage;
     @ManyToMany
     @JoinTable(
-        name = "product_color",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "color_id")
+	name = "product_color",
+	joinColumns = @JoinColumn(name = "product_id"),
+	inverseJoinColumns = @JoinColumn(name = "color_id")
     )
     private List<Color> colorList;
-    @OneToOne(mappedBy = "product", fetch = FetchType.EAGER)
-    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "blog_id")
     private Blog blog;
     @OneToMany(fetch = FetchType.EAGER)
     private List<PurchaseComboItem> purchaseComboItemList;
