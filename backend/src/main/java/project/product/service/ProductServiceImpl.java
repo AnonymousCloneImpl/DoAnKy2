@@ -15,28 +15,45 @@ import project.product.dto.ProductDto;
 import project.product.repository.BlogRepository;
 import project.product.repository.ColorRepository;
 import project.product.repository.ProductRepository;
+import project.search.dto.ProductSummaryDto;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-    @Autowired
-    private ProductRepository productRepo;
-    @Autowired
-    private ColorRepository colorRepo;
-    @Autowired
-    private BlogRepository blogRepo;
-    @Autowired
-    private ModelMapper modelMapper;
-    
-    @Override
-    public List<Product> getAll() {
-	return productRepo.findAll();
-    }
-    
-    @Override
-    public Optional<ProductDto> getById(long id) {
+	@Autowired
+	private ProductRepository productRepo;
+	@Autowired
+	private ColorRepository colorRepo;
+	@Autowired
+	private BlogRepository blogRepo;
+	@Autowired
+	private ModelMapper modelMapper;
+
+	@Override
+	public List<Product> getAll() {
+		return productRepo.findAll();
+	}
+
+	@Override
+	public List<ProductSummaryDto> getByProductType(String type, Long limit) {
+		List<Product> productList = productRepo.getByProductType(type, limit);
+
+		List<ProductSummaryDto> productSummaryDtoList = productList.stream()
+				.map(product -> modelMapper.map(product, ProductSummaryDto.class))
+				.toList();
+
+		for (ProductSummaryDto p : productSummaryDtoList) {
+			p.setImage(p.getImage().split("\\|")[0]);
+		}
+
+		return productSummaryDtoList;
+	}
+
+	@Override
+	public Optional<ProductDto> getById(long id) {
 		Optional<Blog> blogOptional = blogRepo.findById(id);
 		Blog blog = blogOptional.get();
 		BlogDto blogDto = new BlogDto();
@@ -67,41 +84,41 @@ public class ProductServiceImpl implements ProductService {
 		} else {
 			return Optional.empty();
 		}
-    }
-    
-    @Override
-    public List<Product> getByName(Specification<Product> spec, String name) {
+	}
+
+	@Override
+	public List<Product> getByName(Specification<Product> spec, String name) {
 		return productRepo.findAll(nameLike(name));
-    }
-    
-    @Override
-    public boolean existById(long id) {
+	}
+
+	@Override
+	public boolean existById(long id) {
 		return productRepo.existsById(id);
-    }
-    
-    @Override
-    public void deleteById(long id) {
+	}
+
+	@Override
+	public void deleteById(long id) {
 		productRepo.deleteById(id);
-    }
-    
-    @Override
-    public Product insert(ProductDto productDto) {
+	}
+
+	@Override
+	public Product insert(ProductDto productDto) {
 		Product product = modelMapper.map(productDto, Product.class);
 		return productRepo.save(product);
-    }
-    
-    @Override
-    public Product updateById(Long id, ProductDto productDto) {
+	}
+
+	@Override
+	public Product updateById(Long id, ProductDto productDto) {
 		Product product = productRepo.findById(id)
-			.orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
+				.orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
 
 		modelMapper.map(productDto, product);
 		return productRepo.save(product);
-    }
-    
-    @Override
-    public Specification<Product> nameLike(String name) {
+	}
+
+	@Override
+	public Specification<Product> nameLike(String name) {
 		return (root, query, criteriaBuilder)
-			-> criteriaBuilder.like(root.get("name"), "%" + name + "%");
-    }
+				-> criteriaBuilder.like(root.get("name"), "%" + name + "%");
+	}
 }
