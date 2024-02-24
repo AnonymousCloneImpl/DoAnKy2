@@ -17,4 +17,4 @@ public class SearchSpecification<T> {
             return criteriaBuilder.or(namePredicate, producerPredicate, modelPredicate);
         };
     }
-}
+}A

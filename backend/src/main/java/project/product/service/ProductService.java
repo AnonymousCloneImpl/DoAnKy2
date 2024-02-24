@@ -1,28 +1,32 @@
 package project.product.service;
 
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import project.product.dto.ProductDto;
 import project.product.entity.Product;
+import project.search.dto.ProductSummaryDto;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public interface ProductService {
-    List<Product> getAll();
+	List<Product> getAll();
 
-    Optional<ProductDto> getById(long id);
+	List<ProductSummaryDto> getByProductType(String type, Long limit);
 
-    List<Product> getByName(Specification<Product> spec, String name);
+	Optional<ProductDto> getById(long id);
 
-    boolean existById(long id);
+	List<Product> getByName(Specification<Product> spec, String name);
 
-    Specification<Product> nameLike(String name);
+	boolean existById(long id);
 
-    void deleteById(long id);
+	Specification<Product> nameLike(String name);
 
-    Product insert(ProductDto productDto);
+	void deleteById(long id);
 
-    Product updateById(Long id, ProductDto productDto);
+	Product insert(ProductDto productDto);
+
+	Product updateById(Long id, ProductDto productDto);
 }

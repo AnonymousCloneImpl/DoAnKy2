@@ -6,33 +6,34 @@ import org.springframework.stereotype.Service;
 import project.product.entity.Product;
 import project.product.repository.ProductRepository;
 import project.search.SearchSpecification;
-import project.search.dto.ProductSearchDto;
+import project.search.dto.ProductSummaryDto;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class SearchServiceImpl implements SearchService {
-    @Autowired
-    private ProductRepository productRepository;
+@Autowired
+	private ProductRepository productRepository;
 
-    @Override
-    public List<ProductSearchDto> findOnHeader(String str) {
-        SearchSpecification<Product> searchSpecification = new SearchSpecification<Product>();
-        Specification<Product> spec = searchSpecification.searchProducts(str);
+	@Override
+	public List<ProductSummaryDto> findOnHeader(String str) {
+		SearchSpecification<Product> searchSpecification = new SearchSpecification<Product>();
+		Specification<Product> spec = searchSpecification.searchProducts(str);
 
-        List<ProductSearchDto> productSearchDtos = new ArrayList<>();
+		List<ProductSummaryDto> productSearchDtos = new ArrayList<>();
 
-        productRepository.findAll(spec).forEach((item) -> {
-            ProductSearchDto p = new ProductSearchDto();
-            p.setId(item.getId());
-            p.setName(item.getProducer() + " " + item.getModel() + " " + item.getName());
-            p.setPrice(item.getPrice());
-            p.setDiscountPercentage(item.getDiscountPercentage());
-            p.setImage(List.of(item.getImage().split("\\|")));
-            productSearchDtos.add(p);
-        });
+		productRepository.findAll(spec).forEach((item) -> {
+			ProductSummaryDto p = new ProductSummaryDto();
+			p.setId(item.getId());
+			p.setName(item.getProducer() + " " + item.getModel() + " " + item.getName());
+			p.setPrice(item.getPrice());
+			p.setDiscountPercentage(item.getDiscountPercentage());
+			p.setImage(Arrays.toString(item.getImage().split("\\|")));
+			productSearchDtos.add(p);
+		});
 
-        return productSearchDtos;
-    }
+		return productSearchDtos;
+	}
 }
