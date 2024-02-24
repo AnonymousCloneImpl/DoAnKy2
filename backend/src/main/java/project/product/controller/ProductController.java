@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.common.ResponseObject;
-import project.product.entity.Product;
 import project.product.dto.ProductDto;
+import project.product.entity.Product;
 import project.product.service.ProductService;
 import project.search.dto.ProductSummaryDto;
 
@@ -21,6 +21,7 @@ import java.util.Optional;
 @RequestMapping("/products")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
+  
 	@Autowired
 	private ProductService productService;
 	@Autowired

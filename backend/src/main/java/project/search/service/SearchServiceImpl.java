@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 public class SearchServiceImpl implements SearchService {
-	@Autowired
+@Autowired
 	private ProductRepository productRepository;
 
 	@Override

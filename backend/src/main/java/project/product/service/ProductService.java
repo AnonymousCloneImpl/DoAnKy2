@@ -3,8 +3,8 @@ package project.product.service;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
-import project.product.entity.Product;
 import project.product.dto.ProductDto;
+import project.product.entity.Product;
 import project.search.dto.ProductSummaryDto;
 
 import java.util.List;

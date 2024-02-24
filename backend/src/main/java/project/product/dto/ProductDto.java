@@ -1,9 +1,8 @@
 package project.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import project.other_entity.Color;
+import project.product.entity.Color;
 import project.product.entity.Product;
 import project.product.entity.PurchaseComboItem;
 

@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import project.other_entity.Color;
 
 import java.util.List;
 
@@ -37,12 +36,12 @@ public class Product {
     private byte discountPercentage;
     @ManyToMany
     @JoinTable(
-	name = "product_color",
-	joinColumns = @JoinColumn(name = "product_id"),
-	inverseJoinColumns = @JoinColumn(name = "color_id")
+        name = "product_color",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "color_id")
     )
     private List<Color> colorList;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "blog_id")
     private Blog blog;
     @OneToMany(fetch = FetchType.EAGER)

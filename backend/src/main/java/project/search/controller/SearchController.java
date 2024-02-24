@@ -13,7 +13,6 @@ import java.util.List;
 @RequestMapping("/search")
 @CrossOrigin(origins = "http://localhost:3000")
 public class SearchController {
-
 	@Autowired
 	private SearchService searchService;
 

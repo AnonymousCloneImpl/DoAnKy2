@@ -19,7 +19,7 @@ public class PurchaseComboItem {
     private long id;
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList"})
+    @JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList", "discountPercentage"})
     private Product product;
     @Column(name = "discount_percentage")
     private byte discountPercentage;
