@@ -7,16 +7,16 @@ import project.email.service.EmailServiceImpl;
 
 @RestController
 public class EmailController {
-    
+
     private final EmailServiceImpl emailServiceImpl;
-    
+
     @Autowired
     public EmailController(EmailServiceImpl emailServiceImpl) {
-	this.emailServiceImpl = emailServiceImpl;
+        this.emailServiceImpl = emailServiceImpl;
     }
-    
+
     @PostMapping("/send_email")
     public String sendEmail() {
-	return emailServiceImpl.sendEmail("huunghia98er@gmail.com", "subject", " Hello World! ");
+        return emailServiceImpl.sendEmail("huunghia98er@gmail.com", "subject", " Hello World! ");
     }
 }

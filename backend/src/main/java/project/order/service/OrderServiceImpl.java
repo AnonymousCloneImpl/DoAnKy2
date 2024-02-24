@@ -3,7 +3,7 @@ package project.order.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.common.AutoGenerateOderCodeUtils;
+import project.common.GenerateCodeUtils;
 import project.const_.ORDER_STATUS;
 import project.order.entity.Order;
 import project.order.entity.OrderItem;
@@ -15,61 +15,64 @@ import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    private final OrderRepository orderRepo;
-    private final ModelMapper modelMapper;
-    private final AutoGenerateOderCodeUtils autoGenerateOrderCodeUtils;
-    
     @Autowired
-    public OrderServiceImpl(OrderRepository orderRepo, ModelMapper modelMapper, AutoGenerateOderCodeUtils autoGenerateOrderCodeUtils) {
-	this.orderRepo = orderRepo;
-	this.modelMapper = modelMapper;
-	this.autoGenerateOrderCodeUtils = autoGenerateOrderCodeUtils;
-    }
-    
+    private OrderRepository orderRepo;
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public Order createOrder(List<OrderItem> orderItemList) {
-	try {
-	    Order order = Order.builder()
-		.orderCode(autoGenerateOrderCodeUtils.autoGenerateCode())
-		.orderDate(LocalDateTime.now())
-		.status(ORDER_STATUS.WAITING)
-		.orderItemList(orderItemList)
-		.build();
-	    
-	    return orderRepo.save(order);
-	} catch (Exception e) {
-	    System.out.println(e.getMessage());
-	    return null;
-	}
+        if (orderItemList == null || orderItemList.isEmpty()) {
+            throw new IllegalArgumentException("Order items cannot be null or empty");
+        }
+
+        String shippingAddress = "a";
+
+        Order order = Order.builder()
+            .orderCode(GenerateCodeUtils.getRandomCode("prefix"))
+            .orderDate(LocalDateTime.now())
+            .status(ORDER_STATUS.WAITING)
+            .customerName("a")
+            .customerEmail("a")
+            .customerPhone("a")
+            .shippingAddress(shippingAddress)
+            .orderItemList(orderItemList)
+            .build();
+
+        try {
+            return orderRepo.save(order);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to create order", e);
+        }
     }
-    
+
     @Override
     public Optional<Order> getOrderById(Long id) {
-	return orderRepo.findById(id);
+        return orderRepo.findById(id);
     }
-    
+
     @Override
     public List<Order> getOrdersByStatus(ORDER_STATUS status) {
-	return null;
+        return null;
     }
-    
+
     @Override
     public void confirmOrder(Long orderId) {
-	
+
     }
-    
+
     @Override
     public void processPayment(Order order) {
-	
+
     }
-    
+
     @Override
     public void processShipping(Order order) {
-	
+
     }
-    
+
     @Override
     public void processRefund(Order order) {
-	
+
     }
 }

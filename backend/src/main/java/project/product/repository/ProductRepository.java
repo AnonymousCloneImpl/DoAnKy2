@@ -14,6 +14,8 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
     Specification<Product> findByName(String name);
+
     @Query("SELECT p FROM Product p WHERE p.type = :type AND p.id <> :productId")
-    List<Product> findTop10SimilarByType(@Param("type") String type, @Param("productId") Long productId, Pageable pageable);
+    List<Product> findTop10SimilarByType(
+        @Param("type") String type, @Param("productId") Long productId, Pageable pageable);
 }

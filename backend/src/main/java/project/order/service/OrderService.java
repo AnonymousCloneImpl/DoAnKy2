@@ -11,16 +11,16 @@ import java.util.Optional;
 @Service
 public interface OrderService {
     public Order createOrder(List<OrderItem> orderItemList);
-    
+
     public Optional<Order> getOrderById(Long id);
-    
+
     public List<Order> getOrdersByStatus(ORDER_STATUS status);
-    
+
     public void confirmOrder(Long orderId);
-    
+
     public void processPayment(Order order);
-    
+
     public void processShipping(Order order);
-    
+
     public void processRefund(Order order);
 }

@@ -25,11 +25,15 @@ public class Order {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 15)
     private ORDER_STATUS status;
+    @Column(name = "customer_name", length = 50)
+    private String customerName;
+    @Column(name = "customer_phone", length = 15, nullable = false)
+    private String customerPhone;
+    @Column(name = "customer_email", length = 100)
+    private String customerEmail;
     @Column(name = "shipping_address")
     private String shippingAddress;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "order_id")
     private List<OrderItem> orderItemList;
-    @Column(nullable = false)
-    private short quantity;
 }

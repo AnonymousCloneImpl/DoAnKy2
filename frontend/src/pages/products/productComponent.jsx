@@ -20,7 +20,6 @@ const ProductComponent = ({ data }) => {
     setActiveIndex(index);
   };
 
-
   // set choose product color
   const activeBtn = (button) => {
     let buttons = document.querySelectorAll('.pcolor');
@@ -107,23 +106,6 @@ const ProductComponent = ({ data }) => {
   };
 
 
-  // Order form
-  const [isFormVisible, setFormVisible] = useState(false);
-  const formRef = useRef(null);
-
-  const openForm = () => {
-    setFormVisible(true);
-  };
-
-  const closeForm = () => {
-    setFormVisible(false);
-  };
-
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    closeForm();
-  };
-
   // scrollToTop
   const [isScrollVisible, setIsVisible] = useState(false);
 
@@ -189,6 +171,57 @@ const ProductComponent = ({ data }) => {
   const toggleContent = () => {
     setExpanded(!expanded);
   };
+
+// Order form
+  const [isFormVisible, setFormVisible] = useState(false);
+  const formRef = useRef(null);
+
+  const openForm = () => {
+    setFormVisible(true);
+  };
+
+  const closeForm = () => {
+    setFormVisible(false);
+  };
+
+
+// Place Order
+  const [customerName, setCustomerName] = useState('');
+    const [customerAddress, setCustomerAddress] = useState('');
+    const [customerPhone, setCustomerPhone] = useState('');
+    const [customerEmail, setCustomerEmail] = useState('');
+
+    const handleFormSubmit = async (e) => {
+      e.preventDefault();
+
+      const orderData = {
+        customerName,
+        customerAddress,
+        customerPhone,
+        customerEmail
+      };
+      console.log('Order Data:', orderData);
+          const url = `${process.env.DOMAIN}/orders/placeOrder`;
+
+          try {
+                const response = await fetch(url, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(orderData),
+                });
+
+                if (response.ok) {
+                  console.log('Order placed successfully');
+                } else {
+                  console.error('Failed to place order');
+                }
+              } catch (error) {
+                console.error('Error sending order request', error);
+              }
+      };
+
 
   return (
     <div className="body-wrapper">
@@ -437,8 +470,8 @@ const ProductComponent = ({ data }) => {
         <div className="similar-product-line"></div>
 
         {data.similarProductList.map((item) => (
-          <ul className="similar-product-list">
-            <li className="similar-product-item" key={item.id}>
+          <ul key={item.id} className="similar-product-list">
+            <li className="similar-product-item">
               <div className="similar-product-item-content">
                 <div className="similar-product-img">
                   <img src={item.image.split('|')[0]} alt="First Image" />
@@ -491,8 +524,14 @@ const ProductComponent = ({ data }) => {
 
               <form className="order-form" onSubmit={handleFormSubmit}>
                 <label htmlFor="customerName">Name</label>
-                <input type="text" className="customerName" name="customerName" placeholder="example: Ngọc Trinh..."
-                  id="customerName" required></input>
+                <input type="text"
+                       value={customerName}
+                       onChange={(e) => setCustomerName(e.target.value)}
+                       className="customerName"
+                       name="customerName"
+                       placeholder="example: Ngọc Trinh..."
+                       id="customerName" required>
+                </input>
 
                 <label htmlFor="customerAddress">Address</label>
                 <div className="address-selects">
@@ -515,12 +554,20 @@ const ProductComponent = ({ data }) => {
                 <label htmlFor="customerPhone">Phone Number</label>
                 <div className="phone-wrapper">
                   <span className="phone-prefix">+84</span>
-                  <input type="tel" className="customerPhone" name="customerPhone" id="customerPhone" required></input>
+                  <input type="tel" className="customerPhone"
+                       value={customerPhone}
+                       onChange={(e) => setCustomerPhone(e.target.value)}
+                       name="customerPhone"
+                       id="customerPhone" required></input>
                 </div>
 
                 <label htmlFor="customerEmail">Email</label>
-                <input type="email" className="customerEmail" name="customerEmail" placeholder="example@gmail.com"
-                  id="customerEmail" required></input>
+                <input type="email" className="customerEmail"
+                       value={customerEmail}
+                       onChange={(e) => setCustomerEmail(e.target.value)}
+                       name="customerEmail"
+                       placeholder="example@gmail.com"
+                       id="customerEmail" required></input>
 
                 <button type="submit">Confirm Order</button>
               </form>

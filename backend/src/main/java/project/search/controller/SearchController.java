@@ -13,15 +13,15 @@ import java.util.List;
 @RequestMapping("/search")
 @CrossOrigin(origins = "http://localhost:3000")
 public class SearchController {
-    
+
     @Autowired
     private SearchService searchService;
-    
+
     @GetMapping("")
     public ResponseEntity<Object> searchOnHeader(@RequestParam(name = "keyword") String keyword) {
-	List<ProductSearchDto> product = searchService.findOnHeader(keyword);
-	return ResponseEntity.ok().body(
-	    new ResponseObject("OK", "Successfully", product)
-	);
+        List<ProductSearchDto> product = searchService.findOnHeader(keyword);
+        return ResponseEntity.ok().body(
+            new ResponseObject("OK", "Successfully", product)
+        );
     }
 }
