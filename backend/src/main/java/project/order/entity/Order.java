@@ -15,25 +15,25 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 public class Order {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(name = "order_code", nullable = false, length = 13)
-    private String orderCode;
-    @Column(name = "order_date", nullable = false)
-    private LocalDateTime orderDate;
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 15)
-    private ORDER_STATUS status;
-    @Column(name = "customer_name", length = 50)
-    private String customerName;
-    @Column(name = "customer_phone", length = 15, nullable = false)
-    private String customerPhone;
-    @Column(name = "customer_email", length = 100)
-    private String customerEmail;
-    @Column(name = "shipping_address")
-    private String shippingAddress;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
-    private List<OrderItem> orderItemList;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	@Column(name = "order_code", nullable = false, length = 13)
+	private String orderCode;
+	@Column(name = "order_date", nullable = false)
+	private LocalDateTime orderDate;
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 15)
+	private ORDER_STATUS status;
+	@Column(name = "customer_name", length = 50)
+	private String customerName;
+	@Column(name = "customer_phone", length = 15, nullable = false)
+	private String customerPhone;
+	@Column(name = "customer_email", length = 100)
+	private String customerEmail;
+	@Column(name = "shipping_address")
+	private String shippingAddress;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "order_id")
+	private List<OrderItem> orderItemList;
 }

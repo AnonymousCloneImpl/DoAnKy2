@@ -14,13 +14,13 @@ import lombok.Setter;
 @Entity
 @Table(name = "purchase_combo_item")
 public class PurchaseComboItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    @JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList", "discountPercentage"})
-    private Product product;
-    @Column(name = "discount_percentage")
-    private byte discountPercentage;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	@JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList", "discountPercentage"})
+	private Product product;
+	@Column(name = "discount_percentage")
+	private byte discountPercentage;
 }

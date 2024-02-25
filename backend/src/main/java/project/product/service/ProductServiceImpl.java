@@ -19,7 +19,6 @@ import project.search.dto.ProductSummaryDto;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
