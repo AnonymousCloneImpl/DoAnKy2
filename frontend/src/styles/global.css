@@ -1,6 +1,5 @@
 @font-face {
-    font-family: 'JetBrains Mono';
-    src: url('../../public/fonts/JetBrainMono/JetBrainsMono-Regular.woff2') format('truetype');
+    font-family: 'Arial';
 }
 
 * {
