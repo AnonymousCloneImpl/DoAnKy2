@@ -1,24 +1,26 @@
-package project.other_entity;
+package project.product.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.product.entity.Color;
+import project.product.entity.Product;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "province")
-public class Province {
+@Entity
+@Table(name = "stock")
+public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(nullable = false)
-    private String name;
-    @ManyToOne
-    @JoinColumn(name = "district_id")
-    private District district;
+    @OneToOne
+    private Product product;
+    @OneToOne
+    private Color color;
+    private int quantity;
 }

@@ -11,6 +11,9 @@ public class OrderDto {
     private String orderCode;
     private LocalDateTime orderDate;
     private ORDER_STATUS status;
+    private String customerName;
+    private String customerPhone;
+    private String customerEmail;
     private String shippingAddress;
     private List<OrderItem> orderItemList;
 }
