@@ -11,7 +11,6 @@ const Index = ({productBE}) => {
     const [quantity, setQuantity] = useState(1);
 
     const product = productBE;
-    console.log(product)
     // set main image
     const subImgItems = product.imageList;
 
@@ -247,420 +246,425 @@ const Index = ({productBE}) => {
         }
     };
 
-
-    return (
-        <div className="body-wrapper">
-            <div className="url">
-                <Link href="/">Home </Link>
-                <b> &#8250; </b>
-                <Link href="#">Product</Link>
-                <b> &#8250; </b>
-                <Link href="/products">{product.type}</Link>
-                <b> &#8250; </b>
-                <b>{product.name}</b>
-            </div>
-
-            <div className="top-line"></div>
-
-            <div className="product-box">
-                <div className="left-box">
-                    <div className="main-img">
-                        <img src={mainImg} alt="Main Image" />
-                    </div>
-
-                    <div className="sub-img-list">
-                        {subImgItems.map((imgSrc, index) => (
-                            <div
-                                key={index}
-                                className={`sub-img-item ${index === activeIndex ? 'active' : ''}`}
-                                onClick={() => handleClick(index)}
-                            >
-                                <img src={imgSrc} alt={`Sub-Image ${index + 1}`} />
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* service */}
-                    <div className="service">
-                        <div className="service-item">
-                            <div className="service-item-child">
-                                <FontAwesomeIcon className="service-icon" icon={faRotate} />
-                                <div>
-                                    <p>Commitment to 1 for 1 exchange within <b>30 Days</b> for product defects.</p>
-                                    <a href="#">View details &#187;</a>
-                                </div>
-                            </div>
-                            <div className="service-item-child">
-                                <FontAwesomeIcon className="service-icon" icon={faShieldCat} />
-                                <div>
-                                    <p><b>12 Month</b> warranty at manufacturer&apos;s warranty centers</p>
-                                    <a href="#">See warranty address &#187;</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="service-line"></div>
-
-                        <div className="service-item">
-                            <FontAwesomeIcon className="service-icon" icon={faBoxArchive} />
-                            <div className="item-combo">
-                                <b>Product set includes:</b>
-                                <p>Box, Instructions, SIM card, Case, MicroUSB cable</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* blog list */}
-                    <div className={`product-content ${expanded ? 'expanded' : ''}`}>
-                        <h2>{product.blog.header}</h2>
-                        {product.blog.contentList.map((content, index) => (
-                            <div key={index}>
-                                <p>{content}</p>
-                                {product.blog.imageList.length > index && (
-                                    <div className="content-img">
-                                        <img src={product.blog.imageList[index]} alt={`Image ${index}`} />
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                    <button onClick={toggleContent} className="collapse-button">
-                        {expanded ? 'Collapse' : 'Expand'}
-                        <FontAwesomeIcon icon={expanded ? faCaretUp : faCaretDown} className="collapse-chevron" />
-                    </button>
+    if (!productBE) {
+        return (
+            <div>Product Data is undefined</div>
+        )
+    } else {
+        return (
+            <div className="body-wrapper">
+                <div className="url">
+                    <Link href="/">Home </Link>
+                    <b> &#8250; </b>
+                    <Link href="#">Product</Link>
+                    <b> &#8250; </b>
+                    <Link href="/products">{product.type}</Link>
+                    <b> &#8250; </b>
+                    <b>{product.name}</b>
                 </div>
 
-                {/* Right box top */}
-                <div className="right-box">
-                    <div className="right-box-top">
-                        <div className="pname">{product.name}</div>
-                        <p className="sold">100 Sold</p>
+                <div className="top-line"></div>
 
-                        <div className="right-box-top-child">
-                            <div className="ratings">
-                                <FontAwesomeIcon className="star-icon" icon={faStar} />
-                                <FontAwesomeIcon className="star-icon" icon={faStar} />
-                                <FontAwesomeIcon className="star-icon" icon={faStar} />
-                                <FontAwesomeIcon className="star-icon" icon={faStar} />
-                                <FontAwesomeIcon className="star-icon" icon={faStarHalfStroke} />
-                                <p>100 Evaluate</p>
-                            </div>
-
-                            <div className="product-price">
-                                <b>{formatPrice(discountedPrice)}</b>
-                                <b className="main-money-unit">đ</b>
-                                <p>{formatPrice(product.price)}</p>
-                                <p className="main-money-unit">đ</p>
-                            </div>
-
-                            <div className="product-price-ratio">
-                                <p>{`Down ${product.discountPercentage}%`}</p>
-                            </div>
-
-                            <div className="VAT">
-                                <div>VAT included</div>
-                                <div>Warranty 12 Months</div>
-                            </div>
-
-                            <p className="color">Color</p>
-
-                            <div className="product-color">
-                                <button className="pcolor" onClick={(e) => activeBtn(e.target)}>Black</button>
-                                <button className="pcolor" onClick={(e) => activeBtn(e.target)}>Red</button>
-                                <button className="pcolor" onClick={(e) => activeBtn(e.target)}>Pink</button>
-                            </div>
-
-                            <div className="quantity">
-                                <p>Quantity</p>
-                                <div className="quantity-control">
-                                    <button className="quantity-decrease" onClick={decreaseQuantity}>-</button>
-                                    <input
-                                        type="number"
-                                        min="1"
-                                        max="10"
-                                        value={quantity}
-                                        onChange={(e) => limitQuantity(e)}
-                                        onBlur={(e) => resetIfEmpty(e)}
-                                        className="quantity-input"
-                                    />
-                                    <button className="quantity-increase" onClick={increaseQuantity}>+</button>
-                                </div>
-                            </div>
-
-                            <div className="btn-box">
-                                <button className="cart-btn" onClick={() => addToCart()}>
-                                    <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
-                                </button>
-                                <button className="buy-btn" onClick={openForm}>
-                                    <FontAwesomeIcon icon={faCreditCard} /> Buy Now
-                                </button>
-                            </div>
-
-                            <div className="call-to-order">Call to order now
-                                <a href="tel:1900 301 297"> 1900 301 297 </a>
-                                (7:30 - 22:00)
-                            </div>
+                <div className="product-box">
+                    <div className="left-box">
+                        <div className="main-img">
+                            <img src={mainImg} alt="Main Image" />
                         </div>
-                    </div>
 
-                    <div className="right-box-bottom">
-
-                        {/* Detail table */}
-                        <h1 className="detail-name">Thông Tin Chi Tiết</h1>
-
-                        <table className="detail-table">
-                            <tbody>
-                            {Object.entries(JSON.parse(product.productDetail)).map(([key, value]) => (
-                                <tr key={key}>
-                                    <td>{key}</td>
-                                    <td>{value}</td>
-                                </tr>
+                        <div className="sub-img-list">
+                            {subImgItems.map((imgSrc, index) => (
+                                <div
+                                    key={index}
+                                    className={`sub-img-item ${index === activeIndex ? 'active' : ''}`}
+                                    onClick={() => handleClick(index)}
+                                >
+                                    <img src={imgSrc} alt={`Sub-Image ${index + 1}`} />
+                                </div>
                             ))}
-                            </tbody>
-                        </table>
+                        </div>
 
-                        {/* Recommended Accessories */}
-                        <div className="recommended-accessories">
-                            <h1 className="recommended-accessories-header">ATTRACTIVE PROMOTIONS WHEN BUYING TOGETHER</h1>
-
-                            <div className="recommended-accessories-line"></div>
-
-                            <div className="recommend-main-product">
-                                <div className="recommended-main-img">
-                                    <img src={product.imageList[0]}></img>
-                                </div>
-                                <div className="recommended-main-content">
-                                    <h1>{product.name}</h1>
-                                    <div className="accessories-price">
-                                        <b>{formatPrice(discountedPrice)}</b>
-                                        <b className="money-unit">đ</b>
-                                        <p>{formatPrice(product.price)}</p>
-                                        <p className="money-unit">đ</p>
+                        {/* service */}
+                        <div className="service">
+                            <div className="service-item">
+                                <div className="service-item-child">
+                                    <FontAwesomeIcon className="service-icon" icon={faRotate} />
+                                    <div>
+                                        <p>Commitment to 1 for 1 exchange within <b>30 Days</b> for product defects.</p>
+                                        <a href="#">View details &#187;</a>
                                     </div>
-                                    <div className="accessories-price-ratio">
-                                        <p>{`Down ${product.discountPercentage}%`}</p>
+                                </div>
+                                <div className="service-item-child">
+                                    <FontAwesomeIcon className="service-icon" icon={faShieldCat} />
+                                    <div>
+                                        <p><b>12 Month</b> warranty at manufacturer&apos;s warranty centers</p>
+                                        <a href="#">See warranty address &#187;</a>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="recommended-accessories-line"></div>
+                            <div className="service-line"></div>
 
-                            <ul className="recommended-accessories-list">
-                                {product.purchaseComboItem.productList.map((item) => (
-                                    <li className="recommended-accessories-item" key={item.id}>
-                                        <div className="recommended-accessories-checkbox">
-                                            <input type="checkbox" className="product" defaultChecked />
-                                        </div>
+                            <div className="service-item">
+                                <FontAwesomeIcon className="service-icon" icon={faBoxArchive} />
+                                <div className="item-combo">
+                                    <b>Product set includes:</b>
+                                    <p>Box, Instructions, SIM card, Case, MicroUSB cable</p>
+                                </div>
+                            </div>
+                        </div>
 
-                                        <div className="recommended-accessories-img">
-                                            <img src={item.image.split('|')[0]} alt="First Image" />
+                        {/* blog list */}
+                        <div className={`product-content ${expanded ? 'expanded' : ''}`}>
+                            <h2>{product.blog.header}</h2>
+                            {product.blog.contentList.map((content, index) => (
+                                <div key={index}>
+                                    <p>{content}</p>
+                                    {product.blog.imageList.length > index && (
+                                        <div className="content-img">
+                                            <img src={product.blog.imageList[index]} alt={`Image ${index}`} />
                                         </div>
-                                        <div className="recommended-accessories-content">
-                                            <Link href={"/products/"+item.type.toLowerCase()+"/"+item.name.toLowerCase().replace(/ /g, "-")}>
-                                                {item.name}
-                                            </Link>
-                                            <div className="accessories-price">
-                                            <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
-                                                <b className="money-unit">đ</b>
-                                                <p>{formatPrice(item.price)}</p>
-                                                <p className="money-unit">đ</p>
-                                            </div>
-                                            <div className="accessories-price-ratio">
-                                                <p>{`Down ${item.discountPercentage}%`}</p>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                        <button onClick={toggleContent} className="collapse-button">
+                            {expanded ? 'Collapse' : 'Expand'}
+                            <FontAwesomeIcon icon={expanded ? faCaretUp : faCaretDown} className="collapse-chevron" />
+                        </button>
+                    </div>
+
+                    {/* Right box top */}
+                    <div className="right-box">
+                        <div className="right-box-top">
+                            <div className="pname">{product.name}</div>
+                            <p className="sold">100 Sold</p>
+
+                            <div className="right-box-top-child">
+                                <div className="ratings">
+                                    <FontAwesomeIcon className="star-icon" icon={faStar} />
+                                    <FontAwesomeIcon className="star-icon" icon={faStar} />
+                                    <FontAwesomeIcon className="star-icon" icon={faStar} />
+                                    <FontAwesomeIcon className="star-icon" icon={faStar} />
+                                    <FontAwesomeIcon className="star-icon" icon={faStarHalfStroke} />
+                                    <p>100 Evaluate</p>
+                                </div>
+
+                                <div className="product-price">
+                                    <b>{formatPrice(discountedPrice)}</b>
+                                    <b className="main-money-unit">đ</b>
+                                    <p>{formatPrice(product.price)}</p>
+                                    <p className="main-money-unit">đ</p>
+                                </div>
+
+                                <div className="product-price-ratio">
+                                    <p>{`Down ${product.discountPercentage}%`}</p>
+                                </div>
+
+                                <div className="VAT">
+                                    <div>VAT included</div>
+                                    <div>Warranty 12 Months</div>
+                                </div>
+
+                                <p className="color">Color</p>
+
+                                <div className="product-color">
+                                    <button className="pcolor" onClick={(e) => activeBtn(e.target)}>Black</button>
+                                    <button className="pcolor" onClick={(e) => activeBtn(e.target)}>Red</button>
+                                    <button className="pcolor" onClick={(e) => activeBtn(e.target)}>Pink</button>
+                                </div>
+
+                                <div className="quantity">
+                                    <p>Quantity</p>
+                                    <div className="quantity-control">
+                                        <button className="quantity-decrease" onClick={decreaseQuantity}>-</button>
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            max="10"
+                                            value={quantity}
+                                            onChange={(e) => limitQuantity(e)}
+                                            onBlur={(e) => resetIfEmpty(e)}
+                                            className="quantity-input"
+                                        />
+                                        <button className="quantity-increase" onClick={increaseQuantity}>+</button>
+                                    </div>
+                                </div>
+
+                                <div className="btn-box">
+                                    <button className="cart-btn" onClick={() => addToCart()}>
+                                        <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
+                                    </button>
+                                    <button className="buy-btn" onClick={openForm}>
+                                        <FontAwesomeIcon icon={faCreditCard} /> Buy Now
+                                    </button>
+                                </div>
+
+                                <div className="call-to-order">Call to order now
+                                    <a href="tel:1900 301 297"> 1900 301 297 </a>
+                                    (7:30 - 22:00)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="right-box-bottom">
+
+                            {/* Detail table */}
+                            <h1 className="detail-name">Thông Tin Chi Tiết</h1>
+
+                            <table className="detail-table">
+                                <tbody>
+                                {Object.entries(JSON.parse(product.productDetail)).map(([key, value]) => (
+                                    <tr key={key}>
+                                        <td>{key}</td>
+                                        <td>{value}</td>
+                                    </tr>
                                 ))}
-                            </ul>
+                                </tbody>
+                            </table>
 
-                            <div className="recommended-accessories-line"></div>
+                            {/* Recommended Accessories */}
+                            <div className="recommended-accessories">
+                                <h1 className="recommended-accessories-header">ATTRACTIVE PROMOTIONS WHEN BUYING TOGETHER</h1>
 
-                            <div className="total-price">
-                                <h1>Total Price:</h1>
-                                <b>{formatPrice(totalPrice)}</b>
-                                <b className="money-unit">đ</b>
-                                <p>{formatPrice(totalOriginalPrice)}</p>
-                            </div>
-                            <div className="buy-recommend">
-                                <button className="buy-recommend-btn" onClick={openForm}>
-                                    <FontAwesomeIcon icon={faCreditCard} /> Buy Now
-                                </button>
+                                <div className="recommended-accessories-line"></div>
+
+                                <div className="recommend-main-product">
+                                    <div className="recommended-main-img">
+                                        <img src={product.imageList[0]}></img>
+                                    </div>
+                                    <div className="recommended-main-content">
+                                        <h1>{product.name}</h1>
+                                        <div className="accessories-price">
+                                            <b>{formatPrice(discountedPrice)}</b>
+                                            <b className="money-unit">đ</b>
+                                            <p>{formatPrice(product.price)}</p>
+                                            <p className="money-unit">đ</p>
+                                        </div>
+                                        <div className="accessories-price-ratio">
+                                            <p>{`Down ${product.discountPercentage}%`}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="recommended-accessories-line"></div>
+
+                                <ul className="recommended-accessories-list">
+                                    {product.purchaseComboItem.productList.map((item) => (
+                                        <li className="recommended-accessories-item" key={item.id}>
+                                            <div className="recommended-accessories-checkbox">
+                                                <input type="checkbox" className="product" defaultChecked />
+                                            </div>
+
+                                            <div className="recommended-accessories-img">
+                                                <img src={item.image.split('|')[0]} alt="First Image" />
+                                            </div>
+                                            <div className="recommended-accessories-content">
+                                                <Link href={"/products/"+item.type.toLowerCase()+"/"+item.name.toLowerCase().replace(/ /g, "-")}>
+                                                    {item.name}
+                                                </Link>
+                                                <div className="accessories-price">
+                                                    <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
+                                                    <b className="money-unit">đ</b>
+                                                    <p>{formatPrice(item.price)}</p>
+                                                    <p className="money-unit">đ</p>
+                                                </div>
+                                                <div className="accessories-price-ratio">
+                                                    <p>{`Down ${item.discountPercentage}%`}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                <div className="recommended-accessories-line"></div>
+
+                                <div className="total-price">
+                                    <h1>Total Price:</h1>
+                                    <b>{formatPrice(totalPrice)}</b>
+                                    <b className="money-unit">đ</b>
+                                    <p>{formatPrice(totalOriginalPrice)}</p>
+                                </div>
+                                <div className="buy-recommend">
+                                    <button className="buy-recommend-btn" onClick={openForm}>
+                                        <FontAwesomeIcon icon={faCreditCard} /> Buy Now
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
 
-            {/* Similar products */}
-            <div className="similar-product">
-                <h1 className="similar-product-header">Similar Products</h1>
+                {/* Similar products */}
+                <div className="similar-product">
+                    <h1 className="similar-product-header">Similar Products</h1>
 
-                <div className="similar-product-line"></div>
-                <ul className="similar-product-list">
-                    {product.similarProductList.map((item) => (
-                        <li key={item.id} className="similar-product-item">
-                            <div className="similar-product-item-content">
-                                <div className="similar-product-img">
-                                    <img src={item.image.split('|')[0]} alt="First Image"/>
-                                </div>
-                                <div className="similar-product-content">
-                                    <a href={item.id}>{item.name}</a>
-                                    <div className="similar-product-price">
-                                        <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
-                                        <b className="money-unit">đ</b>
-                                        <p>{formatPrice(item.price)}</p>
-                                        <p className="money-unit">đ</p>
+                    <div className="similar-product-line"></div>
+                    <ul className="similar-product-list">
+                        {product.similarProductList.map((item) => (
+                            <li key={item.id} className="similar-product-item">
+                                <div className="similar-product-item-content">
+                                    <div className="similar-product-img">
+                                        <img src={item.image.split('|')[0]} alt="First Image"/>
                                     </div>
-                                    <div className="similar-product-price-ratio">
-                                        <p>{`Down ${item.discountPercentage}%`}</p>
+                                    <div className="similar-product-content">
+                                        <a href={item.id}>{item.name}</a>
+                                        <div className="similar-product-price">
+                                            <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
+                                            <b className="money-unit">đ</b>
+                                            <p>{formatPrice(item.price)}</p>
+                                            <p className="money-unit">đ</p>
+                                        </div>
+                                        <div className="similar-product-price-ratio">
+                                            <p>{`Down ${item.discountPercentage}%`}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="similar-product-btn-box">
-                                <button className="cart-btn" onClick={() => addToCart()}>
-                                    <FontAwesomeIcon icon={faCartShopping}/> Add to Cart
-                                </button>
-                                <button className="buy-btn" onClick={openForm}>
-                                    <FontAwesomeIcon icon={faCreditCard}/> Buy Now
-                                </button>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                                <div className="similar-product-btn-box">
+                                    <button className="cart-btn" onClick={() => addToCart()}>
+                                        <FontAwesomeIcon icon={faCartShopping}/> Add to Cart
+                                    </button>
+                                    <button className="buy-btn" onClick={openForm}>
+                                        <FontAwesomeIcon icon={faCreditCard}/> Buy Now
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
 
-            {/* FORM ORDER */}
-            {isFormVisible && (
-                <>
-                    <div className="overlay" onClick={closeForm}></div>
+                {/* FORM ORDER */}
+                {isFormVisible && (
+                    <>
+                        <div className="overlay" onClick={closeForm}></div>
 
-                    <div className="popup" ref={formRef}>
-                        <div className="popup-content">
+                        <div className="popup" ref={formRef}>
+                            <div className="popup-content">
                             <span className="close-form-btn" onClick={closeForm}>
                                 <FontAwesomeIcon icon={faCircleXmark} />
                             </span>
-                            <h1>Order Form</h1>
+                                <h1>Order Form</h1>
 
-                            <form className="order-form" onSubmit={handleFormSubmit}>
-                                <label htmlFor="customerName">Name</label>
-                                <input type="text"
-                                       value={customerName}
-                                       onChange={(e) => setCustomerName(e.target.value)}
-                                       className="customerName"
-                                       name="customerName"
-                                       placeholder="example: Ngọc Trinh..."
-                                       id="customerName" required>
-                                </input>
+                                <form className="order-form" onSubmit={handleFormSubmit}>
+                                    <label htmlFor="customerName">Name</label>
+                                    <input type="text"
+                                           value={customerName}
+                                           onChange={(e) => setCustomerName(e.target.value)}
+                                           className="customerName"
+                                           name="customerName"
+                                           placeholder="example: Ngọc Trinh..."
+                                           id="customerName" required>
+                                    </input>
 
-                                <label htmlFor="customerAddress">Address</label>
-                                <div className="address-selects">
-                                    <select
-                                        className="province"
-                                        name="province"
-                                        id="province"
-                                        required
-                                        defaultValue=""
-                                        onChange={(e) => handleProvinceChange(e.target.value)}
-                                    >
-                                        <option value="" disabled>--- Province ---</option>
-                                        {provinces.map((province) => (
-                                            <option key={province[0]}
-                                                    value={province[0]}>
-                                                {province[1]}
-                                            </option>
-                                        ))}
-                                    </select>
+                                    <label htmlFor="customerAddress">Address</label>
+                                    <div className="address-selects">
+                                        <select
+                                            className="province"
+                                            name="province"
+                                            id="province"
+                                            required
+                                            defaultValue=""
+                                            onChange={(e) => handleProvinceChange(e.target.value)}
+                                        >
+                                            <option value="" disabled>--- Province ---</option>
+                                            {provinces.map((province) => (
+                                                <option key={province[0]}
+                                                        value={province[0]}>
+                                                    {province[1]}
+                                                </option>
+                                            ))}
+                                        </select>
 
-                                    <select
-                                        className="district"
-                                        name="district"
-                                        id="district"
-                                        required
-                                        defaultValue=""
-                                        onChange={(e) => handleDistrictChange(e.target.value)}
-                                    >
-                                        <option value="" disabled>--- District ---</option>
-                                        {districts.map((district) => (
-                                            <option key={district[0]}
-                                                    value={district[0]}>
-                                                {district[1]}
-                                            </option>
-                                        ))}
-                                    </select>
+                                        <select
+                                            className="district"
+                                            name="district"
+                                            id="district"
+                                            required
+                                            defaultValue=""
+                                            onChange={(e) => handleDistrictChange(e.target.value)}
+                                        >
+                                            <option value="" disabled>--- District ---</option>
+                                            {districts.map((district) => (
+                                                <option key={district[0]}
+                                                        value={district[0]}>
+                                                    {district[1]}
+                                                </option>
+                                            ))}
+                                        </select>
 
-                                    <select
-                                        className="ward"
-                                        name="ward"
-                                        id="ward"
-                                        required
-                                        defaultValue=""
-                                        onChange={(e) => setSelectedWardId(e.target.value)}
-                                    >
-                                        <option value="" disabled>--- Ward ---</option>
-                                        {wards.map((ward) => (
-                                            <option key={ward[0]}
-                                                    value={ward[0]}>
-                                                {ward[1]}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
+                                        <select
+                                            className="ward"
+                                            name="ward"
+                                            id="ward"
+                                            required
+                                            defaultValue=""
+                                            onChange={(e) => setSelectedWardId(e.target.value)}
+                                        >
+                                            <option value="" disabled>--- Ward ---</option>
+                                            {wards.map((ward) => (
+                                                <option key={ward[0]}
+                                                        value={ward[0]}>
+                                                    {ward[1]}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
 
-                                <label htmlFor="houseAddress">House Address</label>
-                                <input type="text"
-                                       value={houseAddress}
-                                       onChange={(e) => setHouseAddress(e.target.value)}
-                                       className="customerName"
-                                       name="houseAddress"
-                                       placeholder="Boulevard, alley, house number,..."
-                                       id="houseAddress" required>
-                                </input>
+                                    <label htmlFor="houseAddress">House Address</label>
+                                    <input type="text"
+                                           value={houseAddress}
+                                           onChange={(e) => setHouseAddress(e.target.value)}
+                                           className="customerName"
+                                           name="houseAddress"
+                                           placeholder="Boulevard, alley, house number,..."
+                                           id="houseAddress" required>
+                                    </input>
 
-                                <label htmlFor="customerPhone">Phone Number</label>
-                                <div className="phone-wrapper">
-                                    <span className="phone-prefix">+84</span>
-                                    <input type="tel" className="customerPhone"
-                                           value={customerPhone}
-                                           onChange={(e) => setCustomerPhone(e.target.value)}
-                                           name="customerPhone"
-                                           id="customerPhone" required></input>
-                                </div>
+                                    <label htmlFor="customerPhone">Phone Number</label>
+                                    <div className="phone-wrapper">
+                                        <span className="phone-prefix">+84</span>
+                                        <input type="tel" className="customerPhone"
+                                               value={customerPhone}
+                                               onChange={(e) => setCustomerPhone(e.target.value)}
+                                               name="customerPhone"
+                                               id="customerPhone" required></input>
+                                    </div>
 
-                                <label htmlFor="customerEmail">Email</label>
-                                <input type="email" className="customerEmail"
-                                       value={customerEmail}
-                                       onChange={(e) => setCustomerEmail(e.target.value)}
-                                       name="customerEmail"
-                                       placeholder="example@gmail.com"
-                                       id="customerEmail" required></input>
+                                    <label htmlFor="customerEmail">Email</label>
+                                    <input type="email" className="customerEmail"
+                                           value={customerEmail}
+                                           onChange={(e) => setCustomerEmail(e.target.value)}
+                                           name="customerEmail"
+                                           placeholder="example@gmail.com"
+                                           id="customerEmail" required></input>
 
-                                <button type="submit">Confirm Order</button>
-                            </form>
+                                    <button type="submit">Confirm Order</button>
+                                </form>
+                            </div>
                         </div>
+                    </>
+                )}
+
+
+                {/* SUCCESS NOTIFICATION */}
+                {isSuccessNotificationVisible && (
+                    <div className="success-notification">
+                        <FontAwesomeIcon className="success-notification-check" icon={faCheck} />
+                        Order placed successfully !
                     </div>
-                </>
-            )}
+                )}
 
 
-            {/* SUCCESS NOTIFICATION */}
-            {isSuccessNotificationVisible && (
-                <div className="success-notification">
-                    <FontAwesomeIcon className="success-notification-check" icon={faCheck} />
-                    Order placed successfully !
+                {/* Cart notification */}
+                <div className="cart-notification" style={{ display: cartNotificationVisible ? 'block' : 'none' }}>
+                    <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
+                    The product has been added to Cart !
                 </div>
-            )}
 
-
-            {/* Cart notification */}
-            <div className="cart-notification" style={{ display: cartNotificationVisible ? 'block' : 'none' }}>
-                <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
-                The product has been added to Cart !
             </div>
-
-        </div>
-    );
+        );
+    }
 };
 
 export default Index;
