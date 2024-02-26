@@ -23,4 +23,13 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
 	@Query(nativeQuery = true, value = "SELECT * FROM product p WHERE p.type LIKE :type AND p.name = :name")
 	Product getByProductTypeAndByName(String type, String name);
+
+	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = 'mouse' ORDER BY s.sold desc LIMIT 1")
+	Product findMostPurchaseMouse();
+
+	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = 'keyboard' ORDER BY s.sold desc LIMIT 1")
+	Product findMostPurchaseKeyboard();
+
+	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = 'headphone' ORDER BY s.sold desc LIMIT 1")
+	Product findMostPurchaseHeadphone();
 }

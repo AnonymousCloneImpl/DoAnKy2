@@ -15,40 +15,35 @@ import java.util.List;
 @Entity
 @Table(name = "product")
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    @Column(length = 20)
-    private String producer;
-    @Column(length = 50)
-    private String model;
-    @Column(nullable = false, length = 50)
-    private String name;
-    @Column(nullable = false, length = 50)
-    private String type;
-    @Column(name = "product_detail", columnDefinition = "TEXT")
-    private String productDetail;
-    @Column(nullable = false)
-    private Long price;
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String image;
-    @Column(nullable = false)
-    private byte discountPercentage;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "product_color",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "color_id")
-    )
-    private List<Color> colorList;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "blog_id")
-    private Blog blog;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "product_purchase_combo",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "purchase_combo_item_id")
-    )
-    private List<PurchaseComboItem> purchaseComboItemList;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	@Column(length = 20)
+	private String producer;
+	@Column(length = 50)
+	private String model;
+	@Column(nullable = false, length = 50)
+	private String name;
+	@Column(nullable = false, length = 50)
+	private String type;
+	@Column(name = "product_detail", columnDefinition = "TEXT")
+	private String productDetail;
+	@Column(nullable = false)
+	private Long price;
+	@Column(nullable = false, columnDefinition = "TEXT")
+	private String image;
+	@Column(nullable = false)
+	private byte discountPercentage;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "product_color",
+			joinColumns = @JoinColumn(name = "product_id"),
+			inverseJoinColumns = @JoinColumn(name = "color_id")
+	)
+	private List<Color> colorList;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "blog_id")
+	private Blog blog;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Stock> stockList;
 }

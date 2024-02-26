@@ -25,7 +25,7 @@ public class ProductDto {
 	private byte discountPercentage;
 	private List<Color> colorList;
 	private BlogDto blog;
-	private List<PurchaseComboItem> purchaseComboItemList;
+	private PurchaseComboItem purchaseComboItem;
 	@JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList"})
 	private List<Product> similarProductList;
 }

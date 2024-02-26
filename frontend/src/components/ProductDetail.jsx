@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+import Link from "next/link";
 
 const Index = ({productBE}) => {
     const [mainImg, setMainImg] = useState('');
@@ -123,23 +124,23 @@ const Index = ({productBE}) => {
     const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
-        const calculatedTotalPrice = product.purchaseComboItemList.reduce((accumulator, item) => {
-            const discountedPrice = item.product.price - (item.product.price * item.discountPercentage / 100);
+        const calculatedTotalPrice = product.purchaseComboItem.productList.reduce((accumulator, item) => {
+            const discountedPrice = item.price - (item.price * item.discountPercentage / 100);
             return accumulator + discountedPrice;
         }, 0);
 
         setTotalPrice(calculatedTotalPrice + discountedPrice);
-    }, [product.purchaseComboItemList]);
+    }, [product.purchaseComboItem]);
 
     const [totalOriginalPrice, setTotalOriginalPrice] = useState(0);
 
     useEffect(() => {
-        const calculatedTotalOriginalPrice = product.purchaseComboItemList.reduce((accumulator, item) => {
-            return accumulator + item.product.price;
+        const calculatedTotalOriginalPrice = product.purchaseComboItem.productList.reduce((accumulator, item) => {
+            return accumulator + item.price;
         }, 0);
 
         setTotalOriginalPrice(calculatedTotalOriginalPrice + product.price);
-    }, [product.purchaseComboItemList]);
+    }, [product.purchaseComboItem]);
 
     const [expanded, setExpanded] = useState(false);
 
@@ -250,11 +251,13 @@ const Index = ({productBE}) => {
     return (
         <div className="body-wrapper">
             <div className="url">
-                <a href="#">Home </a>
+                <Link href="/">Home </Link>
                 <b> &#8250; </b>
-                <a href="#">Product</a>
+                <Link href="#">Product</Link>
                 <b> &#8250; </b>
-                <a href="#">Laptop</a>
+                <Link href="/products">{product.type}</Link>
+                <b> &#8250; </b>
+                <b>{product.name}</b>
             </div>
 
             <div className="top-line"></div>
@@ -443,21 +446,23 @@ const Index = ({productBE}) => {
                             <div className="recommended-accessories-line"></div>
 
                             <ul className="recommended-accessories-list">
-                                {product.purchaseComboItemList.map((item) => (
+                                {product.purchaseComboItem.productList.map((item) => (
                                     <li className="recommended-accessories-item" key={item.id}>
                                         <div className="recommended-accessories-checkbox">
                                             <input type="checkbox" className="product" defaultChecked />
                                         </div>
 
                                         <div className="recommended-accessories-img">
-                                            <img src={item.product.image.split('|')[0]} alt="First Image" />
+                                            <img src={item.image.split('|')[0]} alt="First Image" />
                                         </div>
                                         <div className="recommended-accessories-content">
-                                            <a href={item.product.id}>{item.product.name}</a>
+                                            <Link href={"/products/"+item.type.toLowerCase()+"/"+item.name.toLowerCase().replace(/ /g, "-")}>
+                                                {item.name}
+                                            </Link>
                                             <div className="accessories-price">
-                                                <b>{formatPrice(item.product.price - (item.product.price * item.discountPercentage / 100))}</b>
+                                            <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
                                                 <b className="money-unit">đ</b>
-                                                <p>{formatPrice(item.product.price)}</p>
+                                                <p>{formatPrice(item.price)}</p>
                                                 <p className="money-unit">đ</p>
                                             </div>
                                             <div className="accessories-price-ratio">

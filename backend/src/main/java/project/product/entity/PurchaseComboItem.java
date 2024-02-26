@@ -13,15 +13,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "purchase_combo_item")
 public class PurchaseComboItem {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@ManyToMany(mappedBy = "purchaseComboItemList")
-	@JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList", "discountPercentage"})
+	@JsonIgnoreProperties({"producer", "model", "productDetail", "colorList", "blog", "purchaseComboItemList"})
 	private List<Product> productList;
-	@Column(name = "discount_percentage")
-	private byte discountPercentage;
 }

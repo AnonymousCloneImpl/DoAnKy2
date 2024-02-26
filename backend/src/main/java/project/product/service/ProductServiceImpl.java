@@ -2,6 +2,10 @@ package project.product.service;
 
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Root;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +16,14 @@ import project.product.dto.BlogDto;
 import project.product.dto.ProductDto;
 import project.product.entity.Blog;
 import project.product.entity.Product;
+import project.product.entity.PurchaseComboItem;
+import project.product.entity.Stock;
 import project.product.repository.BlogRepository;
 import project.product.repository.ColorRepository;
 import project.product.repository.ProductRepository;
 import project.search.dto.ProductSummaryDto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,38 +61,51 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String outputString = name.replace("-", " ");
-		System.out.println(outputString);
+
 		Product product = productRepo.getByProductTypeAndByName(type, outputString);
+
+		
 		ProductDto productDto = new ProductDto();
 		BeanUtils.copyProperties(product, productDto);
 
+		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
 
-		Optional<Blog> blogOptional = blogRepo.findById(product.getId());
-		Blog blog = blogOptional.get();
+		try {
+			purchaseComboItem.setProductList(
+					List.of(
+							productRepo.findMostPurchaseMouse(),
+							productRepo.findMostPurchaseKeyboard(),
+							productRepo.findMostPurchaseHeadphone()
+					)
+			);
+			productDto.setPurchaseComboItem(purchaseComboItem);
+		} catch (IllegalAccessError e) {
+			System.err.println("Purchase Combo Item Is Null!");
+			purchaseComboItem.setProductList(new ArrayList<>());
+		}
 
+		Blog blog = product.getBlog();
 		String BlogImageStr = blog.getImage();
 		String BlogContentStr = blog.getContent();
 		BlogDto blogDto = new BlogDto();
+
 		BeanUtils.copyProperties(blog, blogDto);
+
 		if (BlogImageStr != null) {
 			blogDto.setImageList(List.of(BlogImageStr.split("\\|")));
 			blogDto.setContentList(List.of(BlogContentStr.split("\\|")));
 		}
 
-		Optional<Product> productOptional = productRepo.findById(product.getId());
 		List<Product> similarProductList;
-		if (productOptional.isPresent()) {
-			similarProductList = productRepo.findTop10SimilarByType(product.getType(), product.getId(), PageRequest.of(0, 10));
-			String imageString = product.getImage();
-			if (imageString != null) {
-				productDto.setImageList(List.of(imageString.split("\\|")));
-				productDto.setBlog(blogDto);
-				productDto.setSimilarProductList(similarProductList);
-			}
-			return Optional.of(productDto);
-		} else {
-			return Optional.empty();
+		similarProductList = productRepo.findTop10SimilarByType(product.getType(), product.getId(), PageRequest.of(0, 10));
+		String imageString = product.getImage();
+
+		if (imageString != null) {
+			productDto.setImageList(List.of(imageString.split("\\|")));
+			productDto.setBlog(blogDto);
+			productDto.setSimilarProductList(similarProductList);
 		}
+		return Optional.of(productDto);
 	}
 
 	@Override

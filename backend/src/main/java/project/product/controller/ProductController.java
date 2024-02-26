@@ -104,9 +104,7 @@ public class ProductController {
 
 	@GetMapping("/type")
 	public List<ProductSummaryDto> getProductList(@RequestParam String type, @RequestParam Long limit) {
-		long a = System.currentTimeMillis();
-		List<ProductSummaryDto> list = productService.getByProductType(type, limit);
-		System.out.println(a - System.currentTimeMillis());
-		return list;
+
+		return productService.getByProductType(type, limit);
 	}
 }
