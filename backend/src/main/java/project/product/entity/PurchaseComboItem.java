@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,10 +19,9 @@ public class PurchaseComboItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	@ManyToOne
-	@JoinColumn(name = "product_id")
+	@ManyToMany(mappedBy = "purchaseComboItemList")
 	@JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList", "discountPercentage"})
-	private Product product;
+	private List<Product> productList;
 	@Column(name = "discount_percentage")
 	private byte discountPercentage;
 }
