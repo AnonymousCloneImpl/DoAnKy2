@@ -11,7 +11,7 @@ export async function getServerSideProps(context) {
     const response = await fetch(`${process.env.DOMAIN}/products/${type}`);
 
     const dataFromBE = await response.json();
-    console.log(dataFromBE)
+
     return {
         props: {
             pageData: dataFromBE,
