@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import project.product.dto.ProductDto;
 import project.product.entity.Product;
 
 import java.util.List;
@@ -19,6 +18,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 	@Query("SELECT p FROM Product p WHERE p.type = :type AND p.id <> :productId")
 	List<Product> findTop10SimilarByType(@Param("type") String type, @Param("productId") Long productId, Pageable pageable);
 
-	@Query(nativeQuery = true, value = "SELECT * FROM product p WHERE p.type like :type LIMIT :limit")
+	@Query(nativeQuery = true, value = "SELECT * FROM product p WHERE p.type LIKE :type LIMIT :limit")
 	List<Product> getByProductType(String type, Long limit);
+
+	@Query(nativeQuery = true, value = "SELECT * FROM product p WHERE p.type LIKE :type AND p.name LIKE %:name%")
+	List<Product> getByProductTypeAndByName(String type, String name);
 }

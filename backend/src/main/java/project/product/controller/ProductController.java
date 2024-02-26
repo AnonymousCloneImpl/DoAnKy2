@@ -18,26 +18,33 @@ import java.util.Optional;
 @RequestMapping("/products")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
-  
+
 	@Autowired
 	private ProductService productService;
 	@Autowired
 	private ModelMapper modelMapper;
 
 	@GetMapping("")
-	public List<Product> getProductList() {
-		return productService.getAll();
+	public ResponseEntity<List<Product>> getProductList() {
+		return ResponseEntity.status(HttpStatus.OK).body(
+				productService.getAll()
+		);
 	}
 
-	@GetMapping("/{id}")
-	ResponseEntity<Object> getById(@PathVariable Long id) {
-		Optional<ProductDto> product = productService.getById(id);
-		if (product.isPresent()) {
-			return ResponseEntity.ok().body(product);
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-				new ResponseObject("Failed", "Can't find product with id = " + id, "")
-		);
+	@GetMapping("/{type}")
+	ResponseEntity<List<ProductSummaryDto>> getById(@PathVariable String type) {
+		Long limit = 100L;
+		List<ProductSummaryDto> list = productService.getByProductType(type, limit);
+
+		return ResponseEntity.ok().body(list);
+	}
+
+	@GetMapping("/{type}/{name}")
+	ResponseEntity<List<ProductSummaryDto>> getById(@PathVariable String type, @PathVariable String name) {
+
+		List<ProductSummaryDto> list = productService.getByProductTypeAndByName(type, name);
+
+		return ResponseEntity.ok().body(list);
 	}
 
 	@PostMapping("/insert")

@@ -10,8 +10,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BlogDto {
-    private Long id;
-    private List<String> imageList;
-    private String header;
-    private List<String> contentList;
+	private Long id;
+	private List<String> imageList;
+	private String header;
+	private List<String> contentList;
 }

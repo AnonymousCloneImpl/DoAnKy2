@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import project.product.dto.BlogDto;
 import project.product.dto.ProductDto;
 import project.product.entity.Blog;
@@ -19,7 +20,6 @@ import project.search.dto.ProductSummaryDto;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -40,6 +40,23 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductSummaryDto> getByProductType(String type, Long limit) {
 		List<Product> productList = productRepo.getByProductType(type, limit);
+
+		List<ProductSummaryDto> productSummaryDtoList = productList.stream()
+				.map(product -> modelMapper.map(product, ProductSummaryDto.class))
+				.toList();
+
+		for (ProductSummaryDto p : productSummaryDtoList) {
+			p.setImage(p.getImage().split("\\|")[0]);
+		}
+
+		return productSummaryDtoList;
+	}
+
+	@Override
+	public List<ProductSummaryDto> getByProductTypeAndByName(String type, String name) {
+		String outputString = name.replace("-", " ");
+		System.out.println(outputString);
+		List<Product> productList = productRepo.getByProductTypeAndByName(type, outputString);
 
 		List<ProductSummaryDto> productSummaryDtoList = productList.stream()
 				.map(product -> modelMapper.map(product, ProductSummaryDto.class))

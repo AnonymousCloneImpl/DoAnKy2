@@ -3,7 +3,6 @@ import AnimationCarousel from "@/components/slider";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCreditCard, faCartPlus} from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
-import Footer from "@/components/footer/footer";
 import useSWR from 'swr';
 import fetcher from "@/utils/fetchAPI";
 
@@ -118,7 +117,7 @@ export default function Home() {
             <div className="block-products flex justify-center h-full">
                 <div className="w-10/12 h-full">
                     <div className="h-1/5 w-full flex items-center">
-                        <div className="w-full h-1/2 border border-y-red-600 flex justify-between items-center">
+                        <div className="w-full h-1/2 flex justify-between items-center">
                             <p className="text-3xl pl-8 w-2/12">LAPTOP</p>
                             <Link href="/products" className="pl-8 w-2/12">Xem thêm</Link>
                         </div>
@@ -211,7 +210,6 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <Footer/>
         </div>
     )
 }

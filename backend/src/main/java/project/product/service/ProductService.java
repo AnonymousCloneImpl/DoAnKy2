@@ -1,7 +1,6 @@
 package project.product.service;
 
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import project.product.dto.ProductDto;
 import project.product.entity.Product;
@@ -15,6 +14,8 @@ public interface ProductService {
 	List<Product> getAll();
 
 	List<ProductSummaryDto> getByProductType(String type, Long limit);
+
+	List<ProductSummaryDto> getByProductTypeAndByName(String type, String name);
 
 	Optional<ProductDto> getById(long id);
 

@@ -15,10 +15,10 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "color")
 public class Color {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private String name;
-    @ManyToMany(mappedBy = "colorList")
-    private List<Product> productList;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	private String name;
+	@ManyToMany(mappedBy = "colorList")
+	private List<Product> productList;
 }
