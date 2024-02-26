@@ -15,7 +15,7 @@ public interface ProductService {
 
 	List<ProductSummaryDto> getByProductType(String type, Long limit);
 
-	List<ProductSummaryDto> getByProductTypeAndByName(String type, String name);
+	Optional<Object> getByProductTypeAndByName(String type, String name);
 
 	Optional<ProductDto> getById(long id);
 
