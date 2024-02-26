@@ -44,6 +44,11 @@ public class Product {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "blog_id")
     private Blog blog;
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "product_purchase_combo",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "purchase_combo_item_id")
+    )
     private List<PurchaseComboItem> purchaseComboItemList;
 }
