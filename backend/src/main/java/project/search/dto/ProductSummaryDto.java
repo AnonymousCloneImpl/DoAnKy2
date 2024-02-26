@@ -13,4 +13,5 @@ public class ProductSummaryDto {
 	private Long price;
 	private byte discountPercentage;
 	private String image;
+	private String type;
 }
