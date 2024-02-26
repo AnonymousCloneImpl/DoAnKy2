@@ -34,7 +34,7 @@ public class Product {
     private String image;
     @Column(nullable = false)
     private byte discountPercentage;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "product_color",
         joinColumns = @JoinColumn(name = "product_id"),
