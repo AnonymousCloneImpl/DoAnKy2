@@ -165,6 +165,9 @@ const Index = ({productBE}) => {
     const [customerPhone, setCustomerPhone] = useState('');
     const [customerEmail, setCustomerEmail] = useState('');
     const [houseAddress, setHouseAddress] = useState('');
+    const [orderItem, setOrderItem] = useState({
+
+    });
 
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
@@ -211,13 +214,17 @@ const Index = ({productBE}) => {
         const selectedDistrict = districts.find(d => d[0] === selectedDistrictId);
         const selectedProvince = provinces.find(p => p[0] === selectedProvinceId);
 
-        const customerAddress =`${houseAddress}, ${selectedWard ? selectedWard[1] : ''}, ${selectedDistrict ? selectedDistrict[1] : ''}, ${selectedProvince ? selectedProvince[1] : ''}`;
+        const shippingAddress =`${houseAddress}, ${selectedWard ? selectedWard[1] : ''}, ${selectedDistrict ? selectedDistrict[1] : ''}, ${selectedProvince ? selectedProvince[1] : ''}`;
 
         const orderData = {
             customerName,
             customerPhone,
             customerEmail,
-            customerAddress
+            shippingAddress,
+            orderItem: {
+                [product.id] : quantity
+
+            }
         };
         console.log('Order Data:', orderData);
         const url = `${process.env.DOMAIN}/orders/place-order`;
@@ -260,7 +267,7 @@ const Index = ({productBE}) => {
                     <b> &#8250; </b>
                     <Link href="/products">{product.type}</Link>
                     <b> &#8250; </b>
-                    <b>{product.name}</b>
+                    <b className="name">{product.name}</b>
                 </div>
 
                 <div className="top-line"></div>
@@ -557,7 +564,7 @@ const Index = ({productBE}) => {
                                            id="customerName" required>
                                     </input>
 
-                                    <label htmlFor="customerAddress">Address</label>
+                                    <label htmlFor="shippingAddress">Address</label>
                                     <div className="address-selects">
                                         <select
                                             className="province"

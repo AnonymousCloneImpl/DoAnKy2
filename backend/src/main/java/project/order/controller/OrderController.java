@@ -17,7 +17,7 @@ public class OrderController {
     @Autowired
     private ModelMapper modelMapper;
 
-    @PostMapping("/placeOrder")
+    @PostMapping("/place-order")
     public ResponseEntity<String> placeOrder(@RequestBody OrderDto orderDTO) {
         return new ResponseEntity<>("Order placed successfully", HttpStatus.OK);
     }

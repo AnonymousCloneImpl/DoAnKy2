@@ -18,8 +18,15 @@
 
 .url b {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
     color: grey;
+}
+
+.url .name {
+    font-size: 15px;
+    text-decoration: none;
+    color: #2F80ED;
+    font-weight: 500;
 }
 
 .top-line {
