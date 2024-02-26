@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import project.product.dto.BlogDto;
 import project.product.dto.ProductDto;
 import project.product.entity.Blog;
@@ -53,20 +52,40 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductSummaryDto> getByProductTypeAndByName(String type, String name) {
+	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String outputString = name.replace("-", " ");
 		System.out.println(outputString);
-		List<Product> productList = productRepo.getByProductTypeAndByName(type, outputString);
+		Product product = productRepo.getByProductTypeAndByName(type, outputString);
+		ProductDto productDto = new ProductDto();
+		BeanUtils.copyProperties(product, productDto);
 
-		List<ProductSummaryDto> productSummaryDtoList = productList.stream()
-				.map(product -> modelMapper.map(product, ProductSummaryDto.class))
-				.toList();
 
-		for (ProductSummaryDto p : productSummaryDtoList) {
-			p.setImage(p.getImage().split("\\|")[0]);
+		Optional<Blog> blogOptional = blogRepo.findById(product.getId());
+		Blog blog = blogOptional.get();
+
+		String BlogImageStr = blog.getImage();
+		String BlogContentStr = blog.getContent();
+		BlogDto blogDto = new BlogDto();
+		BeanUtils.copyProperties(blog, blogDto);
+		if (BlogImageStr != null) {
+			blogDto.setImageList(List.of(BlogImageStr.split("\\|")));
+			blogDto.setContentList(List.of(BlogContentStr.split("\\|")));
 		}
 
-		return productSummaryDtoList;
+		Optional<Product> productOptional = productRepo.findById(product.getId());
+		List<Product> similarProductList;
+		if (productOptional.isPresent()) {
+			similarProductList = productRepo.findTop10SimilarByType(product.getType(), product.getId(), PageRequest.of(0, 10));
+			String imageString = product.getImage();
+			if (imageString != null) {
+				productDto.setImageList(List.of(imageString.split("\\|")));
+				productDto.setBlog(blogDto);
+				productDto.setSimilarProductList(similarProductList);
+			}
+			return Optional.of(productDto);
+		} else {
+			return Optional.empty();
+		}
 	}
 
 	@Override

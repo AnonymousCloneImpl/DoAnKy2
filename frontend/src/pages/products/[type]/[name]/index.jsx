@@ -2,7 +2,7 @@ import React from 'react';
 import ProductDetail from "@/components/ProductDetail";
 
 const ProductDetailPage = ({ productData }) => {
-    return <ProductDetail product={productData} />
+    return <ProductDetail productBE={productData} />
 };
 
 export async function getServerSideProps(context) {

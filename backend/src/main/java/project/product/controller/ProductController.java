@@ -32,7 +32,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/{type}")
-	ResponseEntity<List<ProductSummaryDto>> getById(@PathVariable String type) {
+	ResponseEntity<List<ProductSummaryDto>> getProductByType(@PathVariable String type) {
 		Long limit = 100L;
 		List<ProductSummaryDto> list = productService.getByProductType(type, limit);
 
@@ -40,9 +40,9 @@ public class ProductController {
 	}
 
 	@GetMapping("/{type}/{name}")
-	ResponseEntity<List<ProductSummaryDto>> getById(@PathVariable String type, @PathVariable String name) {
+	ResponseEntity<Optional<Object>> getProductByTypeAndName(@PathVariable String type, @PathVariable String name) {
 
-		List<ProductSummaryDto> list = productService.getByProductTypeAndByName(type, name);
+		Optional<Object> list = productService.getByProductTypeAndByName(type, name);
 
 		return ResponseEntity.ok().body(list);
 	}
