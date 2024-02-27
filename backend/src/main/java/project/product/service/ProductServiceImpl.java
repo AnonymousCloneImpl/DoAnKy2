@@ -66,12 +66,14 @@ public class ProductServiceImpl implements ProductService {
 
 		Product product = productRepo.getByProductTypeAndByName(type, outputString);
 
-
+		System.out.println(product);
 		ProductDto productDto = new ProductDto();
 		BeanUtils.copyProperties(product, productDto);
 
 		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
-
+		System.out.println(productRepo.findMostPurchaseMouse());
+		System.out.println(productRepo.findMostPurchaseKeyboard());
+		System.out.println(productRepo.findMostPurchaseHeadphone());
 		try {
 			purchaseComboItem.setProductList(
 					List.of(

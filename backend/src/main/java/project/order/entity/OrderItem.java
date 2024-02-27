@@ -23,7 +23,7 @@ public class OrderItem {
 	private Order order;
 	@Column(nullable = false)
 	private short quantity;
-	@OneToOne
+	@ManyToOne
 	@JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList"})
 	private Product product;
 }

@@ -124,10 +124,14 @@ export default function Home() {
 
             {/* Product theo danh muc*/}
             <div className="h-1/5 w-full">
-                <ProductCardComponent productData={laptopData} />
+                <ProductCardComponent productData={laptopData}/>
             </div>
-            <ProductCardComponent productData={headphoneData} />
-            <ProductCardComponent productData={mouseData} />
+            <div className="h-1/5 w-full">
+                <ProductCardComponent productData={headphoneData}/>
+            </div>
+            <div className="h-1/5 w-full">
+                <ProductCardComponent productData={mouseData}/>
+            </div>
 
         </>
     )

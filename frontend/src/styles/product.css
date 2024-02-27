@@ -3,10 +3,9 @@
 @tailwind utilities;
 
 .url {
-    font-size: 16px;
     font-weight: 600;
     color: lightgrey;
-    margin: 10px 0 10px 5%;
+    margin: 8px 0 8px 0;
     font-size: 13px;
 }
 
@@ -33,12 +32,10 @@
     height: 1px;
     background: lightgrey;
     margin: 0 auto;
-    width: 90%;
 }
 
 .product-box {
     display: flex;
-    width: 90%;
     margin: 20px auto;
 }
 

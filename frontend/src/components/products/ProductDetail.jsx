@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
 import Link from "next/link";
+import FormatPrice from "@/components/FormatPrice";
 
 const Index = ({productBE}) => {
     const [mainImg, setMainImg] = useState('');
@@ -105,15 +106,6 @@ const Index = ({productBE}) => {
         if (e && e.target.value === '') {
             setQuantity(1);
         }
-    };
-
-    // set price
-    const formatPrice = (price) => {
-        const formattedPrice = price.toLocaleString('vi-VN', {
-            style: 'currency',
-            currency: 'VND',
-        });
-        return formattedPrice.replace(/[^\d.]/g, '');
     };
 
     const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
@@ -355,9 +347,9 @@ const Index = ({productBE}) => {
                                 </div>
 
                                 <div className="product-price">
-                                    <b>{formatPrice(discountedPrice)}</b>
+                                    <b><FormatPrice price={discountedPrice}/></b>
                                     <b className="main-money-unit">đ</b>
-                                    <p>{formatPrice(product.price)}</p>
+                                    <p><FormatPrice price={product.price}/></p>
                                     <p className="main-money-unit">đ</p>
                                 </div>
 
@@ -440,9 +432,9 @@ const Index = ({productBE}) => {
                                     <div className="recommended-main-content">
                                         <h1>{product.name}</h1>
                                         <div className="accessories-price">
-                                            <b>{formatPrice(discountedPrice)}</b>
+                                            <b><FormatPrice price={discountedPrice}/></b>
                                             <b className="money-unit">đ</b>
-                                            <p>{formatPrice(product.price)}</p>
+                                            <p><FormatPrice price={product.price}/></p>
                                             <p className="money-unit">đ</p>
                                         </div>
                                         <div className="accessories-price-ratio">
@@ -468,9 +460,10 @@ const Index = ({productBE}) => {
                                                     {item.name}
                                                 </Link>
                                                 <div className="accessories-price">
-                                                    <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
+                                                    <b><FormatPrice
+                                                        price={item.price - (item.price * item.discountPercentage / 100)}/></b>
                                                     <b className="money-unit">đ</b>
-                                                    <p>{formatPrice(item.price)}</p>
+                                                    <p><FormatPrice price={item.price}/></p>
                                                     <p className="money-unit">đ</p>
                                                 </div>
                                                 <div className="accessories-price-ratio">
@@ -485,9 +478,9 @@ const Index = ({productBE}) => {
 
                                 <div className="total-price">
                                     <h1>Total Price:</h1>
-                                    <b>{formatPrice(totalPrice)}</b>
+                                    <b><FormatPrice price={totalPrice}/></b>
                                     <b className="money-unit">đ</b>
-                                    <p>{formatPrice(totalOriginalPrice)}</p>
+                                    <p><FormatPrice price={totalOriginalPrice}/></p>
                                 </div>
                                 <div className="buy-recommend">
                                     <button className="buy-recommend-btn" onClick={openForm}>
@@ -513,13 +506,13 @@ const Index = ({productBE}) => {
                                         <img src={item.image.split('|')[0]} alt="First Image"/>
                                     </div>
                                     <div className="similar-product-content">
-                                        <Link href={"/products/"+item.type.toLowerCase()+"/"+item.name.toLowerCase().replace(/ /g, "-")}>
+                                        <Link href={"/"+item.type.toLowerCase()+"/"+item.name.toLowerCase().replace(/ /g, "-")}>
                                             {item.name}
                                         </Link>
                                         <div className="similar-product-price">
-                                            <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
+                                            <b><FormatPrice price={item.price - (item.price * item.discountPercentage / 100)}/></b>
                                             <b className="money-unit">đ</b>
-                                            <p>{formatPrice(item.price)}</p>
+                                            <p><FormatPrice price={item.price}/></p>
                                             <p className="money-unit">đ</p>
                                         </div>
                                         <div className="similar-product-price-ratio">
