@@ -13,13 +13,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "blog")
 public class Blog {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	@Column(columnDefinition = "TEXT", nullable = false)
-	private String image;
-	@Column(nullable = false)
-	private String header;
-	@Column(columnDefinition = "TEXT", nullable = false)
-	private String content;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String image;
+    @Column(nullable = false)
+    private String header;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String content;
 }

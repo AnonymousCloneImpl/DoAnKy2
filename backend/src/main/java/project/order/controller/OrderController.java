@@ -21,6 +21,7 @@ public class OrderController {
     @PostMapping("/place-order")
     public ResponseEntity<String> createOrder(@RequestBody OrderDto orderDto) {
         try {
+            System.out.println(orderDto);
             Order createdOrder = orderService.createOrder(orderDto);
             return new ResponseEntity<>("Order created successfully. Order ID: "
                 + createdOrder.getId(), HttpStatus.CREATED);

@@ -7,5 +7,5 @@ import java.util.List;
 
 @Service
 public interface SearchService {
-	List<ProductSummaryDto> findOnHeader(String str);
+    List<ProductSummaryDto> findOnHeader(String str);
 }

@@ -9,20 +9,19 @@ import project.search.SearchSpecification;
 import project.search.dto.ProductSummaryDto;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class SearchServiceImpl implements SearchService {
-	@Autowired
-	private ProductRepository productRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-	@Override
-	public List<ProductSummaryDto> findOnHeader(String str) {
-		SearchSpecification<Product> searchSpecification = new SearchSpecification<Product>();
-		Specification<Product> spec = searchSpecification.searchProducts(str);
+    @Override
+    public List<ProductSummaryDto> findOnHeader(String str) {
+        SearchSpecification<Product> searchSpecification = new SearchSpecification<Product>();
+        Specification<Product> spec = searchSpecification.searchProducts(str);
 
-		List<ProductSummaryDto> productSearchDtos = new ArrayList<>();
+        List<ProductSummaryDto> productSearchDtos = new ArrayList<>();
 
 		productRepository.findAll(spec).forEach((item) -> {
 			ProductSummaryDto p = new ProductSummaryDto();
@@ -35,6 +34,6 @@ public class SearchServiceImpl implements SearchService {
 			productSearchDtos.add(p);
 		});
 
-		return productSearchDtos;
-	}
+        return productSearchDtos;
+    }
 }
