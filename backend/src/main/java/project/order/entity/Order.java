@@ -36,4 +36,6 @@ public class Order {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id")
 	private List<OrderItem> orderItemList;
+	@Column(name = "total_price")
+	private long totalPrice;
 }

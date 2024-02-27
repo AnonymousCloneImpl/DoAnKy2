@@ -22,4 +22,5 @@ public class OrderDto {
     private String customerEmail;
     private String shippingAddress;
     private List<OrderItem> orderItemList;
+    private long totalPrice;
 }

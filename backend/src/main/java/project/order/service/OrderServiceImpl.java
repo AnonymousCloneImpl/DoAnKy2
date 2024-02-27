@@ -36,6 +36,7 @@ public class OrderServiceImpl implements OrderService {
 			.customerEmail(orderDto.getCustomerEmail())
 			.shippingAddress(orderDto.getShippingAddress())
 			.orderItemList(orderDto.getOrderItemList())
+			.totalPrice(orderDto.getTotalPrice())
 			.build();
 		orderRepo.save(order);
 

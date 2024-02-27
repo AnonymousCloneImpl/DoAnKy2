@@ -241,7 +241,7 @@ const Index = ({productBE}) => {
                 setSuccessNotificationVisible(true);
                 setTimeout(() => {
                     setSuccessNotificationVisible(false);
-                }, 1000);
+                }, 2000);
                 console.log('Order placed successfully');
             } else {
                 console.error('Failed to place order');

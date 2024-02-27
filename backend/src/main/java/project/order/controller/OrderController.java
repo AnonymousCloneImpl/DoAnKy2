@@ -7,10 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.order.dto.OrderDto;
 import project.order.entity.Order;
-import project.order.entity.OrderItem;
 import project.order.service.OrderService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/orders")

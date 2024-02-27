@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import project.product.entity.Product;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -21,7 +23,8 @@ public class OrderItem {
 	private Order order;
 	@Column(nullable = false)
 	private short quantity;
-	@OneToOne(fetch = FetchType.EAGER)
+	@ManyToOne
+	@JoinColumn(name = "product_id", nullable = false)
 	@JsonIgnoreProperties({"producer", "model", "type", "productDetail", "colorList", "blog", "purchaseComboItemList"})
 	private Product product;
 }
