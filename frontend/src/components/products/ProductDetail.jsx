@@ -212,7 +212,7 @@ const Index = ({productBE}) => {
             customerEmail,
             shippingAddress,
             orderItemList: [
-                {"product" : product,
+                {"productId" : product.id,
                     "quantity" : quantity}
             ]
         };

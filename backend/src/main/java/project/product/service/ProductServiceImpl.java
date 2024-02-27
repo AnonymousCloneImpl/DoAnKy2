@@ -47,9 +47,11 @@ public class ProductServiceImpl implements ProductService {
 	public List<ProductSummaryDto> getByProductType(String type, Long limit) {
 		List<Product> productList = productRepo.getByProductType(type, limit);
 
-		List<ProductSummaryDto> productSummaryDtoList = productList.stream()
-				.map(product -> modelMapper.map(product, ProductSummaryDto.class))
-				.toList();
+		List<ProductSummaryDto> productSummaryDtoList = new ArrayList<>();
+		for (Product product : productList) {
+			ProductSummaryDto map = modelMapper.map(product, ProductSummaryDto.class);
+			productSummaryDtoList.add(map);
+		}
 
 		for (ProductSummaryDto p : productSummaryDtoList) {
 			p.setImage(p.getImage().split("\\|")[0]);

@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import fetcher from "@/utils/fetchAPI";
 import ProductCardComponent from "@/components/home/ProductCard";
 import Head from "next/head";
+import CustomErrorPage from "@/pages/error";
 
 dotenv.config();
 
@@ -18,7 +19,7 @@ export default function Home() {
     const { data: headphoneData, error: headphoneError } = useSWR(headphoneApi, fetcher);
     const { data: mouseData, error: mouseError } = useSWR(mouseApi, fetcher);
 
-    if (laptopError || headphoneError || mouseError) return <div>Error loading data</div>;
+    if (laptopError || headphoneError || mouseError) return <CustomErrorPage statusCode="404" />;
 
     if (!laptopData || !headphoneData || !mouseData) return <div>Loading...</div>;
 

@@ -15,7 +15,6 @@ const ProductsPage = ({ pageData }) => {
                 </div>
             </div>
             <h1>List of Products</h1>
-            <p>{pageData[0].name}</p>
         </div>
     );
 };
