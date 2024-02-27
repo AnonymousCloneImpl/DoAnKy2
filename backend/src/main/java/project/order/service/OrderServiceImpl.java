@@ -1,13 +1,15 @@
 package project.order.service;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
 import project.const_.ORDER_STATUS;
+import project.order.dto.OrderDto;
 import project.order.entity.Order;
-import project.order.entity.OrderItem;
+import project.order.repository.OrderItemRepository;
 import project.order.repository.OrderRepository;
+import project.product.repository.ProductRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,64 +17,72 @@ import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-	@Autowired
-	private OrderRepository orderRepo;
-	@Autowired
-	private ModelMapper modelMapper;
+    @Autowired
+    private OrderRepository orderRepo;
+    @Autowired
+    private ProductRepository productRepo;
+    private OrderItemRepository orderItemRepo;
 
-	@Override
-	public Order createOrder(List<OrderItem> orderItemList) {
-		if (orderItemList == null || orderItemList.isEmpty()) {
-			throw new IllegalArgumentException("Order items cannot be null or empty");
-		}
+    @Transactional
+    @Override
+    public Order createOrder(OrderDto orderDto) {
+        Order order = Order.builder()
+            .orderCode(GenerateCodeUtils.getRandomCode(orderDto.getCustomerName()))
+            .orderDate(LocalDateTime.now())
+            .status(ORDER_STATUS.WAITING)
+            .customerName(orderDto.getCustomerName())
+            .customerPhone(orderDto.getCustomerPhone())
+            .customerEmail(orderDto.getCustomerEmail())
+            .shippingAddress(orderDto.getShippingAddress())
+            .totalPrice(orderDto.getTotalPrice())
+            .build();
+        orderRepo.save(order);
 
-		String shippingAddress = "a";
 
-		Order order = Order.builder()
-				.orderCode(GenerateCodeUtils.getRandomCode("prefix"))
-				.orderDate(LocalDateTime.now())
-				.status(ORDER_STATUS.WAITING)
-				.customerName("a")
-				.customerEmail("a")
-				.customerPhone("a")
-				.shippingAddress(shippingAddress)
-				.orderItemList(orderItemList)
-				.build();
+//		for (OrderItem item : orderDto.getOrderItemList()) {
+//			Optional<Product> productOptional = productRepo.findById(item.getProduct().getId());
+//
+//			if (productOptional.isPresent()) {
+//				Product product = productOptional.get();
+//				OrderItem orderItem = OrderItem.builder()
+//					.order(order)
+//					.quantity(item.getQuantity())
+//					.product(product)
+//					.build();
+//				orderItemRepo.save(orderItem);
+//				order.getOrderItemList().add(orderItem);
+//			}
+//		}
+        return order;
+    }
 
-		try {
-			return orderRepo.save(order);
-		} catch (Exception e) {
-			throw new RuntimeException("Failed to create order", e);
-		}
-	}
+    @Override
+    public Optional<Order> getOrderById(Long id) {
+        return orderRepo.findById(id);
+    }
 
-	@Override
-	public Optional<Order> getOrderById(Long id) {
-		return orderRepo.findById(id);
-	}
+    @Override
+    public List<Order> getOrdersByStatus(ORDER_STATUS status) {
+        return null;
+    }
 
-	@Override
-	public List<Order> getOrdersByStatus(ORDER_STATUS status) {
-		return null;
-	}
+    @Override
+    public void confirmOrder(Long orderId) {
 
-	@Override
-	public void confirmOrder(Long orderId) {
+    }
 
-	}
+    @Override
+    public void processPayment(Order order) {
 
-	@Override
-	public void processPayment(Order order) {
+    }
 
-	}
+    @Override
+    public void processShipping(Order order) {
 
-	@Override
-	public void processShipping(Order order) {
+    }
 
-	}
+    @Override
+    public void processRefund(Order order) {
 
-	@Override
-	public void processRefund(Order order) {
-
-	}
+    }
 }

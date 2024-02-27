@@ -205,16 +205,20 @@ const Index = ({productBE}) => {
         const selectedProvince = provinces.find(p => p[0] === selectedProvinceId);
 
         const shippingAddress =`${houseAddress}, ${selectedWard ? selectedWard[1] : ''}, ${selectedDistrict ? selectedDistrict[1] : ''}, ${selectedProvince ? selectedProvince[1] : ''}`;
+        const totalPrice = discountedPrice * quantity;
 
         const orderData = {
             customerName,
             customerPhone,
             customerEmail,
             shippingAddress,
-            orderItemList: [
-                {"productId" : product.id,
-                    "quantity" : quantity}
-            ]
+            orderItemDtoList: [
+                {
+                    "productId" : product.id,
+                    "quantity" : quantity
+                }
+            ],
+            totalPrice
         };
         console.log('Order Data:', orderData);
         const url = `${process.env.DOMAIN}/orders/place-order`;
