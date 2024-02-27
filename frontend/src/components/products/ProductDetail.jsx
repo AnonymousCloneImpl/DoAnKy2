@@ -220,10 +220,6 @@ const Index = ({productBE}) => {
             customerPhone,
             customerEmail,
             shippingAddress,
-            orderItem: {
-                [product.id] : quantity
-
-            },
             orderItemList: [
                 {"product" : product,
                     "quantity" : quantity}
@@ -247,7 +243,7 @@ const Index = ({productBE}) => {
                 setSuccessNotificationVisible(true);
                 setTimeout(() => {
                     setSuccessNotificationVisible(false);
-                }, 1000);
+                }, 2000);
                 console.log('Order placed successfully');
             } else {
                 console.error('Failed to place order');
@@ -517,7 +513,9 @@ const Index = ({productBE}) => {
                                         <img src={item.image.split('|')[0]} alt="First Image"/>
                                     </div>
                                     <div className="similar-product-content">
-                                        <a href={item.id}>{item.name}</a>
+                                        <Link href={"/products/"+item.type.toLowerCase()+"/"+item.name.toLowerCase().replace(/ /g, "-")}>
+                                            {item.name}
+                                        </Link>
                                         <div className="similar-product-price">
                                             <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
                                             <b className="money-unit">đ</b>
