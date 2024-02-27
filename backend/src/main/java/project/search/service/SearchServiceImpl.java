@@ -27,10 +27,11 @@ public class SearchServiceImpl implements SearchService {
 		productRepository.findAll(spec).forEach((item) -> {
 			ProductSummaryDto p = new ProductSummaryDto();
 			p.setId(item.getId());
-			p.setName(item.getProducer() + " " + item.getModel() + " " + item.getName());
+			p.setName(item.getName());
 			p.setPrice(item.getPrice());
 			p.setDiscountPercentage(item.getDiscountPercentage());
 			p.setImage(item.getImage().split("\\|")[0]);
+			p.setType(item.getType());
 			productSearchDtos.add(p);
 		});
 
