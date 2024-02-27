@@ -2,6 +2,7 @@ package project.order.service;
 
 import org.springframework.stereotype.Service;
 import project.const_.ORDER_STATUS;
+import project.order.dto.OrderDto;
 import project.order.entity.Order;
 import project.order.entity.OrderItem;
 
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 @Service
 public interface OrderService {
-	public Order createOrder(List<OrderItem> orderItemList);
+	public Order createOrder(OrderDto orderDto);
 
 	public Optional<Order> getOrderById(Long id);
 

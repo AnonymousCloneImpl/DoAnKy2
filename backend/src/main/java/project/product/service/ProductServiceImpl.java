@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
 
 		Product product = productRepo.getByProductTypeAndByName(type, outputString);
 
-		
+
 		ProductDto productDto = new ProductDto();
 		BeanUtils.copyProperties(product, productDto);
 

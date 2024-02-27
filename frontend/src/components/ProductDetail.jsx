@@ -165,9 +165,7 @@ const Index = ({productBE}) => {
     const [customerPhone, setCustomerPhone] = useState('');
     const [customerEmail, setCustomerEmail] = useState('');
     const [houseAddress, setHouseAddress] = useState('');
-    const [orderItem, setOrderItem] = useState({
-
-    });
+    const [orderItem, setOrderItem] = useState([]);
 
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
@@ -221,10 +219,10 @@ const Index = ({productBE}) => {
             customerPhone,
             customerEmail,
             shippingAddress,
-            orderItem: {
-                [product.id] : quantity
-
-            }
+            orderItemList: [
+                {"product" : product,
+                "quantity" : quantity}
+            ]
         };
         console.log('Order Data:', orderData);
         const url = `${process.env.DOMAIN}/orders/place-order`;
@@ -515,7 +513,9 @@ const Index = ({productBE}) => {
                                         <img src={item.image.split('|')[0]} alt="First Image"/>
                                     </div>
                                     <div className="similar-product-content">
-                                        <a href={item.id}>{item.name}</a>
+                                        <Link href={"/products/"+item.type.toLowerCase()+"/"+item.name.toLowerCase().replace(/ /g, "-")}>
+                                            {item.name}
+                                        </Link>
                                         <div className="similar-product-price">
                                             <b>{formatPrice(item.price - (item.price * item.discountPercentage / 100))}</b>
                                             <b className="money-unit">đ</b>

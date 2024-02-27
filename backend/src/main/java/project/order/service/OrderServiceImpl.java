@@ -1,13 +1,17 @@
 package project.order.service;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
 import project.const_.ORDER_STATUS;
+import project.order.dto.OrderDto;
 import project.order.entity.Order;
 import project.order.entity.OrderItem;
+import project.order.repository.OrderItemRepository;
 import project.order.repository.OrderRepository;
+import project.product.entity.Product;
+import project.product.repository.ProductRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,32 +22,41 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderRepository orderRepo;
 	@Autowired
-	private ModelMapper modelMapper;
+	private ProductRepository productRepo;
+	private OrderItemRepository orderItemRepo;
 
 	@Override
-	public Order createOrder(List<OrderItem> orderItemList) {
-		if (orderItemList == null || orderItemList.isEmpty()) {
-			throw new IllegalArgumentException("Order items cannot be null or empty");
-		}
-
-		String shippingAddress = "a";
-
+	public Order createOrder(OrderDto orderDto) {
 		Order order = Order.builder()
-				.orderCode(GenerateCodeUtils.getRandomCode("prefix"))
-				.orderDate(LocalDateTime.now())
-				.status(ORDER_STATUS.WAITING)
-				.customerName("a")
-				.customerEmail("a")
-				.customerPhone("a")
-				.shippingAddress(shippingAddress)
-				.orderItemList(orderItemList)
-				.build();
+			.orderCode(GenerateCodeUtils.getRandomCode(orderDto.getCustomerName()))
+			.orderDate(LocalDateTime.now())
+			.status(ORDER_STATUS.WAITING)
+			.customerName(orderDto.getCustomerName())
+			.customerPhone(orderDto.getCustomerPhone())
+			.customerEmail(orderDto.getCustomerEmail())
+			.shippingAddress(orderDto.getShippingAddress())
+			.orderItemList(orderDto.getOrderItemList())
+			.build();
+		orderRepo.save(order);
 
-		try {
-			return orderRepo.save(order);
-		} catch (Exception e) {
-			throw new RuntimeException("Failed to create order", e);
+		for (OrderItem item : orderDto.getOrderItemList()) {
+			System.err.println("product service : " + productRepo.findById(item.getProduct().getId()));
+			System.err.println("quantity: " + item.getQuantity());
+			Optional<Product> productOptional = productRepo.findById(item.getProduct().getId());
+
+			if (productOptional.isPresent()) {
+				Product product = productOptional.get();
+
+				OrderItem orderItem = OrderItem.builder()
+					.order(order)
+					.quantity(item.getQuantity())
+					.product(product)
+					.build();
+				orderItemRepo.save(orderItem);
+				order.getOrderItemList().add(orderItem);
+			}
 		}
+		return order;
 	}
 
 	@Override
