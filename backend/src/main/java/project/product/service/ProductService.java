@@ -11,23 +11,23 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
-	List<Product> getAll();
+    List<Product> getAll();
 
-	List<ProductSummaryDto> getByProductType(String type, Long limit);
+    List<ProductSummaryDto> getByProductType(String type, Long limit);
 
-	Optional<Object> getByProductTypeAndByName(String type, String name);
+    Optional<Object> getByProductTypeAndByName(String type, String name);
 
-	Optional<ProductDto> getById(long id);
+    Optional<ProductDto> getById(long id);
 
-	List<Product> getByName(Specification<Product> spec, String name);
+    List<Product> getByName(Specification<Product> spec, String name);
 
-	boolean existById(long id);
+    boolean existById(long id);
 
-	Specification<Product> nameLike(String name);
+    Specification<Product> nameLike(String name);
 
-	void deleteById(long id);
+    void deleteById(long id);
 
-	Product insert(ProductDto productDto);
+    Product insert(ProductDto productDto);
 
-	Product updateById(Long id, ProductDto productDto);
+    Product updateById(Long id, ProductDto productDto);
 }

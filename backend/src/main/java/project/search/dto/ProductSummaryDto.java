@@ -8,10 +8,10 @@ import lombok.*;
 @Getter
 @Setter
 public class ProductSummaryDto {
-	private long id;
-	private String name;
-	private Long price;
-	private byte discountPercentage;
-	private String image;
-	private String type;
+    private long id;
+    private String name;
+    private Long price;
+    private byte discountPercentage;
+    private String image;
+    private String type;
 }
