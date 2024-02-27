@@ -92,14 +92,8 @@ header.sticky {
     cursor: pointer;
 }
 
-.sub-menu-item {
-    display: flex;
-    justify-content: center;
-}
-
 .sub-menu-i {
     font-size: 22px;
-    padding: 10px 10px 0 0;
 }
 
 .main-menu-left {
@@ -119,14 +113,6 @@ ul#sub-menu {
     display: flex;
     justify-content: space-around;
     background: #ffa507;
-}
-
-ul#sub-menu a {
-    text-transform: uppercase;
-    padding: 10px 0;
-    color: black;
-    display: block;
-    font-weight: bold;
 }
 
 ul#sub-menu li {
@@ -267,7 +253,6 @@ ul#sub-menu li:hover ul#sub-drop {
     margin-top: -60px;
     left: 30%;
     width: 40%;
-    border-radius: 8px;
     position: absolute;
     z-index: 999;
     box-shadow: rgba(0, 0, 0, 0.25) 0 14px 28px, rgba(0, 0, 0, 0.22) 0 10px 10px;
@@ -281,6 +266,7 @@ ul#sub-menu li:hover ul#sub-drop {
 
 .search_result_item:hover {
     background-color: #efefef;
+    border-radius: 10px;
 }
 
 .result_image {
@@ -308,8 +294,7 @@ ul#sub-menu li:hover ul#sub-drop {
 .top_result {
     display: flex;
     width: 100%;
-    height: 40%;
-    padding-top: 5%;
+    height: 50%;
 }
 
 .result_name {
@@ -323,16 +308,22 @@ ul#sub-menu li:hover ul#sub-drop {
     width: 20%;
     height: 100%;
     text-align: center;
-    color: red;
     margin-left: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: flex-end;
+}
+
+.result_price_ratio_value{
+    color: #ffffff;
+    background-color: red;
 }
 
 .bottom_result {
     display: flex;
     width: 100%;
-    height: 40%;
+    height: 50%;
+    align-items: center;
 }
 
 .price_discount {

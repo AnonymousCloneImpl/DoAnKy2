@@ -8,7 +8,7 @@ const ProductCardComponent = ({productData}) => {
                 <div className="h-1/5 w-full flex items-center">
                     <div className="w-full h-1/2 flex justify-between items-center">
                         <p className="text-3xl pl-8 w-2/12">{productData[0].type}</p>
-                        <Link href={"/products/" + productData[0].type} className="pl-8 w-2/12">Xem thêm&gt;&gt;</Link>
+                        <Link href={productData[0].type} className="pl-8 w-2/12">Xem thêm&gt;&gt;</Link>
                     </div>
                 </div>
                 <div className="h-4/5 w-full flex">
@@ -21,7 +21,7 @@ const ProductCardComponent = ({productData}) => {
                                 <p className="bg-red-600 text-white w-1/4 text-center rounded-tr-md">-{product.discountPercentage}%</p>
                             </div>
                             <div className="h-3/6 w-full">
-                                <Link href={"/" + product.type.toLowerCase() + "/" + product.name.toLowerCase().replace(/\s/g, "-")}>
+                                <Link href={`/${product.type.toLowerCase()}/${product.name.toLowerCase().replace(/\s/g, "-")}`}>
                                     <img
                                         src={product.image}
                                         className="h-full w-full"
@@ -29,7 +29,7 @@ const ProductCardComponent = ({productData}) => {
                                 </Link>
                             </div>
                             <div className="flex items-center pt-3 h-1/6 w-full">
-                                <Link href={"/" + product.type.toLowerCase() + "/" + product.name.toLowerCase().replace(/\s/g, "-")}>
+                                <Link href={`/${product.type.toLowerCase()}/${product.name.toLowerCase().replace(/\s/g, "-")}`}>
                                     <p className="pl-3 h-full w-full">{product.name}</p>
                                 </Link>
                             </div>

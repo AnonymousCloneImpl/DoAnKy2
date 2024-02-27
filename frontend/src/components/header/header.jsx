@@ -16,6 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from "react";
 import fetcher from "@/utils/fetchAPI";
 import Link from "next/link";
+import FormatPrice from "@/components/FormatPrice";
 
 library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
 
@@ -23,6 +24,7 @@ config.autoAddCss = false;
 
 export default function Header() {
     const [showResults, setShowResults] = useState(false);
+    const [isHoveringOnSearchResult, setIsHoveringOnSearchResult] = useState(false);
     const [results, setResults] = useState({});
 
     const handleSearchChange = async (e) => {
@@ -58,7 +60,30 @@ export default function Header() {
 
 
     const handleBlur = () => {
+        if (!document.activeElement.classList.contains('search_result') && !isHoveringOnSearchResult) {
+            setShowResults(false);
+            clearSearchInput();
+        }
+    };
+
+    const handleSearchResultHover = () => {
+        setIsHoveringOnSearchResult(true);
+    };
+
+    const handleSearchResultLeave = () => {
+        setIsHoveringOnSearchResult(false);
+    };
+
+    const handleResultLinkClick = () => {
         setShowResults(false);
+        clearSearchInput();
+    };
+
+    const clearSearchInput = () => {
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.value = "";
+        }
     };
 
     return (
@@ -104,15 +129,18 @@ export default function Header() {
             <div className="inner-header">
                 <div className="inner-header-form">
                     <div className="logo-wrapper">
-                        <Link href="/" id="logo">
-                            <img src="/spirals.png" alt="logo" width="50" height="50" />
+                        <Link href="/" id="logo" className="flex">
+                            <img src="/spirals.png" alt="logo" width="50" height="50"/>
+                            <p>Thế Giới Manh Động</p>
+                            <b>.com</b>
                         </Link>
-                        <p>Thế Giới Manh Động</p>
-                        <b>.com</b>
                     </div>
                     {/*       Search         */}
                     <div className="search-wrapper">
-                        <div>
+                        <div
+                            onMouseEnter={handleSearchResultHover}
+                            onMouseLeave={handleSearchResultLeave}
+                        >
                             <input type="text" placeholder="Search..." id="searchInput"
                                    onBlur={handleBlur}
                                    onInput={(e) => handleSearchChange(e)}
@@ -139,10 +167,12 @@ export default function Header() {
             <nav id="sub-menu-nav">
                 <ul id="sub-menu">
                     <li>
-                        <div className="sub-menu-item">
+                        <Link href="/laptop" className="flex justify-center items-center m-1">
                             <FontAwesomeIcon icon={faLaptop} className="sub-menu-i"/>
-                            <a href="/src/pages/products/[id]/[id]">laptop</a>
-                        </div>
+                            <p className="text-xl pl-2">
+                                Laptop
+                            </p>
+                        </Link>
                         <ul id="sub-drop">
                             <li>
                                 <img src="/header_img/drop-menu-mouse.webp" alt=""/>
@@ -155,9 +185,11 @@ export default function Header() {
                         </ul>
                     </li>
                     <li>
-                        <div className="sub-menu-item">
-                            <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i"/>
-                            <a href="">accessories</a>
+                        <div className="">
+                            <Link href="/" className="flex justify-center items-center m-1">
+                                <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i"/>
+                                <p className="text-xl pl-2">Accessories</p>
+                            </Link>
                         </div>
                         <ul id="sub-drop">
                             <li><img src="/header_img/drop-menu-mouse.webp" alt=""/>
@@ -168,39 +200,48 @@ export default function Header() {
                         </ul>
                     </li>
                     <li>
-                        <div className="sub-menu-item">
-                            <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
-                            <a href="">build your PC</a>
+                        <div className="">
+                            <Link href="/" className="flex justify-center items-center m-1">
+                                <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
+                                <p className="text-xl pl-2">Build your PC</p>
+                            </Link>
                         </div>
                     </li>
                 </ul>
             </nav>
 
             {showResults && (
-                <div className="search_result">
+                <div className="search_result"
+                     onMouseEnter={handleSearchResultHover}
+                     onMouseLeave={handleSearchResultLeave}
+                >
                     {
                         results.data.length > 0 ? (
                             results.data.map((result) => (
-                                <div className="search_result_item" key={result.id}>
+                                <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id} href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
                                     <div className="flex">
                                         <div className="result_image">
                                             <img className="result_image_item" src={result.image}/>
                                         </div>
                                         <div className="result_info">
                                             <div className="top_result">
-                                                <a className="result_name"
-                                                   href={`/products/${result.id}`}>{`${result.name}`}</a>
-                                                <p className="result_price_ratio">{`-${result.discountPercentage}%`}</p>
+                                                <p className="result_name font-semibold">{result.name}</p>
+                                                <div className="result_price_ratio">
+                                                    <p className="result_price_ratio_value p-1 text-center">{`-${result.discountPercentage}%`}</p>
+                                                </div>
                                             </div>
                                             <div className="bottom_result pt-npm8">
-                                                <b className="price_discount">{result.price - (result.price * result.discountPercentage / 100)}đ</b>
-                                                <p className="price">{result.price}đ</p>
+                                                <b className="price_discount"><FormatPrice price={result.price - (result.price * result.discountPercentage / 100)} />đ</b>
+                                                <p className="price"><FormatPrice price={result.price} />đ</p>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))) : (
-                            <p>No results found.</p>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="flex justify-center h-20 items-center">
+                                <p>No results found.</p>
+                            </div>
                         )
                     }
                 </div>
