@@ -166,9 +166,7 @@ const Index = ({productBE}) => {
     const [customerPhone, setCustomerPhone] = useState('');
     const [customerEmail, setCustomerEmail] = useState('');
     const [houseAddress, setHouseAddress] = useState('');
-    const [orderItem, setOrderItem] = useState({
-
-    });
+    const [orderItem, setOrderItem] = useState([]);
 
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
@@ -225,8 +223,13 @@ const Index = ({productBE}) => {
             orderItem: {
                 [product.id] : quantity
 
-            }
+            },
+            orderItemList: [
+                {"product" : product,
+                    "quantity" : quantity}
+            ]
         };
+
         console.log('Order Data:', orderData);
         const url = `${process.env.DOMAIN}/orders/place-order`;
 
