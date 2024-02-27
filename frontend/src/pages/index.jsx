@@ -1,38 +1,47 @@
 import dotenv from 'dotenv';
 import AnimationCarousel from "@/components/slider";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCreditCard, faCartPlus} from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import useSWR from 'swr';
 import fetcher from "@/utils/fetchAPI";
+import ProductCardComponent from "@/components/home/ProductCard";
+import Head from "next/head";
 
 dotenv.config();
 
 export default function Home() {
 
-    const url = `${process.env.DOMAIN}/products`;
+    const laptopApi = `${process.env.DOMAIN}/products/header?type=laptop&limit=5`;
+    const headphoneApi = `${process.env.DOMAIN}/products/header?type=headphone&limit=5`;
+    const mouseApi = `${process.env.DOMAIN}/products/header?type=mouse&limit=5`;
 
-    const {data, error} = useSWR(url, fetcher);
+    const { data: laptopData, error: laptopError } = useSWR(laptopApi, fetcher);
+    const { data: headphoneData, error: headphoneError } = useSWR(headphoneApi, fetcher);
+    const { data: mouseData, error: mouseError } = useSWR(mouseApi, fetcher);
 
-    if (error) return <div>Error loading data</div>;
+    if (laptopError || headphoneError || mouseError) return <div>Error loading data</div>;
 
-    if (!data) return <div>Loading...</div>;
+    if (!laptopData || !headphoneData || !mouseData) return <div>Loading...</div>;
 
     return (
-        <div className="homepage">
+        <>
+            <Head>
+                <title>
+                    Welcome to Shop
+                </title>
+            </Head>
             <div className="slider">
                 <AnimationCarousel/>
             </div>
             {/*     CATEGORY    */}
             <div className="category-hompage w-full flex justify-center flex-wrap h-80">
-                <div className="w-10/12 h-2/5 flex flex-wrap">
+                <div className="w-full h-2/5 flex flex-wrap">
                     <div className="w-full h-full flex items-center justify-center">
                         <p className="text-center w-full text-5xl">
                             DANH MỤC NỔI BẬT
                         </p>
                     </div>
                 </div>
-                <div className="w-10/12 h-3/5 flex justify-around">
+                <div className="w-full h-3/5 flex justify-around">
                     <Link
                         className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-125 hover:transition-transform hover:duration-500 rounded-md"
                         href="/products">
@@ -86,12 +95,12 @@ export default function Home() {
 
             {/* Khuyến Mãi */}
             <div className="w-full h-80 flex flex-wrap justify-center align-middle mt-10">
-                <div className="w-10/12 flex items-end">
+                <div className="w-full flex items-end">
                     <p className="text-3xl pl-6 text-center w-full pb-3">
                         ƯU ĐÃI NGÀY TẾT, SẮM BẰNG HẾT
                     </p>
                 </div>
-                <div className="w-10/12 h-3/5 flex">
+                <div className="w-full h-3/5 flex">
                     <Link href="" className="h-full w-2/6 ml-1 mr-1">
                         <img
                             src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/SIS%20asus.png"
@@ -114,102 +123,12 @@ export default function Home() {
             </div>
 
             {/* Product theo danh muc*/}
-            <div className="block-products flex justify-center h-full">
-                <div className="w-10/12 h-full">
-                    <div className="h-1/5 w-full flex items-center">
-                        <div className="w-full h-1/2 flex justify-between items-center">
-                            <p className="text-3xl pl-8 w-2/12">LAPTOP</p>
-                            <Link href="/products" className="pl-8 w-2/12">Xem thêm</Link>
-                        </div>
-                    </div>
-                    <div className="h-4/5 w-full flex">
-                        {data.map((product) => (
-                            <div
-                                className="w-1/5 h-full rounded-md homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500 hover:homepage-card-item"
-                                key={product.id}
-                            >
-                                <div className="w-full h-6 flex justify-end">
-                                    <p className="bg-red-600 text-white w-1/4 text-center rounded-tr-md">-{product.discountPercentage}%</p>
-                                </div>
-                                <div className="h-3/6 w-full">
-                                    {/*<Image src="" alt="image" height="100" width="100"/>*/}
-                                    <img
-                                        src="https://product.hstatic.net/200000837185/product/laptopgamingasustuff15fx507vv-lp157w_2f86df45d1f549be964801c1bfa4adab_master.png"
-                                        className="h-full w-full"
-                                    />
-                                </div>
-                                <div className="flex items-center pt-3 h-1/6 w-full">
-                                    <p className="pl-3 h-full w-full">{product.name}</p>
-                                </div>
-                                <div className="flex items-center">
-                                    <p className="price_discount pl-3">{product.price - (product.price * product.discountPercentage / 100)}đ</p>
-                                    <p className="price">{product.price}đ</p>
-                                </div>
-                                <div className="w-full h-1/6 flex space-x-4 justify-center items-center">
-                                    <button className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
-                                        <div>
-                                            <FontAwesomeIcon icon={faCartPlus} className="text-red-600"/>
-                                        </div>
-                                    </button>
-                                    <button className="text-white h-3/4 rounded-md bg-red-600 w-5/12">
-                                        <div>
-                                            <FontAwesomeIcon icon={faCreditCard}/> Buy Now
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
+            <div className="h-1/5 w-full">
+                <ProductCardComponent productData={laptopData} />
             </div>
+            <ProductCardComponent productData={headphoneData} />
+            <ProductCardComponent productData={mouseData} />
 
-            <div className="block-products flex justify-center h-full">
-                <div className="w-10/12 h-full">
-                    <div className="h-1/5 w-full flex items-center">
-                        <div className="w-full h-1/2 border border-y-red-600 flex justify-between items-center">
-                            <p className="text-3xl pl-8 w-2/12">LAPTOP</p>
-                            <Link href="/products" className="pl-8 w-2/12">Xem thêm</Link>
-                        </div>
-                    </div>
-                    <div className="h-4/5 w-full flex">
-                        {data.map((product) => (
-                            <div
-                                className="w-1/5 h-full rounded-md homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500 hover:homepage-card-item"
-                                key={product.id}
-                            >
-                                <div className="w-full h-6 flex justify-end">
-                                    <p className="bg-red-600 text-white w-1/4 text-center rounded-tr-md">-{product.discountPercentage}%</p>
-                                </div>
-                                <div className="h-3/6 w-full">
-                                    <img
-                                        src="https://product.hstatic.net/200000837185/product/laptopgamingasustuff15fx507vv-lp157w_2f86df45d1f549be964801c1bfa4adab_master.png"
-                                        className="h-full w-full"
-                                    />
-                                </div>
-                                <div className="flex items-center pt-3 h-1/6 w-full">
-                                    <p className="pl-3 h-full w-full">{product.name}</p>
-                                </div>
-                                <div className="flex items-center">
-                                    <p className="price_discount pl-3">{product.price - (product.price * product.discountPercentage / 100)}đ</p>
-                                    <p className="price">{product.price}đ</p>
-                                </div>
-                                <div className="w-full h-1/6 flex space-x-4 justify-center items-center">
-                                    <button className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
-                                        <div>
-                                            <FontAwesomeIcon icon={faCartPlus} className="text-red-600"/>
-                                        </div>
-                                    </button>
-                                    <button className="text-white h-3/4 rounded-md bg-red-600 w-5/12">
-                                        <div>
-                                            <FontAwesomeIcon icon={faCreditCard}/> Buy Now
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </div>
+        </>
     )
 }

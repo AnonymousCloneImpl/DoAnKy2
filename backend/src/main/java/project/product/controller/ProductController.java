@@ -102,7 +102,7 @@ public class ProductController {
 		);
 	}
 
-	@GetMapping("/type")
+	@GetMapping("/header")
 	public List<ProductSummaryDto> getProductList(@RequestParam String type, @RequestParam Long limit) {
 
 		return productService.getByProductType(type, limit);

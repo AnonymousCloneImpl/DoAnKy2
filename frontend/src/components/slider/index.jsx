@@ -34,7 +34,7 @@ const Slider = () => {
     };
 
     return (
-        <div className="relative w-full slider overflow-hidden">
+        <div className="relative w-full slider overflow-hidden mt-1">
             {images.map((imageUrl, index) => (
                 <div
                     key={index}
