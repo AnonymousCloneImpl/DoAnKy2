@@ -62,9 +62,11 @@ public class ProductServiceImpl implements ProductService {
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String outputString = name.replace("-", " ");
 
+		System.out.println(name);
+
 		Product product = productRepo.getByProductTypeAndByName(type, outputString);
 
-		
+
 		ProductDto productDto = new ProductDto();
 		BeanUtils.copyProperties(product, productDto);
 

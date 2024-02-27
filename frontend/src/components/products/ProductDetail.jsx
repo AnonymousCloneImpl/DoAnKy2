@@ -11,6 +11,7 @@ const Index = ({productBE}) => {
     const [quantity, setQuantity] = useState(1);
 
     const product = productBE;
+
     // set main image
     const subImgItems = product.imageList;
 
@@ -263,9 +264,7 @@ const Index = ({productBE}) => {
                 <div className="url">
                     <Link href="/">Home </Link>
                     <b> &#8250; </b>
-                    <Link href="#">Product</Link>
-                    <b> &#8250; </b>
-                    <Link href="/products">{product.type}</Link>
+                    <Link href={"/"+product.type.toLowerCase()}>{product.type}</Link>
                     <b> &#8250; </b>
                     <b className="name">{product.name}</b>
                 </div>
@@ -297,14 +296,14 @@ const Index = ({productBE}) => {
                                     <FontAwesomeIcon className="service-icon" icon={faRotate} />
                                     <div>
                                         <p>Commitment to 1 for 1 exchange within <b>30 Days</b> for product defects.</p>
-                                        <a href="#">View details &#187;</a>
+                                        <Link href="#">View details &#187;</Link>
                                     </div>
                                 </div>
                                 <div className="service-item-child">
                                     <FontAwesomeIcon className="service-icon" icon={faShieldCat} />
                                     <div>
                                         <p><b>12 Month</b> warranty at manufacturer&apos;s warranty centers</p>
-                                        <a href="#">See warranty address &#187;</a>
+                                        <Link href="#">See warranty address &#187;</Link>
                                     </div>
                                 </div>
                             </div>
@@ -407,7 +406,7 @@ const Index = ({productBE}) => {
                                 </div>
 
                                 <div className="call-to-order">Call to order now
-                                    <a href="tel:1900 301 297"> 1900 301 297 </a>
+                                    <Link href="tel:1900 301 297"> 1900 301 297 </Link>
                                     (7:30 - 22:00)
                                 </div>
                             </div>

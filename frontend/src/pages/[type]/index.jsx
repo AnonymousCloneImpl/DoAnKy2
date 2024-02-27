@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductsPage from "@/pages/products";
+import ProductsPage from "@/components/products/ProductsPage";
 
 const DynamicPage = ({ pageData }) => {
     return <ProductsPage pageData={pageData} />;

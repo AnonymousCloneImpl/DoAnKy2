@@ -1,9 +1,6 @@
-.homepage {
-    height: 520px;
-}
-
 .slider {
-    height: 600px;
+    height: 480px;
+    position: relative;
 }
 
 .homepage-card-item {

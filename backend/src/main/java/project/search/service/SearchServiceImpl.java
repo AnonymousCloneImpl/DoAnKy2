@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 public class SearchServiceImpl implements SearchService {
-@Autowired
+	@Autowired
 	private ProductRepository productRepository;
 
 	@Override
@@ -30,7 +30,7 @@ public class SearchServiceImpl implements SearchService {
 			p.setName(item.getProducer() + " " + item.getModel() + " " + item.getName());
 			p.setPrice(item.getPrice());
 			p.setDiscountPercentage(item.getDiscountPercentage());
-			p.setImage(Arrays.toString(item.getImage().split("\\|")));
+			p.setImage(item.getImage().split("\\|")[0]);
 			productSearchDtos.add(p);
 		});
 

@@ -30,9 +30,15 @@ export default function Layout({ children }) {
     };
 
     return (
-        <>
+        <div>
             <Header/>
-            <div className="pt-38">{children}</div>
+            <div className="pt-38 w-full flex justify-center">
+                <div className="w-10/12">
+                    {children}
+                </div>
+            </div>
+
+
             {/* Scroll and Call button */}
             <button className="call-button">
                 <a href="tel:+84123456789" className="info-menu2-li-a">
@@ -47,6 +53,6 @@ export default function Layout({ children }) {
                     </button>
                 )}
             </div>
-        </>
+        </div>
     )
 }

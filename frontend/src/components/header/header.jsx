@@ -179,27 +179,29 @@ export default function Header() {
             {showResults && (
                 <div className="search_result">
                     {
-                        // results.data.length > 0 ? (
-                        results.data.map((result) => (
-                            <div className="search_result_item" key={result.id}>
-                                <div className="result_image">
-                                    <img className="result_image_item" src={result.image[0]} />
-                                </div>
-                                <div className="result_info">
-                                    <div className="top_result">
-                                        <a className="result_name" href={`/products/${result.id}`}>{`${result.name}`}</a>
-                                        <p className="result_price_ratio">{`-${result.discountPercentage}%`}</p>
+                        results.data.length > 0 ? (
+                            results.data.map((result) => (
+                                <div className="search_result_item" key={result.id}>
+                                    <div className="flex">
+                                        <div className="result_image">
+                                            <img className="result_image_item" src={result.image}/>
+                                        </div>
+                                        <div className="result_info">
+                                            <div className="top_result">
+                                                <a className="result_name"
+                                                   href={`/products/${result.id}`}>{`${result.name}`}</a>
+                                                <p className="result_price_ratio">{`-${result.discountPercentage}%`}</p>
+                                            </div>
+                                            <div className="bottom_result pt-npm8">
+                                                <b className="price_discount">{result.price - (result.price * result.discountPercentage / 100)}đ</b>
+                                                <p className="price">{result.price}đ</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="bottom_result">
-                                        <b className="price_discount">{result.price - (result.price * result.discountPercentage / 100)}đ</b>
-                                        <p className="price">{result.price}đ</p>
-                                    </div>
                                 </div>
-                            </div>
-                        ))
-                        // ) : (
-                    //     <p>No results found.</p>
-                    // )
+                            ))) : (
+                            <p>No results found.</p>
+                        )
                     }
                 </div>
             )}
