@@ -1,11 +1,17 @@
 package project.order.dto;
 
+import lombok.*;
 import project.const_.ORDER_STATUS;
 import project.order.entity.OrderItem;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDto {
     private Long id;
     private String orderCode;
@@ -16,4 +22,5 @@ public class OrderDto {
     private String customerEmail;
     private String shippingAddress;
     private List<OrderItem> orderItemList;
+    private long totalPrice;
 }

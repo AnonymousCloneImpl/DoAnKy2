@@ -18,7 +18,7 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	@Column(name = "order_code", nullable = false, length = 13)
+	@Column(name = "order_code", nullable = false, length = 15)
 	private String orderCode;
 	@Column(name = "order_date", nullable = false)
 	private LocalDateTime orderDate;
@@ -36,4 +36,6 @@ public class Order {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "order_id")
 	private List<OrderItem> orderItemList;
+	@Column(name = "total_price")
+	private long totalPrice;
 }
