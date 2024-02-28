@@ -17,7 +17,7 @@ public interface ProductService {
 
     Optional<Object> getByProductTypeAndByName(String type, String name);
 
-    Optional<ProductDto> getById(long id);
+    Optional<Product> getById(long id);
 
     List<Product> getByName(Specification<Product> spec, String name);
 
