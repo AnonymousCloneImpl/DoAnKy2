@@ -6,13 +6,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
 import project.const_.ORDER_STATUS;
+import project.email.EmailService;
 import project.order.dto.OrderDto;
 import project.order.dto.OrderItemDto;
 import project.order.entity.Order;
 import project.order.entity.OrderItem;
 import project.order.repository.OrderItemRepository;
 import project.order.repository.OrderRepository;
-import project.product.dto.ProductDto;
 import project.product.dto.StockDto;
 import project.product.entity.Product;
 import project.product.entity.Stock;
@@ -33,6 +33,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderItemRepository orderItemRepo;
     @Autowired
     private StockRepository stockRepo;
+    @Autowired
+    private EmailService emailService;
 
     @Transactional
     @Override
@@ -75,6 +77,17 @@ public class OrderServiceImpl implements OrderService {
                 stockRepo.save(stock);
             }
 		}
+
+        try {
+            emailService.sendEmail(order.getCustomerEmail(), "Success Order",
+                "Order ID: " + order.getId() + "\n"
+                    + "Order Code: " + order.getOrderCode() + "\n"
+                    + "Order Date: " + order.getOrderDate() + "\n"
+                    + "Order Status: " + order.getStatus() + "\n"
+                    + "Total Price: " + order.getTotalPrice());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
         return order;
     }
 

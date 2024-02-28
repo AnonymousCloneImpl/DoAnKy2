@@ -51,6 +51,8 @@ const Index = ({productBE}) => {
         }, 3000);
     };
 
+    const isSoldOut = product.stock.quantity === 0;
+
     // Set quantity----------------------------------------------------------------------------------------------
     useEffect(() => {
         const quantityInput = document.querySelector('.quantity-input');
@@ -103,7 +105,7 @@ const Index = ({productBE}) => {
     };
 
     const resetIfEmpty = (e) => {
-        if (e && e.target.value === '') {
+        if (e && e.target.value === '' || product.stock.quantity === 0) {
             setQuantity(1);
         }
     };
@@ -227,6 +229,21 @@ const Index = ({productBE}) => {
         const shippingAddress =`${houseAddress}, ${selectedWard ? selectedWard[1] : ''}, ${selectedDistrict ? selectedDistrict[1] : ''}, ${selectedProvince ? selectedProvince[1] : ''}`;
         const totalPrice = discountedPrice * quantity;
 
+        if (!validName(customerName)) {
+            alert('Please enter a valid name');
+            return;
+        }
+
+        if (!validPhoneNumber(customerPhone)) {
+            alert('Please enter a valid phone number');
+            return;
+        }
+
+        if (!validEmail(customerEmail)) {
+            alert('Please enter a valid email');
+            return;
+        }
+
         const orderData = {
             customerName,
             customerPhone,
@@ -244,7 +261,6 @@ const Index = ({productBE}) => {
             ],
             totalPrice
         };
-        console.log('Order Data:', orderData);
         const url = `${process.env.DOMAIN}/orders/place-order`;
 
         try {
@@ -262,6 +278,9 @@ const Index = ({productBE}) => {
                 setTimeout(() => {
                     setSuccessNotificationVisible(false);
                 }, 2000);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1);
                 console.log('Order placed successfully');
             } else {
                 console.error('Failed to place order');
@@ -271,8 +290,21 @@ const Index = ({productBE}) => {
         }
     };
 
-    const isSoldOut = product.stock.quantity === 0;
-    console.log(isSoldOut);
+// Validate Order
+    const validName = (name) => {
+        const nameRegex = /^[a-zA-Z\s]+$/;
+        return nameRegex.test(name);
+    };
+
+    const validPhoneNumber = (phoneNumber) => {
+        const phoneNumberRegex = /^[0-9]+$/;
+        return phoneNumberRegex.test(phoneNumber) && phoneNumber.length <= 10 && phoneNumber.length >= 9;
+    };
+
+    const validEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
 
     if (!productBE) {
         return (
