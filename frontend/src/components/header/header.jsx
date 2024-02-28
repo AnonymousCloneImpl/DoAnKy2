@@ -156,7 +156,7 @@ export default function Header() {
                             </li>
                             <li className="main-menu-right">
                                 <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
-                                <a className="main-menu-a" href="">My cart</a>
+                                <a className="main-menu-a" href="/cart">My cart</a>
                             </li>
                         </ul>
                     </div>
