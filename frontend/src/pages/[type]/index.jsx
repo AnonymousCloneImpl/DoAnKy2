@@ -1,11 +1,12 @@
 import React from 'react';
 import ProductsPage from "@/components/products/ProductsPage";
 
-const DynamicPage = ({ pageData }) => {
+const DynamicProductTypePage = ({ pageData }) => {
     return <ProductsPage pageData={pageData} />;
 };
 
 export async function getServerSideProps(context) {
+
     const { type } = context.query;
 
     const response = await fetch(`${process.env.DOMAIN}/products/${type}`);
@@ -19,4 +20,4 @@ export async function getServerSideProps(context) {
     };
 }
 
-export default DynamicPage;
+export default DynamicProductTypePage;

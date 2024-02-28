@@ -1,21 +1,21 @@
 import Link from "next/link";
 import ProductCardComponent from "@/components/home/Component.ProductCard";
 import {useRouter} from "next/router";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {getTrackBackground, Range} from "react-range";
 import ComponentProducerList from "@/components/Component.ProducerList";
-import productList from "@/components/home/ProductList";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCartPlus} from "@fortawesome/free-solid-svg-icons";
+import fetcher from "@/utils/fetchAPI";
 
 const ProductsPage = ({pageData}) => {
-
     const router = useRouter();
     const {query} = router;
-
+    const [products, setProducts] = useState(pageData.productSummaryDtoList);
     const [minPrice, setMinPrice] = useState(query.minPrice || '');
     const [maxPrice, setMaxPrice] = useState(query.maxPrice || '');
     const [showPriceInput, setShowPriceInput] = useState(false);
+    const [page, setPage] = useState(1);
 
     const handleStockClick = () => {
         router.push({pathname: router.pathname, query: {...query, stock: true}});
@@ -26,7 +26,6 @@ const ProductsPage = ({pageData}) => {
     };
 
     const handleApplyPriceFilter = () => {
-        // Áp dụng bộ lọc giá khi người dùng bấm vào nút áp dụng
         router.push({
             pathname: router.pathname,
             query: {
@@ -37,7 +36,22 @@ const ProductsPage = ({pageData}) => {
         });
     };
 
-    if (!pageData) {
+    useEffect(() => {
+        const fetchData = async () => {
+            const url = `${process.env.DOMAIN}/products/${query.type}?page=${page}`;
+            const dataFromBE = fetcher(url);
+            setProducts(dataFromBE.productSummaryDtoList);
+        };
+
+        if (minPrice !== '' && maxPrice !== '') {
+            fetchData();
+        }
+        if (page !== 0) {
+            fetchData();
+        }
+    }, [query.type, page, minPrice, maxPrice]);
+
+    if (!products) {
         return <div>Loading...</div>;
     }
 
@@ -56,7 +70,7 @@ const ProductsPage = ({pageData}) => {
                     </p>
                 </div>
                 <div className="h-96 w-full mb-3">
-                    <ProductCardComponent productData={pageData}/>
+                    <ProductCardComponent productData={products}/>
                 </div>
             </div>
 
@@ -212,12 +226,12 @@ const ProductsPage = ({pageData}) => {
 
             <div className="h-20 flex items-center mt-8 mb-3">
                 <p className="flex items-center text-3xl">
-                    {pageData[0].type}
+                    {products[0].type}
                 </p>
             </div>
 
             <div className="flex flex-wrap h-auto">
-                {pageData.map((product) => (
+                {products.map((product) => (
                     <div key={product.id} className="w-1/5 mb-10">
                         <div
                             className="bg-white rounded-lg homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500 hover:homepage-card-item"

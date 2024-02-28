@@ -2,6 +2,7 @@ package project.product.service;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import project.models.Pagination;
 import project.product.dto.ProductDto;
 import project.product.entity.Product;
 import project.search.dto.ProductSummaryDto;
@@ -11,23 +12,30 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
-    List<Product> getAll();
 
-    List<ProductSummaryDto> getByProductType(String type, Long limit);
+	List<ProductSummaryDto> getAll();
 
-    Optional<Object> getByProductTypeAndByName(String type, String name);
+	Pagination getWithPaging(Long page);
 
-    Optional<Product> getById(long id);
+	List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit);
 
-    List<Product> getByName(Specification<Product> spec, String name);
+	List<ProductSummaryDto> getByProductTypeWithoutPaging(String type);
 
-    boolean existById(long id);
+	Pagination getByProductTypeWithPaging(String type, Integer page);
 
-    Specification<Product> nameLike(String name);
+	Optional<Object> getByProductTypeAndByName(String type, String name);
 
-    void deleteById(long id);
+	Optional<Product> getById(long id);
 
-    Product insert(ProductDto productDto);
+	List<Product> getByName(Specification<Product> spec, String name);
 
-    Product updateById(Long id, ProductDto productDto);
+	boolean existById(long id);
+
+	Specification<Product> nameLike(String name);
+
+	void deleteById(long id);
+
+	Product insert(ProductDto productDto);
+
+	Product updateById(Long id, ProductDto productDto);
 }

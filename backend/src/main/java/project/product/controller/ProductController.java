@@ -2,16 +2,19 @@ package project.product.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.common.ResponseObject;
+import project.models.Pagination;
 import project.product.dto.ProductDto;
 import project.product.entity.Product;
 import project.product.service.ProductService;
 import project.search.dto.ProductSummaryDto;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -19,92 +22,102 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
-    @Autowired
-    private ModelMapper modelMapper;
+	@Autowired
+	private ProductService productService;
+	@Autowired
+	private ModelMapper modelMapper;
 
-    @GetMapping("")
-    public ResponseEntity<List<Product>> getProductList() {
-        return ResponseEntity.status(HttpStatus.OK).body(
-            productService.getAll()
-        );
-    }
+	@Deprecated
+	@GetMapping("")
+	public ResponseEntity<Pagination> getProductList(@Param(value = "page") Long page) {
+		if (page == null) {
+			Pagination pagination = new Pagination();
+			pagination.setProductSummaryDtoList(productService.getAll());
+			return ResponseEntity.status(HttpStatus.OK).body(
+					pagination
+			);
+		}
+		Pagination pagination = productService.getWithPaging(page);
+		return ResponseEntity.status(HttpStatus.OK).body(
+				pagination
+		);
+	}
 
-    @GetMapping("/{type}")
-    ResponseEntity<List<ProductSummaryDto>> getProductByType(@PathVariable String type) {
-        Long limit = 100L;
-        List<ProductSummaryDto> list = productService.getByProductType(type, limit);
+	@GetMapping("/{type}")
+	ResponseEntity<Object> getProductByType(@PathVariable String type, @Param(value = "page") Integer page) {
+		return ResponseEntity.ok().body(
+				productService.getByProductTypeWithPaging(type, Objects.requireNonNullElse(page, 1))
+		);
+	}
 
-        return ResponseEntity.ok().body(list);
-    }
+	@GetMapping("/{type}/{name}")
+	ResponseEntity<Optional<Object>> getProductByTypeAndName(@PathVariable String type, @PathVariable String name) {
 
-    @GetMapping("/{type}/{name}")
-    ResponseEntity<Optional<Object>> getProductByTypeAndName(@PathVariable String type, @PathVariable String name) {
+		Optional<Object> list = productService.getByProductTypeAndByName(type, name);
 
-        Optional<Object> list = productService.getByProductTypeAndByName(type, name);
+		return ResponseEntity.ok().body(list);
+	}
 
-        return ResponseEntity.ok().body(list);
-    }
+	@PostMapping("/insert")
+	ResponseEntity<ResponseObject> insert(@RequestBody ProductDto productDto) {
+		List<Product> products = productService.getByName(productService.nameLike(productDto.getName()), productDto.getName());
+		if (!products.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(
+					new ResponseObject("Failed", "Product name already exist", "")
+			);
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(
+				new ResponseObject("Ok", "Insert new product successfully", productService.insert(productDto))
+		);
+	}
 
-    @PostMapping("/insert")
-    ResponseEntity<ResponseObject> insert(@RequestBody ProductDto productDto) {
-        List<Product> products = productService.getByName(productService.nameLike(productDto.getName()), productDto.getName());
-        if (!products.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(
-                new ResponseObject("Failed", "Product name already exist", "")
-            );
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(
-            new ResponseObject("Ok", "Insert new product successfully", productService.insert(productDto))
-        );
-    }
+	@PutMapping("/{id}")
+	ResponseEntity<ResponseObject> updateById(@PathVariable Long id, @RequestBody ProductDto productDto) {
+		boolean exist = productService.existById(id);
+		if (!exist) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+					new ResponseObject("Failed", "Can't find product with id = " + id, "")
+			);
+		}
 
-    @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateById(@PathVariable Long id, @RequestBody ProductDto productDto) {
-        boolean exist = productService.existById(id);
-        if (!exist) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("Failed", "Can't find product with id = " + id, "")
-            );
-        }
+		Product updatedProduct = productService.updateById(id, productDto);
+		return ResponseEntity.status(HttpStatus.OK).body(
+				new ResponseObject("Ok", "Product information updated successfully",
+						modelMapper.map(updatedProduct, ProductDto.class))
+		);
+	}
 
-        Product updatedProduct = productService.updateById(id, productDto);
-        return ResponseEntity.status(HttpStatus.OK).body(
-            new ResponseObject("Ok", "Product information updated successfully",
-                modelMapper.map(updatedProduct, ProductDto.class))
-        );
-    }
+	@DeleteMapping("/{id}")
+	ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
+		if (productService.existById(id)) {
+			productService.deleteById(id);
+			return ResponseEntity.status(HttpStatus.OK).body(
+					new ResponseObject("Ok", "Delete product successfully", "")
+			);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+				new ResponseObject("Failed", "Can't find product with id = " + id, "")
+		);
+	}
 
-    @DeleteMapping("/{id}")
-    ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
-        if (productService.existById(id)) {
-            productService.deleteById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("Ok", "Delete product successfully", "")
-            );
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-            new ResponseObject("Failed", "Can't find product with id = " + id, "")
-        );
-    }
+	@GetMapping("/search")
+	ResponseEntity<ResponseObject> search(@RequestParam("name") String value) {
+		List<Product> productList = productService.getByName(productService.nameLike(value), value);
+		if (!productList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.OK).body(
+					new ResponseObject("OK", "Get product successfully", productList)
+			);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+				new ResponseObject("Failed", "Can't find product with name = " + value, "")
+		);
+	}
 
-    @GetMapping("/search")
-    ResponseEntity<ResponseObject> search(@RequestParam("name") String value) {
-        List<Product> productList = productService.getByName(productService.nameLike(value), value);
-        if (!productList.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("OK", "Get product successfully", productList)
-            );
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-            new ResponseObject("Failed", "Can't find product with name = " + value, "")
-        );
-    }
-
-    @GetMapping("/header")
-    public List<ProductSummaryDto> getProductList(@RequestParam String type, @RequestParam Long limit) {
-
-        return productService.getByProductType(type, limit);
-    }
+	@GetMapping("/header")
+	public List<ProductSummaryDto> getProductList(@RequestParam String type, @Param(value = "limit") Integer limit) {
+		if (limit == null) {
+			limit = 10;
+		}
+		return productService.getProductByTypeWithLimit(type, limit);
+	}
 }
