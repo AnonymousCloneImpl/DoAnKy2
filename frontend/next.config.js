@@ -4,7 +4,6 @@ const nextConfig = {
     env: {
         DOMAIN: process.env.DOMAIN,
     },
-    excludeFile: (str) => str.endsWith('favicon.ico'),
     webpack: (config, {isServer}) => {
         return config;
     },

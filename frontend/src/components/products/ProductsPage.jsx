@@ -3,6 +3,10 @@ import ProductCardComponent from "@/components/home/Component.ProductCard";
 import {useRouter} from "next/router";
 import {useState} from "react";
 import {getTrackBackground, Range} from "react-range";
+import ComponentProducerList from "@/components/Component.ProducerList";
+import productList from "@/components/home/ProductList";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCartPlus} from "@fortawesome/free-solid-svg-icons";
 
 const ProductsPage = ({pageData}) => {
 
@@ -15,11 +19,6 @@ const ProductsPage = ({pageData}) => {
 
     const handleStockClick = () => {
         router.push({pathname: router.pathname, query: {...query, stock: true}});
-    };
-
-    const handleProducerClick = () => {
-        // Hiển thị list các producer
-        console.log('Show producer list');
     };
 
     const handlePriceClick = () => {
@@ -47,123 +46,26 @@ const ProductsPage = ({pageData}) => {
             <div>
                 <p>This should be small slider</p>
             </div>
+
+            <div className="h-auto rounded-2xl overflow-hidden mt-10"
+                 style={{background: 'linear-gradient(rgb(224, 0, 51), rgb(224, 0, 51)) 0% 0% / cover'}}
+            >
+                <div className="h-32">
+                    <p className="h-full w-full flex justify-center items-center text-6xl text-white">
+                        TOP SELLER
+                    </p>
+                </div>
+                <div className="h-96 w-full mb-3">
+                    <ProductCardComponent productData={pageData}/>
+                </div>
+            </div>
+
             <div className="h-32">
                 <div className="h-1/4">
                     <p>CHUYÊN TRANG THƯƠNG HIỆU</p>
                 </div>
                 <div className="w-full h-3/4">
-                    <ul className="flex flex-wrap justify-start h-full">
-                        <li className="w-1/6 h-1/3 flex justify-center">
-                            <div className="h-full w-1/2">
-                                <Link href=""
-                                      className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center">
-                                    <img
-                                        src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/wysiwyg/Icon/brand_logo/Asus.png"
-                                        className="h-4/6 w-11/12"
-                                    />
-                                </Link>
-                            </div>
-                        </li>
-                        <li className="w-1/6 h-1/3 flex justify-center">
-                            <div className="h-full w-1/2">
-                                <Link href=""
-                                      className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center">
-                                    <img
-                                        src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/wysiwyg/Icon/brand_logo/Asus.png"
-                                        className="h-4/6 w-11/12"
-                                    />
-                                </Link>
-                            </div>
-                        </li>
-                        <li className="w-1/6 h-1/3 flex justify-center">
-                            <div className="h-full w-1/2">
-                                <Link href=""
-                                      className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center">
-                                    <img
-                                        src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/wysiwyg/Icon/brand_logo/Asus.png"
-                                        className="h-4/6 w-11/12"
-                                    />
-                                </Link>
-                            </div>
-                        </li>
-                        <li className="w-1/6 h-1/3 flex justify-center">
-                            <div className="h-full w-1/2">
-                                <Link href=""
-                                      className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center">
-                                    <img
-                                        src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/wysiwyg/Icon/brand_logo/Asus.png"
-                                        className="h-4/6 w-11/12"
-                                    />
-                                </Link>
-                            </div>
-                        </li>
-                        <li className="w-1/6 h-1/3 flex justify-center">
-                            <div className="h-full w-1/2">
-                                <Link href=""
-                                      className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center">
-                                    <img
-                                        src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/wysiwyg/Icon/brand_logo/Asus.png"
-                                        className="h-4/6 w-11/12"
-                                    />
-                                </Link>
-                            </div>
-                        </li>
-                        <li className="w-1/6 h-1/3 flex justify-center">
-                            <div className="h-full w-1/2">
-                                <Link href=""
-                                      className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center">
-                                    <img
-                                        src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/wysiwyg/Icon/brand_logo/Asus.png"
-                                        className="h-4/6 w-11/12"
-                                    />
-                                </Link>
-                            </div>
-                        </li>
-                        <li className="w-1/6 h-1/3 flex justify-center">
-                            <div className="h-full w-1/2">
-                                <Link href=""
-                                      className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center">
-                                    <img
-                                        src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/wysiwyg/Icon/brand_logo/Asus.png"
-                                        className="h-4/6 w-11/12"
-                                    />
-                                </Link>
-                            </div>
-                        </li>
-                        <li className="w-1/6 h-1/3 flex justify-center">
-                            <div className="h-full w-1/2">
-                                <Link href=""
-                                      className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center">
-                                    <img
-                                        src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/wysiwyg/Icon/brand_logo/Asus.png"
-                                        className="h-4/6 w-11/12"
-                                    />
-                                </Link>
-                            </div>
-                        </li>
-                        <li className="w-1/6 h-1/3 flex justify-center">
-                            <div className="h-full w-1/2">
-                                <Link href=""
-                                      className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center">
-                                    <img
-                                        src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/wysiwyg/Icon/brand_logo/Asus.png"
-                                        className="h-4/6 w-11/12"
-                                    />
-                                </Link>
-                            </div>
-                        </li>
-                        <li className="w-1/6 h-1/3 flex justify-center">
-                            <div className="h-full w-1/2">
-                                <Link href=""
-                                      className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center">
-                                    <img
-                                        src="https://cdn2.cellphones.com.vn/insecure/rs:fill:0:50/q:30/plain/https://cellphones.com.vn/media/wysiwyg/Icon/brand_logo/Asus.png"
-                                        className="h-4/6 w-11/12"
-                                    />
-                                </Link>
-                            </div>
-                        </li>
-                    </ul>
+                    <ComponentProducerList/>
                 </div>
             </div>
             <div className="w-full h-36">
@@ -264,19 +166,6 @@ const ProductsPage = ({pageData}) => {
                 </div>
             </div>
 
-            <div className="h-auto rounded-2xl overflow-hidden mt-10"
-                 style={{background: 'linear-gradient(rgb(224, 0, 51), rgb(224, 0, 51)) 0% 0% / cover'}}
-            >
-                <div className="h-32">
-                    <p className="h-full w-full flex justify-center items-center text-6xl text-white">
-                        TOP SELLER
-                    </p>
-                </div>
-                <div className="h-96 w-full mb-3">
-                    <ProductCardComponent productData={pageData}/>
-                </div>
-            </div>
-
             <div>
                 <div>
                     Filter
@@ -291,14 +180,7 @@ const ProductsPage = ({pageData}) => {
                             </a>
                         </div>
                         <div className="h-10 w-1/12 border border-black rounded-xl overflow-hidden mr-5">
-                            <a onClick={handleProducerClick} className="h-full w-full" role="button">
-                                <p className="h-full w-full flex justify-center items-center">
-                                    Producer
-                                </p>
-                            </a>
-                        </div>
-                        <div className="h-10 w-1/12 border border-black rounded-xl overflow-hidden mr-5">
-                            <div className="border border-black rounded-xl overflow-hidden h-full w-full">
+                            <div className="rounded-xl overflow-hidden h-full w-full">
                                 <a onClick={handlePriceClick} className="h-full w-full" role="button">
                                     <p className="h-full w-full flex justify-center items-center">
                                         Price
@@ -310,22 +192,74 @@ const ProductsPage = ({pageData}) => {
                 </div>
             </div>
 
-            <div className="absolute mt-1 left-1/4 w-1/3">
+            <div>
                 {/* Ô input cho giá min và max */}
                 {showPriceInput && (
-                    <div className="flex items-center justify-center border border-black rounded-lg overflow-hidden h-12">
-                        <PriceRangeSlider
-                            minPrice={minPrice}
-                            maxPrice={maxPrice}
-                            setMinPrice={setMinPrice}
-                            setMaxPrice={setMaxPrice}
-                        />
-                        <button onClick={handleApplyPriceFilter} className="ml-6">Apply</button>
+                    <div className="absolute mt-1 left-52 w-1/2">
+                        <div
+                            className="flex items-center justify-center border border-black rounded-lg overflow-hidden h-12 w-full">
+                            <PriceRangeSlider
+                                minPrice={minPrice}
+                                maxPrice={maxPrice}
+                                setMinPrice={setMinPrice}
+                                setMaxPrice={setMaxPrice}
+                            />
+                            <button onClick={handleApplyPriceFilter} className="ml-6">Apply</button>
+                        </div>
                     </div>
                 )}
             </div>
 
-            <div className="mt-20">
+            <div className="h-20 flex items-center mt-8 mb-3">
+                <p className="flex items-center text-3xl">
+                    {pageData[0].type}
+                </p>
+            </div>
+
+            <div className="flex flex-wrap h-auto">
+                {pageData.map((product) => (
+                    <div key={product.id} className="w-1/5 mb-10">
+                        <div
+                            className="bg-white rounded-lg homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500 hover:homepage-card-item"
+                        >
+                            <div className="w-full h-6 flex justify-end">
+                                <p className="bg-red-600 text-white w-1/4 text-center rounded-tr-lg rounded-bl-lg">-{product.discountPercentage}%</p>
+                            </div>
+                            <div className="h-60 w-full">
+                                <Link
+                                    href={`/${product.type.toLowerCase()}/${product.name.toLowerCase().replace(/\s/g, "-")}`}
+                                    className="w-full h-full flex justify-center items-center"
+                                >
+                                    <img
+                                        src={product.image}
+                                        className="h-full"
+                                    />
+                                </Link>
+                            </div>
+                            <div className="flex items-center pt-3 h-20 w-full">
+                                <Link
+                                    href={`/${product.type.toLowerCase()}/${product.name.toLowerCase().replace(/\s/g, "-")}`}>
+                                    <p className="pl-3 h-full w-full">{product.name}</p>
+                                </Link>
+                            </div>
+                            <div className="flex items-center">
+                                <p className="price_discount pl-3">{product.price - (product.price * product.discountPercentage / 100)}đ</p>
+                                <p className="price">{product.price}đ</p>
+                            </div>
+                            <div className="w-full h-16 flex space-x-4 justify-center items-center">
+                                <button className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
+                                    <div>
+                                        <FontAwesomeIcon icon={faCartPlus} className="text-red-600"/>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+
+            <div className="mb-96">
 
             </div>
         </div>
@@ -388,7 +322,7 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
             >
                 {({handles, tracks}) => (
                     <div>
-                        {handles.map(handle => (
+                    {handles.map(handle => (
                             <div
                                 {...handle.props}
                                 key={1}
