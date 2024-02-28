@@ -3,7 +3,7 @@ import AnimationCarousel from "@/components/slider";
 import Link from "next/link";
 import useSWR from 'swr';
 import fetcher from "@/utils/fetchAPI";
-import ProductCardComponent from "@/components/home/ProductCard";
+import ProductListComponent from "@/components/home/ProductList";
 import Head from "next/head";
 import CustomErrorPage from "@/pages/error";
 
@@ -125,13 +125,19 @@ export default function Home() {
 
             {/* Product theo danh muc*/}
             <div className="h-1/5 w-full">
-                <ProductCardComponent productData={laptopData}/>
+                <div className="h-4/5">
+                    <ProductListComponent productData={laptopData}/>
+                </div>
             </div>
             <div className="h-1/5 w-full">
-                <ProductCardComponent productData={headphoneData}/>
+                <div className="h-4/5">
+                    <ProductListComponent productData={headphoneData}/>
+                </div>
             </div>
             <div className="h-1/5 w-full">
-                <ProductCardComponent productData={mouseData}/>
+                <div className="h-4/5">
+                    <ProductListComponent productData={mouseData}/>
+                </div>
             </div>
 
         </>

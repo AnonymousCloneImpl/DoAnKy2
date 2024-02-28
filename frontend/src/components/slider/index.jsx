@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 
-const Slider = () => {
+const HomePageSlider = () => {
     const images = [
         'https://dlcdnwebimgs.asus.com/gain/045A87EA-7742-4E19-831D-241AD480C9AA/fwebp',
         'https://dlcdnwebimgs.asus.com/gain/3A741DEF-79EF-4AFE-A629-162B07681B9F/fwebp',
@@ -70,4 +70,4 @@ const Slider = () => {
     );
 };
 
-export default Slider;
+export default HomePageSlider;
