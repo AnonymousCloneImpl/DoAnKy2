@@ -5,6 +5,7 @@ import lombok.*;
 import project.const_.ORDER_STATUS;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Getter
@@ -35,4 +36,6 @@ public class Order {
     private String shippingAddress;
     @Column(name = "total_price")
     private long totalPrice;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> orderItemList;
 }

@@ -1,15 +1,23 @@
 package project.order.service;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
 import project.const_.ORDER_STATUS;
 import project.order.dto.OrderDto;
+import project.order.dto.OrderItemDto;
 import project.order.entity.Order;
+import project.order.entity.OrderItem;
 import project.order.repository.OrderItemRepository;
 import project.order.repository.OrderRepository;
+import project.product.dto.ProductDto;
+import project.product.dto.StockDto;
+import project.product.entity.Product;
+import project.product.entity.Stock;
 import project.product.repository.ProductRepository;
+import project.product.repository.StockRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,7 +29,10 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepo;
     @Autowired
     private ProductRepository productRepo;
+    @Autowired
     private OrderItemRepository orderItemRepo;
+    @Autowired
+    private StockRepository stockRepo;
 
     @Transactional
     @Override
@@ -38,21 +49,32 @@ public class OrderServiceImpl implements OrderService {
             .build();
         orderRepo.save(order);
 
+        List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();
+		for (OrderItemDto item : orderItemDtoList) {
+			Optional<Product> productOptional = productRepo.findById(item.getProductId());
+            Optional<Stock> stockOptional = stockRepo.findById(item.getProductId());
 
-//		for (OrderItem item : orderDto.getOrderItemList()) {
-//			Optional<Product> productOptional = productRepo.findById(item.getProduct().getId());
-//
-//			if (productOptional.isPresent()) {
-//				Product product = productOptional.get();
-//				OrderItem orderItem = OrderItem.builder()
-//					.order(order)
-//					.quantity(item.getQuantity())
-//					.product(product)
-//					.build();
-//				orderItemRepo.save(orderItem);
-//				order.getOrderItemList().add(orderItem);
-//			}
-//		}
+			if (productOptional.isPresent()) {
+				Product product = productOptional.get();
+				OrderItem orderItem = OrderItem.builder()
+					.order(order)
+					.quantity(item.getQuantity())
+					.product(product)
+					.build();
+                orderItemRepo.save(orderItem);
+			}
+
+            if(stockOptional.isPresent()) {
+                Stock stock = stockOptional.get();
+                StockDto stockDto = StockDto.builder()
+                    .productId(stock.getProduct().getId())
+                    .quantity(stock.getQuantity() - item.getQuantity())
+                    .sold(stock.getSold() + item.getQuantity())
+                    .build();
+                BeanUtils.copyProperties(stockDto, stock);
+                stockRepo.save(stock);
+            }
+		}
         return order;
     }
 
