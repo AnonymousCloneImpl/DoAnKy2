@@ -5,6 +5,7 @@ import lombok.*;
 import project.product.entity.Color;
 import project.product.entity.Product;
 import project.product.entity.PurchaseComboItem;
+import project.product.entity.Stock;
 
 import java.util.List;
 
@@ -28,4 +29,5 @@ public class ProductDto {
     private PurchaseComboItem purchaseComboItem;
     @JsonIgnoreProperties({"producer", "model", "productDetail", "colorList", "blog", "purchaseComboItemList"})
     private List<Product> similarProductList;
+    private StockDto stock;
 }

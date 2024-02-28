@@ -11,12 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.product.dto.BlogDto;
 import project.product.dto.ProductDto;
-import project.product.entity.Blog;
-import project.product.entity.Product;
-import project.product.entity.PurchaseComboItem;
+import project.product.dto.StockDto;
+import project.product.entity.*;
 import project.product.repository.BlogRepository;
-import project.product.repository.ColorRepository;
 import project.product.repository.ProductRepository;
+import project.product.repository.StockRepository;
 import project.search.dto.ProductSummaryDto;
 
 import java.util.ArrayList;
@@ -28,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepo;
     @Autowired
-    private ColorRepository colorRepo;
+    private StockRepository stockRepo;
     @Autowired
     private BlogRepository blogRepo;
     @Autowired
@@ -59,18 +58,12 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Object> getByProductTypeAndByName(String type, String name) {
         String outputString = name.replace("-", " ");
 
-        System.out.println(name);
-
         Product product = productRepo.getByProductTypeAndByName(type, outputString);
 
-        System.out.println(product);
         ProductDto productDto = new ProductDto();
         BeanUtils.copyProperties(product, productDto);
 
         PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
-        System.out.println(productRepo.findMostPurchaseMouse());
-        System.out.println(productRepo.findMostPurchaseKeyboard());
-        System.out.println(productRepo.findMostPurchaseHeadphone());
         try {
             purchaseComboItem.setProductList(
                 List.of(
@@ -89,8 +82,19 @@ public class ProductServiceImpl implements ProductService {
         String BlogImageStr = blog.getImage();
         String BlogContentStr = blog.getContent();
         BlogDto blogDto = new BlogDto();
-
         BeanUtils.copyProperties(blog, blogDto);
+
+        Optional<Stock> stock = stockRepo.findByProductId(product.getId());
+        List<Integer> colorIdList = new ArrayList<>();
+        for (Color c : product.getColorList()) {
+            colorIdList.add(c.getId());
+        }
+        StockDto stockDto = StockDto.builder()
+            .productId(product.getId())
+            .colorIdList(colorIdList)
+            .sold(stock.get().getSold())
+            .quantity(stock.get().getQuantity())
+            .build();
 
         if (BlogImageStr != null) {
             blogDto.setImageList(List.of(BlogImageStr.split("\\|")));
@@ -105,42 +109,14 @@ public class ProductServiceImpl implements ProductService {
             productDto.setImageList(List.of(imageString.split("\\|")));
             productDto.setBlog(blogDto);
             productDto.setSimilarProductList(similarProductList);
+            productDto.setStock(stockDto);
         }
         return Optional.of(productDto);
     }
 
     @Override
-    public Optional<ProductDto> getById(long id) {
-        Optional<Blog> blogOptional = blogRepo.findById(id);
-        Blog blog = blogOptional.get();
-        BlogDto blogDto = new BlogDto();
-        BeanUtils.copyProperties(blog, blogDto);
-
-        String BlogImageStr = blog.getImage();
-        String BlogContentStr = blog.getContent();
-        if (BlogImageStr != null) {
-            blogDto.setImageList(List.of(BlogImageStr.split("\\|")));
-            blogDto.setContentList(List.of(BlogContentStr.split("\\|")));
-        }
-
-        Optional<Product> productOptional = productRepo.findById(id);
-        List<Product> similarProductList;
-        if (productOptional.isPresent()) {
-            Product product = productOptional.get();
-            ProductDto productDto = new ProductDto();
-            BeanUtils.copyProperties(product, productDto);
-            similarProductList = productRepo.findTop10SimilarByType(product.getType(), product.getId(), PageRequest.of(0, 10));
-
-            String imageString = product.getImage();
-            if (imageString != null) {
-                productDto.setImageList(List.of(imageString.split("\\|")));
-                productDto.setBlog(blogDto);
-                productDto.setSimilarProductList(similarProductList);
-            }
-            return Optional.of(productDto);
-        } else {
-            return Optional.empty();
-        }
+    public Optional<Product> getById(long id) {
+        return productRepo.findById(id);
     }
 
     @Override

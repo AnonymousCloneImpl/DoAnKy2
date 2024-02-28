@@ -12,7 +12,7 @@ const Index = ({productBE}) => {
     const [quantity, setQuantity] = useState(1);
 
     const product = productBE;
-    // set main image
+    // set main image----------------------------------------------------------------------------------------------
     const subImgItems = product.imageList;
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const Index = ({productBE}) => {
         setActiveIndex(index);
     };
 
-    // set choose product color
+    // set choose product color----------------------------------------------------------------------------------------------
     const activeBtn = (button) => {
         let buttons = document.querySelectorAll('.pcolor');
         buttons.forEach(function (btn) {
@@ -40,7 +40,7 @@ const Index = ({productBE}) => {
         }
     }, []);
 
-    // cart notification
+    // cart notification----------------------------------------------------------------------------------------------
     const [cartNotificationVisible, setCartNotificationVisible] = useState(false);
 
     const addToCart = () => {
@@ -51,7 +51,7 @@ const Index = ({productBE}) => {
         }, 3000);
     };
 
-    // Set quantity
+    // Set quantity----------------------------------------------------------------------------------------------
     useEffect(() => {
         const quantityInput = document.querySelector('.quantity-input');
         const decreaseButton = document.querySelector('.quantity-decrease');
@@ -91,14 +91,14 @@ const Index = ({productBE}) => {
     function increaseQuantity(e) {
         if (e) {
             e.preventDefault();
-            setQuantity((prevQuantity) => Math.min(prevQuantity + 1, 10));
+            setQuantity((prevQuantity) => Math.min(prevQuantity + 1, product.stock.quantity));
         }
     }
 
     const limitQuantity = (e) => {
         if (e) {
-            const value = parseInt(e.target.value, 10);
-            setQuantity(Math.min(Math.max(value || 1, 1), 10));
+            const value = parseInt(e.target.value, product.stock.quantity);
+            setQuantity(Math.min(Math.max(value || 1, 1), product.stock.quantity));
         }
     };
 
@@ -111,27 +111,46 @@ const Index = ({productBE}) => {
     const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
 
 
-    // Set price combo
+    // Set price combo----------------------------------------------------------------------------------------------
     const [totalPrice, setTotalPrice] = useState(0);
+    const [checkedItems, setCheckedItems] = useState([]);
+
+    const handleCheckboxChange = (itemId) => {
+      const updatedCheckedItems = checkedItems.includes(itemId)
+        ? checkedItems.filter((id) => id !== itemId)
+        : [...checkedItems, itemId];
+
+      setCheckedItems(updatedCheckedItems);
+    };
 
     useEffect(() => {
-        const calculatedTotalPrice = product.purchaseComboItem.productList.reduce((accumulator, item) => {
-            const discountedPrice = item.price - (item.price * item.discountPercentage / 100);
+      const calculatedTotalPrice = product.purchaseComboItem.productList.reduce(
+        (accumulator, item) => {
+          if (checkedItems.includes(item.id)) {
+            const discountedPrice =
+              item.price - (item.price * item.discountPercentage) / 100;
             return accumulator + discountedPrice;
-        }, 0);
+          }
+          return accumulator;
+        },
+        0
+      );
 
-        setTotalPrice(calculatedTotalPrice + discountedPrice);
-    }, [product.purchaseComboItem]);
+      setTotalPrice(calculatedTotalPrice * quantity + discountedPrice * quantity);
+    }, [product.purchaseComboItem, checkedItems]);
 
     const [totalOriginalPrice, setTotalOriginalPrice] = useState(0);
 
     useEffect(() => {
-        const calculatedTotalOriginalPrice = product.purchaseComboItem.productList.reduce((accumulator, item) => {
-            return accumulator + item.price;
-        }, 0);
+      const calculatedTotalOriginalPrice = product.purchaseComboItem.productList.reduce(
+        (accumulator, item) => {
+          return accumulator + (checkedItems.includes(item.id) ? item.price : 0);
+        },
+        0
+      );
 
-        setTotalOriginalPrice(calculatedTotalOriginalPrice + product.price);
-    }, [product.purchaseComboItem]);
+      setTotalOriginalPrice(calculatedTotalOriginalPrice + product.price);
+    }, [product.purchaseComboItem, checkedItems]);
 
     const [expanded, setExpanded] = useState(false);
 
@@ -139,26 +158,7 @@ const Index = ({productBE}) => {
         setExpanded(!expanded);
     };
 
-    // Order form
-    const [isFormVisible, setFormVisible] = useState(false);
-    const formRef = useRef(null);
-
-    const openForm = () => {
-        setFormVisible(true);
-    };
-
-    const closeForm = () => {
-        setFormVisible(false);
-    };
-
-
-    // Place Order
-    const [customerName, setCustomerName] = useState('');
-    const [customerPhone, setCustomerPhone] = useState('');
-    const [customerEmail, setCustomerEmail] = useState('');
-    const [houseAddress, setHouseAddress] = useState('');
-    const [orderItem, setOrderItem] = useState([]);
-
+// Select option address----------------------------------------------------------------------------------------------
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
     const [wards, setWards] = useState([]);
@@ -179,6 +179,26 @@ const Index = ({productBE}) => {
         setSelectedDistrictId(districtId);
         setWards(selectedDistrict[4]);
     };
+
+    // Order form----------------------------------------------------------------------------------------------
+    const [isFormVisible, setFormVisible] = useState(false);
+    const formRef = useRef(null);
+
+    const openForm = () => {
+        setFormVisible(true);
+    };
+
+    const closeForm = () => {
+        setFormVisible(false);
+    };
+
+    // Place Order----------------------------------------------------------------------------------------------
+    const [customerName, setCustomerName] = useState('');
+    const [customerPhone, setCustomerPhone] = useState('');
+    const [customerEmail, setCustomerEmail] = useState('');
+    const [houseAddress, setHouseAddress] = useState('');
+    const [orderItem, setOrderItem] = useState([]);
+    const [selectedAccessories, setSelectedAccessories] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -216,7 +236,11 @@ const Index = ({productBE}) => {
                 {
                     "productId" : product.id,
                     "quantity" : quantity
-                }
+                },
+                ...selectedAccessories.map((accessory) => ({
+                    productId: accessory.id,
+                    quantity: 1,
+                })),
             ],
             totalPrice
         };
@@ -246,6 +270,9 @@ const Index = ({productBE}) => {
             console.error('Error sending order request', error);
         }
     };
+
+    const isSoldOut = product.stock.quantity === 0;
+    console.log(isSoldOut);
 
     if (!productBE) {
         return (
@@ -338,7 +365,7 @@ const Index = ({productBE}) => {
                     <div className="right-box">
                         <div className="right-box-top">
                             <div className="pname">{product.name}</div>
-                            <p className="sold">100 Sold</p>
+                            <p className="sold">{product.stock.sold} Sold</p>
 
                             <div className="right-box-top-child">
                                 <div className="ratings">
@@ -351,9 +378,9 @@ const Index = ({productBE}) => {
                                 </div>
 
                                 <div className="product-price">
-                                    <b><FormatPrice price={discountedPrice}/></b>
+                                    <b><FormatPrice price={discountedPrice * quantity}/></b>
                                     <b className="main-money-unit">đ</b>
-                                    <p><FormatPrice price={product.price}/></p>
+                                    <p><FormatPrice price={product.price * quantity}/></p>
                                     <p className="main-money-unit">đ</p>
                                 </div>
 
@@ -381,7 +408,7 @@ const Index = ({productBE}) => {
                                         <input
                                             type="number"
                                             min="1"
-                                            max="10"
+                                            max={product.stock.quantity}
                                             value={quantity}
                                             onChange={(e) => limitQuantity(e)}
                                             onBlur={(e) => resetIfEmpty(e)}
@@ -391,12 +418,16 @@ const Index = ({productBE}) => {
                                     </div>
                                 </div>
 
+                                <div className="left-in-stock">{product.stock.quantity} Left In Stock</div>
+
                                 <div className="btn-box">
                                     <button className="cart-btn" onClick={() => addToCart()}>
                                         <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                                     </button>
-                                    <button className="buy-btn" onClick={openForm}>
-                                        <FontAwesomeIcon icon={faCreditCard} /> Buy Now
+                                    <button className={`buy-btn ${isSoldOut ? 'disabled-btn' : ''}`}
+                                     onClick={openForm}
+                                     disabled={isSoldOut}>
+                                        {isSoldOut ? 'Out of Stock' : <><FontAwesomeIcon icon={faCreditCard} /> Buy Now</>}
                                     </button>
                                 </div>
 
@@ -436,9 +467,9 @@ const Index = ({productBE}) => {
                                     <div className="recommended-main-content">
                                         <h1>{product.name}</h1>
                                         <div className="accessories-price">
-                                            <b><FormatPrice price={discountedPrice}/></b>
+                                            <b><FormatPrice price={discountedPrice * quantity}/></b>
                                             <b className="money-unit">đ</b>
-                                            <p><FormatPrice price={product.price}/></p>
+                                            <p><FormatPrice price={product.price * quantity}/></p>
                                             <p className="money-unit">đ</p>
                                         </div>
                                         <div className="accessories-price-ratio">
@@ -453,7 +484,9 @@ const Index = ({productBE}) => {
                                     {product.purchaseComboItem.productList.map((item) => (
                                         <li className="recommended-accessories-item" key={item.id}>
                                             <div className="recommended-accessories-checkbox">
-                                                <input type="checkbox" className="product" defaultChecked />
+                                                <input type="checkbox" className="product"
+                                                    onChange={() => handleCheckboxChange(item.id)}
+                                                    checked={checkedItems.includes(item.id)}/>
                                             </div>
 
                                             <div className="recommended-accessories-img">
