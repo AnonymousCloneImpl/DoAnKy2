@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCartPlus} from "@fortawesome/free-solid-svg-icons";
+import FormatPrice from "@/components/FormatPrice";
 
 
 export default function ProductCardComponent({productData}) {
@@ -32,8 +33,8 @@ export default function ProductCardComponent({productData}) {
                             </Link>
                         </div>
                         <div className="flex items-center">
-                            <p className="price_discount pl-3">{product.price - (product.price * product.discountPercentage / 100)}đ</p>
-                            <p className="price">{product.price}đ</p>
+                            <p className="price_discount pl-3"><FormatPrice price={product.price - (product.price * product.discountPercentage / 100)} />đ</p>
+                            <p className="price"><FormatPrice price={product.price} />đ</p>
                         </div>
                         <div className="w-full h-16 flex space-x-4 justify-center items-center">
                             <button className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">

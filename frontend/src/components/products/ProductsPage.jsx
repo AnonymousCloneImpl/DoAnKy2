@@ -7,15 +7,19 @@ import ComponentProducerList from "@/components/Component.ProducerList";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCartPlus} from "@fortawesome/free-solid-svg-icons";
 import fetcher from "@/utils/fetchAPI";
+import ButtonPaging from "@/components/Pagination";
+import FormatPrice from "@/components/FormatPrice";
 
-const ProductsPage = ({pageData}) => {
+const ProductsPage = ({pageData, topSellerData}) => {
     const router = useRouter();
-    const {query} = router;
-    const [products, setProducts] = useState(pageData.productSummaryDtoList);
+    const {query} =  useRouter();
+    const [products, setProducts] = useState([]);
     const [minPrice, setMinPrice] = useState(query.minPrice || '');
     const [maxPrice, setMaxPrice] = useState(query.maxPrice || '');
     const [showPriceInput, setShowPriceInput] = useState(false);
-    const [page, setPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(1);
+    const [topSeller, setTopSeller] = useState([]);
 
     const handleStockClick = () => {
         router.push({pathname: router.pathname, query: {...query, stock: true}});
@@ -36,20 +40,47 @@ const ProductsPage = ({pageData}) => {
         });
     };
 
+    const setParamPage = (value) => {
+        const newQuery = value === 1 ? { ...query } : { ...query, page: value };
+
+        if (value === 1 && newQuery.page) {
+            delete newQuery.page;
+        }
+
+        setCurrentPage(value);
+        fetchNewData(value);
+
+        router.push(
+            {
+                pathname: router.pathname,
+                query: newQuery,
+            },
+            undefined,
+            { scroll: false }
+        );
+    };
+
     useEffect(() => {
+        if (pageData !== null && topSeller !== null) {
+            setProducts(pageData.productSummaryDtoList);
+            setTotalPage(pageData.totalPageNumber);
+            setTopSeller(topSellerData);
+        }
+    }, []);
+
+    const fetchNewData = async (page) => {
+        let url = `${process.env.DOMAIN}/products/${query.type}?page=${page}`;
+        if (page === 1) {
+            url = `${process.env.DOMAIN}/products/${query.type}`;
+        }
+
         const fetchData = async () => {
-            const url = `${process.env.DOMAIN}/products/${query.type}?page=${page}`;
-            const dataFromBE = fetcher(url);
+            const dataFromBE = await fetcher(url);
             setProducts(dataFromBE.productSummaryDtoList);
         };
 
-        if (minPrice !== '' && maxPrice !== '') {
-            fetchData();
-        }
-        if (page !== 0) {
-            fetchData();
-        }
-    }, [query.type, page, minPrice, maxPrice]);
+        fetchData();
+    }
 
     if (!products) {
         return <div>Loading...</div>;
@@ -69,8 +100,8 @@ const ProductsPage = ({pageData}) => {
                         TOP SELLER
                     </p>
                 </div>
-                <div className="h-96 w-full mb-3">
-                    <ProductCardComponent productData={products}/>
+                <div className="w-full">
+                    <ProductCardComponent productData={topSeller}/>
                 </div>
             </div>
 
@@ -226,7 +257,7 @@ const ProductsPage = ({pageData}) => {
 
             <div className="h-20 flex items-center mt-8 mb-3">
                 <p className="flex items-center text-3xl">
-                    {products[0].type}
+                    {products[0]?.type}
                 </p>
             </div>
 
@@ -257,8 +288,8 @@ const ProductsPage = ({pageData}) => {
                                 </Link>
                             </div>
                             <div className="flex items-center">
-                                <p className="price_discount pl-3">{product.price - (product.price * product.discountPercentage / 100)}đ</p>
-                                <p className="price">{product.price}đ</p>
+                                <p className="price_discount pl-3"><FormatPrice price={product.price - (product.price * product.discountPercentage / 100)} />đ</p>
+                                <p className="price"><FormatPrice price={product.price} />đ</p>
                             </div>
                             <div className="w-full h-16 flex space-x-4 justify-center items-center">
                                 <button className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
@@ -272,10 +303,14 @@ const ProductsPage = ({pageData}) => {
                 ))}
             </div>
 
-
-            <div className="mb-96">
-
+            <div className="mb-96 flex justify-center">
+                <ButtonPaging
+                    totalPages={totalPage}
+                    setParamPage={setParamPage}
+                    curentPage={currentPage}
+                />
             </div>
+
         </div>
     );
 };
@@ -336,7 +371,7 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
             >
                 {({handles, tracks}) => (
                     <div>
-                    {handles.map(handle => (
+                        {handles.map(handle => (
                             <div
                                 {...handle.props}
                                 key={1}
