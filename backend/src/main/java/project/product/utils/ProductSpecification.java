@@ -1,17 +1,11 @@
-package project.product.utils;
+package project.search;
 
-import jakarta.persistence.criteria.*;
+import jakarta.persistence.criteria.Predicate;
+import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
-import project.product.entity.Product;
-import project.product.entity.Stock;
 
-public class ProductSpecification<T> {
-
-	public Specification<Product> nameLike(String name) {
-		return (root, query, criteriaBuilder)
-				-> criteriaBuilder.like(root.get("name"), "%" + name + "%");
-	}
-
+@NoArgsConstructor
+public class SearchSpecification<T> {
 	public Specification<T> searchProducts(String keyword) {
 		return (root, query, criteriaBuilder) -> {
 			String likeKeyword = "%" + keyword + "%";

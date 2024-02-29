@@ -1,7 +1,6 @@
 package project.product.dto;
 
 import lombok.*;
-import project.product.entity.Color;
 
 import java.util.List;
 
