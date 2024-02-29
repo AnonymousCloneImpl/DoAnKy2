@@ -120,4 +120,17 @@ public class ProductController {
 		}
 		return productService.getProductByTypeWithLimit(type, limit);
 	}
+
+	@GetMapping("/top-seller")
+	public List<ProductSummaryDto> getListTopSeller(@RequestParam String type, @Param(value = "limit") Integer limit) {
+		if (limit == null) {
+			limit = 5;
+		}
+		return productService.getTopSellerByType(type, limit);
+	}
+
+	@GetMapping("/producer")
+	public List<String> getProducerList() {
+		return productService.getProducerList();
+	}
 }

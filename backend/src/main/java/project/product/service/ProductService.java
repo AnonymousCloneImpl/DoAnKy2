@@ -17,9 +17,11 @@ public interface ProductService {
 
 	Pagination getWithPaging(Long page);
 
+	List<String> getProducerList();
+
 	List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit);
 
-	List<ProductSummaryDto> getByProductTypeWithoutPaging(String type);
+	List<ProductSummaryDto> getTopSellerByType(String type, Integer limit);
 
 	Pagination getByProductTypeWithPaging(String type, Integer page);
 
