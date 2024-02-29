@@ -10,6 +10,7 @@ const Index = ({ productBE }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const product = productBE;
+  console.log(product)
   // set main image----------------------------------------------------------------------------------------------
   const subImgItems = product.imageList;
 
@@ -297,7 +298,7 @@ const Index = ({ productBE }) => {
   const [cartNotificationVisible, setCartNotificationVisible] = useState(false);
 
   //Add To card
-  const addToCart = () => {
+  const addToCart = (product) => {
     const storedItemList = localStorage.getItem('itemList');
     let cartItemList = [];
 
@@ -314,8 +315,7 @@ const Index = ({ productBE }) => {
         "name": product.name,
         "producer": product.producer,
         "price": product.price,
-        "discountedPrice": discountedPrice,
-        "inStock": product.stock.quantity,
+        "discountPercentage": product.discountPercentage,
         "type": product.type
       };
 
@@ -326,8 +326,7 @@ const Index = ({ productBE }) => {
         "name": product.name,
         "producer": product.producer,
         "price": product.price,
-        "discountedPrice": discountedPrice,
-        "inStock": product.stock.quantity,
+        "discountPercentage": product.discountPercentage,
         "type": product.type
       });
     }
@@ -352,8 +351,6 @@ const Index = ({ productBE }) => {
       <div className="body-wrapper">
         <div className="url">
           <Link href="/">Home </Link>
-          <b> &#8250; </b>
-          <Link href="#">Product</Link>
           <b> &#8250; </b>
           <Link href="/products">{product.type}</Link>
           <b> &#8250; </b>
@@ -490,7 +487,7 @@ const Index = ({ productBE }) => {
                 <div className="left-in-stock">{product.stock.quantity} Left In Stock</div>
 
                 <div className="btn-box">
-                  <button className="cart-btn" onClick={() => addToCart()}>
+                  <button className="cart-btn" onClick={() => addToCart(product)}>
                     <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                   </button>
                   <button className={`buy-btn ${isSoldOut ? 'disabled-btn' : ''}`}
@@ -562,7 +559,7 @@ const Index = ({ productBE }) => {
                         <img src={item.image.split('|')[0]} alt="First Image" />
                       </div>
                       <div className="recommended-accessories-content">
-                        <Link href={"/products/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
+                        <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
                           {item.name}
                         </Link>
                         <div className="accessories-price">
@@ -627,7 +624,7 @@ const Index = ({ productBE }) => {
                   </div>
                 </div>
                 <div className="similar-product-btn-box">
-                  <button className="cart-btn" onClick={() => addToCart()}>
+                  <button className="cart-btn" onClick={() => addToCart(item)}>
                     <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                   </button>
                 </div>

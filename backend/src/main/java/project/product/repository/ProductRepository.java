@@ -19,7 +19,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 	Specification<Product> findByName(String name);
 
 	@Query("SELECT p FROM Product p WHERE p.type = :type AND p.id <> :productId")
-	List<Product> findTop10SimilarByType(@Param("type") String type, @Param("productId") Long productId, Pageable pageable);
+	List<Product> findTopSimilarByType(@Param("type") String type, @Param("productId") Long productId, Pageable pageable);
 
 	@Query(nativeQuery = true, value = "SELECT * FROM product p WHERE p.type LIKE :type LIMIT :limit")
 	List<Product> getByProductType(String type, int limit);

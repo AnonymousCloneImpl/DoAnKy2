@@ -28,9 +28,10 @@ const CartPage = () => {
 
   const calculateTotal = () => {
     return items.reduce((total, item) => {
-      return total + item.discountedPrice;
+      return total + (item.price - (item.price * item.discountPercentage) / 100);
     }, 0);
   };
+
 
   return (
     <div className="bg-gray-100">
@@ -59,11 +60,10 @@ const CartPage = () => {
                     <a href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")} className="font-bold text-base">
                       {item.name}
                     </a>
-                    <span className="text-red-600 text-base font-semibold">{item.inStock} Left In Stock</span>
-                    <a href="#" className="font-semibold hover:text-red-500 text-indigo-600 text-lg"
+                    <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-lg"
                       onClick={() => removeItem(index)}>
                       <FontAwesomeIcon icon={faTrashCan} /> Remove
-                    </a>
+                    </b>
                   </div>
                 </div>
                 <div className="flex justify-center w-1/5">
@@ -80,10 +80,10 @@ const CartPage = () => {
                   </svg>
                 </div>
                 <span className="text-center w-1/5 font-semibold text-base">
-                  {item.discountedPrice} đ
+                  <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100}/> đ
                 </span>
-                <span className="text-center w-1/5 font-semibold text-base">
-                  {item.discountedPrice * quantity} đ
+                <span className="text-center text-red-600 w-1/5 font-semibold text-base">
+                  <FormatPrice price={(item.price - (item.price * item.discountPercentage) / 100) * quantity}/> đ
                 </span>
               </div>
             ))}
@@ -102,7 +102,7 @@ const CartPage = () => {
             <h1 className="font-semibold text-3xl border-b pb-8">Order Summary</h1>
 
             <h1 className="font-semibold text-3xl my-3">TOTAL COST</h1>
-            <h1 className="font-semibold text-2xl text-red-600 mb-7">{calculateTotal()} đ</h1>
+            <h1 className="font-semibold text-2xl text-red-600 mb-7"><FormatPrice price={calculateTotal()}/> đ</h1>
 
             <div>
               <label className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
@@ -117,12 +117,10 @@ const CartPage = () => {
               <input type="text" id="promo" placeholder="Enter your code" className="p-2 text-sm w-full" />
             </div>
 
-            <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Apply</button>
-
             <div className="border-t mt-8">
               <button
-                className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
-                Checkout
+                className="bg-indigo-600 font-semibold hover:bg-red-700 py-3 text-sm text-white uppercase w-full">
+                Submit Order
               </button>
             </div>
           </div>
