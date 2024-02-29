@@ -52,21 +52,21 @@ public class OrderServiceImpl implements OrderService {
         orderRepo.save(order);
 
         List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();
-		for (OrderItemDto item : orderItemDtoList) {
-			Optional<Product> productOptional = productRepo.findById(item.getProductId());
+        for (OrderItemDto item : orderItemDtoList) {
+            Optional<Product> productOptional = productRepo.findById(item.getProductId());
             Optional<Stock> stockOptional = stockRepo.findById(item.getProductId());
 
-			if (productOptional.isPresent()) {
-				Product product = productOptional.get();
-				OrderItem orderItem = OrderItem.builder()
-					.order(order)
-					.quantity(item.getQuantity())
-					.product(product)
-					.build();
+            if (productOptional.isPresent()) {
+                Product product = productOptional.get();
+                OrderItem orderItem = OrderItem.builder()
+                    .order(order)
+                    .quantity(item.getQuantity())
+                    .product(product)
+                    .build();
                 orderItemRepo.save(orderItem);
-			}
+            }
 
-            if(stockOptional.isPresent()) {
+            if (stockOptional.isPresent()) {
                 Stock stock = stockOptional.get();
                 StockDto stockDto = StockDto.builder()
                     .productId(stock.getProduct().getId())
@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
                 BeanUtils.copyProperties(stockDto, stock);
                 stockRepo.save(stock);
             }
-		}
+        }
 
         try {
             emailService.sendEmail(order.getCustomerEmail(), "Success Order",
@@ -91,8 +91,7 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
-    @Override
-    public Optional<Order> getOrderById(Long id) {
-        return orderRepo.findById(id);
+    public List<Order> getOrderByPhoneNumber(String number) {
+        return orderRepo.findByCustomerPhone(number);
     }
 }

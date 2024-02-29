@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto  {
+public class OrderDto {
     private String customerName;
     private String customerPhone;
     private String customerEmail;

@@ -19,8 +19,8 @@ import project.product.entity.*;
 import project.product.repository.BlogRepository;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
-import project.product.utils.ProductUtils;
 import project.product.utils.ProductSpecification;
+import project.product.utils.ProductUtils;
 import project.search.dto.ProductSummaryDto;
 
 import java.util.ArrayList;
@@ -70,11 +70,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<String> getProducerList() {
-		return productRepo.getProducerList();
-	}
-
-	@Override
 	public List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit) {
 
 		List<Product> productList = productRepo.getByProductType(type, limit);
@@ -90,15 +85,20 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductSummaryDto> getTopSellerByType(String type, Integer limit) {
-		List<Product> productList = productRepo.getTopSellerByType(type, limit);
+	public List<ProductSummaryDto> getByProductTypeWithoutPaging(String type) {
 
-		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((
-				product -> modelMapper.map(product, ProductSummaryDto.class)
-		)).toList();
+		ProductSpecification<Product> searchSpecification = new ProductSpecification<Product>();
 
-		for (ProductSummaryDto productSummaryDto : productSummaryDtoList) {
-			productSummaryDto.setImage(ProductUtils.getFirstImageUrl(productSummaryDto.getImage()));
+		Specification<Product> spec = searchSpecification.searchByType(type);
+
+		List<Product> productList = productRepo.findAll(spec);
+
+		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((product
+						-> modelMapper.map(product, ProductSummaryDto.class)))
+				.toList();
+
+		for (ProductSummaryDto p : productSummaryDtoList) {
+			p.setImage(p.getImage().split("\\|")[0]);
 		}
 
 		return productSummaryDtoList;
@@ -108,9 +108,9 @@ public class ProductServiceImpl implements ProductService {
 	public Pagination getByProductTypeWithPaging(String type, Integer page) {
 		Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
 
-		ProductSpecification<Product> productSpecification = new ProductSpecification<Product>();
+		ProductSpecification<Product> searchSpecification = new ProductSpecification<Product>();
 
-		Specification<Product> spec = productSpecification.searchByType(type);
+		Specification<Product> spec = searchSpecification.searchByType(type);
 
 		Page<Product> productList = productRepo.findAll(spec, pageable);
 
@@ -144,11 +144,11 @@ public class ProductServiceImpl implements ProductService {
 		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
 		try {
 			purchaseComboItem.setProductList(
-				List.of(
-					productRepo.findMostPurchaseMouse(),
-					productRepo.findMostPurchaseKeyboard(),
-					productRepo.findMostPurchaseHeadphone()
-				)
+					List.of(
+							productRepo.findMostPurchaseMouse(),
+							productRepo.findMostPurchaseKeyboard(),
+							productRepo.findMostPurchaseHeadphone()
+					)
 			);
 			productDto.setPurchaseComboItem(purchaseComboItem);
 		} catch (IllegalAccessError e) {

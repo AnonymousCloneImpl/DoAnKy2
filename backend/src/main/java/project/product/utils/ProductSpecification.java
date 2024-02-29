@@ -6,12 +6,7 @@ import project.product.entity.Product;
 
 public class ProductSpecification<T> {
 
-	public Specification<Product> nameLike(String name) {
-		return (root, query, criteriaBuilder)
-				-> criteriaBuilder.like(root.get("name"), "%" + name + "%");
-	}
-
-	public Specification<T> searchProducts(String keyword) {
+	public Specification<Product> searchProducts(String keyword) {
 		return (root, query, criteriaBuilder) -> {
 			String likeKeyword = "%" + keyword + "%";
 
@@ -23,7 +18,7 @@ public class ProductSpecification<T> {
 		};
 	}
 
-	public Specification<T> searchByType(String type) {
+	public Specification<Product> searchByType(String type) {
 		return (root, query, criteriaBuilder) -> {
 			return criteriaBuilder.like(root.get("type"), "%" + type + "%");
 		};

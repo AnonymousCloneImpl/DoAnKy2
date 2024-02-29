@@ -13,7 +13,7 @@ import {
     faMagnifyingGlass
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {useMemo, useState} from "react";
+import { useState } from "react";
 import fetcher from "@/utils/fetchAPI";
 import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
@@ -130,7 +130,7 @@ export default function Header() {
                 <div className="inner-header-form">
                     <div className="logo-wrapper">
                         <Link href="/" id="logo" className="flex">
-                            <img src="./favico.png" alt="logo" width="50" height="50"/>
+                            <img src="/spirals.png" alt="logo" width="50" height="50"/>
                             <p>Thế Giới Manh Động</p>
                             <b>.com</b>
                         </Link>
@@ -152,11 +152,11 @@ export default function Header() {
                         <ul className="main-menu">
                             <li className="main-menu-left">
                                 <FontAwesomeIcon icon={faFileSignature} className="main-menu-i"/>
-                                <Link className="main-menu-a" href="">Check oder</Link>
+                                <a className="main-menu-a" href="/check-order">Check oder</a>
                             </li>
                             <li className="main-menu-right">
                                 <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
-                                <Link className="main-menu-a" href="/cart">My cart</Link>
+                                <a className="main-menu-a" href="/cart">My cart</a>
                             </li>
                         </ul>
                     </div>
@@ -165,7 +165,7 @@ export default function Header() {
 
             {/*SUB MENU*/}
             <nav id="sub-menu-nav">
-                <ul id="sub-menu">
+                <ul id="sub-menu" className="font-semibold hover:text-indigo-900">
                     <li>
                         <Link href="/laptop" className="flex justify-center items-center m-1">
                             <FontAwesomeIcon icon={faLaptop} className="sub-menu-i"/>
@@ -210,74 +210,40 @@ export default function Header() {
                 </ul>
             </nav>
 
-            {/*{showResults && (*/}
-            {/*    <div className="search_result"*/}
-            {/*         onMouseEnter={handleSearchResultHover}*/}
-            {/*         onMouseLeave={handleSearchResultLeave}*/}
-            {/*    >*/}
-            {/*        {*/}
-            {/*            results.data.length > 0 ? (*/}
-            {/*                results.data.map((result) => (*/}
-            {/*                    <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id} href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>*/}
-            {/*                        <div className="flex">*/}
-            {/*                            <div className="result_image">*/}
-            {/*                                <img className="result_image_item" src={result.image}/>*/}
-            {/*                            </div>*/}
-            {/*                            <div className="result_info">*/}
-            {/*                                <div className="top_result">*/}
-            {/*                                    <p className="result_name font-semibold">{result.name}</p>*/}
-            {/*                                    <div className="result_price_ratio">*/}
-            {/*                                        <p className="result_price_ratio_value p-1 text-center">{`-${result.discountPercentage}%`}</p>*/}
-            {/*                                    </div>*/}
-            {/*                                </div>*/}
-            {/*                                <div className="bottom_result pt-npm8">*/}
-            {/*                                    <b className="price_discount"><FormatPrice price={result.price - (result.price * result.discountPercentage / 100)} />đ</b>*/}
-            {/*                                    <p className="price"><FormatPrice price={result.price} />đ</p>*/}
-            {/*                                </div>*/}
-            {/*                            </div>*/}
-            {/*                        </div>*/}
-            {/*                    </Link>*/}
-            {/*                ))*/}
-            {/*            ) : (*/}
-            {/*                <div className="search_result_item">*/}
-            {/*                    <p>No results found.</p>*/}
-            {/*                </div>*/}
-            {/*            )*/}
-            {/*        }*/}
-            {/*    </div>*/}
-            {/*)}*/}
-
             {showResults && (
-                <div className={`search_result ${isHoveringOnSearchResult ? 'hovered' : ''}`}>
-                    {results.data.length > 0 ? (
-                        results.data.map((result, index) => (
-                            <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id}
-                                  href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
-                                <div className="flex">
-                                    <div className="result_image">
-                                        <img className="result_image_item" src={result.image}/>
-                                    </div>
-                                    <div className="result_info">
-                                        <div className="top_result">
-                                            <p className="result_name font-semibold">{result.name}</p>
-                                            <div className="result_price_ratio">
-                                                <p className="result_price_ratio_value p-1 text-center">{`-${result.discountPercentage}%`}</p>
+                <div className="search_result"
+                     onMouseEnter={handleSearchResultHover}
+                     onMouseLeave={handleSearchResultLeave}
+                >
+                    {
+                        results.data.length > 0 ? (
+                            results.data.map((result) => (
+                                <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id} href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
+                                    <div className="flex">
+                                        <div className="result_image">
+                                            <img className="result_image_item" src={result.image}/>
+                                        </div>
+                                        <div className="result_info">
+                                            <div className="top_result">
+                                                <p className="result_name font-semibold">{result.name}</p>
+                                                <div className="result_price_ratio">
+                                                    <p className="result_price_ratio_value p-1 text-center">{`-${result.discountPercentage}%`}</p>
+                                                </div>
+                                            </div>
+                                            <div className="bottom_result pt-npm8">
+                                                <b className="price_discount"><FormatPrice price={result.price - (result.price * result.discountPercentage / 100)} />đ</b>
+                                                <p className="price"><FormatPrice price={result.price} />đ</p>
                                             </div>
                                         </div>
-                                        <div className="bottom_result pt-npm8">
-                                            <b className="price_discount"><FormatPrice
-                                                price={result.price - (result.price * result.discountPercentage / 100)}/>đ</b>
-                                            <p className="price"><FormatPrice price={result.price}/>đ</p>
-                                        </div>
                                     </div>
-                                </div>
-                            </Link>
-                        ))
-                    ) : (
-                        <div className="search_result_item">
-                            <p>No results found.</p>
-                        </div>
-                    )}
+                                </Link>
+                            ))
+                        ) : (
+                            <div className="flex justify-center h-20 items-center">
+                                <p>No results found.</p>
+                            </div>
+                        )
+                    }
                 </div>
             )}
 
