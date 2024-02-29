@@ -19,8 +19,8 @@ import project.product.entity.*;
 import project.product.repository.BlogRepository;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
+import project.product.utils.ProductSpecification;
 import project.product.utils.ProductUtils;
-import project.search.SearchSpecification;
 import project.search.dto.ProductSummaryDto;
 
 import java.util.ArrayList;
@@ -87,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductSummaryDto> getByProductTypeWithoutPaging(String type) {
 
-		SearchSpecification<Product> searchSpecification = new SearchSpecification<Product>();
+		ProductSpecification<Product> searchSpecification = new ProductSpecification<Product>();
 
 		Specification<Product> spec = searchSpecification.searchByType(type);
 
@@ -108,7 +108,7 @@ public class ProductServiceImpl implements ProductService {
 	public Pagination getByProductTypeWithPaging(String type, Integer page) {
 		Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
 
-		SearchSpecification<Product> searchSpecification = new SearchSpecification<Product>();
+		ProductSpecification<Product> searchSpecification = new ProductSpecification<Product>();
 
 		Specification<Product> spec = searchSpecification.searchByType(type);
 
