@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
-import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+import { faCircleXmark, faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
 
 const Index = ({ productBE }) => {
   const [mainImg, setMainImg] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1);
 
   const product = productBE;
   // set main image----------------------------------------------------------------------------------------------
@@ -41,6 +39,8 @@ const Index = ({ productBE }) => {
   }, []);
 
   // Set quantity----------------------------------------------------------------------------------------------
+  const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
     const quantityInput = document.querySelector('.quantity-input');
     const decreaseButton = document.querySelector('.quantity-decrease');
@@ -313,7 +313,10 @@ const Index = ({ productBE }) => {
         "image": mainImg,
         "name": product.name,
         "producer": product.producer,
-        "price": discountedPrice
+        "price": product.price,
+        "discountedPrice": discountedPrice,
+        "inStock": product.stock.quantity,
+        "type": product.type
       };
 
       cartItemList = updatedCartItemList;
@@ -322,7 +325,10 @@ const Index = ({ productBE }) => {
         "image": mainImg,
         "name": product.name,
         "producer": product.producer,
-        "price": discountedPrice
+        "price": product.price,
+        "discountedPrice": discountedPrice,
+        "inStock": product.stock.quantity,
+        "type": product.type
       });
     }
 
@@ -636,7 +642,7 @@ const Index = ({ productBE }) => {
           <>
             <div className="overlay" onClick={closeForm}></div>
 
-            <div className="popup" ref={formRef}>
+            <div className="order-popup" ref={formRef}>
               <div className="popup-content">
                 <span className="close-form-btn" onClick={closeForm}>
                   <FontAwesomeIcon icon={faCircleXmark} />
@@ -725,7 +731,8 @@ const Index = ({ productBE }) => {
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                       name="customerPhone"
-                      id="customerPhone" required></input>
+                      id="customerPhone" required>
+                    </input>
                   </div>
 
                   <label htmlFor="customerEmail">Email</label>
