@@ -3,7 +3,6 @@ package project.product.utils;
 import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 import project.product.entity.Product;
-import project.product.entity.Stock;
 
 public class ProductSpecification<T> {
 
