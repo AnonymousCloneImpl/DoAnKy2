@@ -85,22 +85,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductSummaryDto> getByProductTypeWithoutPaging(String type) {
-
-		ProductSpecification<Product> searchSpecification = new ProductSpecification<Product>();
-
-		Specification<Product> spec = searchSpecification.searchByType(type);
-
-		List<Product> productList = productRepo.findAll(spec);
-
-		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((product
-						-> modelMapper.map(product, ProductSummaryDto.class)))
-				.toList();
-
-		for (ProductSummaryDto p : productSummaryDtoList) {
-			p.setImage(p.getImage().split("\\|")[0]);
+	public List<ProductSummaryDto> getTopSellerByType(String type, Integer limit) {
+		List<Product> productList = productRepo.getTopSellerByType(type, limit);
+		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((
+				product -> modelMapper.map(product, ProductSummaryDto.class)
+		)).toList();
+		for (ProductSummaryDto productSummaryDto : productSummaryDtoList) {
+			productSummaryDto.setImage(ProductUtils.getFirstImageUrl(productSummaryDto.getImage()));
 		}
-
 		return productSummaryDtoList;
 	}
 

@@ -17,6 +17,7 @@ import { useState } from "react";
 import fetcher from "@/utils/fetchAPI";
 import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
+import Image from "next/image";
 
 library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
 
@@ -130,7 +131,7 @@ export default function Header() {
                 <div className="inner-header-form">
                     <div className="logo-wrapper">
                         <Link href="/" id="logo" className="flex">
-                            <img src="/spirals.png" alt="logo" width="50" height="50"/>
+                            <Image src="/favico.png" alt="logo" width="50" height="50"/>
                             <p>Thế Giới Manh Động</p>
                             <b>.com</b>
                         </Link>
@@ -152,11 +153,11 @@ export default function Header() {
                         <ul className="main-menu">
                             <li className="main-menu-left">
                                 <FontAwesomeIcon icon={faFileSignature} className="main-menu-i"/>
-                                <a className="main-menu-a" href="/check-order">Check oder</a>
+                                <Link className="main-menu-a" href="/check-order">Check oder</Link>
                             </li>
                             <li className="main-menu-right">
                                 <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
-                                <a className="main-menu-a" href="/cart">My cart</a>
+                                <Link className="main-menu-a" href="/cart">My cart</Link>
                             </li>
                         </ul>
                     </div>
