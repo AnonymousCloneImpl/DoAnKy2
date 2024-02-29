@@ -152,7 +152,7 @@ export default function Header() {
                         <ul className="main-menu">
                             <li className="main-menu-left">
                                 <FontAwesomeIcon icon={faFileSignature} className="main-menu-i"/>
-                                <a className="main-menu-a" href="">Check oder</a>
+                                <a className="main-menu-a" href="/check-order">Check oder</a>
                             </li>
                             <li className="main-menu-right">
                                 <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
@@ -165,7 +165,7 @@ export default function Header() {
 
             {/*SUB MENU*/}
             <nav id="sub-menu-nav">
-                <ul id="sub-menu">
+                <ul id="sub-menu" className="font-semibold hover:text-indigo-900">
                     <li>
                         <Link href="/laptop" className="flex justify-center items-center m-1">
                             <FontAwesomeIcon icon={faLaptop} className="sub-menu-i"/>

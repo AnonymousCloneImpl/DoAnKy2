@@ -13,9 +13,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pagination {
-	public static final int PAGE_SIZE = 15;
-	private int totalPageNumber;
-	private long totalElement;
-	private int elementPerPage;
-	private List<ProductSummaryDto> productSummaryDtoList;
+    public static final int PAGE_SIZE = 15;
+    private int totalPageNumber;
+    private long totalElement;
+    private int elementPerPage;
+    private List<ProductSummaryDto> productSummaryDtoList;
 }

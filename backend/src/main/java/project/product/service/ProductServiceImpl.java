@@ -1,7 +1,6 @@
 package project.product.service;
 
 
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,177 +28,177 @@ import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-	@Autowired
-	private ProductRepository productRepo;
-	@Autowired
-	private StockRepository stockRepo;
-	@Autowired
-	private BlogRepository blogRepo;
-	@Autowired
-	private ModelMapper modelMapper;
+    @Autowired
+    private ProductRepository productRepo;
+    @Autowired
+    private StockRepository stockRepo;
+    @Autowired
+    private BlogRepository blogRepo;
+    @Autowired
+    private ModelMapper modelMapper;
 
-	@Override
-	public List<ProductSummaryDto> getAll() {
-		return productRepo.findAll().stream().map((product
-				-> modelMapper.map(product, ProductSummaryDto.class))
-		).toList();
-	}
+    @Override
+    public List<ProductSummaryDto> getAll() {
+        return productRepo.findAll().stream().map((product
+            -> modelMapper.map(product, ProductSummaryDto.class))
+        ).toList();
+    }
 
-	@Deprecated
-	@Override
-	public Pagination getWithPaging(Long page) {
-		Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
+    @Deprecated
+    @Override
+    public Pagination getWithPaging(Long page) {
+        Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
 
-		Page<Product> productPage = productRepo.findAll(pageable);
+        Page<Product> productPage = productRepo.findAll(pageable);
 
-		Pagination pagination = Pagination.builder()
-				.totalPageNumber(productPage.getTotalPages())
-				.totalElement(productPage.getTotalElements())
-				.elementPerPage(Pagination.PAGE_SIZE)
-				.productSummaryDtoList(
-						productPage.stream().map((product
-										-> modelMapper.map(product, ProductSummaryDto.class)))
-								.toList())
-				.build();
+        Pagination pagination = Pagination.builder()
+            .totalPageNumber(productPage.getTotalPages())
+            .totalElement(productPage.getTotalElements())
+            .elementPerPage(Pagination.PAGE_SIZE)
+            .productSummaryDtoList(
+                productPage.stream().map((product
+                        -> modelMapper.map(product, ProductSummaryDto.class)))
+                    .toList())
+            .build();
 
-		for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
-			p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
-		}
+        for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
+            p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+        }
 
-		return pagination;
-	}
+        return pagination;
+    }
 
-	@Override
-	public List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit) {
+    @Override
+    public List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit) {
 
-		List<Product> productList = productRepo.getByProductType(type, limit);
+        List<Product> productList = productRepo.getByProductType(type, limit);
 
-		List<ProductSummaryDto> productSummaryDtoList =
-				productList.stream().map((product -> modelMapper.map(product, ProductSummaryDto.class))).toList();
+        List<ProductSummaryDto> productSummaryDtoList =
+            productList.stream().map((product -> modelMapper.map(product, ProductSummaryDto.class))).toList();
 
-		for (ProductSummaryDto p : productSummaryDtoList) {
-			p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
-		}
+        for (ProductSummaryDto p : productSummaryDtoList) {
+            p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+        }
 
-		return productSummaryDtoList;
-	}
+        return productSummaryDtoList;
+    }
 
-	@Override
-	public List<ProductSummaryDto> getByProductTypeWithoutPaging(String type) {
+    @Override
+    public List<ProductSummaryDto> getByProductTypeWithoutPaging(String type) {
 
-		SearchSpecification<Product> searchSpecification = new SearchSpecification<Product>();
+        SearchSpecification<Product> searchSpecification = new SearchSpecification<Product>();
 
-		Specification<Product> spec = searchSpecification.searchByType(type);
+        Specification<Product> spec = searchSpecification.searchByType(type);
 
-		List<Product> productList = productRepo.findAll(spec);
+        List<Product> productList = productRepo.findAll(spec);
 
-		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((product
-						-> modelMapper.map(product, ProductSummaryDto.class)))
-				.toList();
+        List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((product
+                -> modelMapper.map(product, ProductSummaryDto.class)))
+            .toList();
 
-		for (ProductSummaryDto p : productSummaryDtoList) {
-			p.setImage(p.getImage().split("\\|")[0]);
-		}
+        for (ProductSummaryDto p : productSummaryDtoList) {
+            p.setImage(p.getImage().split("\\|")[0]);
+        }
 
-		return productSummaryDtoList;
-	}
+        return productSummaryDtoList;
+    }
 
-	@Override
-	public Pagination getByProductTypeWithPaging(String type, Integer page) {
-		Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
+    @Override
+    public Pagination getByProductTypeWithPaging(String type, Integer page) {
+        Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
 
-		SearchSpecification<Product> searchSpecification = new SearchSpecification<Product>();
+        SearchSpecification<Product> searchSpecification = new SearchSpecification<Product>();
 
-		Specification<Product> spec = searchSpecification.searchByType(type);
+        Specification<Product> spec = searchSpecification.searchByType(type);
 
-		Page<Product> productList = productRepo.findAll(spec, pageable);
+        Page<Product> productList = productRepo.findAll(spec, pageable);
 
-		Pagination pagination = Pagination.builder()
-				.totalPageNumber(productList.getTotalPages())
-				.totalElement(productList.getTotalElements())
-				.elementPerPage(Pagination.PAGE_SIZE)
-				.productSummaryDtoList(
-						productList.stream().map((product
-										-> modelMapper.map(product, ProductSummaryDto.class)))
-								.toList())
-				.build();
+        Pagination pagination = Pagination.builder()
+            .totalPageNumber(productList.getTotalPages())
+            .totalElement(productList.getTotalElements())
+            .elementPerPage(Pagination.PAGE_SIZE)
+            .productSummaryDtoList(
+                productList.stream().map((product
+                        -> modelMapper.map(product, ProductSummaryDto.class)))
+                    .toList())
+            .build();
 
-		for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
-			p.setImage(p.getImage().split("\\|")[0]);
-		}
+        for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
+            p.setImage(p.getImage().split("\\|")[0]);
+        }
 
-		return pagination;
-	}
+        return pagination;
+    }
 
-	@Transactional
-	@Override
-	public Optional<Object> getByProductTypeAndByName(String type, String name) {
-		String outputString = name.replace("-", " ");
+    @Transactional
+    @Override
+    public Optional<Object> getByProductTypeAndByName(String type, String name) {
+        String outputString = name.replace("-", " ");
 
-		Product product = productRepo.getByProductTypeAndByName(type, outputString);
+        Product product = productRepo.getByProductTypeAndByName(type, outputString);
 
-		ProductDto productDto = new ProductDto();
-		BeanUtils.copyProperties(product, productDto);
+        ProductDto productDto = new ProductDto();
+        BeanUtils.copyProperties(product, productDto);
 
-		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
-		try {
-			purchaseComboItem.setProductList(
-				List.of(
-					productRepo.findMostPurchaseMouse(),
-					productRepo.findMostPurchaseKeyboard(),
-					productRepo.findMostPurchaseHeadphone()
-				)
-			);
-			productDto.setPurchaseComboItem(purchaseComboItem);
-		} catch (IllegalAccessError e) {
-			System.err.println("Purchase Combo Item Is Null!");
-			purchaseComboItem.setProductList(new ArrayList<>());
-		}
+        PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
+        try {
+            purchaseComboItem.setProductList(
+                List.of(
+                    productRepo.findMostPurchaseMouse(),
+                    productRepo.findMostPurchaseKeyboard(),
+                    productRepo.findMostPurchaseHeadphone()
+                )
+            );
+            productDto.setPurchaseComboItem(purchaseComboItem);
+        } catch (IllegalAccessError e) {
+            System.err.println("Purchase Combo Item Is Null!");
+            purchaseComboItem.setProductList(new ArrayList<>());
+        }
 
-		Blog blog = product.getBlog();
-		String BlogImageStr = blog.getImage();
-		String BlogContentStr = blog.getContent();
-		BlogDto blogDto = new BlogDto();
-		BeanUtils.copyProperties(blog, blogDto);
+        Blog blog = product.getBlog();
+        String BlogImageStr = blog.getImage();
+        String BlogContentStr = blog.getContent();
+        BlogDto blogDto = new BlogDto();
+        BeanUtils.copyProperties(blog, blogDto);
 
-		Optional<Stock> stock = stockRepo.findByProductId(product.getId());
-		List<Integer> colorIdList = new ArrayList<>();
-		for (Color c : product.getColorList()) {
-			colorIdList.add(c.getId());
-		}
-		StockDto stockDto = StockDto.builder()
-				.productId(product.getId())
-				.colorIdList(colorIdList)
-				.sold(stock.get().getSold())
-				.quantity(stock.get().getQuantity())
-				.build();
+        Optional<Stock> stock = stockRepo.findByProductId(product.getId());
+        List<Integer> colorIdList = new ArrayList<>();
+        for (Color c : product.getColorList()) {
+            colorIdList.add(c.getId());
+        }
+        StockDto stockDto = StockDto.builder()
+            .productId(product.getId())
+            .colorIdList(colorIdList)
+            .sold(stock.get().getSold())
+            .quantity(stock.get().getQuantity())
+            .build();
 
-		if (BlogImageStr != null) {
-			blogDto.setImageList(List.of(BlogImageStr.split("\\|")));
-			blogDto.setContentList(List.of(BlogContentStr.split("\\|")));
-		}
+        if (BlogImageStr != null) {
+            blogDto.setImageList(List.of(BlogImageStr.split("\\|")));
+            blogDto.setContentList(List.of(BlogContentStr.split("\\|")));
+        }
 
-		List<Product> similarProductList;
-		similarProductList = productRepo.findTopSimilarByType(product.getType(), product.getId(), PageRequest.of(0, 6));
-		String imageString = product.getImage();
+        List<Product> similarProductList;
+        similarProductList = productRepo.findTopSimilarByType(product.getType(), product.getId(), PageRequest.of(0, 6));
+        String imageString = product.getImage();
 
-		if (imageString != null) {
-			productDto.setImageList(List.of(imageString.split("\\|")));
-			productDto.setBlog(blogDto);
-			productDto.setSimilarProductList(similarProductList);
-			productDto.setStock(stockDto);
-		}
-		return Optional.of(productDto);
-	}
+        if (imageString != null) {
+            productDto.setImageList(List.of(imageString.split("\\|")));
+            productDto.setBlog(blogDto);
+            productDto.setSimilarProductList(similarProductList);
+            productDto.setStock(stockDto);
+        }
+        return Optional.of(productDto);
+    }
 
-	@Override
-	public List<Product> getByName(Specification<Product> spec, String name) {
-		return productRepo.findAll(nameLike(name));
-	}
+    @Override
+    public List<Product> getByName(Specification<Product> spec, String name) {
+        return productRepo.findAll(nameLike(name));
+    }
 
-	@Override
-	public Specification<Product> nameLike(String name) {
-		return (root, query, criteriaBuilder)
-				-> criteriaBuilder.like(root.get("name"), "%" + name + "%");
-	}
+    @Override
+    public Specification<Product> nameLike(String name) {
+        return (root, query, criteriaBuilder)
+            -> criteriaBuilder.like(root.get("name"), "%" + name + "%");
+    }
 }
