@@ -27,17 +27,8 @@ public interface ProductService {
 
 	Optional<Object> getByProductTypeAndByName(String type, String name);
 
-	Optional<Product> getById(long id);
-
 	List<Product> getByName(Specification<Product> spec, String name);
 
-	boolean existById(long id);
 
 	Specification<Product> nameLike(String name);
-
-	void deleteById(long id);
-
-	Product insert(ProductDto productDto);
-
-	Product updateById(Long id, ProductDto productDto);
 }
