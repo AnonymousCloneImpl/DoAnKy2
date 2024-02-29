@@ -64,7 +64,7 @@ const ProductsPage = ({pageData, topSellerData}) => {
         if (pageData !== null && topSeller !== null) {
             setProducts(pageData.productSummaryDtoList);
             setTotalPage(pageData.totalPageNumber);
-            setTopSeller(topSellerData);
+            setTopSeller(topSellerData.productSummaryDtoList);
         }
     }, []);
 

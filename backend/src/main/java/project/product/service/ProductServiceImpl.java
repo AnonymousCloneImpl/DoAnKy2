@@ -85,6 +85,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+<<<<<<< HEAD
 	public List<ProductSummaryDto> getByProductTypeWithoutPaging(String type) {
 
 		ProductSpecification<Product> searchSpecification = new ProductSpecification<Product>();
@@ -99,8 +100,16 @@ public class ProductServiceImpl implements ProductService {
 
 		for (ProductSummaryDto p : productSummaryDtoList) {
 			p.setImage(p.getImage().split("\\|")[0]);
+=======
+	public List<ProductSummaryDto> getTopSellerByType(String type, Integer limit) {
+		List<Product> productList = productRepo.getTopSellerByType(type, limit);
+		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((
+				product -> modelMapper.map(product, ProductSummaryDto.class)
+		)).toList();
+		for (ProductSummaryDto productSummaryDto : productSummaryDtoList) {
+			productSummaryDto.setImage(ProductUtils.getFirstImageUrl(productSummaryDto.getImage()));
+>>>>>>> a8e69b47b8815459d93365d50f9c32af1ca49d76
 		}
-
 		return productSummaryDtoList;
 	}
 
@@ -144,11 +153,11 @@ public class ProductServiceImpl implements ProductService {
 		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
 		try {
 			purchaseComboItem.setProductList(
-				List.of(
-					productRepo.findMostPurchaseMouse(),
-					productRepo.findMostPurchaseKeyboard(),
-					productRepo.findMostPurchaseHeadphone()
-				)
+					List.of(
+							productRepo.findMostPurchaseMouse(),
+							productRepo.findMostPurchaseKeyboard(),
+							productRepo.findMostPurchaseHeadphone()
+					)
 			);
 			productDto.setPurchaseComboItem(purchaseComboItem);
 		} catch (IllegalAccessError e) {
