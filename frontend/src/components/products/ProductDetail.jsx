@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
-import { faCircleXmark } from '@fortawesome/free-regular-svg-icons';
+import { faCircleXmark, faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
 
 const Index = ({ productBE }) => {
   const [mainImg, setMainImg] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1);
 
   const product = productBE;
+  console.log(product)
   // set main image----------------------------------------------------------------------------------------------
   const subImgItems = product.imageList;
 
@@ -41,6 +40,8 @@ const Index = ({ productBE }) => {
   }, []);
 
   // Set quantity----------------------------------------------------------------------------------------------
+  const [quantity, setQuantity] = useState(1);
+
   useEffect(() => {
     const quantityInput = document.querySelector('.quantity-input');
     const decreaseButton = document.querySelector('.quantity-decrease');
@@ -297,7 +298,7 @@ const Index = ({ productBE }) => {
   const [cartNotificationVisible, setCartNotificationVisible] = useState(false);
 
   //Add To card
-  const addToCart = () => {
+  const addToCart = (product) => {
     const storedItemList = localStorage.getItem('itemList');
     let cartItemList = [];
 
@@ -313,7 +314,9 @@ const Index = ({ productBE }) => {
         "image": mainImg,
         "name": product.name,
         "producer": product.producer,
-        "price": discountedPrice
+        "price": product.price,
+        "discountPercentage": product.discountPercentage,
+        "type": product.type
       };
 
       cartItemList = updatedCartItemList;
@@ -322,7 +325,9 @@ const Index = ({ productBE }) => {
         "image": mainImg,
         "name": product.name,
         "producer": product.producer,
-        "price": discountedPrice
+        "price": product.price,
+        "discountPercentage": product.discountPercentage,
+        "type": product.type
       });
     }
 
@@ -346,8 +351,6 @@ const Index = ({ productBE }) => {
       <div className="body-wrapper">
         <div className="url">
           <Link href="/">Home </Link>
-          <b> &#8250; </b>
-          <Link href="#">Product</Link>
           <b> &#8250; </b>
           <Link href="/products">{product.type}</Link>
           <b> &#8250; </b>
@@ -484,7 +487,7 @@ const Index = ({ productBE }) => {
                 <div className="left-in-stock">{product.stock.quantity} Left In Stock</div>
 
                 <div className="btn-box">
-                  <button className="cart-btn" onClick={() => addToCart()}>
+                  <button className="cart-btn" onClick={() => addToCart(product)}>
                     <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                   </button>
                   <button className={`buy-btn ${isSoldOut ? 'disabled-btn' : ''}`}
@@ -556,7 +559,7 @@ const Index = ({ productBE }) => {
                         <img src={item.image.split('|')[0]} alt="First Image" />
                       </div>
                       <div className="recommended-accessories-content">
-                        <Link href={"/products/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
+                        <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
                           {item.name}
                         </Link>
                         <div className="accessories-price">
@@ -621,7 +624,7 @@ const Index = ({ productBE }) => {
                   </div>
                 </div>
                 <div className="similar-product-btn-box">
-                  <button className="cart-btn" onClick={() => addToCart()}>
+                  <button className="cart-btn" onClick={() => addToCart(item)}>
                     <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                   </button>
                 </div>
@@ -636,7 +639,7 @@ const Index = ({ productBE }) => {
           <>
             <div className="overlay" onClick={closeForm}></div>
 
-            <div className="popup" ref={formRef}>
+            <div className="order-popup" ref={formRef}>
               <div className="popup-content">
                 <span className="close-form-btn" onClick={closeForm}>
                   <FontAwesomeIcon icon={faCircleXmark} />
@@ -725,7 +728,8 @@ const Index = ({ productBE }) => {
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
                       name="customerPhone"
-                      id="customerPhone" required></input>
+                      id="customerPhone" required>
+                    </input>
                   </div>
 
                   <label htmlFor="customerEmail">Email</label>

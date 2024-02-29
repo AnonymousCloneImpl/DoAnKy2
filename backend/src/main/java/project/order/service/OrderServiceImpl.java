@@ -95,29 +95,4 @@ public class OrderServiceImpl implements OrderService {
     public Optional<Order> getOrderById(Long id) {
         return orderRepo.findById(id);
     }
-
-    @Override
-    public List<Order> getOrdersByStatus(ORDER_STATUS status) {
-        return null;
-    }
-
-    @Override
-    public void confirmOrder(Long orderId) {
-
-    }
-
-    @Override
-    public void processPayment(Order order) {
-
-    }
-
-    @Override
-    public void processShipping(Order order) {
-
-    }
-
-    @Override
-    public void processRefund(Order order) {
-
-    }
 }

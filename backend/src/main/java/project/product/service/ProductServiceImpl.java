@@ -144,11 +144,11 @@ public class ProductServiceImpl implements ProductService {
 		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
 		try {
 			purchaseComboItem.setProductList(
-					List.of(
-							productRepo.findMostPurchaseMouse(),
-							productRepo.findMostPurchaseKeyboard(),
-							productRepo.findMostPurchaseHeadphone()
-					)
+				List.of(
+					productRepo.findMostPurchaseMouse(),
+					productRepo.findMostPurchaseKeyboard(),
+					productRepo.findMostPurchaseHeadphone()
+				)
 			);
 			productDto.setPurchaseComboItem(purchaseComboItem);
 		} catch (IllegalAccessError e) {
@@ -180,7 +180,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		List<Product> similarProductList;
-		similarProductList = productRepo.findTop10SimilarByType(product.getType(), product.getId(), PageRequest.of(0, 10));
+		similarProductList = productRepo.findTopSimilarByType(product.getType(), product.getId(), PageRequest.of(0, 6));
 		String imageString = product.getImage();
 
 		if (imageString != null) {
@@ -193,38 +193,8 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Optional<Product> getById(long id) {
-		return productRepo.findById(id);
-	}
-
-	@Override
 	public List<Product> getByName(Specification<Product> spec, String name) {
 		return productRepo.findAll(nameLike(name));
-	}
-
-	@Override
-	public boolean existById(long id) {
-		return productRepo.existsById(id);
-	}
-
-	@Override
-	public void deleteById(long id) {
-		productRepo.deleteById(id);
-	}
-
-	@Override
-	public Product insert(ProductDto productDto) {
-		Product product = modelMapper.map(productDto, Product.class);
-		return productRepo.save(product);
-	}
-
-	@Override
-	public Product updateById(Long id, ProductDto productDto) {
-		Product product = productRepo.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
-
-		modelMapper.map(productDto, product);
-		return productRepo.save(product);
 	}
 
 	@Override

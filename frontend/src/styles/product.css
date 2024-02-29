@@ -590,14 +590,14 @@
     z-index: 1;
 }
 
-.popup {
+.order-popup {
     border-radius: 10px;
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
-    padding: 0 20px;
+    padding: 0 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     z-index: 2;
 }
@@ -632,8 +632,8 @@
 
 .order-form {
     width: 500px;
-    margin: 20px auto;
-    padding: 20px;
+    margin: 10px auto;
+    padding: 10px 15px;
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #f8f8f8;
@@ -642,8 +642,7 @@
 .order-form label {
     float: left;
     display: block;
-    margin-bottom: 8px;
-    margin-top: 10px;
+    margin: 5px 0;
     color: #333;
     font-weight: 600;
 }
