@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.models.Pagination;
+import project.product.entity.Producer;
+import project.product.service.ProducerService;
 import project.product.service.ProductService;
 import project.search.dto.ProductSummaryDto;
 
@@ -20,12 +22,15 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @Deprecated
-    @GetMapping("")
-    public ResponseEntity<Pagination> getProductList(@Param(value = "page") Integer page) {
-        if (page == null) {
-            page = 1;
-        }
+	@Autowired
+	private ProducerService producerService;
+
+	@Deprecated
+	@GetMapping("")
+	public ResponseEntity<Pagination> getProductList(@Param(value = "page") Integer page) {
+		if (page == null) {
+			page = 1;
+		}
 
         Pagination pagination = productService.getWithPaging(page);
         if (pagination != null) {
@@ -58,14 +63,17 @@ public class ProductController {
         return ResponseEntity.ok().body(list);
     }
 
-    @GetMapping("/search")
-    ResponseEntity<List<ProductSummaryDto>> search(@RequestParam String name, @Param(value = "limit") Integer limit) {
-        List<ProductSummaryDto> productSummaryDtoList = productService.getByName(name, limit);
-        if (productSummaryDtoList != null) {
-            return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
-        }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-    }
+	@GetMapping("/search")
+	ResponseEntity<List<ProductSummaryDto>> search(@RequestParam String name, @Param(value = "limit") Integer limit) {
+		if (limit == null) {
+			limit = 5;
+		}
+		List<ProductSummaryDto> productSummaryDtoList = productService.getByName(name, limit);
+		if (productSummaryDtoList != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	}
 
     @GetMapping("/top-seller")
     public List<ProductSummaryDto> getListTopSeller(@RequestParam String type, @Param(value = "limit") Integer limit) {
@@ -75,9 +83,8 @@ public class ProductController {
         return productService.getTopSellerByType(type, limit);
     }
 
-    @GetMapping("/producer")
-    public List<String> getProducerList() {
-//		return productService.getProducerList();
-        return null;
-    }
+	@GetMapping("/producer")
+	public List<Producer> getProducerList() {
+		return producerService.getAll();
+	}
 }
