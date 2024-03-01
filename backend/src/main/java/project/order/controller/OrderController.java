@@ -22,7 +22,6 @@ public class OrderController {
     public ResponseEntity<String> createOrder(@RequestBody OrderDto orderDto) {
         try {
             Order createdOrder = orderService.createOrder(orderDto);
-            orderService.sendEmail(createdOrder);
             return new ResponseEntity<>("Order created successfully. Order ID: "
                 + createdOrder.getId(), HttpStatus.CREATED);
         } catch (Exception e) {

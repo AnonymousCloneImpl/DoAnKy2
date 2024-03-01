@@ -13,27 +13,27 @@ import java.util.List;
 
 @Service
 public class SearchServiceImpl implements SearchService {
-	@Autowired
-	private ProductRepository productRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
-	@Override
-	public List<ProductSummaryDto> findOnHeader(String str) {
-		ProductSpecification productSpecification = new ProductSpecification();
-		Specification<Product> spec = productSpecification.searchProducts(str);
+    @Override
+    public List<ProductSummaryDto> findOnHeader(String str) {
+        ProductSpecification productSpecification = new ProductSpecification();
+        Specification<Product> spec = productSpecification.searchProducts(str);
 
-		List<ProductSummaryDto> productSearchDtos = new ArrayList<>();
+        List<ProductSummaryDto> productSearchDtos = new ArrayList<>();
 
-		productRepository.findAll(spec).forEach((item) -> {
-			ProductSummaryDto p = new ProductSummaryDto();
-			p.setId(item.getId());
-			p.setName(item.getName());
-			p.setPrice(item.getPrice());
-			p.setDiscountPercentage(item.getDiscountPercentage());
-			p.setImage(item.getImage().split("\\|")[0]);
-			p.setType(item.getType());
-			productSearchDtos.add(p);
-		});
+        productRepository.findAll(spec).forEach((item) -> {
+            ProductSummaryDto p = new ProductSummaryDto();
+            p.setId(item.getId());
+            p.setName(item.getName());
+            p.setPrice(item.getPrice());
+            p.setDiscountPercentage(item.getDiscountPercentage());
+            p.setImage(item.getImage().split("\\|")[0]);
+            p.setType(item.getType());
+            productSearchDtos.add(p);
+        });
 
-		return productSearchDtos;
-	}
+        return productSearchDtos;
+    }
 }
