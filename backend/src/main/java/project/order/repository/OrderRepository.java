@@ -13,6 +13,5 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o WHERE o.customerPhone = :number")
     List<OrderDto> getByCustomerPhone(@Param("number") String number);
-//    public void sendEmail(Order order);
     List<OrderDto> findByCustomerPhone(String phone);
 }

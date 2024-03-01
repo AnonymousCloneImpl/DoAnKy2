@@ -11,8 +11,5 @@ import java.util.List;
 public interface OrderService {
     public Order createOrder(OrderDto orderDto);
     public void updateStock(OrderItemDto item);
-
-//    public void sendEmail(Order order);
-
     public List<OrderDto> getOrderByPhoneNumber(String number);
 }
