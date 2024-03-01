@@ -10,7 +10,7 @@ import fetcher from "@/utils/fetchAPI";
 import ButtonPaging from "@/components/Pagination";
 import FormatPrice from "@/components/FormatPrice";
 
-const ProductsPage = ({pageData, topSellerData}) => {
+const ProductsByTypePage = ({pageData, topSellerData}) => {
     const router = useRouter();
     const {query} =  useRouter();
     const [products, setProducts] = useState([]);
@@ -64,7 +64,7 @@ const ProductsPage = ({pageData, topSellerData}) => {
         if (pageData !== null && topSeller !== null) {
             setProducts(pageData.productSummaryDtoList);
             setTotalPage(pageData.totalPageNumber);
-            setTopSeller(topSellerData.productSummaryDtoList);
+            setTopSeller(topSellerData);
         }
     }, []);
 
@@ -400,4 +400,4 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
 }
 
 
-export default ProductsPage;
+export default ProductsByTypePage;

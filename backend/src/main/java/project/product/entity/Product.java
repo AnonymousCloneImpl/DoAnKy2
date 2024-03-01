@@ -27,24 +27,13 @@ public class Product {
 	private String name;
 	@Column(nullable = false, length = 50)
 	private String type;
-	@Column(name = "product_detail", columnDefinition = "TEXT")
-	private String productDetail;
 	@Column(nullable = false)
 	private Long price;
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String image;
 	@Column(nullable = false)
 	private byte discountPercentage;
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(
-			name = "product_color",
-			joinColumns = @JoinColumn(name = "product_id"),
-			inverseJoinColumns = @JoinColumn(name = "color_id")
-	)
-	private List<Color> colorList;
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "blog_id")
 	private Blog blog;
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Stock> stockList;
 }

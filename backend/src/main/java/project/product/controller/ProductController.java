@@ -84,6 +84,8 @@ public class ProductController {
 		if (limit == null) {
 			limit = 5;
 		}
+		System.out.println(type);
+		System.out.println(limit);
 		return productService.getTopSellerByType(type, limit);
 	}
 

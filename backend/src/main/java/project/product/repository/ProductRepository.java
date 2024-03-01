@@ -27,14 +27,14 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 	@Query(nativeQuery = true, value = "SELECT * FROM product p WHERE p.type LIKE :type AND p.name = :name")
 	Product getByProductTypeAndByName(String type, String name);
 
-	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = 'mouse' ORDER BY s.sold desc LIMIT 1")
-	Product findMostPurchaseMouse();
-
-	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = 'keyboard' ORDER BY s.sold desc LIMIT 1")
-	Product findMostPurchaseKeyboard();
-
-	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = 'headphone' ORDER BY s.sold desc LIMIT 1")
-	Product findMostPurchaseHeadphone();
+//	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = 'mouse' ORDER BY s.sold desc LIMIT 1")
+//	Product findMostPurchaseMouse();
+//
+//	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = 'keyboard' ORDER BY s.sold desc LIMIT 1")
+//	Product findMostPurchaseKeyboard();
+//
+//	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = 'headphone' ORDER BY s.sold desc LIMIT 1")
+//	Product findMostPurchaseHeadphone();
 
 	@Query(nativeQuery = true,
 			value = "SELECT * FROM product p JOIN ( SELECT product_id FROM stock s join product p2 on s.product_id = p2.id WHERE p2.type = :type ORDER BY s.sold desc LIMIT :limit ) s ON p.id = s.product_id WHERE p.type = :type")

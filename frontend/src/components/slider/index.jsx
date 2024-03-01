@@ -34,7 +34,7 @@ const HomePageSlider = () => {
     };
 
     return (
-        <div className="relative w-full slider overflow-hidden mt-1">
+        <div className="relative w-full slider overflow-hidden">
             {images.map((imageUrl, index) => (
                 <div
                     key={index}

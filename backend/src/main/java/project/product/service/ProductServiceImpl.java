@@ -129,24 +129,24 @@ public class ProductServiceImpl implements ProductService {
 		String outputString = name.replace("-", " ");
 
 		Product product = productRepo.getByProductTypeAndByName(type, outputString);
-
+		System.out.println(product.getName());
 		ProductDto productDto = new ProductDto();
 		BeanUtils.copyProperties(product, productDto);
 
 		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
-		try {
-			purchaseComboItem.setProductList(
-					List.of(
-							productRepo.findMostPurchaseMouse(),
-							productRepo.findMostPurchaseKeyboard(),
-							productRepo.findMostPurchaseHeadphone()
-					)
-			);
-			productDto.setPurchaseComboItem(purchaseComboItem);
-		} catch (IllegalAccessError e) {
-			System.err.println("Purchase Combo Item Is Null!");
-			purchaseComboItem.setProductList(new ArrayList<>());
-		}
+//		try {
+//			purchaseComboItem.setProductList(
+//					List.of(
+//							productRepo.findMostPurchaseMouse(),
+//							productRepo.findMostPurchaseKeyboard()
+////							productRepo.findMostPurchaseHeadphone()
+//					)
+//			);
+//			productDto.setPurchaseComboItem(purchaseComboItem);
+//		} catch (IllegalAccessError e) {
+//			System.err.println("Purchase Combo Item Is Null!");
+//			purchaseComboItem.setProductList(new ArrayList<>());
+//		}
 
 		Blog blog = product.getBlog();
 		String BlogImageStr = blog.getImage();
@@ -154,17 +154,14 @@ public class ProductServiceImpl implements ProductService {
 		BlogDto blogDto = new BlogDto();
 		BeanUtils.copyProperties(blog, blogDto);
 
-		Optional<Stock> stock = stockRepo.findByProductId(product.getId());
+//		Optional<Stock> stock = stockRepo.findByProductId(product.getId());
 		List<Integer> colorIdList = new ArrayList<>();
-		for (Color c : product.getColorList()) {
-			colorIdList.add(c.getId());
-		}
-		StockDto stockDto = StockDto.builder()
-				.productId(product.getId())
-				.colorIdList(colorIdList)
-				.sold(stock.get().getSold())
-				.quantity(stock.get().getQuantity())
-				.build();
+//		StockDto stockDto = StockDto.builder()
+//				.productId(product.getId())
+//				.colorIdList(colorIdList)
+//				.sold(stock.get().getSold())
+//				.quantity(stock.get().getQuantity())
+//				.build();
 
 		if (BlogImageStr != null) {
 			blogDto.setImageList(List.of(BlogImageStr.split("\\|")));
@@ -179,7 +176,7 @@ public class ProductServiceImpl implements ProductService {
 			productDto.setImageList(List.of(imageString.split("\\|")));
 			productDto.setBlog(blogDto);
 			productDto.setSimilarProductList(similarProductList);
-			productDto.setStock(stockDto);
+//			productDto.setStock(stockDto);
 		}
 		return Optional.of(productDto);
 	}

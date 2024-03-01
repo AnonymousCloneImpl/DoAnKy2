@@ -633,7 +633,6 @@ const Index = ({ productBE }) => {
           </ul>
         </div>
 
-
         {/* FORM ORDER */}
         {isFormVisible && (
           <>
