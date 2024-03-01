@@ -10,16 +10,16 @@ import java.util.Optional;
 @Service
 public interface ProductService {
 
-    Pagination getWithPaging(Integer page);
+	Pagination getWithPaging(Integer page, Integer limit);
 
-    List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit);
+	List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit);
 
-    List<ProductSummaryDto> getTopSellerByType(String type, Integer limit);
+	List<ProductSummaryDto> getTopSellerByType(String type, Integer limit);
 
-    Pagination getProductsByTypeWithPaging(String type, Integer page);
+	Pagination getProductsByTypeWithPaging(String type, Integer page, Integer limit);
 
-    Optional<Object> getByProductTypeAndByName(String type, String name);
+	Optional<Object> getByProductTypeAndByName(String type, String name);
 
-    List<ProductSummaryDto> getByName(String name, Integer limit);
+	List<ProductSummaryDto> getByName(String name, Integer limit);
 
 }

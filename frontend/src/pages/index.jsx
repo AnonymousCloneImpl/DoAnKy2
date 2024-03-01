@@ -11,15 +11,17 @@ dotenv.config();
 
 export default function Home() {
 
-    const laptopApi = `${process.env.DOMAIN}/products/header?type=laptop&limit=5`;
-    const headphoneApi = `${process.env.DOMAIN}/products/header?type=headphone&limit=5`;
-    const mouseApi = `${process.env.DOMAIN}/products/header?type=mouse&limit=5`;
+    const laptopApi = `${process.env.DOMAIN}/products/laptop?limit=5`;
+    const headphoneApi = `${process.env.DOMAIN}/products/laptop?limit=5`;
+    const mouseApi = `${process.env.DOMAIN}/products/laptop?limit=5`;
 
     const { data: laptopData, error: laptopError } = useSWR(laptopApi, fetcher);
     const { data: headphoneData, error: headphoneError } = useSWR(headphoneApi, fetcher);
     const { data: mouseData, error: mouseError } = useSWR(mouseApi, fetcher);
 
     if (laptopError || headphoneError || mouseError) return <CustomErrorPage statusCode="404" />;
+
+    if (laptopError === [] || headphoneError === [] || mouseError === []) return <CustomErrorPage statusCode="404" />;
 
     if (!laptopData || !headphoneData || !mouseData) return <div>Loading...</div>;
 
@@ -126,17 +128,17 @@ export default function Home() {
             {/* Product theo danh muc*/}
             <div className="h-1/5 w-full">
                 <div className="h-4/5">
-                    <ProductListComponent productData={laptopData}/>
+                    <ProductListComponent productData={laptopData.productSummaryDtoList}/>
                 </div>
             </div>
             <div className="h-1/5 w-full">
                 <div className="h-4/5">
-                    <ProductListComponent productData={headphoneData}/>
+                    <ProductListComponent productData={headphoneData.productSummaryDtoList}/>
                 </div>
             </div>
             <div className="h-1/5 w-full">
                 <div className="h-4/5">
-                    <ProductListComponent productData={mouseData}/>
+                    <ProductListComponent productData={mouseData.productSummaryDtoList}/>
                 </div>
             </div>
 
