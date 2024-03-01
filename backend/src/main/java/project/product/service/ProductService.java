@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
-
 	Pagination getWithPaging(Integer page, Integer limit);
 
 	List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit);

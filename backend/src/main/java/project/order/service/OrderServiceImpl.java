@@ -51,16 +51,7 @@ public class OrderServiceImpl implements OrderService {
                 updateStock(item);
             }
         }
-//        try {
-//            emailService.sendEmail(order.getCustomerEmail(), "Success Order",
-//                "Order ID: " + order.getId() + "\n"
-//                    + "Order Code: " + order.getOrderCode() + "\n"
-//                    + "Order Date: " + order.getOrderDate() + "\n"
-//                    + "Order Status: " + order.getStatus() + "\n"
-//                    + "Total Price: " + order.getTotalPrice());
-//        } catch (Exception e) {
-//            System.err.println(e.getMessage());
-//        }
+        sendEmail(order);
         return order;
     }
 
@@ -101,21 +92,22 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-//    @Override
-//    public void sendEmail(Order order) {
-//        try {
-//            emailService.sendEmail(order.getCustomerEmail(), "Success Order",
-//                "Order ID: " + order.getId() + "\n"
-//                    + "Order Code: " + order.getOrderCode() + "\n"
-//                    + "Order Date: " + order.getOrderDate() + "\n"
-//                    + "Order Status: " + order.getStatus() + "\n"
-//                    + "Total Price: " + order.getTotalPrice());
-//        } catch (Exception e) {
-//            System.err.println(e.getMessage());
-//        }
-//    }
-
     public List<OrderDto> getOrderByPhoneNumber(String phone) {
 		return orderRepo.findByCustomerPhone(phone);
 	}
+
+    private void sendEmail(Order order) {
+        try {
+            StringBuilder email = new StringBuilder();
+            email.append("Order ID: ").append(order.getId()).append("\n")
+                .append("Order Code: ").append(order.getOrderCode()).append("\n")
+                .append("Order Date: ").append(order.getOrderDate()).append("\n")
+                .append("Order Status: ").append(order.getStatus()).append("\n")
+                .append("Total Price: ").append(order.getTotalPrice());
+
+            emailService.sendEmail(order.getCustomerEmail(), "Success Order", email.toString());
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
 }
