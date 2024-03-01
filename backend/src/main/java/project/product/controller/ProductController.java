@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.common.ResponseObject;
 import project.models.Pagination;
+import project.product.entity.Producer;
 import project.product.entity.Product;
+import project.product.service.ProducerService;
 import project.product.service.ProductService;
 import project.search.dto.ProductSummaryDto;
 
@@ -22,6 +24,9 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	private ProducerService producerService;
 
 	@Deprecated
 	@GetMapping("")
@@ -63,6 +68,9 @@ public class ProductController {
 
 	@GetMapping("/search")
 	ResponseEntity<List<ProductSummaryDto>> search(@RequestParam String name, @Param(value = "limit") Integer limit) {
+		if (limit == null) {
+			limit = 5;
+		}
 		List<ProductSummaryDto> productSummaryDtoList = productService.getByName(name, limit);
 		if (productSummaryDtoList != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
@@ -79,8 +87,7 @@ public class ProductController {
 	}
 
 	@GetMapping("/producer")
-	public List<String> getProducerList() {
-//		return productService.getProducerList();
-		return null;
+	public List<Producer> getProducerList() {
+		return producerService.getAll();
 	}
 }
