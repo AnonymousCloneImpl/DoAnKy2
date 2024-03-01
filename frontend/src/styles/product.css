@@ -171,19 +171,18 @@
     border-radius: 5px;
 }
 
-.product-color {
+.product-model {
     display: flex;
     align-items: center;
     margin: 2px 0;
 }
 
-.color {
+.model {
     font-size: 20px;
     font-weight: 700;
 }
 
-.pcolor {
-    width: 65px;
+.pmodel {
     height: 25px;
     font-size: 15px;
     border: 1.5px solid grey;
@@ -191,9 +190,10 @@
     text-align: center;
     margin-right: 10px;
     cursor: pointer;
+    padding: 0 5px;
 }
 
-.pcolor.active {
+.pmodel.active {
     border-color: orange;
     color: orange;
     font-weight: 600;

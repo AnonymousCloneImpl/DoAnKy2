@@ -148,6 +148,7 @@ public class ProductServiceImpl implements ProductService {
         setProductDetail(productDto, p);
         setProducer(productDto, p);
         setPurchaseComboItem(productDto);
+        productDto.setConfigurationList(productRepo.getListConfiguration(name));
 
         Blog blog = p.getBlog();
         BlogDto blogDto = createBlogDto(blog);

@@ -10,6 +10,7 @@ const Index = ({ productBE }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const product = productBE;
+  console.log(product);
   // set main image----------------------------------------------------------------------------------------------
   const subImgItems = product.imageList;
 
@@ -21,9 +22,9 @@ const Index = ({ productBE }) => {
     setActiveIndex(index);
   };
 
-  // set choose product color----------------------------------------------------------------------------------------------
+  // set choose product model----------------------------------------------------------------------------------------------
   const activeBtn = (button) => {
-    let buttons = document.querySelectorAll('.pcolor');
+    let buttons = document.querySelectorAll('.pmodel');
     buttons.forEach(function (btn) {
       btn.classList.remove('active');
     });
@@ -31,7 +32,7 @@ const Index = ({ productBE }) => {
   };
 
   useEffect(() => {
-    const firstButton = document.querySelector('.pcolor');
+    const firstButton = document.querySelector('.pmodel');
     if (firstButton) {
       firstButton.classList.add('active');
       activeBtn(firstButton);
@@ -458,12 +459,13 @@ const Index = ({ productBE }) => {
                   <div>Warranty 12 Months</div>
                 </div>
 
-                <p className="color">Color</p>
+                <p className="model">Configuration</p>
 
-                <div className="product-color">
-                  <button className="pcolor" onClick={(e) => activeBtn(e.target)}>Black</button>
-                  <button className="pcolor" onClick={(e) => activeBtn(e.target)}>Red</button>
-                  <button className="pcolor" onClick={(e) => activeBtn(e.target)}>Pink</button>
+                <div className="product-model">
+
+                  {product.configurationList.map((item) => (
+                    <button className="pmodel" onClick={(e) => activeBtn(e.target)}>{item}</button>
+                  ))}
                 </div>
 
                 <div className="quantity">
@@ -510,9 +512,9 @@ const Index = ({ productBE }) => {
 
               <table className="detail-table">
                 <tbody>
-                  {Object.entries(JSON.parse(product.productDetail)).map(([key, value]) => (
+                  {Object.entries(product.productDetail).map(([key, value]) => (
                     <tr key={key}>
-                      <td>{key}</td>
+                      <td>{key.toUpperCase()}</td>
                       <td>{value}</td>
                     </tr>
                   ))}
