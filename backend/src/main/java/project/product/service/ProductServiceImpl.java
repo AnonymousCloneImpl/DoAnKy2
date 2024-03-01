@@ -13,8 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import project.models.Pagination;
 import project.product.dto.BlogDto;
 import project.product.dto.ProductDto;
+import project.product.dto.StockDto;
 import project.product.entity.*;
 import project.product.repository.BlogRepository;
+import project.product.repository.ProductDetailRepository;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
 import project.product.utils.ProductSpecification;
@@ -29,6 +31,8 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductRepository productRepo;
+	@Autowired
+	private ProductDetailRepository productDetailRepo;
 	@Autowired
 	private StockRepository stockRepo;
 	@Autowired
@@ -123,26 +127,30 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String outputString = name.replace("-", " ");
-
 		Product product = productRepo.getByProductTypeAndByName(type, outputString);
-		System.out.println(product.getName());
 		ProductDto productDto = new ProductDto();
 		BeanUtils.copyProperties(product, productDto);
 
+		ProductDetail detail = productDetailRepo.findByProductId(product.getId());
+		productDto.setProductDetail(detail);
+
+		String producer = product.getProducer().getName();
+		productDto.setProducer(producer);
+
 		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
-//		try {
-//			purchaseComboItem.setProductList(
-//					List.of(
-//							productRepo.findMostPurchaseMouse(),
-//							productRepo.findMostPurchaseKeyboard()
-////							productRepo.findMostPurchaseHeadphone()
-//					)
-//			);
-//			productDto.setPurchaseComboItem(purchaseComboItem);
-//		} catch (IllegalAccessError e) {
-//			System.err.println("Purchase Combo Item Is Null!");
-//			purchaseComboItem.setProductList(new ArrayList<>());
-//		}
+		try {
+			purchaseComboItem.setProductList(
+					List.of(
+							productRepo.findMostPurchaseMouse(),
+							productRepo.findMostPurchaseKeyboard(),
+							productRepo.findMostPurchaseHeadphone()
+					)
+			);
+			productDto.setPurchaseComboItem(purchaseComboItem);
+		} catch (IllegalAccessError e) {
+			System.err.println("Purchase Combo Item Is Null!");
+			purchaseComboItem.setProductList(new ArrayList<>());
+		}
 
 		Blog blog = product.getBlog();
 		String BlogImageStr = blog.getImage();
@@ -150,14 +158,12 @@ public class ProductServiceImpl implements ProductService {
 		BlogDto blogDto = new BlogDto();
 		BeanUtils.copyProperties(blog, blogDto);
 
-//		Optional<Stock> stock = stockRepo.findByProductId(product.getId());
-		List<Integer> colorIdList = new ArrayList<>();
-//		StockDto stockDto = StockDto.builder()
-//				.productId(product.getId())
-//				.colorIdList(colorIdList)
-//				.sold(stock.get().getSold())
-//				.quantity(stock.get().getQuantity())
-//				.build();
+		Optional<Stock> stock = stockRepo.findByProductDetailId(product.getId());
+		StockDto stockDto = StockDto.builder()
+				.productId(product.getId())
+				.sold(stock.get().getSold())
+				.quantity(stock.get().getQuantity())
+				.build();
 
 		if (BlogImageStr != null) {
 			blogDto.setImageList(List.of(BlogImageStr.split("\\|")));
@@ -172,7 +178,7 @@ public class ProductServiceImpl implements ProductService {
 			productDto.setImageList(List.of(imageString.split("\\|")));
 			productDto.setBlog(blogDto);
 			productDto.setSimilarProductList(similarProductList);
-//			productDto.setStock(stockDto);
+			productDto.setStock(stockDto);
 		}
 		return Optional.of(productDto);
 	}

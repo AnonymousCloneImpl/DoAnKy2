@@ -90,7 +90,17 @@ public class OrderServiceImpl implements OrderService {
 		return order;
 	}
 
-	public List<Order> getOrderByPhoneNumber(String number) {
-		return orderRepo.findByCustomerPhone(number);
+	@Override
+	public void sendEmail(Order order) {
+
 	}
+
+	@Override
+	public List<OrderDto> getOrderByPhoneNumber(String number) {
+		return null;
+	}
+
+//	public List<Order> getOrderByPhoneNumber(String number) {
+//		return orderRepo.findByCustomerPhone(number);
+//	}
 }
