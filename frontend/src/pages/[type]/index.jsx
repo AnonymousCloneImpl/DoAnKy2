@@ -26,7 +26,6 @@ export async function getServerSideProps(context) {
         const productData = await fetcher(`${process.env.DOMAIN}/products/${type}`);
         const topSellerData = await fetcher(`${process.env.DOMAIN}/products/top-seller?type=${type}&limit=5`);
 
-        console.log(productData)
         return {
             props: {
                 pageData: productData,

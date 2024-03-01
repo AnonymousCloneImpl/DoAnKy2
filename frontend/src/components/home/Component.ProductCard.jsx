@@ -5,7 +5,6 @@ import FormatPrice from "@/components/FormatPrice";
 
 
 export default function ProductCardComponent({productData}) {
-    console.log(productData)
     if (productData !== null && productData !== [] && productData !== undefined) {
         return (
             <div className="h-full w-full flex">
