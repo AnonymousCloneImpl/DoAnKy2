@@ -1,21 +1,27 @@
 import React from 'react';
-import ProductDetail from "@/components/products/ProductPage";
+import {useRouter} from "next/router";
+import useSWR from "swr";
+import fetcher from "@/utils/fetchAPI";
+import CustomErrorPage from "@/pages/error";
+import ProductPageComponent from "@/components/products/ProductPageComponent";
 
-const ProductDetailPage = ({ productData }) => {
-    return <ProductDetail productBE={productData} />
+const ProductDetailPage = () => {
+    const {query} =  useRouter();
+
+    const firstDataUrl = `${process.env.DOMAIN}/products/${query.type}/${query.name}`;
+
+    const {data, isLoading, error} = useSWR(firstDataUrl, fetcher,{
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false
+    })
+
+    if (isLoading) return <div>Loading...</div>
+
+    if (error) return <CustomErrorPage />
+
+
+    return <ProductPageComponent productBE={data} />
 };
-
-export async function getServerSideProps(context) {
-    const { type, name } = context.params;
-
-    const response = await fetch(`${process.env.DOMAIN}/products/${type}/${name}`);
-    const productData = await response.json();
-
-    return {
-        props: {
-            productData,
-        },
-    };
-}
 
 export default ProductDetailPage;

@@ -5,12 +5,12 @@ import { faCircleXmark, faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStrok
 import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
 
-const Index = ({ productBE }) => {
+const ProductPageComponent = ({ productBE }) => {
   const [mainImg, setMainImg] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
 
   const product = productBE;
-  console.log(product);
+
   // set main image----------------------------------------------------------------------------------------------
   const subImgItems = product.imageList;
 
@@ -464,7 +464,7 @@ const Index = ({ productBE }) => {
                 <div className="product-model">
 
                   {product.configurationList.map((item) => (
-                    <button className="pmodel" onClick={(e) => activeBtn(e.target)}>{item}</button>
+                    <button key={item.id} className="pmodel" onClick={(e) => activeBtn(e.target)}>{item}</button>
                   ))}
                 </div>
 
@@ -768,4 +768,4 @@ const Index = ({ productBE }) => {
   }
 };
 
-export default Index;
+export default ProductPageComponent;

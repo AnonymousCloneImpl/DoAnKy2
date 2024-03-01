@@ -9,7 +9,7 @@ const ProductListComponent = ({productData}) => {
                 <div className="h-1/5 w-full flex items-center">
                     <div className="w-full h-1/2 flex justify-between items-center">
                         <p className="text-3xl pl-8 w-2/12">{productData[0].type}</p>
-                        <Link href={productData[0].type} className="pl-8 w-2/12">Xem thêm&gt;&gt;</Link>
+                        <Link href={productData[0].type.toLowerCase()} className="pl-8 w-2/12">Xem thêm&gt;&gt;</Link>
                     </div>
                 </div>
                 <ProductCardComponent productData={productData} />
