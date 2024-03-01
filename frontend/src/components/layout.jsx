@@ -32,24 +32,29 @@ export default function Layout({ children }) {
     return (
         <div>
             <Header/>
+            <div className="fixed top-36 border border-black w-1/12 h-60">
+                a
+            </div>
             <div className="pt-38 w-full flex justify-center">
                 <div className="w-10/12">
                     {children}
                 </div>
             </div>
-
+            <div className="fixed top-36 right-0 border border-black w-1/12 h-60">
+                b
+            </div>
 
             {/* Scroll and Call button */}
             <button className="call-button">
                 <a href="tel:+84123456789" className="info-menu2-li-a">
-                    <FontAwesomeIcon icon={faPhoneVolume} />
+                    <FontAwesomeIcon icon={faPhoneVolume}/>
                 </a>
             </button>
 
             <div>
                 {isScrollVisible && (
                     <button onClick={scrollToTop} className="scroll-to-top-button">
-                        <FontAwesomeIcon icon={faCircleUp} className="scroll-icon" />
+                        <FontAwesomeIcon icon={faCircleUp} className="scroll-icon"/>
                     </button>
                 )}
             </div>

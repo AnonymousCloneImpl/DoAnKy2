@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductDetail from "@/components/products/ProductDetail";
+import ProductDetail from "@/components/products/ProductPage";
 
 const ProductDetailPage = ({ productData }) => {
     return <ProductDetail productBE={productData} />
