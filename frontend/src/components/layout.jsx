@@ -32,16 +32,10 @@ export default function Layout({ children }) {
     return (
         <div>
             <Header/>
-            <div className="fixed top-36 border border-black w-1/12 h-60">
-                a
-            </div>
             <div className="pt-38 w-full flex justify-center">
                 <div className="w-10/12">
                     {children}
                 </div>
-            </div>
-            <div className="fixed top-36 right-0 border border-black w-1/12 h-60">
-                b
             </div>
 
             {/* Scroll and Call button */}

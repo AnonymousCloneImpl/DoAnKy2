@@ -2,13 +2,13 @@ import React from "react";
 import { cn, Pagination, PaginationItemType } from "@nextui-org/react";
 import { ChevronIcon } from "./ChevronIcon";
 
-export default function ButtonPaging({ totalPages, setParamPage, curentPage }) {
+export default function ButtonPaging({ totalPages, setParamPage, currentPage }) {
     const renderItem = ({
                             ref,
                             key,
                             value,
                             isActive,
-                            setPage,
+                            setPage = currentPage,
                             className,
                         }) => {
 
@@ -41,7 +41,7 @@ export default function ButtonPaging({ totalPages, setParamPage, curentPage }) {
         <Pagination
             disableCursorAnimation
             total={totalPages}
-            initialPage={curentPage}
+            initialPage={currentPage}
             className="gap-2"
             radius="full"
             renderItem={renderItem}

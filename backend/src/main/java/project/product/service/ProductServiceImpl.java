@@ -57,6 +57,9 @@ public class ProductServiceImpl implements ProductService {
 			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
 				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
 			}
+
+			pagination.setElementPerPage(limit);
+
 			return pagination;
 		} catch (Exception e) {
 			System.err.println("Error in getWithPaging function : " + e.getMessage());
@@ -119,6 +122,8 @@ public class ProductServiceImpl implements ProductService {
 			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
 				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
 			}
+
+			pagination.setElementPerPage(limit);
 
 			return pagination;
 		} catch (Exception e) {

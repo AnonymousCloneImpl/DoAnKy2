@@ -12,8 +12,8 @@ dotenv.config();
 export default function Home() {
 
     const laptopApi = `${process.env.DOMAIN}/products/laptop?limit=5`;
-    const headphoneApi = `${process.env.DOMAIN}/products/laptop?limit=5`;
-    const mouseApi = `${process.env.DOMAIN}/products/laptop?limit=5`;
+    const headphoneApi = `${process.env.DOMAIN}/products/headphone?limit=5`;
+    const mouseApi = `${process.env.DOMAIN}/products/mouse?limit=5`;
 
     const { data: laptopData, error: laptopError } = useSWR(laptopApi, fetcher);
     const { data: headphoneData, error: headphoneError } = useSWR(headphoneApi, fetcher);
