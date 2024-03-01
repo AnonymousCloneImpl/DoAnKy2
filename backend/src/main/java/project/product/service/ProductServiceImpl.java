@@ -39,7 +39,6 @@ public class ProductServiceImpl implements ProductService {
     private ModelMapper modelMapper;
     @Autowired
     private ProductSpecification productSpecification;
-    public static final int SIMILAR_PRODUCTS_NUMBER = 6;
 
     @Deprecated
     @Override
@@ -160,10 +159,10 @@ public class ProductServiceImpl implements ProductService {
         String imageStr = p.getImage();
         if (imageStr != null) {
             productDto.setImageList(List.of(imageStr.split("\\|")));
+            productDto.setBlog(blogDto);
+            productDto.setSimilarProductList(findTopSimilarProducts(p));
+            productDto.setStock(stockDto);
         }
-        productDto.setBlog(blogDto);
-        productDto.setSimilarProductList(findTopSimilarProducts(p));
-        productDto.setStock(stockDto);
 
         return Optional.of(productDto);
     }
@@ -225,6 +224,6 @@ public class ProductServiceImpl implements ProductService {
 
     private List<Product> findTopSimilarProducts(Product product) {
         return productRepo.findTopSimilarByType(product.getType(), product.getId(),
-            PageRequest.of(0, SIMILAR_PRODUCTS_NUMBER));
+            PageRequest.of(0, 6));
     }
 }

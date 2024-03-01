@@ -61,6 +61,7 @@ const ProductsByTypePage = ({pageData, topSellerData}) => {
     };
 
     useEffect(() => {
+        console.log(pageData)
         if (pageData !== null && topSeller !== null) {
             setProducts(pageData.productSummaryDtoList);
             setTotalPage(pageData.totalPageNumber);
