@@ -20,6 +20,7 @@ import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,12 +44,8 @@ public class OrderServiceImpl implements OrderService {
             .orderCode(GenerateCodeUtils.getRandomCode(orderDto.getCustomerName()))
             .orderDate(LocalDateTime.now())
             .status(ORDER_STATUS.WAITING)
-            .customerName(orderDto.getCustomerName())
-            .customerPhone(orderDto.getCustomerPhone())
-            .customerEmail(orderDto.getCustomerEmail())
-            .shippingAddress(orderDto.getShippingAddress())
-            .totalPrice(orderDto.getTotalPrice())
             .build();
+        BeanUtils.copyProperties(orderDto, order);
         orderRepo.save(order);
 
         List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();
@@ -77,21 +74,32 @@ public class OrderServiceImpl implements OrderService {
                 stockRepo.save(stock);
             }
         }
+        return order;
+    }
 
+    @Override
+    public void sendEmail(Order order) {
         try {
             emailService.sendEmail(order.getCustomerEmail(), "Success Order",
                 "Order ID: " + order.getId() + "\n"
                     + "Order Code: " + order.getOrderCode() + "\n"
                     + "Order Date: " + order.getOrderDate() + "\n"
                     + "Order Status: " + order.getStatus() + "\n"
-                    + "Total Price: " + order.getTotalPrice());
+                    + "Total Price: " + order.getTotalPrice() + "");
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
-        return order;
     }
 
-    public List<Order> getOrderByPhoneNumber(String number) {
-        return orderRepo.findByCustomerPhone(number);
+    public List<OrderDto> getOrderByPhoneNumber(String number) {
+        OrderDto orderDto;
+        List<OrderDto> orderDtoList = new ArrayList<>();
+        List<Order> orderList = orderRepo.getByCustomerPhone(number);
+        for (Order o : orderList) {
+            orderDto = new OrderDto();
+            BeanUtils.copyProperties(o, orderDto);
+            orderDtoList.add(orderDto);
+        }
+        return orderDtoList;
     }
 }

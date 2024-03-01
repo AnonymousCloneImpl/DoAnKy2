@@ -1,6 +1,5 @@
 package project.order.controller;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +8,6 @@ import project.common.ResponseObject;
 import project.order.dto.OrderDto;
 import project.order.entity.Order;
 import project.order.service.OrderService;
-import project.product.entity.Product;
 
 import java.util.List;
 
@@ -24,6 +22,7 @@ public class OrderController {
     public ResponseEntity<String> createOrder(@RequestBody OrderDto orderDto) {
         try {
             Order createdOrder = orderService.createOrder(orderDto);
+            orderService.sendEmail(createdOrder);
             return new ResponseEntity<>("Order created successfully. Order ID: "
                 + createdOrder.getId(), HttpStatus.CREATED);
         } catch (Exception e) {
@@ -34,8 +33,7 @@ public class OrderController {
 
     @GetMapping("/check-order")
     ResponseEntity<ResponseObject> getOrderByPhoneNumber(@RequestParam("q") String number) {
-        List<Order> orderList = orderService.getOrderByPhoneNumber(number);
-
+        List<OrderDto> orderList = orderService.getOrderByPhoneNumber(number);
         if (!orderList.isEmpty()) {
             return ResponseEntity.status(HttpStatus.OK)
                 .body(new ResponseObject("OK", "Get product successfully", orderList));
@@ -43,5 +41,6 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ResponseObject("Failed", "Can't find order with phone number = " + number, ""));
         }
+
     }
 }
