@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Deprecated
     @Override
-    public Pagination getWithPaging(Integer page) {
+    public Pagination getWithPaging(Integer page, Integer limit) {
         Pageable pageable = PageRequest.of((page - 1), Pagination.PAGE_SIZE);
 
         try {
@@ -99,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Pagination getProductsByTypeWithPaging(String type, Integer page) {
+    public Pagination getProductsByTypeWithPaging(String type, Integer page, Integer limit) {
         Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
 
         Specification<Product> spec = productSpecification.searchByType(type);
@@ -184,12 +184,23 @@ public class ProductServiceImpl implements ProductService {
 
     private void setPurchaseComboItem(ProductDto productDto) {
         PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
+        Pageable pageable = PageRequest.of(0, 1);
         try {
-            purchaseComboItem.setProductList(List.of(
-                productRepo.findMostPurchaseMouse(),
-                productRepo.findMostPurchaseKeyboard(),
-                productRepo.findMostPurchaseHeadphone()
-            ));
+            String type = "";
+            List<Product> productList = new ArrayList<>();
+            for (int i = 0; i < 3; i++) {
+                if (i == 0) {
+                    type = "mouse";
+                }
+                if (i == 1) {
+                    type = "keyboard";
+                }
+                if (i == 2) {
+                    type = "headphone";
+                }
+                productList.addAll(productRepo.findMostPurchaseByType(type, pageable));
+            }
+            purchaseComboItem.setProductList(productList);
             productDto.setPurchaseComboItem(purchaseComboItem);
         } catch (IllegalAccessError e) {
             System.err.println("Purchase Combo Item Is Null!");
