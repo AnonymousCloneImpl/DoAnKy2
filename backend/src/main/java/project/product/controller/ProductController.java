@@ -1,15 +1,12 @@
 package project.product.controller;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.common.ResponseObject;
 import project.models.Pagination;
 import project.product.entity.Producer;
-import project.product.entity.Product;
 import project.product.service.ProducerService;
 import project.product.service.ProductService;
 import project.search.dto.ProductSummaryDto;
@@ -22,8 +19,8 @@ import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:3000")
 public class ProductController {
 
-	@Autowired
-	private ProductService productService;
+    @Autowired
+    private ProductService productService;
 
 	@Autowired
 	private ProducerService producerService;
@@ -35,36 +32,36 @@ public class ProductController {
 			page = 1;
 		}
 
-		Pagination pagination = productService.getWithPaging(page);
-		if (pagination != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(
-					pagination
-			);
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-	}
+        Pagination pagination = productService.getWithPaging(page);
+        if (pagination != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                pagination
+            );
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
 
-	@GetMapping("/{type}")
-	ResponseEntity<Object> getProductByType(@PathVariable String type, @Param(value = "page") Integer page) {
-		if (page == null) {
-			page = 1;
-		}
-		Pagination pagination = productService.getProductsByTypeWithPaging(type, page);
-		if (pagination != null) {
-			return ResponseEntity.ok().body(
-					pagination
-			);
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-	}
+    @GetMapping("/{type}")
+    ResponseEntity<Object> getProductByType(@PathVariable String type, @Param(value = "page") Integer page) {
+        if (page == null) {
+            page = 1;
+        }
+        Pagination pagination = productService.getProductsByTypeWithPaging(type, page);
+        if (pagination != null) {
+            return ResponseEntity.ok().body(
+                pagination
+            );
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    }
 
-	@GetMapping("/{type}/{name}")
-	ResponseEntity<Optional<Object>> getProductByTypeAndName(@PathVariable String type, @PathVariable String name) {
+    @GetMapping("/{type}/{name}")
+    ResponseEntity<Optional<Object>> getProductByTypeAndName(@PathVariable String type, @PathVariable String name) {
 
-		Optional<Object> list = productService.getByProductTypeAndByName(type, name);
+        Optional<Object> list = productService.getByProductTypeAndByName(type, name);
 
-		return ResponseEntity.ok().body(list);
-	}
+        return ResponseEntity.ok().body(list);
+    }
 
 	@GetMapping("/search")
 	ResponseEntity<List<ProductSummaryDto>> search(@RequestParam String name, @Param(value = "limit") Integer limit) {
@@ -78,13 +75,13 @@ public class ProductController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
-	@GetMapping("/top-seller")
-	public List<ProductSummaryDto> getListTopSeller(@RequestParam String type, @Param(value = "limit") Integer limit) {
-		if (limit == null) {
-			limit = 5;
-		}
-		return productService.getTopSellerByType(type, limit);
-	}
+    @GetMapping("/top-seller")
+    public List<ProductSummaryDto> getListTopSeller(@RequestParam String type, @Param(value = "limit") Integer limit) {
+        if (limit == null) {
+            limit = 5;
+        }
+        return productService.getTopSellerByType(type, limit);
+    }
 
 	@GetMapping("/producer")
 	public List<Producer> getProducerList() {

@@ -10,7 +10,6 @@ const Index = ({ productBE }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const product = productBE;
-  console.log(product)
   // set main image----------------------------------------------------------------------------------------------
   const subImgItems = product.imageList;
 

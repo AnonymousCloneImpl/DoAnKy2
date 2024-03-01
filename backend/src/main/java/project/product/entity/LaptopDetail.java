@@ -15,15 +15,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "laptop_detail")
 public class LaptopDetail extends ProductDetail {
-	private String cpu;
-	private String ram;
-	@Column(name = "screen_size")
-	private String screenSize;
-	@Column(name = "screen_resolution")
-	private String screenResolution;
-	private String storage;
-	@Column(name = "graphics_card")
-	private String graphicsCard;
-	private String ports;
-	private String os;
+    private String cpu;
+    private String ram;
+    @Column(name = "screen_size")
+    private String screenSize;
+    @Column(name = "screen_resolution")
+    private String screenResolution;
+    private String storage;
+    @Column(name = "graphics_card")
+    private String graphicsCard;
+    private String ports;
+    private String os;
 }

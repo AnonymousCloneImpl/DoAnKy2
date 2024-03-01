@@ -15,12 +15,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "keyboard_detail")
 public class KeyboardDetail extends ProductDetail {
-	private String type;
-	@Column(name = "switch_type")
-	private String switchType;
-	@Column(name = "cable_length")
-	private String cableLength;
-	@Column(name = "connection_type")
-	private String connectionType;
-	private boolean led;
+    private String type;
+    @Column(name = "switch_type")
+    private String switchType;
+    @Column(name = "cable_length")
+    private String cableLength;
+    @Column(name = "connection_type")
+    private String connectionType;
+    private boolean led;
 }
