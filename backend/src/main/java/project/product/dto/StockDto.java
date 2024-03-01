@@ -10,8 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StockDto {
-    private long productId;
-    private List<Integer> colorIdList;
-    private int quantity;
-    private int sold;
+	private long productId;
+	private int quantity;
+	private int sold;
 }

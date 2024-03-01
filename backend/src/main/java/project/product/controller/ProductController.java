@@ -8,13 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.common.ResponseObject;
 import project.models.Pagination;
-import project.product.dto.ProductDto;
 import project.product.entity.Product;
 import project.product.service.ProductService;
 import project.search.dto.ProductSummaryDto;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -24,30 +22,35 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
-	@Autowired
-	private ModelMapper modelMapper;
 
 	@Deprecated
 	@GetMapping("")
-	public ResponseEntity<Pagination> getProductList(@Param(value = "page") Long page) {
+	public ResponseEntity<Pagination> getProductList(@Param(value = "page") Integer page) {
 		if (page == null) {
-			Pagination pagination = new Pagination();
-			pagination.setProductSummaryDtoList(productService.getAll());
+			page = 1;
+		}
+
+		Pagination pagination = productService.getWithPaging(page);
+		if (pagination != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(
 					pagination
 			);
 		}
-		Pagination pagination = productService.getWithPaging(page);
-		return ResponseEntity.status(HttpStatus.OK).body(
-				pagination
-		);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
 	@GetMapping("/{type}")
 	ResponseEntity<Object> getProductByType(@PathVariable String type, @Param(value = "page") Integer page) {
-		return ResponseEntity.ok().body(
-				productService.getByProductTypeWithPaging(type, Objects.requireNonNullElse(page, 1))
-		);
+		if (page == null) {
+			page = 1;
+		}
+		Pagination pagination = productService.getProductsByTypeWithPaging(type, page);
+		if (pagination != null) {
+			return ResponseEntity.ok().body(
+					pagination
+			);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
 	@GetMapping("/{type}/{name}")
@@ -59,24 +62,12 @@ public class ProductController {
 	}
 
 	@GetMapping("/search")
-	ResponseEntity<ResponseObject> search(@RequestParam("name") String value) {
-		List<Product> productList = productService.getByName(productService.nameLike(value), value);
-		if (!productList.isEmpty()) {
-			return ResponseEntity.status(HttpStatus.OK).body(
-					new ResponseObject("OK", "Get product successfully", productList)
-			);
+	ResponseEntity<List<ProductSummaryDto>> search(@RequestParam String name, @Param(value = "limit") Integer limit) {
+		List<ProductSummaryDto> productSummaryDtoList = productService.getByName(name, limit);
+		if (productSummaryDtoList != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
 		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-				new ResponseObject("Failed", "Can't find product with name = " + value, "")
-		);
-	}
-
-	@GetMapping("/header")
-	public List<ProductSummaryDto> getProductList(@RequestParam String type, @Param(value = "limit") Integer limit) {
-		if (limit == null) {
-			limit = 10;
-		}
-		return productService.getProductByTypeWithLimit(type, limit);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
 	@GetMapping("/top-seller")
@@ -84,8 +75,6 @@ public class ProductController {
 		if (limit == null) {
 			limit = 5;
 		}
-		System.out.println(type);
-		System.out.println(limit);
 		return productService.getTopSellerByType(type, limit);
 	}
 

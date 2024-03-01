@@ -1,7 +1,6 @@
 package project.product.service;
 
 
-import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import project.models.Pagination;
 import project.product.dto.BlogDto;
 import project.product.dto.ProductDto;
-import project.product.dto.StockDto;
 import project.product.entity.*;
 import project.product.repository.BlogRepository;
 import project.product.repository.ProductRepository;
@@ -37,90 +35,88 @@ public class ProductServiceImpl implements ProductService {
 	private BlogRepository blogRepo;
 	@Autowired
 	private ModelMapper modelMapper;
-
-	@Override
-	public List<ProductSummaryDto> getAll() {
-		return productRepo.findAll().stream().map((product
-				-> modelMapper.map(product, ProductSummaryDto.class))
-		).toList();
-	}
+	@Autowired
+	private ProductSpecification productSpecification;
 
 	@Deprecated
 	@Override
-	public Pagination getWithPaging(Long page) {
-		Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
+	public Pagination getWithPaging(Integer page) {
+		Pageable pageable = PageRequest.of((page - 1), Pagination.PAGE_SIZE);
 
-		Page<Product> productPage = productRepo.findAll(pageable);
+		try {
+			Page<Product> productPage = productRepo.findAll(pageable);
 
-		Pagination pagination = Pagination.builder()
-				.totalPageNumber(productPage.getTotalPages())
-				.totalElement(productPage.getTotalElements())
-				.elementPerPage(Pagination.PAGE_SIZE)
-				.productSummaryDtoList(
-						productPage.stream().map((product
-										-> modelMapper.map(product, ProductSummaryDto.class)))
-								.toList())
-				.build();
+			Pagination pagination = ProductUtils
+					.convertPageProductToPaginationObject(productPage, modelMapper);
 
-		for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
-			p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
+				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+			}
+			return pagination;
+		} catch (Exception e) {
+			System.err.println("Error in getWithPaging function : " + e.getMessage());
+			return null;
 		}
-
-		return pagination;
 	}
 
 	@Override
 	public List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit) {
 
-		List<Product> productList = productRepo.getByProductType(type, limit);
+		Pageable pageable = PageRequest.of(0, limit);
+		try {
+			List<Product> productList = productRepo.getByProductType(type, pageable);
 
-		List<ProductSummaryDto> productSummaryDtoList =
-				productList.stream().map((product -> modelMapper.map(product, ProductSummaryDto.class))).toList();
+			List<ProductSummaryDto> productSummaryDtoList = ProductUtils.convertProductsToProductSummaryDtoList(productList, modelMapper);
 
-		for (ProductSummaryDto p : productSummaryDtoList) {
-			p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+			for (ProductSummaryDto p : productSummaryDtoList) {
+				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+			}
+			return productSummaryDtoList;
+		} catch (Exception e) {
+			System.err.println("Error in getProductByTypeWithLimit function : " + e.getMessage());
+			return null;
 		}
-
-		return productSummaryDtoList;
 	}
 
 	@Override
 	public List<ProductSummaryDto> getTopSellerByType(String type, Integer limit) {
-		List<Product> productList = productRepo.getTopSellerByType(type, limit);
-		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((
-				product -> modelMapper.map(product, ProductSummaryDto.class)
-		)).toList();
-		for (ProductSummaryDto productSummaryDto : productSummaryDtoList) {
-			productSummaryDto.setImage(ProductUtils.getFirstImageUrl(productSummaryDto.getImage()));
+		try {
+			List<Product> productList = productRepo.getTopSellerByType(type, limit);
+
+			List<ProductSummaryDto> productSummaryDtoList = ProductUtils.convertProductsToProductSummaryDtoList(productList, modelMapper);
+
+			for (ProductSummaryDto summaryDto : productSummaryDtoList) {
+				summaryDto.setImage(ProductUtils.getFirstImageUrl(summaryDto.getImage()));
+			}
+
+			return productSummaryDtoList;
+		} catch (Exception e) {
+			System.err.println("Error in getTopSellerByType function : " + e.getMessage());
+			return null;
 		}
-		return productSummaryDtoList;
 	}
 
 	@Override
-	public Pagination getByProductTypeWithPaging(String type, Integer page) {
+	public Pagination getProductsByTypeWithPaging(String type, Integer page) {
 		Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
 
-		ProductSpecification<Product> searchSpecification = new ProductSpecification<Product>();
+		Specification<Product> spec = productSpecification.searchByType(type);
 
-		Specification<Product> spec = searchSpecification.searchByType(type);
+		try {
+			Page<Product> productList = productRepo.findAll(spec, pageable);
 
-		Page<Product> productList = productRepo.findAll(spec, pageable);
+			Pagination pagination = ProductUtils
+					.convertPageProductToPaginationObject(productList, modelMapper);
 
-		Pagination pagination = Pagination.builder()
-				.totalPageNumber(productList.getTotalPages())
-				.totalElement(productList.getTotalElements())
-				.elementPerPage(Pagination.PAGE_SIZE)
-				.productSummaryDtoList(
-						productList.stream().map((product
-										-> modelMapper.map(product, ProductSummaryDto.class)))
-								.toList())
-				.build();
+			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
+				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+			}
 
-		for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
-			p.setImage(p.getImage().split("\\|")[0]);
+			return pagination;
+		} catch (Exception e) {
+			System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
+			return null;
 		}
-
-		return pagination;
 	}
 
 	@Transactional
@@ -182,13 +178,19 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getByName(Specification<Product> spec, String name) {
-		return productRepo.findAll(nameLike(name));
-	}
+	public List<ProductSummaryDto> getByName(String name, Integer limit) {
+		Pageable pageable = PageRequest.of(0, limit);
+		Page<Product> productList = productRepo.findAll(productSpecification.nameLike(name), pageable);
 
-	@Override
-	public Specification<Product> nameLike(String name) {
-		return (root, query, criteriaBuilder)
-				-> criteriaBuilder.like(root.get("name"), "%" + name + "%");
+		List<ProductSummaryDto> productSummaryDtoList;
+
+		if (!productList.isEmpty()) {
+			productSummaryDtoList = ProductUtils
+					.convertProductsToProductSummaryDtoList(productList.getContent(), modelMapper);
+			return productSummaryDtoList;
+		} else {
+			System.err.println("Error in getProductsByTypeWithPaging function : productList is null");
+			return null;
+		}
 	}
 }
