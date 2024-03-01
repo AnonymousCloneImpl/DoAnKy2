@@ -11,8 +11,6 @@ import java.util.Optional;
 public interface ProductService {
 	Pagination getWithPaging(Integer page, Integer limit);
 
-	List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit);
-
 	List<ProductSummaryDto> getTopSellerByType(String type, Integer limit);
 
 	Pagination getProductsByTypeWithPaging(String type, Integer page, Integer limit);
