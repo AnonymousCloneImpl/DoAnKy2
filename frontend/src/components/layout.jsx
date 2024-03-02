@@ -1,57 +1,58 @@
 import Header from "@/components/header/header";
-import {useEffect, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleUp, faPhoneVolume} from "@fortawesome/free-solid-svg-icons";
+import Footer from "@/components/footer/footer";
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleUp, faPhoneVolume } from "@fortawesome/free-solid-svg-icons";
 export default function Layout({ children }) {
 
-    // scrollToTop
-    const [isScrollVisible, setIsVisible] = useState(false);
+  // scrollToTop
+  const [isScrollVisible, setIsVisible] = useState(false);
 
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
-
-    const handleScroll = () => {
-        if (window.scrollY > 100) {
-            setIsVisible(true);
-        } else {
-            setIsVisible(false);
-        }
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
     };
+  }, []);
 
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-        });
-    };
+  const handleScroll = () => {
+    if (window.scrollY > 100) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
 
-    return (
-        <div>
-            <Header/>
-            <div className="pt-38 w-full flex justify-center">
-                <div className="w-10/12">
-                    {children}
-                </div>
-            </div>
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
-            {/* Scroll and Call button */}
-            <button className="call-button">
-                <a href="tel:+84123456789" className="info-menu2-li-a">
-                    <FontAwesomeIcon icon={faPhoneVolume}/>
-                </a>
-            </button>
+  return (
+    <div>
+      <Header />
+      <div className="pt-38 w-full flex justify-center">
+        <div className="w-10/12">
+          {children}
+          {/* Scroll and Call button */}
+          <button className="call-button">
+            <a href="tel:+84123456789" className="info-menu2-li-a">
+              <FontAwesomeIcon icon={faPhoneVolume} />
+            </a>
+          </button>
 
-            <div>
-                {isScrollVisible && (
-                    <button onClick={scrollToTop} className="scroll-to-top-button">
-                        <FontAwesomeIcon icon={faCircleUp} className="scroll-icon"/>
-                    </button>
-                )}
-            </div>
+          <div>
+            {isScrollVisible && (
+              <button onClick={scrollToTop} className="scroll-to-top-button">
+                <FontAwesomeIcon icon={faCircleUp} className="scroll-icon" />
+              </button>
+            )}
+          </div>
         </div>
-    )
+      </div>
+      <Footer />
+    </div>
+  )
 }

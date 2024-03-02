@@ -26,7 +26,7 @@ export default function Home() {
     if (!laptopData || !headphoneData || !mouseData) return <div>Loading...</div>;
 
     return (
-        <>
+        <div className="mb-20">
             <Head>
                 <title>
                     Welcome to Shop
@@ -142,6 +142,6 @@ export default function Home() {
                 </div>
             </div>
 
-        </>
+        </div>
     )
 }

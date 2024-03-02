@@ -106,7 +106,7 @@ const CartPage = () => {
             <h1 className="font-semibold text-2xl text-red-600 mb-7"><FormatPrice price={calculateTotal()}/> đ</h1>
 
             <div>
-              <label className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
+              <label htmlFor="shipping" className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
               <select className="block p-2 text-gray-600 w-full text-sm">
                 <option>Standard shipping - 30.000 đ</option>
                 <option>Fast shipping - 50.000 đ</option>
@@ -114,7 +114,7 @@ const CartPage = () => {
             </div>
 
             <div className="py-10">
-              <label for="promo" className="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
+              <label htmlFor="promo" className="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
               <input type="text" id="promo" placeholder="Enter your code" className="p-2 text-sm w-full" />
             </div>
 

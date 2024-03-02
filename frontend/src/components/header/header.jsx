@@ -75,6 +75,19 @@ export default function Header() {
         }
     };
 
+    const [cartNumber, setCartNumber] = useState(0);
+
+    useEffect(() => {
+      const storedItemList = localStorage.getItem('itemList');
+
+      if (storedItemList) {
+        const ls = JSON.parse(storedItemList);
+        setCartNumber(ls.length);
+      } else {
+        setCartNumber(0);
+      }
+    }, []);
+
     return (
         <header className="header_">
             {/*TOP HEADER*/}
@@ -145,10 +158,10 @@ export default function Header() {
                                 Check oder</Link>
                             </li>
                             <li className="main-menu-right">
-                                <Link className="main-menu-a hover:text-red-800" href="/src/pages/cart">
+                                <Link className="main-menu-a hover:text-red-800" href="/cart">
                                     <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
                                 My cart</Link>
-                                <div className="cart-number-list">10</div>
+                                <div className="cart-number-list">{cartNumber}</div>
                             </li>
                         </ul>
                     </div>
@@ -165,16 +178,6 @@ export default function Header() {
                                 Laptop
                             </p>
                         </Link>
-                        <ul id="sub-drop">
-                            <li>
-                                <img src="/header_img/drop-menu-mouse.webp" alt=""/>
-                                <a href="">mouse</a>
-                            </li>
-                            <li>
-                                <img id="fix" src="/header_img/drop-menu-keyboard.webp" alt=""/>
-                                <a href="">keyboard</a>
-                            </li>
-                        </ul>
                     </li>
                     <li className="hover:text-red-800">
                         <div className="">
@@ -185,10 +188,15 @@ export default function Header() {
                         </div>
                         <ul id="sub-drop">
                             <li><img src="/header_img/drop-menu-mouse.webp" alt=""/>
-                                <a href="">mouse</a>
+                                <a href="/mouse">mouse</a>
                             </li>
-                            <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt=""/><a
-                                href="">keyboard</a></li>
+                            <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt=""/>
+                                <a href="/keyboard">keyboard</a>
+                            </li>
+                            <li>
+                                <img id="fix" src="/header_img/drop-menu-headphone.webp" alt=""/>
+                                <a href="/headphone">headphone</a>
+                            </li>
                         </ul>
                     </li>
                     <li className="hover:text-red-800">

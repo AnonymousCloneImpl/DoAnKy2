@@ -315,7 +315,6 @@ const ProductPage = ({ productBE }) => {
       updatedCartItemList[existingProductIndex] = {
         "image": product.image,
         "name": product.name,
-        "producer": product.producer,
         "price": product.price,
         "discountPercentage": product.discountPercentage,
         "type": product.type
@@ -326,7 +325,6 @@ const ProductPage = ({ productBE }) => {
       cartItemList.push({
         "image": product.image,
         "name": product.name,
-        "producer": product.producer,
         "price": product.price,
         "discountPercentage": product.discountPercentage,
         "type": product.type
@@ -358,7 +356,7 @@ const ProductPage = ({ productBE }) => {
         <div className="url">
           <Link href="/">Home </Link>
           <b> &#8250; </b>
-          <Link href="/products">{product.type}</Link>
+          <Link href={`/${product.type}`}>{product.type}</Link>
           <b> &#8250; </b>
           <b className="name">{product.name}</b>
         </div>
