@@ -5,7 +5,7 @@ import { faCircleXmark, faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStrok
 import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
 
-const ProductPageComponent = ({ productBE }) => {
+const ProductPage = ({ productBE }) => {
   const [mainImg, setMainImg] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -768,4 +768,4 @@ const ProductPageComponent = ({ productBE }) => {
   }
 };
 
-export default ProductPageComponent;
+export default ProductPage;

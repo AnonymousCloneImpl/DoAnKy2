@@ -3,7 +3,7 @@ import {useRouter} from "next/router";
 import useSWR from "swr";
 import fetcher from "@/utils/fetchAPI";
 import CustomErrorPage from "@/pages/error";
-import ProductPageComponent from "@/components/products/ProductPageComponent";
+import ProductPage from "@/components/products/ProductPage";
 
 const ProductDetailPage = () => {
     const {query} =  useRouter();
@@ -21,7 +21,7 @@ const ProductDetailPage = () => {
     if (error) return <CustomErrorPage />
 
 
-    return <ProductPageComponent productBE={data} />
+    return <ProductPage productBE={data} />
 };
 
 export default ProductDetailPage;
