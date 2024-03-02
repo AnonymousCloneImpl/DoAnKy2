@@ -268,9 +268,9 @@ const ProductPage = ({ productBE }) => {
         setTimeout(() => {
           setSuccessNotificationVisible(false);
         }, 2000);
-//         setTimeout(() => {
-//           window.location.reload();
-//         }, 1);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1);
         console.log('Order placed successfully');
       } else {
         console.error('Failed to place order');
@@ -390,14 +390,14 @@ const ProductPage = ({ productBE }) => {
                   <FontAwesomeIcon className="service-icon" icon={faRotate} />
                   <div>
                     <p>Commitment to 1 for 1 exchange within <b>30 Days</b> for product defects.</p>
-                    <a href="#">View details &#187;</a>
+                    <Link href="#">View details &#187;</Link>
                   </div>
                 </div>
                 <div className="service-item-child">
                   <FontAwesomeIcon className="service-icon" icon={faShieldCat} />
                   <div>
                     <p><b>12 Month</b> warranty at manufacturer&apos;s warranty centers</p>
-                    <a href="#">See warranty address &#187;</a>
+                    <Link href="#">See warranty address &#187;</Link>
                   </div>
                 </div>
               </div>
@@ -469,8 +469,8 @@ const ProductPage = ({ productBE }) => {
 
                 <div className="product-model">
 
-                  {product.configurationList.map((item) => (
-                    <button key={item.id} className="pmodel" onClick={(e) => activeBtn(e.target)}>{item}</button>
+                  {product.configurationList.map((item, index) => (
+                    <button key={index} className="pmodel" onClick={(e) => activeBtn(e.target)}>{item}</button>
                   ))}
                 </div>
 
@@ -505,7 +505,7 @@ const ProductPage = ({ productBE }) => {
                 </div>
 
                 <div className="call-to-order">Call to order now
-                  <a href="tel:1900 301 297"> 1900 301 297 </a>
+                  <Link href="tel:1900 301 297"> 1900 301 297 </Link>
                   (7:30 - 22:00)
                 </div>
               </div>
@@ -554,8 +554,8 @@ const ProductPage = ({ productBE }) => {
                 <div className="recommended-accessories-line"></div>
 
                 <ul className="recommended-accessories-list">
-                  {product.purchaseComboItem.productList.map((item) => (
-                    <li className="recommended-accessories-item" key={item.id}>
+                  {product.purchaseComboItem.productList.map((item, index) => (
+                    <li className="recommended-accessories-item" key={index}>
                       <div className="recommended-accessories-checkbox">
                         <input type="checkbox" className="product"
                           onChange={() => handleCheckboxChange(item.id)}
@@ -609,8 +609,8 @@ const ProductPage = ({ productBE }) => {
 
           <div className="similar-product-line"></div>
           <ul className="similar-product-list">
-            {product.similarProductList.map((item) => (
-              <li key={item.id} className="similar-product-item">
+            {product.similarProductList.map((item, index) => (
+              <li key={index} className="similar-product-item">
                 <div className="similar-product-item-content">
                   <div className="similar-product-img">
                     <img src={item.image} alt="First Image" />
@@ -675,7 +675,7 @@ const ProductPage = ({ productBE }) => {
                     >
                       <option value="" disabled>--- Province ---</option>
                       {provinces.map((province) => (
-                        <option key={province[0]}
+                        <option key={province}
                           value={province[0]}>
                           {province[1]}
                         </option>
@@ -692,7 +692,7 @@ const ProductPage = ({ productBE }) => {
                     >
                       <option value="" disabled>--- District ---</option>
                       {districts.map((district) => (
-                        <option key={district[0]}
+                        <option key={district}
                           value={district[0]}>
                           {district[1]}
                         </option>
@@ -709,7 +709,7 @@ const ProductPage = ({ productBE }) => {
                     >
                       <option value="" disabled>--- Ward ---</option>
                       {wards.map((ward) => (
-                        <option key={ward[0]}
+                        <option key={ward}
                           value={ward[0]}>
                           {ward[1]}
                         </option>
