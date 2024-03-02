@@ -1,19 +1,7 @@
-"use client"
 import { config, library } from '@fortawesome/fontawesome-svg-core';
-import {
-    faLaptop,
-    faKeyboard,
-    faScrewdriverWrench,
-    faLocationDot,
-    faEnvelope,
-    faPhone,
-    faFileSignature,
-    faCircleUser,
-    faCartShopping,
-    faMagnifyingGlass
-} from '@fortawesome/free-solid-svg-icons';
+import { faLaptop, faKeyboard, faScrewdriverWrench, faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import fetcher from "@/utils/fetchAPI";
 import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
@@ -160,6 +148,7 @@ export default function Header() {
                                 <Link className="main-menu-a hover:text-red-800" href="/cart">
                                     <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
                                 My cart</Link>
+                                <div className="cart-number-list">10</div>
                             </li>
                         </ul>
                     </div>

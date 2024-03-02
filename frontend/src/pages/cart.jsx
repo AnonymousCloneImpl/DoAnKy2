@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import Link from "next/link";
 
 import FormatPrice from "@/components/FormatPrice";
 
@@ -45,21 +46,21 @@ const CartPage = () => {
 
             <div className="flex mt-10 mb-5 text-xl">
               <h3 className="font-semibold text-600 uppercase w-2/5">Product Details</h3>
-              <h3 className="font-semibold text-center text-700 uppercase w-1/5 text-center">Quantity</h3>
-              <h3 className="font-semibold text-center text-700 uppercase w-1/5 text-center">Price</h3>
-              <h3 className="font-semibold text-center text-700 uppercase w-1/5 text-center">Total</h3>
+              <h3 className="font-semibold text-center text-700 uppercase w-1/5">Quantity</h3>
+              <h3 className="font-semibold text-center text-700 uppercase w-1/5">Price</h3>
+              <h3 className="font-semibold text-center text-700 uppercase w-1/5">Total</h3>
             </div>
 
             {items.map((item, index) => (
-              <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
+              <div key={index} className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
                 <div className="flex w-2/5">
                   <div className="w-40">
                     <img className="h-50" src={item.image} />
                   </div>
-                  <div key={index} className="flex flex-col justify-between ml-4 flex-grow">
-                    <a href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")} className="font-bold text-base">
+                  <div className="flex flex-col justify-between ml-4 flex-grow">
+                    <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")} className="font-bold text-base">
                       {item.name}
-                    </a>
+                    </Link>
                     <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-lg"
                       onClick={() => removeItem(index)}>
                       <FontAwesomeIcon icon={faTrashCan} /> Remove
@@ -88,14 +89,14 @@ const CartPage = () => {
               </div>
             ))}
 
-            <a href="/" className="flex font-semibold text-indigo-600 text-sm mt-10">
+            <Link href="/" className="flex font-semibold text-indigo-600 text-sm mt-10">
 
               <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
                 <path
                   d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
               </svg>
               Continue Shopping
-            </a>
+            </Link>
           </div>
 
           <div id="summary" className="w-1/3 px-8 py-10">
