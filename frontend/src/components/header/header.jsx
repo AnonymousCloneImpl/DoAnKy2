@@ -152,12 +152,14 @@ export default function Header() {
                     <div className="main-menu-container">
                         <ul className="main-menu">
                             <li className="main-menu-left">
-                                <FontAwesomeIcon icon={faFileSignature} className="main-menu-i"/>
-                                <Link className="main-menu-a" href="/check-order">Check oder</Link>
+                                <Link className="main-menu-a hover:text-red-800" href="/check-order">
+                                    <FontAwesomeIcon icon={faFileSignature} className="main-menu-i"/>
+                                Check oder</Link>
                             </li>
                             <li className="main-menu-right">
-                                <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
-                                <Link className="main-menu-a" href="/cart">My cart</Link>
+                                <Link className="main-menu-a hover:text-red-800" href="/cart">
+                                    <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
+                                My cart</Link>
                             </li>
                         </ul>
                     </div>
@@ -166,8 +168,8 @@ export default function Header() {
 
             {/*SUB MENU*/}
             <nav id="sub-menu-nav">
-                <ul id="sub-menu" className="font-semibold hover:text-indigo-900">
-                    <li>
+                <ul id="sub-menu" className="font-semibold">
+                    <li className="hover:text-red-800">
                         <Link href="/laptop" className="flex justify-center items-center m-1">
                             <FontAwesomeIcon icon={faLaptop} className="sub-menu-i"/>
                             <p className="text-xl pl-2">
@@ -185,7 +187,7 @@ export default function Header() {
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    <li className="hover:text-red-800">
                         <div className="">
                             <Link href="/" className="flex justify-center items-center m-1">
                                 <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i"/>
@@ -200,7 +202,7 @@ export default function Header() {
                                 href="">keyboard</a></li>
                         </ul>
                     </li>
-                    <li>
+                    <li className="hover:text-red-800">
                         <div className="">
                             <Link href="/" className="flex justify-center items-center m-1">
                                 <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>

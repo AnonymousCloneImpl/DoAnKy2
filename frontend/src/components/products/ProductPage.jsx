@@ -126,7 +126,7 @@ const ProductPage = ({ productBE }) => {
       0
     );
 
-    setTotalPrice(calculatedTotalPrice * quantity + discountedPrice * quantity);
+    setTotalPrice(calculatedTotalPrice + discountedPrice);
   }, [product.purchaseComboItem, checkedItems]);
 
   const [totalOriginalPrice, setTotalOriginalPrice] = useState(0);
@@ -249,6 +249,7 @@ const ProductPage = ({ productBE }) => {
       ],
       totalPrice
     };
+    console.log(orderData);
     const url = `${process.env.DOMAIN}/orders/place-order`;
 
     try {
@@ -266,9 +267,9 @@ const ProductPage = ({ productBE }) => {
         setTimeout(() => {
           setSuccessNotificationVisible(false);
         }, 2000);
-        setTimeout(() => {
-          window.location.reload();
-        }, 1);
+//         setTimeout(() => {
+//           window.location.reload();
+//         }, 1);
         console.log('Order placed successfully');
       } else {
         console.error('Failed to place order');
@@ -295,7 +296,7 @@ const ProductPage = ({ productBE }) => {
   };
 
   // cart notification----------------------------------------------------------------------------------------------
-  const [cartNotificationVisible, setCartNotificationVisible] = useState(false);
+  const [cartNotifications, setCartNotifications] = useState([]);
 
   //Add To card
   const addToCart = (product) => {
@@ -311,7 +312,7 @@ const ProductPage = ({ productBE }) => {
     if (existingProductIndex !== -1) {
       const updatedCartItemList = [...cartItemList];
       updatedCartItemList[existingProductIndex] = {
-        "image": mainImg,
+        "image": product.image,
         "name": product.name,
         "producer": product.producer,
         "price": product.price,
@@ -322,7 +323,7 @@ const ProductPage = ({ productBE }) => {
       cartItemList = updatedCartItemList;
     } else {
       cartItemList.push({
-        "image": mainImg,
+        "image": product.image,
         "name": product.name,
         "producer": product.producer,
         "price": product.price,
@@ -333,10 +334,14 @@ const ProductPage = ({ productBE }) => {
 
     localStorage.setItem('itemList', JSON.stringify(cartItemList));
 
-    setCartNotificationVisible(true);
+    const newNotification = {
+      message: 'The product has been added to Cart !',
+    };
+
+    setCartNotifications((prevNotifications) => [...prevNotifications, newNotification]);
 
     setTimeout(() => {
-      setCartNotificationVisible(false);
+      setCartNotifications((prevNotifications) => prevNotifications.filter((n) => n !== newNotification));
     }, 3000);
   };
 
@@ -534,9 +539,9 @@ const ProductPage = ({ productBE }) => {
                   <div className="recommended-main-content">
                     <h1>{product.name}</h1>
                     <div className="accessories-price">
-                      <b><FormatPrice price={discountedPrice * quantity} /></b>
+                      <b><FormatPrice price={discountedPrice} /></b>
                       <b className="money-unit">đ</b>
-                      <p><FormatPrice price={product.price * quantity} /></p>
+                      <p><FormatPrice price={product.price} /></p>
                       <p className="money-unit">đ</p>
                     </div>
                     <div className="accessories-price-ratio">
@@ -607,7 +612,7 @@ const ProductPage = ({ productBE }) => {
               <li key={item.id} className="similar-product-item">
                 <div className="similar-product-item-content">
                   <div className="similar-product-img">
-                    <img src={item.image.split('|')[0]} alt="First Image" />
+                    <img src={item.image} alt="First Image" />
                   </div>
                   <div className="similar-product-content">
                     <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
@@ -748,21 +753,17 @@ const ProductPage = ({ productBE }) => {
         )}
 
 
-        {/* SUCCESS NOTIFICATION */}
-        {isSuccessNotificationVisible && (
-          <div className="success-notification">
-            <FontAwesomeIcon className="success-notification-check" icon={faCheck} />
-            Order placed successfully !
+        {/* Cart notifications */}
+        {cartNotifications.map((notification, index) => (
+          <div
+            key={index}
+            className="cart-notification"
+            style={{ bottom: `${10 + index * 40}px`, display: 'block' }}
+          >
+            <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
+            {notification.message}
           </div>
-        )}
-
-
-        {/* Cart notification */}
-        <div className="cart-notification" style={{ display: cartNotificationVisible ? 'block' : 'none' }}>
-          <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
-          The product has been added to Cart !
-        </div>
-
+        ))}
       </div>
     );
   }
