@@ -33,8 +33,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 	List<Product> getTopSellerByType(String type, Integer limit);
 
 	@Query(nativeQuery = true,
-		value = "select ld.ram from laptop_detail ld\n" +
-			"where ld.id = (select s.id from stock s where product_detail_id = (select pd.id from product_detail pd\n" +
-			"where pd.product_id = (select p.id from product p where p.name = \"Laptop Dell Vostro 3520 Y4G15\")))")
+		value = "SELECT ld.ram FROM laptop_detail ld JOIN stock s ON ld.id = s.id JOIN product_detail pd ON s.product_detail_id = pd.id JOIN product p ON pd.product_id = p.id WHERE p.name = :name")
 	List<String> getListConfiguration(String name);
 }

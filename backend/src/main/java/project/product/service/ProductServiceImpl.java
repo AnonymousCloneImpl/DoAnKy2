@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import project.models.Pagination;
 import project.product.dto.BlogDto;
 import project.product.dto.ProductDto;
+import project.product.dto.SimilarProductDto;
 import project.product.dto.StockDto;
 import project.product.entity.*;
 import project.product.repository.ProductDetailRepository;
@@ -143,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
 		setProductDetail(productDto, p);
 		setProducer(productDto, p);
 		setPurchaseComboItem(productDto);
-		productDto.setConfigurationList(productRepo.getListConfiguration(name));
+		productDto.setConfigurationList(productRepo.getListConfiguration(namePath));
 
 		Blog blog = p.getBlog();
 		BlogDto blogDto = createBlogDto(blog);
@@ -155,10 +156,10 @@ public class ProductServiceImpl implements ProductService {
 		String imageStr = p.getImage();
 		if (imageStr != null) {
 			productDto.setImageList(List.of(imageStr.split("\\|")));
-			productDto.setBlog(blogDto);
-			productDto.setSimilarProductList(findTopSimilarProducts(p));
-			productDto.setStock(stockDto);
 		}
+		productDto.setBlog(blogDto);
+		productDto.setSimilarProductList(findTopSimilarProducts(p));
+		productDto.setStock(stockDto);
 
 		return Optional.of(productDto);
 	}
@@ -229,8 +230,17 @@ public class ProductServiceImpl implements ProductService {
 				.build();
 	}
 
-	private List<Product> findTopSimilarProducts(Product product) {
-		return productRepo.findTopSimilarByType(product.getType(), product.getId(),
-				PageRequest.of(0, 6));
+	private List<SimilarProductDto> findTopSimilarProducts(Product product) {
+		List<Product> productList = productRepo.findTopSimilarByType(product.getType(), product.getId(),
+			PageRequest.of(0, 6));
+		SimilarProductDto sp;
+		List<SimilarProductDto> list = new ArrayList<>();
+		for (Product p : productList) {
+			sp = new SimilarProductDto();
+			BeanUtils.copyProperties(p, sp);
+			sp.setImage(List.of(p.getImage().split("\\|")).getFirst());
+			list.add(sp);
+		}
+		return list;
 	}
 }
