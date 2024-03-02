@@ -157,7 +157,7 @@ export default function Header() {
                                 Check oder</Link>
                             </li>
                             <li className="main-menu-right">
-                                <Link className="main-menu-a hover:text-red-800" href="/cart">
+                                <Link className="main-menu-a hover:text-red-800" href="/src/pages/cart">
                                     <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
                                 My cart</Link>
                             </li>

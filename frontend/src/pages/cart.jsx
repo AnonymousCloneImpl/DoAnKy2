@@ -88,7 +88,7 @@ const CartPage = () => {
               </div>
             ))}
 
-            <a href="/" className="flex font-semibold text-indigo-600 text-sm mt-10">
+            <a href="/public" className="flex font-semibold text-indigo-600 text-sm mt-10">
 
               <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
                 <path
