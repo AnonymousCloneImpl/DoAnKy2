@@ -1,5 +1,5 @@
 import { config, library } from '@fortawesome/fontawesome-svg-core';
-import { faLaptop, faKeyboard, faScrewdriverWrench, faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
+import { faGears, faLaptop, faKeyboard, faScrewdriverWrench, faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useEffect } from "react";
 import fetcher from "@/utils/fetchAPI";
@@ -171,7 +171,7 @@ export default function Header() {
             {/*SUB MENU*/}
             <nav id="sub-menu-nav">
                 <ul id="sub-menu" className="font-semibold">
-                    <li className="hover:text-red-800">
+                    <li>
                         <Link href="/laptop" className="flex justify-center items-center m-1">
                             <FontAwesomeIcon icon={faLaptop} className="sub-menu-i"/>
                             <p className="text-xl pl-2">
@@ -179,31 +179,39 @@ export default function Header() {
                             </p>
                         </Link>
                     </li>
-                    <li className="hover:text-red-800">
+                    <li>
                         <div className="">
                             <Link href="/" className="flex justify-center items-center m-1">
                                 <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i"/>
-                                <p className="text-xl pl-2">Accessories</p>
+                                <p className="text-xl pl-2">Gear</p>
                             </Link>
                         </div>
                         <ul id="sub-drop">
                             <li><img src="/header_img/drop-menu-mouse.webp" alt=""/>
-                                <a href="/mouse">mouse</a>
+                                <a href="/mouse">Mouse</a>
                             </li>
                             <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt=""/>
-                                <a href="/keyboard">keyboard</a>
+                                <a href="/keyboard">Keyboard</a>
                             </li>
                             <li>
                                 <img id="fix" src="/header_img/drop-menu-headphone.webp" alt=""/>
-                                <a href="/headphone">headphone</a>
+                                <a href="/headphone">Headphone</a>
                             </li>
                         </ul>
                     </li>
-                    <li className="hover:text-red-800">
+                    <li>
+                        <Link href="/laptop" className="flex justify-center items-center m-1">
+                            <FontAwesomeIcon icon={faGears} className="sub-menu-i"/>
+                                <p className="text-xl pl-2">
+                                    PC Components
+                                </p>
+                            </Link>
+                        </li>
+                    <li>
                         <div className="">
                             <Link href="/" className="flex justify-center items-center m-1">
                                 <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
-                                <p className="text-xl pl-2">Build your PC</p>
+                                <p className="text-xl pl-2">Build PC</p>
                             </Link>
                         </div>
                     </li>

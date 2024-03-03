@@ -1,6 +1,5 @@
 package project.product.service;
 
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -238,7 +237,10 @@ public class ProductServiceImpl implements ProductService {
 		for (Product p : productList) {
 			sp = new SimilarProductDto();
 			BeanUtils.copyProperties(p, sp);
+			Optional<Stock> stock = stockRepo.findByProductDetailId(p.getId());
+			StockDto stockDto = createStockDto(stock, p.getId());
 			sp.setImage(List.of(p.getImage().split("\\|")).getFirst());
+			sp.setStock(stockDto);
 			list.add(sp);
 		}
 		return list;
