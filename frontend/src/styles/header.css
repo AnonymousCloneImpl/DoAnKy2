@@ -145,6 +145,7 @@ ul#sub-menu li:hover {
     justify-content: center !important;
     align-items: center !important;
     background: #fff !important;
+    height: 50px;
 }
 
 #sub-drop li:hover {
@@ -352,12 +353,12 @@ ul#sub-menu li:hover ul#sub-drop {
 .cart-number-list {
     position: absolute;
     background: #D0021C;
-    width: 23px;
-    height: 23px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     color: white;
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13px;
     top: 28px;
-    right: 163px;
+    right: 123px;
 }

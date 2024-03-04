@@ -15,5 +15,6 @@ public class SimilarProductDto {
     private String type;
     private Long price;
     private String image;
+    private StockDto stock;
     private byte discountPercentage;
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
+import project.common.InputValidUtils;
 import project.const_.ORDER_STATUS;
 import project.email.EmailService;
 import project.order.dto.OrderDto;
@@ -40,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order createOrder(OrderDto orderDto) {
         Order order = createOrderObj(orderDto);
+
         BeanUtils.copyProperties(orderDto, order);
         orderRepo.save(order);
 
@@ -104,7 +106,6 @@ public class OrderServiceImpl implements OrderService {
                 .append("Order Date: ").append(order.getOrderDate()).append("\n")
                 .append("Order Status: ").append(order.getStatus()).append("\n")
                 .append("Total Price: ").append(order.getTotalPrice());
-
             emailService.sendEmail(order.getCustomerEmail(), "Success Order", email.toString());
         } catch (Exception e) {
             System.err.println(e.getMessage());

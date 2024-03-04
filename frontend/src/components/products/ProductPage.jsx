@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faCircleXmark, faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
+import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
 
 const ProductPage = ({ productBE }) => {
@@ -48,29 +49,24 @@ const ProductPage = ({ productBE }) => {
     const decreaseButton = document.querySelector('.quantity-decrease');
     const increaseButton = document.querySelector('.quantity-increase');
 
-    decreaseButton.addEventListener('click', function () {
-      decreaseQuantity();
-    });
+    const handleDecrease = () => decreaseQuantity();
+    const handleIncrease = () => increaseQuantity();
+    const handleInput = () => limitQuantity();
+    const handleBlur = () => resetIfEmpty();
 
-    increaseButton.addEventListener('click', function () {
-      increaseQuantity();
-    });
-
-    quantityInput.addEventListener('input', function () {
-      limitQuantity();
-    });
-
-    quantityInput.addEventListener('blur', function () {
-      resetIfEmpty();
-    });
+    decreaseButton.addEventListener('click', handleDecrease);
+    increaseButton.addEventListener('click', handleIncrease);
+    quantityInput.addEventListener('input', handleInput);
+    quantityInput.addEventListener('blur', handleBlur);
 
     return () => {
-      decreaseButton.removeEventListener('click', decreaseQuantity);
-      increaseButton.removeEventListener('click', increaseQuantity);
-      quantityInput.removeEventListener('input', limitQuantity);
-      quantityInput.removeEventListener('blur', resetIfEmpty);
+      decreaseButton.removeEventListener('click', handleDecrease);
+      increaseButton.removeEventListener('click', handleIncrease);
+      quantityInput.removeEventListener('input', handleInput);
+      quantityInput.removeEventListener('blur', handleBlur);
     };
   }, []);
+
 
   function decreaseQuantity(e) {
     if (e) {
@@ -88,7 +84,7 @@ const ProductPage = ({ productBE }) => {
 
   const limitQuantity = (e) => {
     if (e) {
-      const value = parseInt(e.target.value, product.stock.quantity);
+      const value = parseInt(e.target.value, 10);
       setQuantity(Math.min(Math.max(value || 1, 1), product.stock.quantity));
     }
   };
@@ -107,11 +103,13 @@ const ProductPage = ({ productBE }) => {
   const [checkedItems, setCheckedItems] = useState([]);
 
   const handleCheckboxChange = (itemId) => {
-    const updatedCheckedItems = checkedItems.includes(itemId)
-      ? checkedItems.filter((id) => id !== itemId)
-      : [...checkedItems, itemId];
+    setCheckedItems((prevCheckedItems) => {
+      const updatedCheckedItems = prevCheckedItems.includes(itemId)
+        ? prevCheckedItems.filter((id) => id !== itemId)
+        : [...prevCheckedItems, itemId];
 
-    setCheckedItems(updatedCheckedItems);
+      return updatedCheckedItems;
+    });
   };
 
   useEffect(() => {
@@ -157,8 +155,6 @@ const ProductPage = ({ productBE }) => {
   const [selectedDistrictId, setSelectedDistrictId] = useState('');
   const [selectedWardId, setSelectedWardId] = useState('');
 
-  const [isSuccessNotificationVisible, setSuccessNotificationVisible] = useState(false);
-
   const handleProvinceChange = (provinceId) => {
     const selectedProvince = provinces.find((province) => province[0] === provinceId);
     setSelectedProvinceId(provinceId);
@@ -189,7 +185,7 @@ const ProductPage = ({ productBE }) => {
   const [customerEmail, setCustomerEmail] = useState('');
   const [houseAddress, setHouseAddress] = useState('');
   const [orderItem, setOrderItem] = useState([]);
-  const [selectedAccessories, setSelectedAccessories] = useState([]);
+  const [selectedCombo, setSelectedCombo] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -210,6 +206,8 @@ const ProductPage = ({ productBE }) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+  console.log('Checked Items:', checkedItems);
 
     const selectedWard = wards.find(w => w[0] === selectedWardId);
     const selectedDistrict = districts.find(d => d[0] === selectedDistrictId);
@@ -233,6 +231,11 @@ const ProductPage = ({ productBE }) => {
       return;
     }
 
+    const selectedCombo = product.purchaseComboItem.productList
+        .filter((item) => checkedItems.includes(item.id));
+
+  console.log('Selected Accessories:', selectedCombo);
+
     const orderData = {
       customerName,
       customerPhone,
@@ -243,8 +246,8 @@ const ProductPage = ({ productBE }) => {
           "productId": product.id,
           "quantity": quantity
         },
-        ...selectedAccessories.map((accessory) => ({
-          productId: accessory.id,
+        ...selectedCombo.map((item) => ({
+          productId: item.id,
           quantity: 1,
         })),
       ],
@@ -264,13 +267,8 @@ const ProductPage = ({ productBE }) => {
 
       if (response.ok) {
         closeForm();
-        setSuccessNotificationVisible(true);
-        setTimeout(() => {
-          setSuccessNotificationVisible(false);
-        }, 2000);
-        setTimeout(() => {
-          window.location.reload();
-        }, 1);
+        alert("Order placed successfully");
+        window.location.reload();
         console.log('Order placed successfully');
       } else {
         console.error('Failed to place order');
@@ -282,7 +280,7 @@ const ProductPage = ({ productBE }) => {
 
   // Validate Order
   const validName = (name) => {
-    const nameRegex = /^[a-zA-Z\s]+$/;
+    const nameRegex = /^[a-zA-ZÀ-ỹ\s]+$/;
     return nameRegex.test(name);
   };
 
@@ -315,10 +313,10 @@ const ProductPage = ({ productBE }) => {
       updatedCartItemList[existingProductIndex] = {
         "image": product.image,
         "name": product.name,
-        "producer": product.producer,
         "price": product.price,
         "discountPercentage": product.discountPercentage,
-        "type": product.type
+        "type": product.type,
+        "stock": product.stock.quantity
       };
 
       cartItemList = updatedCartItemList;
@@ -326,10 +324,10 @@ const ProductPage = ({ productBE }) => {
       cartItemList.push({
         "image": product.image,
         "name": product.name,
-        "producer": product.producer,
         "price": product.price,
         "discountPercentage": product.discountPercentage,
-        "type": product.type
+        "type": product.type,
+        "stock": product.stock.quantity
       });
     }
 
@@ -355,10 +353,15 @@ const ProductPage = ({ productBE }) => {
   } else {
     return (
       <div className="body-wrapper">
+        <Head>
+           <title>
+              {product.name}
+           </title>
+        </Head>
         <div className="url">
           <Link href="/">Home </Link>
           <b> &#8250; </b>
-          <Link href="/products">{product.type}</Link>
+          <Link href={`/${product.type}`}>{product.type}</Link>
           <b> &#8250; </b>
           <b className="name">{product.name}</b>
         </div>
@@ -477,7 +480,7 @@ const ProductPage = ({ productBE }) => {
                 <div className="quantity">
                   <p>Quantity</p>
                   <div className="quantity-control">
-                    <button className="quantity-decrease" onClick={decreaseQuantity}>-</button>
+                    <button className="quantity-decrease" onClick={decreaseQuantity}><FontAwesomeIcon icon={faMinus} /></button>
                     <input
                       type="number"
                       min="1"
@@ -487,7 +490,7 @@ const ProductPage = ({ productBE }) => {
                       onBlur={(e) => resetIfEmpty(e)}
                       className="quantity-input"
                     />
-                    <button className="quantity-increase" onClick={increaseQuantity}>+</button>
+                    <button className="quantity-increase" onClick={increaseQuantity}><FontAwesomeIcon icon={faPlus} /></button>
                   </div>
                 </div>
 

@@ -26,6 +26,7 @@ export default function Home() {
     if (!laptopData || !headphoneData || !mouseData) return <div>Loading...</div>;
 
     return (
+
         <div>
             <Head>
                 <title>

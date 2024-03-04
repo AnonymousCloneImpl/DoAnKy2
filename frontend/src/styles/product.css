@@ -210,9 +210,9 @@
     border: 1px solid black;
     border-radius: 2px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 900;
     font-size: 15px;
-    background: lightgrey;
+    background: #E2E8F0;
 }
 
 .quantity p {
@@ -228,6 +228,7 @@
     text-align: center;
     border: 1px solid black;
     border-radius: 2px;
+    font-weight: 500;
 }
 
 .btn-box {
@@ -762,7 +763,7 @@
 }
 
 .product-content {
-  max-height: 1500px;
+  max-height: 1300px;
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
 }
