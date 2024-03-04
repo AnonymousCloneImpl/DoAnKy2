@@ -9,5 +9,5 @@ import java.util.List;
 public interface ProducerService {
 	List<Producer> getAll();
 
-	List<Producer> findProducersWithTypeLaptop(String type);
+	List<Producer> findProducersByProductType(String type);
 }

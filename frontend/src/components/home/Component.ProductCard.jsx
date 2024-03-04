@@ -42,7 +42,7 @@ export default function ProductCardComponent({productData, type}) {
                                     className="flex flex-wrap justify-around items-center text-sm text-gray-600">
                                     <div className="flex justify-center items-center">
                                         <FontAwesomeIcon icon={faMicrochip}/>
-                                        <p className="pl-1">{p.configuration.cpu_type}</p>
+                                        <p className="pl-1">{p.configuration.cpuType}</p>
                                     </div>
                                     <div className="flex justify-center items-center">
                                         <FontAwesomeIcon icon={faMemory}/>

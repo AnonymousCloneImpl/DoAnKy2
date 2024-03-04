@@ -47,52 +47,52 @@ export default function Home() {
                 </div>
                 <div className="w-full h-3/5 flex justify-around">
                     <Link
-                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-125 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/products">
+                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
+                        href="/laptop">
                         <img src="https://dlcdnwebimgs.asus.com/gain/868C3307-DD02-4624-8BA7-31B62EE4A38F/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"/>
                         <p className="h-1/5 text-center w-full text-2xl pt-2">LAPTOP</p>
                     </Link>
                     <Link
-                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-125 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/products">
+                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
+                        href="/headphone">
                         <img src="https://dlcdnwebimgs.asus.com/gain/070A915A-ED63-4C9E-B837-F6F1766E2863/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"/>
                         <p className="h-1/5 text-center w-full text-2xl pt-2">HEADPHONE</p>
                     </Link>
                     <Link
-                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-125 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/products">
+                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
+                        href="/mouse">
                         <img src="https://dlcdnwebimgs.asus.com/gain/F919198E-4F2B-4A8A-969A-E6E4757674AC/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"/>
                         <p className="h-1/5 text-center w-full text-2xl pt-2">MOUSE</p>
                     </Link>
                     <Link
-                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-125 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/products">
-                        <img src="https://dlcdnwebimgs.asus.com/gain/01480520-08BA-439E-A626-2E3D6F0D9908/w240/h175"
-                             alt="image"
-                             className="h-4/5 w-full"/>
-                        <p className="h-1/5 text-center w-full text-2xl pt-2">GRAPHICS CARD</p>
-                    </Link>
-                    <Link
-                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-125 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/products">
+                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
+                        href="/monitor">
                         <img src="https://dlcdnwebimgs.asus.com/gain/718462E2-0FF1-424B-8070-9EE75A96DC64/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"/>
                         <p className="h-1/5 text-center w-full text-2xl pt-2">MONITOR</p>
                     </Link>
                     <Link
-                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-125 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/products">
+                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
+                        href="/storage">
                         <img src="https://dlcdnwebimgs.asus.com/gain/D8D19FB9-2485-478F-9E58-4344265E0E69/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"/>
                         <p className="h-1/5 text-center w-full text-2xl pt-2">STORAGE</p>
+                    </Link>
+                    <Link
+                        className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
+                        href="/graphics-card">
+                        <img src="https://dlcdnwebimgs.asus.com/gain/01480520-08BA-439E-A626-2E3D6F0D9908/w240/h175"
+                             alt="image"
+                             className="h-4/5 w-full"/>
+                        <p className="h-1/5 text-center w-full text-2xl pt-2">GRAPHICS CARD</p>
                     </Link>
                 </div>
             </div>

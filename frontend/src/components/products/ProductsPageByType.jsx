@@ -6,16 +6,19 @@ import {getTrackBackground, Range} from "react-range";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import ProductList from "@/components/home/ProductList";
+import FormatPrice from "@/components/FormatPrice";
 
 const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
     const router = useRouter();
     const {query} =  useRouter();
     const [showPriceInput, setShowPriceInput] = useState(false);
+    const [showCpuOption, setShowCpuOption] = useState(false);
 
     // Data for render
     const [products, setProducts] = useState([]);
     const [producers, setProducers] = useState([]);
     const [topSeller, setTopSeller] = useState([]);
+    const [cpuFilter, setCpuFilter] = useState([]);
 
     // Paging
     const [currentPage, setCurrentPage] = useState(1);
@@ -24,8 +27,8 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
     const [totalElement, setTotalElement] = useState();
 
     // Param
-    const [minPrice, setMinPrice] = useState(query.minPrice || '');
-    const [maxPrice, setMaxPrice] = useState(query.maxPrice || '');
+    const [minPrice, setMinPrice] = useState(query.minPrice || 0);
+    const [maxPrice, setMaxPrice] = useState(query.maxPrice || 200000000);
 
     // init data
     useEffect(() => {
@@ -56,19 +59,8 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
         setCurrentPage(page);
     }, []);
 
-    const handleStockClick = async () => {
-        if (query.stock) {
-            const { stock, ...newQuery } = query;
-            await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
-                resolve();
-            });
-        } else {
-            await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...query, stock: true } }, undefined, { shallow: true, scroll: false, });
-                resolve();
-            });
-        }
+    const handleCpuClick = async () => {
+        setShowCpuOption(!showCpuOption);
     };
 
     const handlePriceClick = () => {
@@ -104,6 +96,29 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
         }
     };
 
+    const handleCpuTypeClick = async ({value}) => {
+        value = value.replace(" ", "-");
+        if (query.cpu === value) {
+            const { cpu, ...newQuery } = query;
+            await new Promise((resolve) => {
+                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                resolve();
+            });
+        } else {
+            if (query.cpu) {
+                const { cpu, ...newQuery } = query;
+                await new Promise((resolve) => {
+                    router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                    resolve();
+                });
+            }
+            await new Promise((resolve) => {
+                router.push({ pathname: router.pathname, query: { ...query, cpu: value } }, undefined, { shallow: true, scroll: false, });
+                resolve();
+            });
+        }
+    };
+
     const handleApplyPriceFilter = async () => {
         await new Promise((resolve) => {
             router.push({
@@ -121,7 +136,7 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
         setShowPriceInput(!showPriceInput);
     };
 
-    const useParamPage = async (value) => {
+    const handlePageButtonClick = async (value) => {
         const newQuery = value === 1 ? { ...query } : { ...query, page: value };
 
         if (value === 1 && newQuery.page) {
@@ -129,8 +144,6 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
         }
 
         setCurrentPage(value);
-
-        await useNewData(value);
 
         await new Promise((resolve) => {
             router.push(
@@ -144,17 +157,6 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
             resolve();
         })
     };
-
-    const useNewData = async (page) => {
-        let url = `${process.env.DOMAIN}/products/${query.type}?page=${page}&limit=${elementPerPage}`;
-
-        const data = await fetcher(url);
-
-        if (data) {
-            setProducts(data.productSummaryDtoList);
-        }
-
-    }
 
     return (
         <div className="h-full">
@@ -175,15 +177,15 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
                 </div>
             </div>
 
-            <div className="h-32 mt-8">
+            <div className="mt-8 h-20">
                 <div className="text-2xl">
                     <p className="h-10">CHUYÊN TRANG THƯƠNG HIỆU</p>
                 </div>
-                <div className="w-full h-3/4">
-                    <ul className="flex flex-wrap justify-start h-full">
+                <div className="w-full mt-3">
+                    <ul className="flex flex-wrap justify-start">
                         {producers.map((producer) => (
-                            <li key={producer.id} className="w-1/6 h-1/3 flex justify-center">
-                                <div className="h-full w-1/2">
+                            <li key={producer.id} className="h-8 w-36 flex ">
+                                <div className="h-full">
                                     <button className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center"
                                             onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}
                                     >
@@ -198,19 +200,19 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
                     </ul>
                 </div>
             </div>
-            <div className="w-full h-36 mt-8">
+            <div className="w-full mt-8">
                 <div className="h-1/4">
                     <p className="text-2xl">
                         CHỌN THEO NHU CẦU
                     </p>
                 </div>
-                <div className="h-3/4 flex">
+                <div className="flex mt-3">
                     <div className="w-1/12 h-full rounded-md overflow-hidden mr-6"
                          style={{backgroundColor: 'rgb(253,180,113)'}}
                     >
                         <button
                             onClick={() => handleOptionClick({value : "vanphong"})}
-                            className="h-full w-full flex flex-col items-center justify-center text-white"
+                            className="h-28 w-full flex flex-col items-center justify-center text-white"
                         >
                             <div className="h-1/6">
                                 <p className="text-lg">Văn Phòng</p>
@@ -226,12 +228,12 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
                             </div>
                         </button>
                     </div>
-                    <div className="w-1/12 h-full rounded-md overflow-hidden mr-6"
+                    <div className="w-1/12 rounded-md overflow-hidden mr-6"
                          style={{backgroundColor: 'rgb(247, 119, 77)'}}
                     >
                         <button
                             onClick={() => handleOptionClick({value : "gaming"})}
-                            className="h-full w-full flex flex-col items-center justify-center text-white"
+                            className="h-28 w-full flex flex-col items-center justify-center text-white"
                         >
                             <div className="h-1/6">
                                 <p className="text-lg">Gaming</p>
@@ -246,12 +248,12 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
                             </div>
                         </button>
                     </div>
-                    <div className="w-1/12 h-full rounded-md overflow-hidden mr-6"
+                    <div className="w-1/12 rounded-md overflow-hidden mr-6"
                          style={{backgroundColor: 'rgb(255, 143, 143)'}}
                     >
                         <button
                             onClick={() => handleOptionClick({value : "dohoa"})}
-                            className="h-full w-full flex flex-col items-center justify-center text-white"
+                            className="h-28 w-full flex flex-col items-center justify-center text-white"
                         >
                             <div className="h-1/6">
                                 <p className="text-lg">Đồ họa</p>
@@ -266,12 +268,12 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
                             </div>
                         </button>
                     </div>
-                    <div className="w-1/12 h-full rounded-md overflow-hidden mr-6"
+                    <div className="w-1/12 rounded-md overflow-hidden mr-6"
                          style={{backgroundColor: 'rgb(237, 85, 108)'}}
                     >
                         <button
                             onClick={() => handleOptionClick({value : "mongnhe"})}
-                            className="h-full w-full flex flex-col items-center justify-center text-white"
+                            className="h-28 w-full flex flex-col items-center justify-center text-white"
                         >
                             <div className="h-1/6">
                                 <p className="text-lg">Mỏng nhẹ</p>
@@ -286,43 +288,37 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
                             </div>
                         </button>
                     </div>
-                    <div className="w-1/12 h-full rounded-md overflow-hidden">
-                    </div>
-                    <div className="w-1/12 h-full">
-                    </div>
                 </div>
             </div>
 
-            <div className="h-32">
-                <div>
-                    Filter
+            <div className="mt-6">
+                <div className="text-2xl">
+                    FILTER
                 </div>
-                <div>
+                <div className="mt-3">
                     <div className="flex justify-start items-center">
-                        <div className="h-10 w-1/12 border border-black rounded-xl overflow-hidden mr-5">
-                            <a onClick={handleStockClick} className="h-full w-full" role="button">
-                                <p className="h-full w-full flex justify-center items-center">
-                                    Stocking
+                        <div className="h-10 w-1/12 mr-5">
+                            <button onClick={handlePriceClick} className="h-full w-full">
+                                <p className="h-full w-full flex justify-start items-center text-xl">
+                                    Price
                                 </p>
-                            </a>
+                            </button>
                         </div>
-                        <div className="h-10 w-1/12 border border-black rounded-xl overflow-hidden mr-5">
-                            <div className="rounded-xl overflow-hidden h-full w-full">
-                                <a onClick={handlePriceClick} className="h-full w-full" role="button">
-                                    <p className="h-full w-full flex justify-center items-center">
-                                        Price
-                                    </p>
-                                </a>
-                            </div>
+                        <div className="h-10 w-1/12 mr-5">
+                            <button onClick={handleCpuClick} className="h-full w-full">
+                                <p className="h-full w-full flex justify-start items-center text-xl">
+                                    CPU
+                                </p>
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div>
                     {/* Ô input cho giá min và max */}
                     {showPriceInput && (
-                        <div className="absolute mt-1 left-52 w-1/2">
+                        <div className="absolute mt-1 left-8 w-1/2">
                             <div
-                                className="flex items-center justify-center border border-black rounded-lg overflow-hidden h-12 w-full">
+                                className="flex items-center justify-center rounded-lg overflow-hidden h-12 w-full">
                                 <PriceRangeSlider
                                     minPrice={minPrice}
                                     maxPrice={maxPrice}
@@ -333,17 +329,30 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
                             </div>
                         </div>
                     )}
+
+                    {/* Ô input cho cpu */}
+                    {showCpuOption && (
+                        <div className="absolute mt-4 w-1/2 flex justify-start left-48">
+                            {cpuFilter.map((p) => (
+                                <div key={p.id} className="mr-8">
+                                    <button onClick={() => {handleCpuTypeClick({value : p})}}>
+                                        {p}
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </div>
 
-            <div className="flex flex-wrap h-auto">
-                <ProductList productData={products} type={pageType}/>
+            <div className="flex flex-wrap h-auto mt-28">
+                <ProductList productData={products} type={pageType} />
             </div>
 
             <div className="mb-96 flex justify-center">
                 <ButtonPaging
                     totalPages={totalPage}
-                    setParamPage={useParamPage}
+                    handlePageClick={handlePageButtonClick}
                     currentPage={currentPage}
                 />
             </div>
@@ -353,7 +362,7 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
 }
 
 const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
-    const [values, setValues] = useState([0, 10000000]);
+    const [values, setValues] = useState([0, 200000000]);
 
     const handleChange = (newValues) => {
         setValues(newValues);
@@ -397,11 +406,11 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
                                 width: '100%',
                                 padding: '0 10px',
                                 boxSizing: 'border-box',
-                                marginTop: '10px',
+                                marginTop: '10px'
                             }}
                         >
-                            <span>{values[0]}</span>
-                            <span>{values[1]}</span>
+                            <span><FormatPrice price={values[0]} />đ</span>
+                            <span><FormatPrice price={values[1]} />đ</span>
                         </div>
                     </div>
                 )}

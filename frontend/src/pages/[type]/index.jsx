@@ -9,7 +9,7 @@ const ProductsPageRoute = () => {
 
     const page = router.query.page || 1;
 
-    let type = router.query.type || null;
+    let type = router.query.type?.replace("-", " ") || null;
 
     let producer = router.query.producer || null;
 
@@ -21,26 +21,32 @@ const ProductsPageRoute = () => {
 
     let option = router.query.option || null;
 
+    let cpu = router.query.cpu || null;
+
     let firstProductDataUrl = `${process.env.DOMAIN}/products/${type}?page=${page}`;
 
     if (producer !== null) {
-        firstProductDataUrl += `&producer=${producer}`
+        firstProductDataUrl += `&producer=${producer}`;
     }
 
     if (minPrice !== null) {
-        firstProductDataUrl += `&minprice=${minPrice}`
+        firstProductDataUrl += `&minprice=${minPrice}`;
     }
 
     if (maxPrice !== null) {
-        firstProductDataUrl += `&maxprice=${maxPrice}`
+        firstProductDataUrl += `&maxprice=${maxPrice}`;
     }
 
     if (stock !== null) {
-        firstProductDataUrl += `&stock=${stock}`
+        firstProductDataUrl += `&stock=${stock}`;
     }
 
     if (option !== null) {
-        firstProductDataUrl += `&option=${option}`
+        firstProductDataUrl += `&option=${option}`;
+    }
+
+    if (cpu !== null) {
+        firstProductDataUrl += `&cpu=${cpu}`;
     }
 
     firstProductDataUrl += `&limit=5`;
@@ -59,7 +65,7 @@ const ProductsPageRoute = () => {
         revalidateOnReconnect: false
     })
 
-    if (isLoading || data === undefined) return <div>Loading...</div>
+    if (isLoading) return <div>Loading...</div>
 
     if (error || err) return <CustomErrorPage />
 

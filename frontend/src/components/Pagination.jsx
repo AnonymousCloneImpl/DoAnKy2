@@ -2,7 +2,7 @@ import React from "react";
 import { cn, Pagination, PaginationItemType } from "@nextui-org/react";
 import { ChevronIcon } from "./ChevronIcon";
 
-export default function ButtonPaging({ totalPages, setParamPage, currentPage }) {
+export default function ButtonPaging({ totalPages, handlePageClick, currentPage }) {
     const renderItem = ({
                             ref,
                             key,
@@ -27,7 +27,7 @@ export default function ButtonPaging({ totalPages, setParamPage, currentPage }) 
                 )}
                 onClick={() => {
                     setPage(value);
-                    setParamPage(value);
+                    handlePageClick(value);
                 }}
                 type="button"
             >

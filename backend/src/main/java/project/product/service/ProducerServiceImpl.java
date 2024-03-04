@@ -27,7 +27,7 @@ public class ProducerServiceImpl implements ProducerService {
 	}
 
 	@Override
-	public List<Producer> findProducersWithTypeLaptop(String type) {
+	public List<Producer> findProducersByProductType(String type) {
 		Specification<Product> spec = productSpecification.searchByType(type);
 		return productRepository.findAll(spec)
 				.stream()

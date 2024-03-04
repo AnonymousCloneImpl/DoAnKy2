@@ -3,6 +3,7 @@ package project.product.service;
 import org.springframework.stereotype.Service;
 import project.models.Pagination;
 import project.product.dto.ProductSummaryDto;
+import project.product.dto.SearchDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,7 +14,7 @@ public interface ProductService {
 
 	List<ProductSummaryDto> getTopSellerByType(String type, Integer limit);
 
-	Pagination getProductsByTypeWithPaging(String type, Integer page, Integer limit);
+	Pagination getProductsByTypeWithPaging(SearchDto searchDto);
 
 	Optional<Object> getByProductTypeAndByName(String type, String name);
 

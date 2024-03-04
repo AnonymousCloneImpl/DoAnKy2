@@ -10,17 +10,13 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.models.Pagination;
-import project.product.dto.BlogDto;
-import project.product.dto.ProductDto;
-import project.product.dto.SimilarProductDto;
-import project.product.dto.StockDto;
+import project.product.dto.*;
 import project.product.entity.*;
 import project.product.repository.ProductDetailRepository;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
 import project.product.utils.ProductSpecification;
 import project.product.utils.ProductUtils;
-import project.product.dto.ProductSummaryDto;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -91,13 +87,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Pagination getProductsByTypeWithPaging(String type, Integer page, Integer limit) {
-		if (limit == null) {
-			limit = Pagination.PAGE_SIZE;
-		}
-		Specification<Product> spec = productSpecification.searchByType(type);
+	public Pagination getProductsByTypeWithPaging(SearchDto searchDto) {
+		Specification<Product> spec = productSpecification.filterOfProduct(searchDto);
+
+		Pageable pageable = PageRequest.of((searchDto.getPage() - 1), searchDto.getLimit() == null ? Pagination.PAGE_SIZE : searchDto.getLimit());
+
 		try {
-			Page<Product> productList = productRepo.findAll(spec, PageRequest.of((page - 1), limit));
+			Page<Product> productList = productRepo.findAll(spec, pageable);
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
@@ -109,8 +105,10 @@ public class ProductServiceImpl implements ProductService {
 				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
 			}
 
-			pagination.setProducerList(producerService.findProducersWithTypeLaptop(type));
-			pagination.setElementPerPage(limit);
+			pagination.setProducerList(producerService.findProducersByProductType(searchDto.getType()));
+
+			pagination.setElementPerPage(productList.getNumberOfElements());
+
 			return pagination;
 		} catch (Exception e) {
 			System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());

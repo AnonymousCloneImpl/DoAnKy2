@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.models.Pagination;
+import project.product.dto.SearchDto;
 import project.product.entity.Producer;
 import project.product.service.ProducerService;
 import project.product.service.ProductService;
@@ -40,11 +41,26 @@ public class ProductController {
 	}
 
 	@GetMapping("/{type}")
-	ResponseEntity<Object> getProductByType(@PathVariable String type, @Param(value = "page") Integer page, @Param(value = "limit") Integer limit) {
+	ResponseEntity<Object> getProductByType(@PathVariable String type,
+	                                        @Param(value = "page") Integer page,
+	                                        @Param(value = "limit") Integer limit,
+	                                        @Param(value = "producer") String producer,
+	                                        @Param(value = "minPrice") Integer minPrice,
+	                                        @Param(value = "maxPrice") Integer maxPrice,
+	                                        @Param(value = "cpu") String cpu) {
 		if (page == null) {
 			page = 1;
 		}
-		Pagination pagination = productService.getProductsByTypeWithPaging(type, page, limit);
+		SearchDto searchDto = SearchDto.builder()
+				.type(type)
+				.producer(producer)
+				.page(page)
+				.limit(limit)
+				.minPrice(minPrice)
+				.maxPrice(maxPrice)
+				.cpu(cpu)
+				.build();
+		Pagination pagination = productService.getProductsByTypeWithPaging(searchDto);
 		if (pagination != null) {
 			return ResponseEntity.ok().body(
 					pagination
@@ -88,6 +104,6 @@ public class ProductController {
 
 	@GetMapping("/producer/{type}")
 	public List<Producer> getProducesByType(@PathVariable String type) {
-		return producerService.findProducersWithTypeLaptop(type);
+		return producerService.findProducersByProductType(type);
 	}
 }

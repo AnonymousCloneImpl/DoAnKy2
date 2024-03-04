@@ -1,8 +1,6 @@
 package project.product.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +13,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "laptop_detail")
 public class LaptopDetail extends ProductDetail {
-	private String cpu_type;
+	@Column(name = "cpu_type")
+	private String cpuType;
 	private String cpu;
 	private String ram;
 	@Column(name = "screen_size")
