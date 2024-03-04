@@ -1,23 +1,20 @@
 import fetcher from "@/utils/fetchAPI";
 import ProductCardComponent from "@/components/home/Component.ProductCard";
-import ComponentProducerList from "@/components/Component.ProducerList";
 import Link from "next/link";
-import FormatPrice from "@/components/FormatPrice";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCartPlus} from "@fortawesome/free-solid-svg-icons";
 import ButtonPaging from "@/components/Pagination";
 import {getTrackBackground, Range} from "react-range";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
-import useSWR from "swr";
+import ProductList from "@/components/home/ProductList";
 
-const ProductsPageByType = ({ pageData }) => {
+const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
     const router = useRouter();
     const {query} =  useRouter();
     const [showPriceInput, setShowPriceInput] = useState(false);
 
     // Data for render
     const [products, setProducts] = useState([]);
+    const [producers, setProducers] = useState([]);
     const [topSeller, setTopSeller] = useState([]);
 
     // Paging
@@ -47,6 +44,15 @@ const ProductsPageByType = ({ pageData }) => {
         if (pageData.totalElement) {
             setTotalElement(pageData.totalElement);
         }
+
+        if (pageData.producerList) {
+            setProducers(pageData.producerList);
+        }
+
+        if (topSellerBE) {
+            setTopSeller(topSellerBE)
+        }
+        setCurrentPage(page);
     }, []);
 
     const handleStockClick = async () => {
@@ -66,6 +72,35 @@ const ProductsPageByType = ({ pageData }) => {
 
     const handlePriceClick = () => {
         setShowPriceInput(!showPriceInput);
+    };
+
+    const handleProducerClick = async ({name}) => {
+        await new Promise((resolve) => {
+            router.push({ pathname: router.pathname, query: { ...query, producer: name } }, undefined, { shallow: true, scroll: false, });
+            resolve();
+        });
+    };
+
+    const handleOptionClick = async ({value}) => {
+        if (query.option === value) {
+            const { option, ...newQuery } = query;
+            await new Promise((resolve) => {
+                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                resolve();
+            });
+        } else {
+            if (query.option) {
+                const { option, ...newQuery } = query;
+                await new Promise((resolve) => {
+                    router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                    resolve();
+                });
+            }
+            await new Promise((resolve) => {
+                router.push({ pathname: router.pathname, query: { ...query, option: value } }, undefined, { shallow: true, scroll: false, });
+                resolve();
+            });
+        }
     };
 
     const handleApplyPriceFilter = async () => {
@@ -134,109 +169,121 @@ const ProductsPageByType = ({ pageData }) => {
                         TOP SELLER
                     </p>
                 </div>
-                <div className="w-full">
-                    <ProductCardComponent productData={topSeller}/>
+                <div className="w-full mb-8">
+                    <ProductCardComponent productData={topSeller} type={"laptop"}/>
                 </div>
             </div>
 
-            <div className="h-32">
-                <div className="h-1/4">
-                    <p>CHUYÊN TRANG THƯƠNG HIỆU</p>
+            <div className="h-32 mt-8">
+                <div className="text-2xl">
+                    <p className="h-10">CHUYÊN TRANG THƯƠNG HIỆU</p>
                 </div>
                 <div className="w-full h-3/4">
-                    <ComponentProducerList/>
+                    <ul className="flex flex-wrap justify-start h-full">
+                        {producers.map((producer) => (
+                            <li key={producer.id} className="w-1/6 h-1/3 flex justify-center">
+                                <div className="h-full w-1/2">
+                                    <button className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center"
+                                            onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}
+                                    >
+                                        <img
+                                            src={`${producer.image}`}
+                                            className="h-4/6 w-11/12"
+                                        />
+                                    </button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             </div>
-            <div className="w-full h-36">
+            <div className="w-full h-36 mt-8">
                 <div className="h-1/4">
-                    <p>
+                    <p className="text-2xl">
                         CHỌN THEO NHU CẦU
                     </p>
                 </div>
-                <div className="h-3/4 flex justify-around">
-                    <div className="w-1/12 h-full rounded-md overflow-hidden"
+                <div className="h-3/4 flex">
+                    <div className="w-1/12 h-full rounded-md overflow-hidden mr-6"
                          style={{backgroundColor: 'rgb(253,180,113)'}}
                     >
-                        <Link href="/">
+                        <button
+                            onClick={() => handleOptionClick({value : "vanphong"})}
+                            className="h-full w-full flex flex-col items-center justify-center text-white"
+                        >
                             <div className="h-1/6">
-                                <p className="w-full h-full text-center text-lg text-white">
-                                    Văn Phòng
-                                </p>
+                                <p className="text-lg">Văn Phòng</p>
                             </div>
-                            <div className="h-5/6 w-full flex justify-center">
-                                <div style={{
+                            <div
+                                style={{
                                     background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-971.svg')",
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'bottom'
                                 }}
-                                     className="h-full w-full"
-                                >
-                                </div>
+                                className="h-5/6 w-full"
+                            >
                             </div>
-                        </Link>
+                        </button>
                     </div>
-                    <div className="w-1/12 h-full rounded-md overflow-hidden"
+                    <div className="w-1/12 h-full rounded-md overflow-hidden mr-6"
                          style={{backgroundColor: 'rgb(247, 119, 77)'}}
                     >
-                        <Link href="/">
+                        <button
+                            onClick={() => handleOptionClick({value : "gaming"})}
+                            className="h-full w-full flex flex-col items-center justify-center text-white"
+                        >
                             <div className="h-1/6">
-                                <p className="w-full h-full text-center text-lg text-white">
-                                    Gaming
-                                </p>
+                                <p className="text-lg">Gaming</p>
                             </div>
-                            <div className="h-5/6 w-full flex justify-center">
-                                <div style={{
-                                    background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-973.svg')",
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'bottom'
-                                }}
-                                     className="h-full w-full"
-                                >
-                                </div>
+                            <div style={{
+                                background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-973.svg')",
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'bottom'
+                            }}
+                                 className="h-full w-full"
+                            >
                             </div>
-                        </Link>
+                        </button>
                     </div>
-                    <div className="w-1/12 h-full rounded-md overflow-hidden"
+                    <div className="w-1/12 h-full rounded-md overflow-hidden mr-6"
                          style={{backgroundColor: 'rgb(255, 143, 143)'}}
                     >
-                        <Link href="/">
+                        <button
+                            onClick={() => handleOptionClick({value : "dohoa"})}
+                            className="h-full w-full flex flex-col items-center justify-center text-white"
+                        >
                             <div className="h-1/6">
-                                <p className="w-full h-full text-center text-lg text-white">
-                                    Đồ họa
-                                </p>
+                                <p className="text-lg">Đồ họa</p>
                             </div>
-                            <div className="h-5/6 w-full flex justify-center">
-                                <div style={{
-                                    background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-971.svg')",
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'bottom'
-                                }}
-                                     className="h-full w-full"
-                                >
-                                </div>
+                            <div style={{
+                                background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-971.svg')",
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'bottom'
+                            }}
+                                 className="h-full w-full"
+                            >
                             </div>
-                        </Link>
+                        </button>
                     </div>
-                    <div className="w-1/12 h-full rounded-md overflow-hidden"
+                    <div className="w-1/12 h-full rounded-md overflow-hidden mr-6"
                          style={{backgroundColor: 'rgb(237, 85, 108)'}}
                     >
-                        <Link href="/">
+                        <button
+                            onClick={() => handleOptionClick({value : "mongnhe"})}
+                            className="h-full w-full flex flex-col items-center justify-center text-white"
+                        >
                             <div className="h-1/6">
-                                <p className="w-full h-full text-center text-lg text-white">
-                                    Mỏng nhẹ
-                                </p>
+                                <p className="text-lg">Mỏng nhẹ</p>
                             </div>
-                            <div className="h-5/6 w-full flex justify-center">
-                                <div style={{
-                                    background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-1071.svg')",
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'bottom'
-                                }}
-                                     className="h-full w-full"
-                                >
-                                </div>
+                            <div style={{
+                                background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-1071.svg')",
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'bottom'
+                            }}
+                                 className="h-full w-full"
+                            >
                             </div>
-                        </Link>
+                        </button>
                     </div>
                     <div className="w-1/12 h-full rounded-md overflow-hidden">
                     </div>
@@ -245,7 +292,7 @@ const ProductsPageByType = ({ pageData }) => {
                 </div>
             </div>
 
-            <div>
+            <div className="h-32">
                 <div>
                     Filter
                 </div>
@@ -269,72 +316,27 @@ const ProductsPageByType = ({ pageData }) => {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div>
-                {/* Ô input cho giá min và max */}
-                {showPriceInput && (
-                    <div className="absolute mt-1 left-52 w-1/2">
-                        <div
-                            className="flex items-center justify-center border border-black rounded-lg overflow-hidden h-12 w-full">
-                            <PriceRangeSlider
-                                minPrice={minPrice}
-                                maxPrice={maxPrice}
-                                setMinPrice={setMinPrice}
-                                setMaxPrice={setMaxPrice}
-                            />
-                            <button onClick={handleApplyPriceFilter} className="ml-6">Apply</button>
+                <div>
+                    {/* Ô input cho giá min và max */}
+                    {showPriceInput && (
+                        <div className="absolute mt-1 left-52 w-1/2">
+                            <div
+                                className="flex items-center justify-center border border-black rounded-lg overflow-hidden h-12 w-full">
+                                <PriceRangeSlider
+                                    minPrice={minPrice}
+                                    maxPrice={maxPrice}
+                                    setMinPrice={setMinPrice}
+                                    setMaxPrice={setMaxPrice}
+                                />
+                                <button onClick={handleApplyPriceFilter} className="ml-6">Apply</button>
+                            </div>
                         </div>
-                    </div>
-                )}
-            </div>
-
-            <div className="h-20 flex items-center mt-8 mb-3">
-                <p className="flex items-center text-3xl">
-                    {products[0]?.type}
-                </p>
+                    )}
+                </div>
             </div>
 
             <div className="flex flex-wrap h-auto">
-                {products.map((product) => (
-                    <div key={product.id} className="w-1/5 mb-10">
-                        <div
-                            className="bg-white rounded-lg homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500 hover:homepage-card-item"
-                        >
-                            <div className="w-full h-6 flex justify-end">
-                                <p className="bg-red-600 text-white w-1/4 text-center rounded-tr-lg rounded-bl-lg">-{product.discountPercentage}%</p>
-                            </div>
-                            <div className="h-60 w-full">
-                                <Link
-                                    href={`/${product.type.toLowerCase()}/${product.name.toLowerCase().replace(/\s/g, "-")}`}
-                                    className="w-full h-full flex justify-center items-center"
-                                >
-                                    <img
-                                        src={product.image}
-                                        className="h-full"
-                                    />
-                                </Link>
-                            </div>
-                            <div className="flex items-center pt-3 h-20 w-full">
-                                <Link
-                                    href={`/${product.type.toLowerCase()}/${product.name.toLowerCase().replace(/\s/g, "-")}`}>
-                                    <p className="pl-3 h-full w-full">{product.name}</p>
-                                </Link>
-                            </div>
-                            <div className="flex items-center">
-                                <p className="price_discount pl-3"><FormatPrice price={product.price - (product.price * product.discountPercentage / 100)} />đ</p>
-                                <p className="price"><FormatPrice price={product.price} />đ</p>
-                            </div>
-                            <div className="w-full h-16 flex space-x-4 justify-center items-center">
-                                <button className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
-                                    <div>
-                                        <FontAwesomeIcon icon={faCartPlus} className="text-red-600"/>
-                                    </div>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                ))}
+                <ProductList productData={products} type={pageType}/>
             </div>
 
             <div className="mb-96 flex justify-center">

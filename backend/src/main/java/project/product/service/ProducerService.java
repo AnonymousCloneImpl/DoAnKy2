@@ -8,4 +8,6 @@ import java.util.List;
 @Service
 public interface ProducerService {
 	List<Producer> getAll();
+
+	List<Producer> findProducersWithTypeLaptop(String type);
 }

@@ -21,7 +21,7 @@ import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
 import project.product.utils.ProductSpecification;
 import project.product.utils.ProductUtils;
-import project.search.dto.ProductSummaryDto;
+import project.product.dto.ProductSummaryDto;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,6 +40,10 @@ public class ProductServiceImpl implements ProductService {
 	private ModelMapper modelMapper;
 	@Autowired
 	private ProductSpecification productSpecification;
+	@Autowired
+	private ProducerService producerService;
+	@Autowired
+	private ProductDetailService productDetailService;
 
 	@Deprecated
 	@Override
@@ -76,6 +80,10 @@ public class ProductServiceImpl implements ProductService {
 				summaryDto.setImage(ProductUtils.getFirstImageUrl(summaryDto.getImage()));
 			}
 
+			for (ProductSummaryDto p : productSummaryDtoList) {
+				p.setConfiguration(productDetailRepo.findAllDetailByProductId(p.getId()));
+			}
+
 			return productSummaryDtoList;
 		} catch (Exception e) {
 			System.err.println("Error in getTopSellerByType function : " + e.getMessage());
@@ -88,25 +96,22 @@ public class ProductServiceImpl implements ProductService {
 		if (limit == null) {
 			limit = Pagination.PAGE_SIZE;
 		}
-
-		Pageable pageable = PageRequest.of((page - 1), limit);
-
 		Specification<Product> spec = productSpecification.searchByType(type);
-
 		try {
-			Page<Product> productList = productRepo.findAll(spec, pageable);
-
-			System.out.println(productList.getNumberOfElements());
-
+			Page<Product> productList = productRepo.findAll(spec, PageRequest.of((page - 1), limit));
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
+
+			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
+				p.setConfiguration(productDetailRepo.findAllDetailByProductId(p.getId()));
+			}
 
 			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
 				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
 			}
 
+			pagination.setProducerList(producerService.findProducersWithTypeLaptop(type));
 			pagination.setElementPerPage(limit);
-
 			return pagination;
 		} catch (Exception e) {
 			System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
@@ -119,17 +124,21 @@ public class ProductServiceImpl implements ProductService {
 		if (limit == null) {
 			limit = Pagination.PAGE_SIZE;
 		}
-		Pageable pageable = PageRequest.of(0, limit);
-		Page<Product> productList = productRepo.findAll(productSpecification.nameLike(name), pageable);
 
-		List<ProductSummaryDto> productSummaryDtoList;
+		Page<Product> productList = productRepo
+				.findAll(productSpecification.nameLike(name), PageRequest.of(0, limit));
 
 		if (!productList.isEmpty()) {
-			productSummaryDtoList = ProductUtils
+
+			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
 					.convertProductsToProductSummaryDtoList(productList.getContent(), modelMapper);
+
+			for (ProductSummaryDto p : productSummaryDtoList) {
+				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+			}
 			return productSummaryDtoList;
 		} else {
-			System.err.println("Error in getProductsByTypeWithPaging function : productList is null");
+			System.err.println("Error in getByName function : productList is null");
 			return null;
 		}
 	}
@@ -232,7 +241,7 @@ public class ProductServiceImpl implements ProductService {
 
 	private List<SimilarProductDto> findTopSimilarProducts(Product product) {
 		List<Product> productList = productRepo.findTopSimilarByType(product.getType(), product.getId(),
-			PageRequest.of(0, 6));
+				PageRequest.of(0, 6));
 		SimilarProductDto sp;
 		List<SimilarProductDto> list = new ArrayList<>();
 		for (Product p : productList) {

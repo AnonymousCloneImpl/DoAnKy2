@@ -1,0 +1,23 @@
+package project.product.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import project.product.entity.Product;
+import project.product.entity.ProductDetail;
+import project.product.repository.ProductDetailRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class ProductDetailServiceImpl implements ProductDetailService {
+	@Autowired
+	private ProductDetailRepository productDetailRepository;
+
+	@Override
+	public List<ProductDetail> getProductDetailsByProducts(List<Product> products) {
+		return products.stream()
+				.map(product -> productDetailRepository.findByProductId(product.getId()))
+				.collect(Collectors.toList());
+	}
+}

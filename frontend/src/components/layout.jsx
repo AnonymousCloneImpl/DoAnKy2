@@ -32,8 +32,8 @@ export default function Layout({ children }) {
     return (
         <div>
             <Header/>
-            <div className="pt-38 w-full flex justify-center">
-                <div className="w-10/12">
+            <div className="w-full flex justify-center">
+                <div className="w-11/12">
                     {children}
                 </div>
             </div>

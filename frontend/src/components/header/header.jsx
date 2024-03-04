@@ -27,11 +27,11 @@ export default function Header() {
             });
             setShowResults(true);
         } else {
-            let url = `${process.env.DOMAIN}/search?keyword=${inputValue}`;
+            let url = `${process.env.DOMAIN}/products/search?name=${inputValue}&limit=5`;
 
             try {
                 const data = await fetcher(url);
-                if (data.data.length === 0 && data.status === 20) {
+                if (data.length === 0) {
                     setResults([]);
                     setShowResults(true);
                 }
@@ -145,7 +145,7 @@ export default function Header() {
                                 Check oder</Link>
                             </li>
                             <li className="main-menu-right">
-                                <Link className="main-menu-a hover:text-red-800" href="/src/pages/cart">
+                                <Link className="main-menu-a hover:text-red-800" href="/cart">
                                     <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
                                 My cart</Link>
                                 <div className="cart-number-list">10</div>
@@ -208,8 +208,8 @@ export default function Header() {
                      onMouseLeave={handleSearchResultLeave}
                 >
                     {
-                        results.data.length > 0 ? (
-                            results.data.map((result) => (
+                        results.length > 0 ? (
+                            results.map((result) => (
                                 <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id} href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
                                     <div className="flex">
                                         <div className="result_image">
