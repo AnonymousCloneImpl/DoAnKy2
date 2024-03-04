@@ -138,12 +138,9 @@ public class ProductServiceImpl implements ProductService {
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String namePath = name.replace("-", " ");
 		Product p = productRepo.getByProductTypeAndByName(type, namePath);
-
 		ProductDto productDto = createProductDto(p);
 		setProductDetail(productDto, p);
-		setProducer(productDto, p);
 		setPurchaseComboItem(productDto);
-		productDto.setConfigurationList(productRepo.getListConfiguration(namePath));
 
 		Blog blog = p.getBlog();
 		BlogDto blogDto = createBlogDto(blog);
@@ -152,13 +149,12 @@ public class ProductServiceImpl implements ProductService {
 		Optional<Stock> stock = stockRepo.findByProductDetailId(p.getId());
 		StockDto stockDto = createStockDto(stock, p.getId());
 
-		String imageStr = p.getImage();
-		if (imageStr != null) {
-			productDto.setImageList(List.of(imageStr.split("\\|")));
-		}
+		productDto.setProducer(p.getProducer().getName());
+		productDto.setImageList(List.of(p.getImage().split("\\|")));
 		productDto.setBlog(blogDto);
 		productDto.setSimilarProductList(findTopSimilarProducts(p));
 		productDto.setStock(stockDto);
+		productDto.setConfigurationList(productRepo.getListConfiguration(namePath));
 
 		return Optional.of(productDto);
 	}
@@ -172,10 +168,6 @@ public class ProductServiceImpl implements ProductService {
 	private void setProductDetail(ProductDto productDto, Product p) {
 		ProductDetail detail = productDetailRepo.findByProductId(p.getId());
 		productDto.setProductDetail(detail);
-	}
-
-	private void setProducer(ProductDto productDto, Product p) {
-		productDto.setProducer(p.getProducer().getName());
 	}
 
 	private void setPurchaseComboItem(ProductDto productDto) {
