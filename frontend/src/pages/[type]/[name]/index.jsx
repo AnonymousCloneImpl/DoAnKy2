@@ -20,8 +20,8 @@ const ProductDetailPage = () => {
 
     if (error) return <CustomErrorPage />
 
-    if (isLoading) {
-        return <div>Loading...</div>
+    if (isLoading || data === undefined) {
+        return <div>Loading...</div>;
     }
 
     return <ProductPage productBE={data} />

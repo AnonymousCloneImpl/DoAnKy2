@@ -59,7 +59,7 @@ const ProductsPageRoute = () => {
         revalidateOnReconnect: false
     })
 
-    if (isLoading) return <div>Loading...</div>
+    if (isLoading || data === undefined) return <div>Loading...</div>
 
     if (error || err) return <CustomErrorPage />
 

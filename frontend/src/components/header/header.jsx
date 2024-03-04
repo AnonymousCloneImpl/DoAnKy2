@@ -157,7 +157,7 @@ export default function Header() {
                                     <FontAwesomeIcon icon={faFileSignature} className="main-menu-i"/>
                                 Check oder</Link>
                             </li>
-                            <li className="main-menu-right">
+                            <li className="main-menu-right flex">
                                 <Link className="main-menu-a hover:text-red-800" href="/cart">
                                     <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
                                 My cart</Link>
@@ -188,14 +188,14 @@ export default function Header() {
                         </div>
                         <ul id="sub-drop">
                             <li><img src="/header_img/drop-menu-mouse.webp" alt=""/>
-                                <a href="/mouse">Mouse</a>
+                                <Link href="/mouse">Mouse</Link>
                             </li>
                             <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt=""/>
-                                <a href="/keyboard">Keyboard</a>
+                                <Link href="/keyboard">Keyboard</Link>
                             </li>
                             <li>
                                 <img id="fix" src="/header_img/drop-menu-headphone.webp" alt=""/>
-                                <a href="/headphone">Headphone</a>
+                                <Link href="/headphone">Headphone</Link>
                             </li>
                         </ul>
                     </li>
@@ -209,7 +209,7 @@ export default function Header() {
                         </li>
                     <li>
                         <div className="">
-                            <Link href="/" className="flex justify-center items-center m-1">
+                            <Link href="/buildpc" className="flex justify-center items-center m-1">
                                 <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
                                 <p className="text-xl pl-2">Build PC</p>
                             </Link>
