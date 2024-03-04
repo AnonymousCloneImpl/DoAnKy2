@@ -1,4 +1,8 @@
-export default function FormatPrice({price}) {
+import {useEffect, useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCircleCheck} from "@fortawesome/free-solid-svg-icons";
+
+export default function AddToCard({product}) {
 
   // cart notification----------------------------------------------------------------------------------------------
   const [cartNotifications, setCartNotifications] = useState([]);
@@ -48,17 +52,22 @@ export default function FormatPrice({price}) {
     }, 3000);
   };
 
+  useEffect(()=> {
+    addToCart(product);
+  }, [])
+
   return (
-    {/* Cart notifications */}
-            {cartNotifications.map((notification, index) => (
-              <div
+      <>
+        {cartNotifications.map((notification, index) => (
+            <div
                 key={index}
                 className="cart-notification"
-                style={{ bottom: `${10 + index * 40}px`, display: 'block' }}
-              >
-                <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
-                {notification.message}
-              </div>
-            ))}
-  )
+                style={{ bottom: `${10 + index + 40}px`, display: 'block' }}
+            >
+              <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
+              {notification.message}
+            </div>
+        ))}
+      </>
+)
 }

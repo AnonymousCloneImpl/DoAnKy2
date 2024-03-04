@@ -52,6 +52,8 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
         if (topSellerBE) {
             setTopSeller(topSellerBE)
         }
+
+        console.log(topSellerBE)
         setCurrentPage(page);
     }, []);
 

@@ -35,12 +35,12 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 					"    FROM stock s\n" +
 					"    JOIN product_detail pd ON s.product_detail_id = pd.id\n" +
 					"    JOIN product p2 ON pd.product_id = p2.id\n" +
-					"    WHERE p2.type = 'laptop'\n" +
+					"    WHERE p2.type = :type \n" +
 					"    ORDER BY s.sold DESC\n" +
-					"    LIMIT 5\n" +
+					"    LIMIT :limit \n" +
 					") s ON p.id = s.product_id\n" +
-					"WHERE p.type = 'laptop';")
-	List<Product> getTopSellerByType(String type, Integer limit);
+					"WHERE p.type = :type")
+	List<Product> getTopSellerByType(@Param("type") String type, @Param("limit") Integer limit);
 
 	@Query(nativeQuery = true,
 			value = "SELECT ld.ram FROM laptop_detail ld JOIN stock s ON ld.id = s.id JOIN product_detail pd ON s.product_detail_id = pd.id JOIN product p ON pd.product_id = p.id WHERE p.name = :name")
