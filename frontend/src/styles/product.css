@@ -469,11 +469,11 @@
 }
 
 .recommended-accessories-checkbox {
-    padding: 45px 10px 0 30px;
+    padding: 45px 0 0 30px;
 }
 
 .recommended-accessories-checkbox input[type="checkbox"] {
-    transform: scale(1.5);
+    transform: scale(1.25);
 }
 
 /* RECOMMEND ACCESSORIES LIST */
@@ -557,6 +557,10 @@
     font-size: 20px;
     font-weight: 500;
     margin: 20px 0;
+}
+
+.buy-recommend-btn:hover {
+    background: #FF4500;
 }
 
 .total-price {

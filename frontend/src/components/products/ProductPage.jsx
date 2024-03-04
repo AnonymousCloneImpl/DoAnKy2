@@ -7,13 +7,11 @@ import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
 
 const ProductPage = ({ productBE }) => {
-  const [mainImg, setMainImg] = useState('');
-  const [activeIndex, setActiveIndex] = useState(0);
-
   const product = productBE;
-  console.log(productBE)
 
   // set main image----------------------------------------------------------------------------------------------
+  const [mainImg, setMainImg] = useState('');
+  const [activeIndex, setActiveIndex] = useState(0);
   const subImgItems = product.imageList;
 
   useEffect(() => {
@@ -24,7 +22,7 @@ const ProductPage = ({ productBE }) => {
     setActiveIndex(index);
   };
 
-  // set choose product model----------------------------------------------------------------------------------------------
+  // set choose product ram----------------------------------------------------------------------------------------------
   const activeBtn = (button) => {
     let buttons = document.querySelectorAll('.pmodel');
     buttons.forEach(function (btn) {
@@ -95,19 +93,16 @@ const ProductPage = ({ productBE }) => {
     }
   };
 
-  const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
-
-
-  // Set price combo----------------------------------------------------------------------------------------------
+  // Set combo----------------------------------------------------------------------------------------------
   const [totalPrice, setTotalPrice] = useState(0);
   const [checkedItems, setCheckedItems] = useState([]);
+  const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
+  const [totalOriginalPrice, setTotalOriginalPrice] = useState(0);
 
   const handleCheckboxChange = (itemId) => {
     setCheckedItems((prevCheckedItems) => {
-      const updatedCheckedItems = prevCheckedItems.includes(itemId)
-        ? prevCheckedItems.filter((id) => id !== itemId)
-        : [...prevCheckedItems, itemId];
-
+      const updatedCheckedItems = prevCheckedItems.includes(itemId) ?
+        prevCheckedItems.filter((id) => id !== itemId) : [...prevCheckedItems, itemId];
       return updatedCheckedItems;
     });
   };
@@ -124,11 +119,8 @@ const ProductPage = ({ productBE }) => {
       },
       0
     );
-
     setTotalPrice(calculatedTotalPrice + discountedPrice);
   }, [product.purchaseComboItem, checkedItems]);
-
-  const [totalOriginalPrice, setTotalOriginalPrice] = useState(0);
 
   useEffect(() => {
     const calculatedTotalOriginalPrice = product.purchaseComboItem.productList.reduce(
@@ -141,10 +133,22 @@ const ProductPage = ({ productBE }) => {
     setTotalOriginalPrice(calculatedTotalOriginalPrice + product.price);
   }, [product.purchaseComboItem, checkedItems]);
 
+  // Expand/Collapse content----------------------------------------------------------------------------------------------
   const [expanded, setExpanded] = useState(false);
-
   const toggleContent = () => {
     setExpanded(!expanded);
+  };
+
+  // Open/Close order form----------------------------------------------------------------------------------------------
+  const [isFormVisible, setFormVisible] = useState(false);
+  const formRef = useRef(null);
+
+  const openForm = () => {
+    setFormVisible(true);
+  };
+
+  const closeForm = () => {
+    setFormVisible(false);
   };
 
   // Select option address----------------------------------------------------------------------------------------------
@@ -167,26 +171,14 @@ const ProductPage = ({ productBE }) => {
     setWards(selectedDistrict[4]);
   };
 
-  // Order form----------------------------------------------------------------------------------------------
-  const [isFormVisible, setFormVisible] = useState(false);
-  const formRef = useRef(null);
-
-  const openForm = () => {
-    setFormVisible(true);
-  };
-
-  const closeForm = () => {
-    setFormVisible(false);
-  };
-
   // Place Order----------------------------------------------------------------------------------------------
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [houseAddress, setHouseAddress] = useState('');
   const [orderItem, setOrderItem] = useState([]);
-  const [selectedCombo, setSelectedCombo] = useState([]);
 
+  // get address from json file
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -207,14 +199,10 @@ const ProductPage = ({ productBE }) => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-  console.log('Checked Items:', checkedItems);
-
     const selectedWard = wards.find(w => w[0] === selectedWardId);
     const selectedDistrict = districts.find(d => d[0] === selectedDistrictId);
     const selectedProvince = provinces.find(p => p[0] === selectedProvinceId);
-
     const shippingAddress = `${houseAddress}, ${selectedWard ? selectedWard[1] : ''}, ${selectedDistrict ? selectedDistrict[1] : ''}, ${selectedProvince ? selectedProvince[1] : ''}`;
-    const totalPrice = discountedPrice * quantity;
 
     if (!validName(customerName)) {
       alert('Please enter a valid name');
@@ -231,10 +219,19 @@ const ProductPage = ({ productBE }) => {
       return;
     }
 
-    const selectedCombo = product.purchaseComboItem.productList
-        .filter((item) => checkedItems.includes(item.id));
+    // get combo items
+    const handleCheckboxChange = (productId) => {
+      const isChecked = checkedItems.includes(productId);
+      if (isChecked) {
+        setCheckedItems(checkedItems.filter((id) => id !== productId));
+      } else {
+        setCheckedItems([...checkedItems, productId]);
+      }
+    };
 
-  console.log('Selected Accessories:', selectedCombo);
+    const selectedCombo = product.purchaseComboItem.productList.filter((item) =>
+      checkedItems.includes(item.id)
+    );
 
     const orderData = {
       customerName,
@@ -253,7 +250,6 @@ const ProductPage = ({ productBE }) => {
       ],
       totalPrice
     };
-    console.log(orderData);
     const url = `${process.env.DOMAIN}/orders/place-order`;
 
     try {
@@ -269,7 +265,6 @@ const ProductPage = ({ productBE }) => {
         closeForm();
         alert("Order placed successfully");
         window.location.reload();
-        console.log('Order placed successfully');
       } else {
         console.error('Failed to place order');
       }
@@ -318,7 +313,6 @@ const ProductPage = ({ productBE }) => {
         "type": product.type,
         "stock": product.stock.quantity
       };
-
       cartItemList = updatedCartItemList;
     } else {
       cartItemList.push({
@@ -354,9 +348,9 @@ const ProductPage = ({ productBE }) => {
     return (
       <div className="body-wrapper">
         <Head>
-           <title>
-              {product.name}
-           </title>
+          <title>
+            {product.name}
+          </title>
         </Head>
         <div className="url">
           <Link href="/">Home </Link>
@@ -560,7 +554,7 @@ const ProductPage = ({ productBE }) => {
                   {product.purchaseComboItem.productList.map((item, index) => (
                     <li className="recommended-accessories-item" key={index}>
                       <div className="recommended-accessories-checkbox">
-                        <input type="checkbox" className="product"
+                        <input type="checkbox" className="product mr-5 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
                           onChange={() => handleCheckboxChange(item.id)}
                           checked={checkedItems.includes(item.id)} />
                       </div>

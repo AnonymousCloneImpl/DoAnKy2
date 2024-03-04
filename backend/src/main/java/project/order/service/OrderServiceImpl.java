@@ -2,6 +2,7 @@ package project.order.service;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
@@ -41,7 +42,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order createOrder(OrderDto orderDto) {
         Order order = createOrderObj(orderDto);
-
         BeanUtils.copyProperties(orderDto, order);
         orderRepo.save(order);
 
@@ -53,7 +53,6 @@ public class OrderServiceImpl implements OrderService {
                 updateStock(item);
             }
         }
-        sendEmail(order);
         return order;
     }
 
@@ -67,7 +66,6 @@ public class OrderServiceImpl implements OrderService {
 
     private OrderItem createOrderItem(Order order, OrderItemDto item) {
         Optional<Product> productOptional = productRepo.findById(item.getProductId());
-
         if (productOptional.isPresent()) {
             Product product = productOptional.get();
             return OrderItem.builder()
@@ -94,18 +92,21 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-    public List<OrderDto> getOrderByPhoneNumber(String phone) {
+    public List<Order> getOrderByPhoneNumber(String phone) {
 		return orderRepo.findByCustomerPhone(phone);
 	}
 
-    private void sendEmail(Order order) {
+    @Async
+    @Override
+    public void sendEmail(Order order) {
         try {
             StringBuilder email = new StringBuilder();
-            email.append("Order ID: ").append(order.getId()).append("\n")
+            email.append("Thank you for shopping at THẾ GIỚI MANH ĐỘNG\n")
+                .append("Order ID: ").append(order.getId()).append("\n")
                 .append("Order Code: ").append(order.getOrderCode()).append("\n")
                 .append("Order Date: ").append(order.getOrderDate()).append("\n")
                 .append("Order Status: ").append(order.getStatus()).append("\n")
-                .append("Total Price: ").append(order.getTotalPrice());
+                .append("Total Price: ").append(order.getTotalPrice()).append("\n");
             emailService.sendEmail(order.getCustomerEmail(), "Success Order", email.toString());
         } catch (Exception e) {
             System.err.println(e.getMessage());

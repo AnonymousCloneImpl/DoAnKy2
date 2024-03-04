@@ -22,24 +22,24 @@ public class OrderController {
 	public ResponseEntity<String> createOrder(@RequestBody OrderDto orderDto) {
 		try {
 			Order createdOrder = orderService.createOrder(orderDto);
+			orderService.sendEmail(createdOrder);
 			return new ResponseEntity<>("Order created successfully. Order ID: "
-					+ createdOrder.getId(), HttpStatus.CREATED);
+				+ createdOrder.getId(), HttpStatus.CREATED);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Failed to create order. "
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+				+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@GetMapping("/check-order")
 	ResponseEntity<ResponseObject> getOrderByPhoneNumber(@RequestParam("q") String number) {
-		List<OrderDto> orderList = orderService.getOrderByPhoneNumber(number);
+		List<Order> orderList = orderService.getOrderByPhoneNumber(number);
 		if (!orderList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ResponseObject("OK", "Get product successfully", orderList));
+				.body(new ResponseObject("OK", "Get product successfully", orderList));
 		} else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
-					.body(new ResponseObject("Failed", "Can't find order with phone number = " + number, ""));
+				.body(new ResponseObject("Failed", "Can't find order with phone number = " + number, ""));
 		}
-
 	}
 }

@@ -1,9 +1,8 @@
-import {useEffect, useState} from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleCheck} from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 
-export default function AddToCard({product}) {
-
+export default function AddToCard({ product }) {
   // cart notification----------------------------------------------------------------------------------------------
   const [cartNotifications, setCartNotifications] = useState([]);
 
@@ -25,9 +24,9 @@ export default function AddToCard({product}) {
         "name": product.name,
         "price": product.price,
         "discountPercentage": product.discountPercentage,
-        "type": product.type
+        "type": product.type,
+        "stock": product.stock.quantity
       };
-
       cartItemList = updatedCartItemList;
     } else {
       cartItemList.push({
@@ -35,7 +34,8 @@ export default function AddToCard({product}) {
         "name": product.name,
         "price": product.price,
         "discountPercentage": product.discountPercentage,
-        "type": product.type
+        "type": product.type,
+        "stock": product.stock.quantity
       });
     }
 
@@ -52,22 +52,18 @@ export default function AddToCard({product}) {
     }, 3000);
   };
 
-  useEffect(()=> {
-    addToCart(product);
-  }, [])
-
   return (
-      <>
-        {cartNotifications.map((notification, index) => (
-            <div
-                key={index}
-                className="cart-notification"
-                style={{ bottom: `${10 + index + 40}px`, display: 'block' }}
-            >
-              <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
-              {notification.message}
-            </div>
-        ))}
-      </>
-)
+    <>
+      {cartNotifications.map((notification, index) => (
+        <div
+          key={index}
+          className="cart-notification"
+          style={{ bottom: `${10 + index + 40}px`, display: 'block' }}
+        >
+          <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
+          {notification.message}
+        </div>
+      ))}
+    </>
+  )
 }

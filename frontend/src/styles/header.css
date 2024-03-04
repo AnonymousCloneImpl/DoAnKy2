@@ -138,7 +138,7 @@ ul#sub-menu li:hover {
 }
 
 #sub-drop li {
-    border-top: 1px solid black;
+    border-bottom: 1px solid black;
     transition: all 0.3s ease-in-out;
     display: flex;
     justify-content: center !important;
