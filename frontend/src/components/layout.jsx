@@ -52,8 +52,6 @@ export default function Layout({ children }) {
               </button>
             )}
           </div>
-        </div>
-      </div>
       <Footer />
     </div>
   )
