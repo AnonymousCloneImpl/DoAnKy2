@@ -8,7 +8,7 @@ export default function ButtonPaging({ totalPages, setParamPage, currentPage }) 
                             key,
                             value,
                             isActive,
-                            setPage = currentPage,
+                            setPage,
                             className,
                         }) => {
 
@@ -16,7 +16,6 @@ export default function ButtonPaging({ totalPages, setParamPage, currentPage }) 
             return <button key={key} className={className}>...</button>;
         }
 
-        // cursor is the default item
         return (
             <button
                 key={key}

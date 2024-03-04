@@ -29,10 +29,20 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 	List<Product> findMostPurchaseByType(@Param("type") String type, Pageable pageable);
 
 	@Query(nativeQuery = true,
-			value = "SELECT * FROM product p JOIN ( SELECT product_id FROM stock s join product p2 on s.product_id = p2.id WHERE p2.type = :type ORDER BY s.sold desc LIMIT :limit ) s ON p.id = s.product_id WHERE p.type = :type")
+			value = "SELECT p.* FROM product p\n" +
+					"JOIN (\n" +
+					"    SELECT pd.product_id\n" +
+					"    FROM stock s\n" +
+					"    JOIN product_detail pd ON s.product_detail_id = pd.id\n" +
+					"    JOIN product p2 ON pd.product_id = p2.id\n" +
+					"    WHERE p2.type = 'laptop'\n" +
+					"    ORDER BY s.sold DESC\n" +
+					"    LIMIT 5\n" +
+					") s ON p.id = s.product_id\n" +
+					"WHERE p.type = 'laptop';")
 	List<Product> getTopSellerByType(String type, Integer limit);
 
 	@Query(nativeQuery = true,
-		value = "SELECT ld.ram FROM laptop_detail ld JOIN stock s ON ld.id = s.id JOIN product_detail pd ON s.product_detail_id = pd.id JOIN product p ON pd.product_id = p.id WHERE p.name = :name")
+			value = "SELECT ld.ram FROM laptop_detail ld JOIN stock s ON ld.id = s.id JOIN product_detail pd ON s.product_detail_id = pd.id JOIN product p ON pd.product_id = p.id WHERE p.name = :name")
 	List<String> getListConfiguration(String name);
 }

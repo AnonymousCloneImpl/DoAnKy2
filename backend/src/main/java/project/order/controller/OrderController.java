@@ -13,33 +13,33 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class OrderController {
-    @Autowired
-    private OrderService orderService;
+	@Autowired
+	private OrderService orderService;
 
-    @PostMapping("/orders/place-order")
-    public ResponseEntity<String> createOrder(@RequestBody OrderDto orderDto) {
-        try {
-            Order createdOrder = orderService.createOrder(orderDto);
-            return new ResponseEntity<>("Order created successfully. Order ID: "
-                + createdOrder.getId(), HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity<>("Failed to create order. "
-                + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+	@PostMapping("/orders/place-order")
+	public ResponseEntity<String> createOrder(@RequestBody OrderDto orderDto) {
+		try {
+			Order createdOrder = orderService.createOrder(orderDto);
+			return new ResponseEntity<>("Order created successfully. Order ID: "
+					+ createdOrder.getId(), HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>("Failed to create order. "
+					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-    @GetMapping("/check-order")
-    ResponseEntity<ResponseObject> getOrderByPhoneNumber(@RequestParam("q") String number) {
-        List<OrderDto> orderList = orderService.getOrderByPhoneNumber(number);
-        if (!orderList.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.OK)
-                .body(new ResponseObject("OK", "Get product successfully", orderList));
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(new ResponseObject("Failed", "Can't find order with phone number = " + number, ""));
-        }
+	@GetMapping("/check-order")
+	ResponseEntity<ResponseObject> getOrderByPhoneNumber(@RequestParam("q") String number) {
+		List<OrderDto> orderList = orderService.getOrderByPhoneNumber(number);
+		if (!orderList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ResponseObject("OK", "Get product successfully", orderList));
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(new ResponseObject("Failed", "Can't find order with phone number = " + number, ""));
+		}
 
-    }
+	}
 }

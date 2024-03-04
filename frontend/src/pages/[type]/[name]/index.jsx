@@ -12,7 +12,7 @@ const ProductDetailPage = () => {
 
     const firstDataUrl = `${process.env.DOMAIN}/products${pathName}`;
 
-    const {data, error} = useSWR(firstDataUrl, fetcher,{
+    const {data, isLoading, error} = useSWR(firstDataUrl, fetcher,{
         revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false
@@ -20,10 +20,9 @@ const ProductDetailPage = () => {
 
     if (error) return <CustomErrorPage />
 
-    if (data === undefined) {
-        return <CustomErrorPage />
+    if (isLoading) {
+        return <div>Loading...</div>
     }
-
 
     return <ProductPage productBE={data} />
 };

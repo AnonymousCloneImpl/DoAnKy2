@@ -9,14 +9,14 @@ import project.models.Pagination;
 import project.product.entity.Producer;
 import project.product.service.ProducerService;
 import project.product.service.ProductService;
-import project.search.dto.ProductSummaryDto;
+import project.product.dto.ProductSummaryDto;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/products")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class ProductController {
 	@Autowired
 	private ProductService productService;
@@ -84,5 +84,10 @@ public class ProductController {
 	@GetMapping("/producer")
 	public List<Producer> getProducerList() {
 		return producerService.getAll();
+	}
+
+	@GetMapping("/producer/{type}")
+	public List<Producer> getProducesByType(@PathVariable String type) {
+		return producerService.findProducersWithTypeLaptop(type);
 	}
 }

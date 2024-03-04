@@ -26,7 +26,8 @@ export default function Home() {
     if (!laptopData || !headphoneData || !mouseData) return <div>Loading...</div>;
 
     return (
-        <div className="mb-20">
+
+        <div>
             <Head>
                 <title>
                     Welcome to Shop
@@ -127,19 +128,13 @@ export default function Home() {
 
             {/* Product theo danh muc*/}
             <div className="h-1/5 w-full">
-                <div className="h-4/5">
-                    <ProductListComponent productData={laptopData.productSummaryDtoList}/>
-                </div>
+                <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"} renderFromHomePage={true}/>
             </div>
             <div className="h-1/5 w-full">
-                <div className="h-4/5">
-                    <ProductListComponent productData={headphoneData.productSummaryDtoList}/>
-                </div>
+                <ProductListComponent productData={headphoneData.productSummaryDtoList} renderFromHomePage={true}/>
             </div>
             <div className="h-1/5 w-full">
-                <div className="h-4/5">
-                    <ProductListComponent productData={mouseData.productSummaryDtoList}/>
-                </div>
+                <ProductListComponent productData={mouseData.productSummaryDtoList} renderFromHomePage={true}/>
             </div>
 
         </div>

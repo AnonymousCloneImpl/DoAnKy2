@@ -22,7 +22,7 @@ export default function Layout({ children }) {
       setIsVisible(false);
     }
   };
-
+  
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -30,12 +30,14 @@ export default function Layout({ children }) {
     });
   };
 
-  return (
-    <div>
-      <Header />
-      <div className="pt-38 w-full flex justify-center">
-        <div className="w-10/12">
-          {children}
+    return (
+        <div>
+            <Header/>
+            <div className="w-full flex justify-center">
+                <div className="w-11/12">
+                    {children}
+                </div>
+            </div>
           {/* Scroll and Call button */}
           <button className="call-button">
             <a href="tel:+84123456789" className="info-menu2-li-a">
