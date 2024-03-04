@@ -2,6 +2,7 @@ package project.order.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.BatchSize;
 import project.const_.ORDER_STATUS;
 
 import java.time.LocalDateTime;
@@ -35,6 +36,6 @@ public class Order {
     private String shippingAddress;
     @Column(name = "total_price")
     private long totalPrice;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> orderItemList;
 }
