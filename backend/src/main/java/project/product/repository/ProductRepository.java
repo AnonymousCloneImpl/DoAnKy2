@@ -30,16 +30,16 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
 	@Query(nativeQuery = true,
 			value = "SELECT p.* FROM product p\n" +
-					"JOIN (\n" +
+					"JOIN (" +
 					"    SELECT pd.product_id\n" +
 					"    FROM stock s\n" +
 					"    JOIN product_detail pd ON s.product_detail_id = pd.id\n" +
 					"    JOIN product p2 ON pd.product_id = p2.id\n" +
-					"    WHERE p2.type = 'laptop'\n" +
+					"    WHERE p2.type = :type" +
 					"    ORDER BY s.sold DESC\n" +
-					"    LIMIT 5\n" +
+					"    LIMIT :limit\n" +
 					") s ON p.id = s.product_id\n" +
-					"WHERE p.type = 'laptop';")
+					"WHERE p.type = :type;")
 	List<Product> getTopSellerByType(String type, Integer limit);
 
 	@Query(nativeQuery = true,

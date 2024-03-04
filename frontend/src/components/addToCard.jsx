@@ -1,5 +1,4 @@
-export default function FormatPrice({price}) {
-
+export default function FormatPrice({ price }) {
   // cart notification----------------------------------------------------------------------------------------------
   const [cartNotifications, setCartNotifications] = useState([]);
 
@@ -21,7 +20,8 @@ export default function FormatPrice({price}) {
         "name": product.name,
         "price": product.price,
         "discountPercentage": product.discountPercentage,
-        "type": product.type
+        "type": product.type,
+        "stock": product.stock.quantity
       };
 
       cartItemList = updatedCartItemList;
@@ -31,7 +31,8 @@ export default function FormatPrice({price}) {
         "name": product.name,
         "price": product.price,
         "discountPercentage": product.discountPercentage,
-        "type": product.type
+        "type": product.type,
+        "stock": product.stock.quantity
       });
     }
 
@@ -49,16 +50,18 @@ export default function FormatPrice({price}) {
   };
 
   return (
-    {/* Cart notifications */}
-            {cartNotifications.map((notification, index) => (
-              <div
-                key={index}
-                className="cart-notification"
-                style={{ bottom: `${10 + index * 40}px`, display: 'block' }}
-              >
-                <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
-                {notification.message}
-              </div>
-            ))}
+    <>
+      {/* Cart notifications */}
+      {cartNotifications.map((notification, index) => (
+        <div
+          key={index}
+          className="cart-notification"
+          style={{ bottom: `${10 + index * 40}px`, display: 'block' }}
+        >
+          <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
+          {notification.message}
+        </div>
+      ))}
+    </>
   )
 }
