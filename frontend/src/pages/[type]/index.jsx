@@ -9,6 +9,8 @@ const ProductsPageRoute = () => {
 
     const page = router.query.page || 1;
 
+    let type = router.query.type || null;
+
     let producer = router.query.producer || null;
 
     let minPrice = router.query.minprice || null;
@@ -19,7 +21,7 @@ const ProductsPageRoute = () => {
 
     let option = router.query.option || null;
 
-    let firstProductDataUrl = `${process.env.DOMAIN}/products/${router.query.type}?page=${page}`;
+    let firstProductDataUrl = `${process.env.DOMAIN}/products/${type}?page=${page}`;
 
     if (producer !== null) {
         firstProductDataUrl += `&producer=${producer}`
@@ -43,9 +45,7 @@ const ProductsPageRoute = () => {
 
     firstProductDataUrl += `&limit=5`;
 
-    console.log(firstProductDataUrl)
-
-    const topSellerApi = `${process.env.DOMAIN}/products/top-seller?type=${router.query.type}`;
+    const topSellerApi = `${process.env.DOMAIN}/products/top-seller?type=${type}`;
 
     const {data : topSeller, error : err} = useSWR(topSellerApi, fetcher,{
         revalidateIfStale: false,
@@ -61,7 +61,7 @@ const ProductsPageRoute = () => {
 
     if (isLoading) return <div>Loading...</div>
 
-    if (error) return <CustomErrorPage />
+    if (error || err) return <CustomErrorPage />
 
     if (data) return <ProductsPageByType pageData={data} page={page} pageType={router.query.type} topSellerBE={topSeller} />
 

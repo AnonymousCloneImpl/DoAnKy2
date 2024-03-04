@@ -3,6 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCartPlus, faDisplay, faHardDrive, faLaptop, faMemory, faMicrochip} from "@fortawesome/free-solid-svg-icons";
 import FormatPrice from "@/components/FormatPrice";
 import Image from "next/image";
+import AddToCard from "@/components/addToCard";
 
 
 export default function ProductCardComponent({productData, type}) {
@@ -64,7 +65,8 @@ export default function ProductCardComponent({productData, type}) {
                                     <p className="price"><FormatPrice price={p.price} />đ</p>
                                 </div>
                                 <div className="w-full h-16 flex space-x-4 justify-center items-center">
-                                    <button className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
+                                    <button onClick={() => AddToCard({ product: p })}
+                                        className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
                                         <div>
                                             <FontAwesomeIcon icon={faCartPlus} className="text-red-600"/>
                                         </div>

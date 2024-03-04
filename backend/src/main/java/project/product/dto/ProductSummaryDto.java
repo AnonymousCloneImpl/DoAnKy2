@@ -17,6 +17,7 @@ public class ProductSummaryDto {
 	private byte discountPercentage;
 	private String image;
 	private String type;
+	private StockDto stock;
 	@JsonIgnoreProperties({"material", "dimensions", "releaseDate", "product", "cpu", "screenResolution", "ports", "os"})
 	private Object configuration;
 }
