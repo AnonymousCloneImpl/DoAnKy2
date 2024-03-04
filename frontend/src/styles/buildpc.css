@@ -1,0 +1,29 @@
+button {
+    position: relative;
+    overflow: hidden;
+}
+
+.fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5));
+    transition: width 0.15s;
+}
+
+button:hover .fill {
+    width: 100%;
+}
+
+.product-info {
+    display: flex;
+    align-items: center;
+}
+
+.product-image {
+    width: 5rem;
+    height: auto;
+    margin-right: 10px;
+}

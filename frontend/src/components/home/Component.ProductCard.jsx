@@ -4,11 +4,13 @@ import {faCartPlus, faDisplay, faHardDrive, faLaptop, faMemory, faMicrochip} fro
 import FormatPrice from "@/components/FormatPrice";
 import Image from "next/image";
 import AddToCard from "@/components/addToCard";
-
+import {useRouter} from "next/router";
 
 export default function ProductCardComponent({productData, type}) {
+    const { query } = useRouter();
+
     if (productData !== null && productData !== [] && productData !== undefined) {
-        if (type?.toLowerCase() === "laptop") {
+        if (query.type === "laptop") {
             return (
                 <div className="w-full flex">
                     {productData.map((p) => (
@@ -66,7 +68,7 @@ export default function ProductCardComponent({productData, type}) {
                                 </div>
                                 <div className="w-full h-16 flex space-x-4 justify-center items-center">
                                     <button onClick={() => AddToCard({ product: p })}
-                                        className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
+                                            className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
                                         <div>
                                             <FontAwesomeIcon icon={faCartPlus} className="text-red-600"/>
                                         </div>
@@ -78,6 +80,7 @@ export default function ProductCardComponent({productData, type}) {
                 </div>
             )
         }
+
         return (
             <div className="w-full flex">
                 {productData.map((p) => (
