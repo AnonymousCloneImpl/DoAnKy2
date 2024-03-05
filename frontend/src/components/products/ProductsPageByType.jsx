@@ -8,6 +8,7 @@ import ProductList from "@/components/home/ProductList";
 import FormatPrice from "@/components/FormatPrice";
 import {faFilter, faMemory, faMicrochip, faMoneyBill} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import FilterProduct from "@/components/FilterProduct";
 
 const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     const router = useRouter();
@@ -66,14 +67,32 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     }, [pageData]);
 
     const handleCpuClick = async () => {
+        if (showRamOption) {
+            setShowRamOption(!showRamOption);
+        }
+        if (showPriceInput) {
+            setShowPriceInput(!showPriceInput);
+        }
         setShowCpuOption(!showCpuOption);
     };
 
     const handleRamClick = async () => {
+        if (showCpuOption) {
+            setShowCpuOption(!showCpuOption);
+        }
+        if (showPriceInput) {
+            setShowPriceInput(!showPriceInput);
+        }
         setShowRamOption(!showRamOption);
     };
 
     const handlePriceClick = () => {
+        if (showCpuOption) {
+            setShowCpuOption(!showCpuOption);
+        }
+        if (showRamOption) {
+            setShowRamOption(!showRamOption);
+        }
         setShowPriceInput(!showPriceInput);
     };
 
@@ -170,16 +189,17 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 <p>This should be small slider</p>
             </div>
 
-            <div className="h-auto rounded-2xl overflow-hidden mt-10"
-                 style={{background: 'linear-gradient(rgb(224, 0, 51), rgb(224, 0, 51)) 0% 0% / cover'}}
-            >
-                <div className="h-32">
-                    <p className="h-full w-full flex justify-center items-center text-6xl text-white">
+            <div className="h-auto mt-10 bg-gray-300">
+                <div className="h-24">
+                    <p className="h-full w-full flex justify-center items-center text-5xl">
                         TOP SELLER
                     </p>
                 </div>
                 <div className="w-full mb-8">
                     <ProductCardComponent productData={topSeller} type={"laptop"}/>
+                </div>
+                <div className="h-3">
+
                 </div>
             </div>
 
@@ -211,7 +231,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
             <div className="mt-6">
                 <div className="text-xl flex items-center">
                     FILTER
-                    <FontAwesomeIcon className="text-sm" icon={faFilter} />
+                    <FontAwesomeIcon className="text-sm" icon={faFilter}/>
                 </div>
                 <div className="mt-3">
                     <div className="flex justify-start items-center">
@@ -224,24 +244,31 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                                 </p>
                             </button>
                         </div>
-                        <div className="h-10 w-20 mr-5">
-                            <button onClick={handleCpuClick}
-                                    className="h-full w-full rounded-md overflow-hidden bg-gray-300 flex justify-center items-center">
-                                <FontAwesomeIcon className="w-2/6" icon={faMicrochip}/>
-                                <p className="h-full w-4/6 flex items-center">
-                                    CPU
-                                </p>
-                            </button>
-                        </div>
-                        <div className="h-10 w-20 mr-5">
-                            <button onClick={handleRamClick}
-                                    className="h-full w-full rounded-md overflow-hidden bg-gray-300 flex justify-center items-center">
-                                <FontAwesomeIcon className="w-2/6" icon={faMemory} />
-                                <p className="h-full w-4/6 flex items-center">
-                                        RAM
-                                </p>
-                            </button>
-                        </div>
+                        {pageType?.toLowerCase() === 'laptop' ? (
+                            <>
+                                <div className="h-10 w-20 mr-5">
+                                    <button onClick={handleCpuClick}
+                                            className="h-full w-full rounded-md overflow-hidden bg-gray-300 flex justify-center items-center">
+                                        <FontAwesomeIcon className="w-2/6" icon={faMicrochip}/>
+                                        <p className="h-full w-4/6 flex items-center">
+                                            CPU
+                                        </p>
+                                    </button>
+                                </div>
+                                <div className="h-10 w-20 mr-5">
+                                    <button onClick={handleRamClick}
+                                            className="h-full w-full rounded-md overflow-hidden bg-gray-300 flex justify-center items-center">
+                                        <FontAwesomeIcon className="w-2/6" icon={faMemory}/>
+                                        <p className="h-full w-4/6 flex items-center">
+                                            RAM
+                                        </p>
+                                    </button>
+                                </div>
+                            </>
+                        ) : (
+                            <>
+                            </>
+                        )}
                     </div>
                 </div>
                 <div>
@@ -264,9 +291,11 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                     {/* Ô input cho cpu */}
                     {showCpuOption && (
                         <div className="absolute mt-4 w-1/2 flex justify-start left-48">
-                            {cpuFilter.map((p, index) => (
+                        {cpuFilter.map((p, index) => (
                                 <div key={index} className="mr-8">
-                                    <button onClick={() => {handleRamTypeClick({value : p})}}>
+                                    <button onClick={() => {
+                                        handleRamTypeClick({value: p})
+                                    }}>
                                         {p}
                                     </button>
                                 </div>
@@ -279,7 +308,9 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                         <div className="absolute mt-4 w-1/2 flex justify-start left-60">
                             {ramFilter.map((p, index) => (
                                 <div key={index} className="mr-8">
-                                    <button onClick={() => {handleCpuTypeClick({value : p})}}>
+                                    <button onClick={() => {
+                                        handleCpuTypeClick({value: p})
+                                    }}>
                                         {p}
                                     </button>
                                 </div>
@@ -290,32 +321,40 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
             </div>
 
             <div className="flex flex-wrap h-auto mt-28">
-                <ProductList productData={products} type={pageType} />
+                <ProductList productData={products} type={pageType}/>
             </div>
 
             <div className="mb-96 flex justify-center mt-9">
                 <div className="flex">
-                    {Array.from({ length: totalPage }, (_, i) => (
-                        i + 1 === currentPage ? (
-                                <button key={i}
-                                        onClick={
-                                            (e) => handlePageButtonClick(i + 1)
-                                        }
-                                        className="m-5 w-8 h-8 rounded-lg font-bold bg-black text-white"
-                                >
-                                    {i + 1}
-                                </button>
-                            ) : (
-                                <button key={i}
-                                        onClick={
-                                            (e) => handlePageButtonClick(i + 1)
-                                        }
-                                        className="m-5 w-8 h-8 rounded-lg font-bold"
-                                >
-                                    {i + 1}
-                                </button>
-                            )
-                        ))}
+                    {Array.from({length: totalPage}, (_, i) => (
+                        <button key={i}
+                                onClick={
+                                    (e) => handlePageButtonClick(i + 1)
+                                }
+                                className="m-5 w-8 h-8 rounded-lg font-bold"
+                        >
+                            {i + 1}
+                        </button>
+                        // i + 1 === currentPage ? (
+                        //         <button key={i}
+                        //                 onClick={
+                        //                     (e) => handlePageButtonClick(i + 1)
+                        //                 }
+                        //                 className="m-5 w-8 h-8 rounded-lg font-bold bg-black text-white"
+                        //         >
+                        //             {i + 1}
+                        //         </button>
+                        //     ) : (
+                        //         <button key={i}
+                        //                 onClick={
+                        //                     (e) => handlePageButtonClick(i + 1)
+                        //                 }
+                        //                 className="m-5 w-8 h-8 rounded-lg font-bold"
+                        //         >
+                        //             {i + 1}
+                        //         </button>
+                        //     )
+                    ))}
                 </div>
             </div>
 

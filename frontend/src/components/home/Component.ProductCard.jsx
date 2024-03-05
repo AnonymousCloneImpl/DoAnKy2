@@ -7,16 +7,15 @@ import AddToCard from "@/components/addToCard";
 import {useRouter} from "next/router";
 
 export default function ProductCardComponent({productData, type}) {
-    const { query } = useRouter();
 
     if (productData !== null && productData !== [] && productData !== undefined) {
-        if (query.type === "laptop") {
+        if (type === "laptop") {
             return (
                 <div className="w-full flex flex-wrap">
                     {productData.map((p) => (
                         <div key={p.id} className="w-1/5 mt-3">
                             <div
-                                className="bg-white rounded-lg homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500 hover:homepage-card-item"
+                                className="bg-white rounded-lg homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500"
                             >
                                 <div className="w-full h-6 flex justify-end">
                                     <p className="bg-red-600 text-white w-1/4 text-center rounded-tr-lg rounded-bl-lg">-{p.discountPercentage}%</p>
@@ -35,7 +34,7 @@ export default function ProductCardComponent({productData, type}) {
                                 <div className="flex items-center pt-3 h-20 w-full">
                                     <Link
                                         href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}>
-                                        <p className="pl-3 h-full w-full">{p.name}</p>
+                                        <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
                                     </Link>
                                 </div>
                                 <div
@@ -66,12 +65,16 @@ export default function ProductCardComponent({productData, type}) {
                                         price={p.price - (p.price * p.discountPercentage / 100)}/>đ</p>
                                     <p className="price"><FormatPrice price={p.price} />đ</p>
                                 </div>
-                                <div className="w-full h-16 flex space-x-4 justify-center items-center">
+                                <div className="w-full h-16 flex space-x-4 justify-center items-center mb-6">
                                     <button onClick={() => AddToCard({ product: p })}
-                                            className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
-                                        <div>
-                                            <FontAwesomeIcon icon={faCartPlus} className="text-red-600"/>
-                                        </div>
+                                            className="h-3/4 rounded-md w-5/12 button-style">
+                                            <FontAwesomeIcon
+                                                icon={faCartPlus}
+                                                className="icon-style"
+                                                style={{
+                                                    transition: 'color 0.3s ease',
+                                                }}
+                                            />
                                     </button>
                                 </div>
                             </div>
@@ -86,7 +89,7 @@ export default function ProductCardComponent({productData, type}) {
                 {productData.map((p) => (
                     <div key={p.id} className="w-1/5">
                         <div
-                            className="bg-white rounded-lg homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500 hover:homepage-card-item"
+                            className="bg-white rounded-lg homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500"
                         >
                             <div className="w-full h-6 flex justify-end">
                                 <p className="bg-red-600 text-white w-1/4 text-center rounded-tr-lg rounded-bl-lg">-{p.discountPercentage}%</p>
@@ -114,9 +117,9 @@ export default function ProductCardComponent({productData, type}) {
                                 <p className="price"><FormatPrice price={p.price}/>đ</p>
                             </div>
                             <div className="w-full h-16 flex space-x-4 justify-center items-center">
-                                <button className="bg-white h-3/4 rounded-md w-5/12 border border-red-600">
+                                <button className="bg-white h-3/4 rounded-md w-5/12 button-style">
                                     <div>
-                                        <FontAwesomeIcon icon={faCartPlus} className="text-red-600"/>
+                                        <FontAwesomeIcon icon={faCartPlus} className="icon-style"/>
                                     </div>
                                 </button>
                             </div>
