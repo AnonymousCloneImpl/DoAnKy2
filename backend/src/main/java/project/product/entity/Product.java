@@ -1,5 +1,8 @@
 package project.product.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +21,7 @@ public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "producer_id")
 	private Producer producer;
@@ -37,5 +41,6 @@ public class Product {
 	@JoinColumn(name = "blog_id")
 	private Blog blog;
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
 	private List<ProductDetail> productDetails;
 }
