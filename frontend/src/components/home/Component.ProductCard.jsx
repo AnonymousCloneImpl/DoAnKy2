@@ -12,9 +12,9 @@ export default function ProductCardComponent({productData, type}) {
     if (productData !== null && productData !== [] && productData !== undefined) {
         if (query.type === "laptop") {
             return (
-                <div className="w-full flex">
+                <div className="w-full flex flex-wrap">
                     {productData.map((p) => (
-                        <div key={p.id} className="w-1/5">
+                        <div key={p.id} className="w-1/5 mt-3">
                             <div
                                 className="bg-white rounded-lg homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500 hover:homepage-card-item"
                             >

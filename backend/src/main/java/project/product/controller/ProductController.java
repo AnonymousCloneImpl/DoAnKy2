@@ -7,8 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.models.Pagination;
 import project.product.dto.SearchDto;
+import project.product.dto.StaticDataProductPage;
 import project.product.entity.Producer;
+import project.product.entity.ProductDetail;
 import project.product.service.ProducerService;
+import project.product.service.ProductDetailService;
 import project.product.service.ProductService;
 import project.product.dto.ProductSummaryDto;
 
@@ -23,6 +26,8 @@ public class ProductController {
 	private ProductService productService;
 	@Autowired
 	private ProducerService producerService;
+	@Autowired
+	private ProductDetailService productDetailService;
 
 	@Deprecated
 	@GetMapping("")
@@ -89,12 +94,16 @@ public class ProductController {
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
-	@GetMapping("/top-seller")
-	public List<ProductSummaryDto> getListTopSeller(@RequestParam String type, @Param(value = "limit") Integer limit) {
+	@GetMapping("/staticData")
+	public ResponseEntity<StaticDataProductPage> getStaticDataByType(@RequestParam String type, @Param(value = "limit") Integer limit) {
 		if (limit == null) {
 			limit = 5;
 		}
-		return productService.getTopSellerByType(type, limit);
+		StaticDataProductPage data = productService.getStaticDataByType(type, limit);
+		if (data != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(data);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 	}
 
 	@GetMapping("/producer")

@@ -20,5 +20,4 @@ public class Pagination {
 	private long totalElement;
 	private int elementPerPage;
 	private List<ProductSummaryDto> productSummaryDtoList;
-	private List<Producer> producerList;
 }

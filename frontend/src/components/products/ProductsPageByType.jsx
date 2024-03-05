@@ -1,24 +1,27 @@
 import fetcher from "@/utils/fetchAPI";
 import ProductCardComponent from "@/components/home/Component.ProductCard";
 import Link from "next/link";
-import ButtonPaging from "@/components/Pagination";
 import {getTrackBackground, Range} from "react-range";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import ProductList from "@/components/home/ProductList";
 import FormatPrice from "@/components/FormatPrice";
+import {faFilter, faMemory, faMicrochip, faMoneyBill} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
+const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     const router = useRouter();
     const {query} =  useRouter();
     const [showPriceInput, setShowPriceInput] = useState(false);
     const [showCpuOption, setShowCpuOption] = useState(false);
+    const [showRamOption, setShowRamOption] = useState(false);
 
     // Data for render
     const [products, setProducts] = useState([]);
     const [producers, setProducers] = useState([]);
     const [topSeller, setTopSeller] = useState([]);
     const [cpuFilter, setCpuFilter] = useState([]);
+    const [ramFilter, setRamFilter] = useState([]);
 
     // Paging
     const [currentPage, setCurrentPage] = useState(1);
@@ -52,15 +55,22 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
             setProducers(pageData.producerList);
         }
 
-        if (topSellerBE) {
-            setTopSeller(topSellerBE)
+        if (staticData) {
+            setTopSeller(staticData.productSummaryDtoList);
+            setProducers(staticData.producerList);
+            setCpuFilter(staticData.cpuList);
+            setRamFilter(staticData.ramList);
         }
 
         setCurrentPage(page);
-    }, []);
+    }, [pageData]);
 
     const handleCpuClick = async () => {
         setShowCpuOption(!showCpuOption);
+    };
+
+    const handleRamClick = async () => {
+        setShowRamOption(!showRamOption);
     };
 
     const handlePriceClick = () => {
@@ -72,28 +82,6 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
             router.push({ pathname: router.pathname, query: { ...query, producer: name } }, undefined, { shallow: true, scroll: false, });
             resolve();
         });
-    };
-
-    const handleOptionClick = async ({value}) => {
-        if (query.option === value) {
-            const { option, ...newQuery } = query;
-            await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
-                resolve();
-            });
-        } else {
-            if (query.option) {
-                const { option, ...newQuery } = query;
-                await new Promise((resolve) => {
-                    router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
-                    resolve();
-                });
-            }
-            await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...query, option: value } }, undefined, { shallow: true, scroll: false, });
-                resolve();
-            });
-        }
     };
 
     const handleCpuTypeClick = async ({value}) => {
@@ -119,6 +107,28 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
         }
     };
 
+    const handleRamTypeClick = async ({value}) => {
+        if (query.ram === value) {
+            const { cpu, ...newQuery } = query;
+            await new Promise((resolve) => {
+                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                resolve();
+            });
+        } else {
+            if (query.ram) {
+                const { cpu, ...newQuery } = query;
+                await new Promise((resolve) => {
+                    router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                    resolve();
+                });
+            }
+            await new Promise((resolve) => {
+                router.push({ pathname: router.pathname, query: { ...query, ram: value } }, undefined, { shallow: true, scroll: false, });
+                resolve();
+            });
+        }
+    };
+
     const handleApplyPriceFilter = async () => {
         await new Promise((resolve) => {
             router.push({
@@ -137,22 +147,18 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
     };
 
     const handlePageButtonClick = async (value) => {
-        const newQuery = value === 1 ? { ...query } : { ...query, page: value };
-
-        if (value === 1 && newQuery.page) {
-            delete newQuery.page;
-        }
+        const newQuery = { ...query, page: value };
 
         setCurrentPage(value);
 
         await new Promise((resolve) => {
-            router.push(
+            router.replace(
                 {
                     pathname: router.pathname,
                     query: newQuery,
                 },
                 undefined,
-                { shallow: true, scroll: false, }
+                { shallow: true, scroll: false}
             );
             resolve();
         })
@@ -200,114 +206,39 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
                     </ul>
                 </div>
             </div>
-            <div className="w-full mt-8">
-                <div className="h-1/4">
-                    <p className="text-2xl">
-                        CHỌN THEO NHU CẦU
-                    </p>
-                </div>
-                <div className="flex mt-3">
-                    <div className="w-1/12 h-full rounded-md overflow-hidden mr-6"
-                         style={{backgroundColor: 'rgb(253,180,113)'}}
-                    >
-                        <button
-                            onClick={() => handleOptionClick({value : "vanphong"})}
-                            className="h-28 w-full flex flex-col items-center justify-center text-white"
-                        >
-                            <div className="h-1/6">
-                                <p className="text-lg">Văn Phòng</p>
-                            </div>
-                            <div
-                                style={{
-                                    background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-971.svg')",
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'bottom'
-                                }}
-                                className="h-5/6 w-full"
-                            >
-                            </div>
-                        </button>
-                    </div>
-                    <div className="w-1/12 rounded-md overflow-hidden mr-6"
-                         style={{backgroundColor: 'rgb(247, 119, 77)'}}
-                    >
-                        <button
-                            onClick={() => handleOptionClick({value : "gaming"})}
-                            className="h-28 w-full flex flex-col items-center justify-center text-white"
-                        >
-                            <div className="h-1/6">
-                                <p className="text-lg">Gaming</p>
-                            </div>
-                            <div style={{
-                                background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-973.svg')",
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'bottom'
-                            }}
-                                 className="h-full w-full"
-                            >
-                            </div>
-                        </button>
-                    </div>
-                    <div className="w-1/12 rounded-md overflow-hidden mr-6"
-                         style={{backgroundColor: 'rgb(255, 143, 143)'}}
-                    >
-                        <button
-                            onClick={() => handleOptionClick({value : "dohoa"})}
-                            className="h-28 w-full flex flex-col items-center justify-center text-white"
-                        >
-                            <div className="h-1/6">
-                                <p className="text-lg">Đồ họa</p>
-                            </div>
-                            <div style={{
-                                background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-971.svg')",
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'bottom'
-                            }}
-                                 className="h-full w-full"
-                            >
-                            </div>
-                        </button>
-                    </div>
-                    <div className="w-1/12 rounded-md overflow-hidden mr-6"
-                         style={{backgroundColor: 'rgb(237, 85, 108)'}}
-                    >
-                        <button
-                            onClick={() => handleOptionClick({value : "mongnhe"})}
-                            className="h-28 w-full flex flex-col items-center justify-center text-white"
-                        >
-                            <div className="h-1/6">
-                                <p className="text-lg">Mỏng nhẹ</p>
-                            </div>
-                            <div style={{
-                                background: "url('https://cellphones.com.vn/media/icons/category/laptop/filter-cate-1071.svg')",
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'bottom'
-                            }}
-                                 className="h-full w-full"
-                            >
-                            </div>
-                        </button>
-                    </div>
-                </div>
-            </div>
 
+            {/* FILTER */}
             <div className="mt-6">
-                <div className="text-2xl">
+                <div className="text-xl flex items-center">
                     FILTER
+                    <FontAwesomeIcon className="text-sm" icon={faFilter} />
                 </div>
                 <div className="mt-3">
                     <div className="flex justify-start items-center">
-                        <div className="h-10 w-1/12 mr-5">
-                            <button onClick={handlePriceClick} className="h-full w-full">
-                                <p className="h-full w-full flex justify-start items-center text-xl">
+                        <div className="h-10 w-20 mr-5">
+                            <button onClick={handlePriceClick}
+                                    className="h-full w-full rounded-md overflow-hidden bg-gray-300 flex justify-center items-center">
+                                <FontAwesomeIcon className="w-2/6" icon={faMoneyBill}/>
+                                <p className="h-full w-4/6 flex items-center">
                                     Price
                                 </p>
                             </button>
                         </div>
-                        <div className="h-10 w-1/12 mr-5">
-                            <button onClick={handleCpuClick} className="h-full w-full">
-                                <p className="h-full w-full flex justify-start items-center text-xl">
+                        <div className="h-10 w-20 mr-5">
+                            <button onClick={handleCpuClick}
+                                    className="h-full w-full rounded-md overflow-hidden bg-gray-300 flex justify-center items-center">
+                                <FontAwesomeIcon className="w-2/6" icon={faMicrochip}/>
+                                <p className="h-full w-4/6 flex items-center">
                                     CPU
+                                </p>
+                            </button>
+                        </div>
+                        <div className="h-10 w-20 mr-5">
+                            <button onClick={handleRamClick}
+                                    className="h-full w-full rounded-md overflow-hidden bg-gray-300 flex justify-center items-center">
+                                <FontAwesomeIcon className="w-2/6" icon={faMemory} />
+                                <p className="h-full w-4/6 flex items-center">
+                                        RAM
                                 </p>
                             </button>
                         </div>
@@ -333,8 +264,21 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
                     {/* Ô input cho cpu */}
                     {showCpuOption && (
                         <div className="absolute mt-4 w-1/2 flex justify-start left-48">
-                            {cpuFilter.map((p) => (
-                                <div key={p.id} className="mr-8">
+                            {cpuFilter.map((p, index) => (
+                                <div key={index} className="mr-8">
+                                    <button onClick={() => {handleRamTypeClick({value : p})}}>
+                                        {p}
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Ô input cho cpu */}
+                    {showRamOption && (
+                        <div className="absolute mt-4 w-1/2 flex justify-start left-60">
+                            {ramFilter.map((p, index) => (
+                                <div key={index} className="mr-8">
                                     <button onClick={() => {handleCpuTypeClick({value : p})}}>
                                         {p}
                                     </button>
@@ -349,12 +293,30 @@ const ProductsPageByType = ({ pageData, page, pageType, topSellerBE }) => {
                 <ProductList productData={products} type={pageType} />
             </div>
 
-            <div className="mb-96 flex justify-center">
-                <ButtonPaging
-                    totalPages={totalPage}
-                    handlePageClick={handlePageButtonClick}
-                    currentPage={currentPage}
-                />
+            <div className="mb-96 flex justify-center mt-9">
+                <div className="flex">
+                    {Array.from({ length: totalPage }, (_, i) => (
+                        i + 1 === currentPage ? (
+                                <button key={i}
+                                        onClick={
+                                            (e) => handlePageButtonClick(i + 1)
+                                        }
+                                        className="m-5 w-8 h-8 rounded-lg font-bold bg-black text-white"
+                                >
+                                    {i + 1}
+                                </button>
+                            ) : (
+                                <button key={i}
+                                        onClick={
+                                            (e) => handlePageButtonClick(i + 1)
+                                        }
+                                        className="m-5 w-8 h-8 rounded-lg font-bold"
+                                >
+                                    {i + 1}
+                                </button>
+                            )
+                        ))}
+                </div>
             </div>
 
         </div>

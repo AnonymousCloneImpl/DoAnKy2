@@ -1,8 +1,25 @@
 import {useRouter} from "next/router";
 import fetcher from "@/utils/fetchAPI";
-import useSWR from "swr";
+import useSWR, {mutate} from "swr";
 import CustomErrorPage from "@/pages/error";
 import ProductsPageByType from "@/components/products/ProductsPageByType";
+import {useEffect} from "react";
+
+const postMethodFetcher = async (url, body) => {
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch data');
+    }
+
+    return response.json();
+};
 
 const ProductsPageRoute = () => {
     const router = useRouter();
@@ -17,59 +34,85 @@ const ProductsPageRoute = () => {
 
     let maxPrice = router.query.maxprice || null;
 
-    let stock = router.query.stock || null;
-
-    let option = router.query.option || null;
-
     let cpu = router.query.cpu || null;
 
-    let firstProductDataUrl = `${process.env.DOMAIN}/products/${type}?page=${page}`;
+    let limit = router.query.limit || null;
+
+    let firstProductDataUrl = `${process.env.DOMAIN}/search/searchByCondition?page=${page}&limit=5`;
+
+    let body = {
+        "searchRequestDtoList" : [
+            {
+                "column" : "type",
+                "value" : type,
+                "operator" : "EQUAL"
+            }
+        ],
+        "globalOperator" : "AND"
+    }
 
     if (producer !== null) {
-        firstProductDataUrl += `&producer=${producer}`;
+        body.searchRequestDtoList.push({
+            "column": "producer",
+            "value": producer,
+            "operator": "EQUAL"
+        });
     }
 
-    if (minPrice !== null) {
-        firstProductDataUrl += `&minprice=${minPrice}`;
-    }
-
-    if (maxPrice !== null) {
-        firstProductDataUrl += `&maxprice=${maxPrice}`;
-    }
-
-    if (stock !== null) {
-        firstProductDataUrl += `&stock=${stock}`;
-    }
-
-    if (option !== null) {
-        firstProductDataUrl += `&option=${option}`;
+    if (maxPrice !== null && minPrice !== null) {
+        body.searchRequestDtoList.push({
+            "column": "price",
+            "value": `${minPrice},${maxPrice}`,
+            "operator": "BETWEEN"
+        });
+    } else if (minPrice !== null && maxPrice === null) {
+        body.searchRequestDtoList.push({
+            "column": "price",
+            "value": `${minPrice}`,
+            "operator": "GREATER_THAN"
+        });
+    } else if (minPrice === null && maxPrice !== null) {
+        body.searchRequestDtoList.push({
+            "column": "price",
+            "value": `${maxPrice}`,
+            "operator": "LESS_THAN"
+        });
     }
 
     if (cpu !== null) {
-        firstProductDataUrl += `&cpu=${cpu}`;
+        body.searchRequestDtoList.push({
+            "column": "cpuType",
+            "value": cpu.replace("-", " "),
+            "operator": "EQUAL"
+        });
     }
+    const { data, isLoading, error, revalidate } = useSWR(
+        firstProductDataUrl,
+        () => postMethodFetcher(firstProductDataUrl, body),
+        {
+            revalidateOnFocus: false,
+            revalidateOnReconnect: true,
+            revalidateOnMount: false
+        }
+    );
 
-    firstProductDataUrl += `&limit=5`;
+    useEffect(() => {
+        mutate(firstProductDataUrl);
+    }, [page, type, producer, minPrice, maxPrice, cpu, limit]);
 
-    const topSellerApi = `${process.env.DOMAIN}/products/top-seller?type=${type}`;
+    const staticData = `${process.env.DOMAIN}/products/staticData?type=${type}`;
 
-    const {data : topSeller, error : err} = useSWR(topSellerApi, fetcher,{
+    const {data : res, error : err} = useSWR(staticData, fetcher,{
         revalidateIfStale: false,
         revalidateOnFocus: false,
-        revalidateOnReconnect: false
-    })
+        revalidateOnReconnect: true
+    });
 
-    const {data, isLoading, error} = useSWR(firstProductDataUrl, fetcher,{
-        revalidateIfStale: false,
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false
-    })
-
-    if (isLoading) return <div>Loading...</div>
+    if (isLoading || res === undefined) return <div>Loading...</div>
 
     if (error || err) return <CustomErrorPage />
 
-    if (data) return <ProductsPageByType pageData={data} page={page} pageType={router.query.type} topSellerBE={topSeller} />
+    if (data) return <ProductsPageByType pageData={data} page={page} pageType={router.query.type} staticData={res} />
 
 };
 

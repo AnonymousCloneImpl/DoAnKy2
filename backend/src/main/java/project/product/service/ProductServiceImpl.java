@@ -15,7 +15,7 @@ import project.product.entity.*;
 import project.product.repository.ProductDetailRepository;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
-import project.product.utils.ProductSpecification;
+import project.specification.ProductSpecification;
 import project.product.utils.ProductUtils;
 
 import java.util.ArrayList;
@@ -65,23 +65,29 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<ProductSummaryDto> getTopSellerByType(String type, Integer limit) {
+	public StaticDataProductPage getStaticDataByType(String type, Integer limit) {
 		try {
 			List<Product> productList = productRepo.getTopSellerByType(type, limit);
 
-			List<ProductSummaryDto> productSummaryDtoList = ProductUtils.convertProductsToProductSummaryDtoList(productList, modelMapper);
-
-			for (ProductSummaryDto summaryDto : productSummaryDtoList) {
-				summaryDto.setImage(ProductUtils.getFirstImageUrl(summaryDto.getImage()));
-			}
+			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
+					.convertProductsToProductSummaryDtoList(productList, modelMapper);
 
 			for (ProductSummaryDto p : productSummaryDtoList) {
 				p.setConfiguration(productDetailRepo.findAllDetailByProductId(p.getId()));
 			}
 
-			return productSummaryDtoList;
+			ProductUtils.getConfigurationForDto(productSummaryDtoList, productDetailRepo);
+
+			List<ProductDetail> productDetailList = productDetailRepo.findAll(productSpecification.getByProductType(type));
+
+			return StaticDataProductPage.builder()
+					.productSummaryDtoList(productSummaryDtoList)
+					.producerList(producerService.findProducersByProductType(type))
+					.cpuList(productDetailService.getCpuList())
+					.ramList(productDetailService.getRamList())
+					.build();
 		} catch (Exception e) {
-			System.err.println("Error in getTopSellerByType function : " + e.getMessage());
+			System.err.println("Error in getStaticDataByType function : " + e.getMessage());
 			return null;
 		}
 	}
@@ -97,15 +103,7 @@ public class ProductServiceImpl implements ProductService {
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
-			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
-				p.setConfiguration(productDetailRepo.findAllDetailByProductId(p.getId()));
-			}
-
-			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
-				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
-			}
-
-			pagination.setProducerList(producerService.findProducersByProductType(searchDto.getType()));
+			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailRepo);
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 

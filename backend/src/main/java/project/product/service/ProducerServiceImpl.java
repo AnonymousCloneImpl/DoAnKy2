@@ -7,7 +7,7 @@ import project.product.entity.Producer;
 import project.product.entity.Product;
 import project.product.repository.ProducerRepository;
 import project.product.repository.ProductRepository;
-import project.product.utils.ProductSpecification;
+import project.specification.ProductSpecification;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +28,7 @@ public class ProducerServiceImpl implements ProducerService {
 
 	@Override
 	public List<Producer> findProducersByProductType(String type) {
-		Specification<Product> spec = productSpecification.searchByType(type);
+		Specification<Product> spec = productSpecification.findByType(type);
 		return productRepository.findAll(spec)
 				.stream()
 				.map(Product::getProducer)
