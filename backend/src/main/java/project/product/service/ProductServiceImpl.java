@@ -1,5 +1,7 @@
 package project.product.service;
 
+
+import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,16 +12,18 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.models.Pagination;
-import project.product.dto.*;
+import project.product.dto.BlogDto;
+import project.product.dto.ProductDto;
+import project.product.dto.StockDto;
 import project.product.entity.*;
-import project.product.repository.ProductDetailRepository;
+import project.product.repository.BlogRepository;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
-import project.specification.ProductSpecification;
+import project.product.utils.ProductSpecification;
 import project.product.utils.ProductUtils;
+import project.search.dto.ProductSummaryDto;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,218 +32,183 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductRepository productRepo;
 	@Autowired
-	private ProductDetailRepository productDetailRepo;
-	@Autowired
 	private StockRepository stockRepo;
 	@Autowired
+	private BlogRepository blogRepo;
+	@Autowired
 	private ModelMapper modelMapper;
-	@Autowired
-	private ProductSpecification productSpecification;
-	@Autowired
-	private ProducerService producerService;
-	@Autowired
-	private ProductDetailService productDetailService;
+
+	@Override
+	public List<ProductSummaryDto> getAll() {
+		return productRepo.findAll().stream().map((product
+				-> modelMapper.map(product, ProductSummaryDto.class))
+		).toList();
+	}
 
 	@Deprecated
 	@Override
-	public Pagination getWithPaging(Integer page, Integer limit) {
-		Pageable pageable = PageRequest.of((page - 1), Pagination.PAGE_SIZE);
+	public Pagination getWithPaging(Long page) {
+		Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
 
-		try {
-			Page<Product> productPage = productRepo.findAll(pageable);
+		Page<Product> productPage = productRepo.findAll(pageable);
 
-			Pagination pagination = ProductUtils
-					.convertPageProductToPaginationObject(productPage, modelMapper);
+		Pagination pagination = Pagination.builder()
+				.totalPageNumber(productPage.getTotalPages())
+				.totalElement(productPage.getTotalElements())
+				.elementPerPage(Pagination.PAGE_SIZE)
+				.productSummaryDtoList(
+						productPage.stream().map((product
+										-> modelMapper.map(product, ProductSummaryDto.class)))
+								.toList())
+				.build();
 
-			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
-				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
-			}
-
-			pagination.setElementPerPage(limit);
-
-			return pagination;
-		} catch (Exception e) {
-			System.err.println("Error in getWithPaging function : " + e.getMessage());
-			return null;
+		for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
+			p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
 		}
+
+		return pagination;
 	}
 
 	@Override
-	public StaticDataProductPage getStaticDataByType(String type, Integer limit) {
-		try {
-			List<Product> productList = productRepo.getTopSellerByType(type, limit);
+	public List<ProductSummaryDto> getProductByTypeWithLimit(String type, int limit) {
 
-			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
-					.convertProductsToProductSummaryDtoList(productList, modelMapper);
+		List<Product> productList = productRepo.getByProductType(type, limit);
 
-			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setConfiguration(productDetailRepo.findAllDetailByProductId(p.getId()));
-			}
+		List<ProductSummaryDto> productSummaryDtoList =
+				productList.stream().map((product -> modelMapper.map(product, ProductSummaryDto.class))).toList();
 
-			ProductUtils.getConfigurationForDto(productSummaryDtoList, productDetailRepo);
-
-			List<ProductDetail> productDetailList = productDetailRepo.findAll(productSpecification.getByProductType(type));
-
-			return StaticDataProductPage.builder()
-					.productSummaryDtoList(productSummaryDtoList)
-					.producerList(producerService.findProducersByProductType(type))
-					.cpuList(productDetailService.getCpuList())
-					.ramList(productDetailService.getRamList())
-					.build();
-		} catch (Exception e) {
-			System.err.println("Error in getStaticDataByType function : " + e.getMessage());
-			return null;
+		for (ProductSummaryDto p : productSummaryDtoList) {
+			p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
 		}
+
+		return productSummaryDtoList;
 	}
 
 	@Override
-	public Pagination getProductsByTypeWithPaging(SearchDto searchDto) {
-		Specification<Product> spec = productSpecification.filterOfProduct(searchDto);
+<<<<<<< HEAD
+	public List<ProductSummaryDto> getByProductTypeWithoutPaging(String type) {
 
-		Pageable pageable = PageRequest.of((searchDto.getPage() - 1), searchDto.getLimit() == null ? Pagination.PAGE_SIZE : searchDto.getLimit());
+		ProductSpecification<Product> searchSpecification = new ProductSpecification<Product>();
 
-		try {
-			Page<Product> productList = productRepo.findAll(spec, pageable);
-			Pagination pagination = ProductUtils
-					.convertPageProductToPaginationObject(productList, modelMapper);
+		Specification<Product> spec = searchSpecification.searchByType(type);
 
-			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailRepo);
+		List<Product> productList = productRepo.findAll(spec);
 
-			pagination.setElementPerPage(productList.getNumberOfElements());
+		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((product
+						-> modelMapper.map(product, ProductSummaryDto.class)))
+				.toList();
 
-			return pagination;
-		} catch (Exception e) {
-			System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
-			return null;
+		for (ProductSummaryDto p : productSummaryDtoList) {
+			p.setImage(p.getImage().split("\\|")[0]);
+=======
+	public List<ProductSummaryDto> getTopSellerByType(String type, Integer limit) {
+		List<Product> productList = productRepo.getTopSellerByType(type, limit);
+		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((
+				product -> modelMapper.map(product, ProductSummaryDto.class)
+		)).toList();
+		for (ProductSummaryDto productSummaryDto : productSummaryDtoList) {
+			productSummaryDto.setImage(ProductUtils.getFirstImageUrl(productSummaryDto.getImage()));
+>>>>>>> a8e69b47b8815459d93365d50f9c32af1ca49d76
 		}
+		return productSummaryDtoList;
 	}
 
 	@Override
-	public List<ProductSummaryDto> getByName(String name, Integer limit) {
-		if (limit == null) {
-			limit = Pagination.PAGE_SIZE;
+	public Pagination getByProductTypeWithPaging(String type, Integer page) {
+		Pageable pageable = PageRequest.of((int) (page - 1), Pagination.PAGE_SIZE);
+
+		ProductSpecification<Product> searchSpecification = new ProductSpecification<Product>();
+
+		Specification<Product> spec = searchSpecification.searchByType(type);
+
+		Page<Product> productList = productRepo.findAll(spec, pageable);
+
+		Pagination pagination = Pagination.builder()
+				.totalPageNumber(productList.getTotalPages())
+				.totalElement(productList.getTotalElements())
+				.elementPerPage(Pagination.PAGE_SIZE)
+				.productSummaryDtoList(
+						productList.stream().map((product
+										-> modelMapper.map(product, ProductSummaryDto.class)))
+								.toList())
+				.build();
+
+		for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
+			p.setImage(p.getImage().split("\\|")[0]);
 		}
 
-		Page<Product> productList = productRepo
-				.findAll(productSpecification.nameLike(name), PageRequest.of(0, limit));
-
-		if (!productList.isEmpty()) {
-
-			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
-					.convertProductsToProductSummaryDtoList(productList.getContent(), modelMapper);
-
-			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
-			}
-			return productSummaryDtoList;
-		} else {
-			System.err.println("Error in getByName function : productList is null");
-			return null;
-		}
+		return pagination;
 	}
 
 	@Transactional
 	@Override
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
-		String namePath = name.replace("-", " ");
-		Product p = productRepo.getByProductTypeAndByName(type, namePath);
-		ProductDto productDto = createProductDto(p);
-		setProductDetail(productDto, p);
-		setPurchaseComboItem(productDto);
+		String outputString = name.replace("-", " ");
 
-		Blog blog = p.getBlog();
-		BlogDto blogDto = createBlogDto(blog);
-		setBlogImageAndContent(blogDto, blog);
+		Product product = productRepo.getByProductTypeAndByName(type, outputString);
 
-		Optional<Stock> stock = stockRepo.findByProductDetailId(p.getId());
-		StockDto stockDto = createStockDto(stock, p.getId());
-
-		productDto.setProducer(p.getProducer().getName());
-		productDto.setImageList(List.of(p.getImage().split("\\|")));
-		productDto.setBlog(blogDto);
-		productDto.setSimilarProductList(findTopSimilarProducts(p));
-		productDto.setStock(stockDto);
-		productDto.setConfigurationList(productRepo.getListConfiguration(namePath));
-
-		return Optional.of(productDto);
-	}
-
-	private ProductDto createProductDto(Product product) {
 		ProductDto productDto = new ProductDto();
 		BeanUtils.copyProperties(product, productDto);
-		return productDto;
-	}
 
-	private void setProductDetail(ProductDto productDto, Product p) {
-		ProductDetail detail = productDetailRepo.findByProductId(p.getId());
-		productDto.setProductDetail(detail);
-	}
-
-	private void setPurchaseComboItem(ProductDto productDto) {
 		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
-		Pageable pageable = PageRequest.of(0, 1);
 		try {
-			String type = "";
-			List<Product> productList = new ArrayList<>();
-			for (int i = 0; i < 3; i++) {
-				if (i == 0) {
-					type = "mouse";
-				}
-				if (i == 1) {
-					type = "keyboard";
-				}
-				if (i == 2) {
-					type = "headphone";
-				}
-				productList.addAll(productRepo.findMostPurchaseByType(type, pageable));
-			}
-			purchaseComboItem.setProductList(productList);
+			purchaseComboItem.setProductList(
+					List.of(
+							productRepo.findMostPurchaseMouse(),
+							productRepo.findMostPurchaseKeyboard(),
+							productRepo.findMostPurchaseHeadphone()
+					)
+			);
 			productDto.setPurchaseComboItem(purchaseComboItem);
 		} catch (IllegalAccessError e) {
 			System.err.println("Purchase Combo Item Is Null!");
 			purchaseComboItem.setProductList(new ArrayList<>());
 		}
-	}
 
-	private BlogDto createBlogDto(Blog blog) {
+		Blog blog = product.getBlog();
+		String BlogImageStr = blog.getImage();
+		String BlogContentStr = blog.getContent();
 		BlogDto blogDto = new BlogDto();
 		BeanUtils.copyProperties(blog, blogDto);
-		return blogDto;
-	}
 
-	private void setBlogImageAndContent(BlogDto blogDto, Blog blog) {
-		String blogImageStr = blog.getImage();
-		String blogContentStr = blog.getContent();
-		blogDto.setImageList(Optional.ofNullable(blogImageStr)
-				.map(str -> List.of(str.split("\\|")))
-				.orElse(Collections.emptyList()));
-		blogDto.setContentList(Optional.ofNullable(blogContentStr)
-				.map(str -> List.of(str.split("\\|")))
-				.orElse(Collections.emptyList()));
-	}
-
-	private StockDto createStockDto(Optional<Stock> stock, Long productId) {
-		return StockDto.builder()
-				.productId(productId)
-				.sold(stock.map(Stock::getSold).orElse(0))
-				.quantity(stock.map(Stock::getQuantity).orElse(0))
-				.build();
-	}
-
-	private List<SimilarProductDto> findTopSimilarProducts(Product product) {
-		List<Product> productList = productRepo.findTopSimilarByType(product.getType(), product.getId(),
-				PageRequest.of(0, 6));
-		SimilarProductDto sp;
-		List<SimilarProductDto> list = new ArrayList<>();
-		for (Product p : productList) {
-			sp = new SimilarProductDto();
-			BeanUtils.copyProperties(p, sp);
-			Optional<Stock> stock = stockRepo.findByProductDetailId(p.getId());
-			StockDto stockDto = createStockDto(stock, p.getId());
-			sp.setImage(List.of(p.getImage().split("\\|")).getFirst());
-			sp.setStock(stockDto);
-			list.add(sp);
+		Optional<Stock> stock = stockRepo.findByProductId(product.getId());
+		List<Integer> colorIdList = new ArrayList<>();
+		for (Color c : product.getColorList()) {
+			colorIdList.add(c.getId());
 		}
-		return list;
+		StockDto stockDto = StockDto.builder()
+				.productId(product.getId())
+				.colorIdList(colorIdList)
+				.sold(stock.get().getSold())
+				.quantity(stock.get().getQuantity())
+				.build();
+
+		if (BlogImageStr != null) {
+			blogDto.setImageList(List.of(BlogImageStr.split("\\|")));
+			blogDto.setContentList(List.of(BlogContentStr.split("\\|")));
+		}
+
+		List<Product> similarProductList;
+		similarProductList = productRepo.findTopSimilarByType(product.getType(), product.getId(), PageRequest.of(0, 6));
+		String imageString = product.getImage();
+
+		if (imageString != null) {
+			productDto.setImageList(List.of(imageString.split("\\|")));
+			productDto.setBlog(blogDto);
+			productDto.setSimilarProductList(similarProductList);
+			productDto.setStock(stockDto);
+		}
+		return Optional.of(productDto);
+	}
+
+	@Override
+	public List<Product> getByName(Specification<Product> spec, String name) {
+		return productRepo.findAll(nameLike(name));
+	}
+
+	@Override
+	public Specification<Product> nameLike(String name) {
+		return (root, query, criteriaBuilder)
+				-> criteriaBuilder.like(root.get("name"), "%" + name + "%");
 	}
 }
