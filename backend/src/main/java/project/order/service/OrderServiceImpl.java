@@ -22,6 +22,7 @@ import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,13 +47,17 @@ public class OrderServiceImpl implements OrderService {
         orderRepo.save(order);
 
         List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();
+        long startTime = System.currentTimeMillis();
+        List<OrderItem> orderItems = new ArrayList<>();
         for (OrderItemDto item : orderItemDtoList) {
             OrderItem orderItem = createOrderItem(order, item);
             if (orderItem != null) {
-                orderItemRepo.save(orderItem);
+                orderItems.add(orderItem);
                 updateStock(item);
             }
         }
+        orderItemRepo.saveAll(orderItems);
+        System.err.println("Order time : " + (System.currentTimeMillis() -startTime));
         return order;
     }
 
@@ -92,6 +97,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
     public List<Order> getOrderByPhoneNumber(String phone) {
 		return orderRepo.findByCustomerPhone(phone);
 	}

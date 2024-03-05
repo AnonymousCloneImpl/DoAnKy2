@@ -1,5 +1,6 @@
 package project.order.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
@@ -36,6 +37,7 @@ public class Order {
     private String shippingAddress;
     @Column(name = "total_price")
     private long totalPrice;
+    @JsonManagedReference
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderItem> orderItemList;
 }

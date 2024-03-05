@@ -26,13 +26,6 @@ const CartPage = () => {
     localStorage.setItem('itemList', JSON.stringify(updatedItems));
   };
 
-  const calculateTotal = () => {
-    return items.reduce((total, item) => {
-      const itemTotal = (item.price - (item.price * item.discountPercentage) / 100) * item.quantity;
-      return total + itemTotal;
-    }, 0);
-  };
-
   // Quantity----------------------------------------------------------------------------------------------
   const decreaseQuantity = (index) => {
     const updatedItems = [...items];
@@ -98,33 +91,46 @@ const CartPage = () => {
 
   // Checkbox----------------------------------------------------------------------------------------------
   const [checkedItems, setCheckedItems] = useState([]);
-  const [totalOriginalPrice, setTotalOriginalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleCheckboxChange = (itemId) => {
     setCheckedItems((prevCheckedItems) => {
-      const updatedCheckedItems = prevCheckedItems.includes(itemId) ?
-        prevCheckedItems.filter((id) => id !== itemId) : [...prevCheckedItems, itemId];
+      const updatedCheckedItems = prevCheckedItems.includes(itemId)
+        ? prevCheckedItems.filter((id) => id !== itemId)
+        : [...prevCheckedItems, itemId];
+      console.log("Updated Checked Items:", updatedCheckedItems);
       return updatedCheckedItems;
     });
   };
 
+  const [shippingCost, setShippingCost] = useState(50000);
+  const handleShippingChange = (event) => {
+    const selectedShipping = event.target.value;
+    const costMapping = {
+      'Standard shipping - 50.000 đ': 50000,
+      'Fast shipping - 100.000 đ': 100000,
+    };
+    setShippingCost(costMapping[selectedShipping]);
+  };
+
   useEffect(() => {
-    const calculatedTotalOriginalPrice = items.reduce(
-      (accumulator, item) => {
-        return accumulator + (checkedItems.includes(item.id) ? item.price : 0);
-      },
-      0
-    );
-    setTotalOriginalPrice(calculatedTotalOriginalPrice);
-  }, [checkedItems]);
+    const isItemChecked = checkedItems.length > 0;
+    const calculatedTotalPrice = items.reduce((accumulator, item) => {
+      if (isItemChecked && checkedItems.includes(item.id)) {
+        return accumulator + (item.price - (item.price * item.discountPercentage) / 100) * item.quantity;
+      }
+      return accumulator;
+    }, 0);
 
+    const finalTotalPrice = isItemChecked ? calculatedTotalPrice + shippingCost : calculatedTotalPrice;
+    setTotalPrice(finalTotalPrice);
+  }, [items, checkedItems, shippingCost]);
 
-  // place order
+  // place order----------------------------------------------------------------------------------------------
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [houseAddress, setHouseAddress] = useState('');
-  const [orderItem, setOrderItem] = useState([]);
 
   // get address from json file
   useEffect(() => {
@@ -169,15 +175,6 @@ const CartPage = () => {
     }
 
     // get combo items
-    const handleCheckboxChange = (productId) => {
-      const isChecked = checkedItems.includes(productId);
-      if (isChecked) {
-        setCheckedItems(checkedItems.filter((id) => id !== productId));
-      } else {
-        setCheckedItems([...checkedItems, productId]);
-      }
-    };
-
     const selectedCartItem = items.filter((item) =>
       checkedItems.includes(item.id)
     );
@@ -190,10 +187,10 @@ const CartPage = () => {
       orderItemDtoList: [
         ...selectedCartItem.map((item) => ({
           productId: item.id,
-          quantity: item.quantity,
-        })),
-        calculateTotal()
-      ]
+          quantity: item.quantity
+        }))
+      ],
+      totalPrice
     };
     const url = `${process.env.DOMAIN}/orders/place-order`;
 
@@ -315,13 +312,13 @@ const CartPage = () => {
             <h1 className="font-semibold text-3xl border-b pb-8">Order Summary</h1>
 
             <h1 className="font-semibold text-3xl my-3">TOTAL COST</h1>
-            <h1 className="font-semibold text-2xl text-red-600 mb-7"><FormatPrice price={calculateTotal()} /> đ</h1>
+            <h1 className="font-semibold text-2xl text-red-600 mb-7"><FormatPrice price={totalPrice} /> đ</h1>
 
             <div>
               <label htmlFor="shipping" className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
-              <select className="block p-2 text-gray-600 w-full text-sm">
-                <option>Standard shipping - 30.000 đ</option>
-                <option>Fast shipping - 50.000 đ</option>
+              <select className="block p-2 text-gray-600 w-full text-sm" onChange={handleShippingChange}>
+                <option>Standard shipping - 50.000 đ</option>
+                <option>Fast shipping - 100.000 đ</option>
               </select>
             </div>
 
@@ -335,118 +332,118 @@ const CartPage = () => {
       </div>
 
 
-        {/* FORM ORDER */}
-        {isFormVisible && (
-          <>
-            <div className="overlay" onClick={closeForm}></div>
+      {/* FORM ORDER */}
+      {isFormVisible && (
+        <>
+          <div className="overlay" onClick={closeForm}></div>
 
-            <div className="order-popup" ref={formRef}>
-              <div className="popup-content">
-                <span className="close-form-btn" onClick={closeForm}>
-                  <FontAwesomeIcon icon={faCircleXmark} />
-                </span>
-                <h1>Order Form</h1>
+          <div className="order-popup" ref={formRef}>
+            <div className="popup-content">
+              <span className="close-form-btn" onClick={closeForm}>
+                <FontAwesomeIcon icon={faCircleXmark} />
+              </span>
+              <h1>Order Form</h1>
 
-                <form className="order-form" onSubmit={handleFormSubmit}>
-                  <label htmlFor="customerName">Name</label>
-                  <input type="text"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    className="customerName"
-                    name="customerName"
-                    placeholder="example: Ngọc Trinh..."
-                    id="customerName" required>
+              <form className="order-form" onSubmit={handleFormSubmit}>
+                <label htmlFor="customerName">Name</label>
+                <input type="text"
+                  value={customerName}
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  className="customerName"
+                  name="customerName"
+                  placeholder="example: Ngọc Trinh..."
+                  id="customerName" required>
+                </input>
+
+                <label htmlFor="shippingAddress">Address</label>
+                <div className="address-selects">
+                  <select
+                    className="province"
+                    name="province"
+                    id="province"
+                    required
+                    defaultValue=""
+                    onChange={(e) => handleProvinceChange(e.target.value)}
+                  >
+                    <option value="" disabled>--- Province ---</option>
+                    {provinces.map((province) => (
+                      <option key={province}
+                        value={province[0]}>
+                        {province[1]}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    className="district"
+                    name="district"
+                    id="district"
+                    required
+                    defaultValue=""
+                    onChange={(e) => handleDistrictChange(e.target.value)}
+                  >
+                    <option value="" disabled>--- District ---</option>
+                    {districts.map((district) => (
+                      <option key={district}
+                        value={district[0]}>
+                        {district[1]}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    className="ward"
+                    name="ward"
+                    id="ward"
+                    required
+                    defaultValue=""
+                    onChange={(e) => setSelectedWardId(e.target.value)}
+                  >
+                    <option value="" disabled>--- Ward ---</option>
+                    {wards.map((ward) => (
+                      <option key={ward}
+                        value={ward[0]}>
+                        {ward[1]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <label htmlFor="houseAddress">House Address</label>
+                <input type="text"
+                  value={houseAddress}
+                  onChange={(e) => setHouseAddress(e.target.value)}
+                  className="customerName"
+                  name="houseAddress"
+                  placeholder="Boulevard, alley, house number,..."
+                  id="houseAddress" required>
+                </input>
+
+                <label htmlFor="customerPhone">Phone Number</label>
+                <div className="phone-wrapper">
+                  <span className="phone-prefix">+84</span>
+                  <input type="tel" className="customerPhone"
+                    value={customerPhone}
+                    onChange={(e) => setCustomerPhone(e.target.value)}
+                    name="customerPhone"
+                    id="customerPhone" required>
                   </input>
+                </div>
 
-                  <label htmlFor="shippingAddress">Address</label>
-                  <div className="address-selects">
-                    <select
-                      className="province"
-                      name="province"
-                      id="province"
-                      required
-                      defaultValue=""
-                      onChange={(e) => handleProvinceChange(e.target.value)}
-                    >
-                      <option value="" disabled>--- Province ---</option>
-                      {provinces.map((province) => (
-                        <option key={province}
-                          value={province[0]}>
-                          {province[1]}
-                        </option>
-                      ))}
-                    </select>
+                <label htmlFor="customerEmail">Email</label>
+                <input type="email" className="customerEmail"
+                  value={customerEmail}
+                  onChange={(e) => setCustomerEmail(e.target.value)}
+                  name="customerEmail"
+                  placeholder="example@gmail.com"
+                  id="customerEmail" required></input>
 
-                    <select
-                      className="district"
-                      name="district"
-                      id="district"
-                      required
-                      defaultValue=""
-                      onChange={(e) => handleDistrictChange(e.target.value)}
-                    >
-                      <option value="" disabled>--- District ---</option>
-                      {districts.map((district) => (
-                        <option key={district}
-                          value={district[0]}>
-                          {district[1]}
-                        </option>
-                      ))}
-                    </select>
-
-                    <select
-                      className="ward"
-                      name="ward"
-                      id="ward"
-                      required
-                      defaultValue=""
-                      onChange={(e) => setSelectedWardId(e.target.value)}
-                    >
-                      <option value="" disabled>--- Ward ---</option>
-                      {wards.map((ward) => (
-                        <option key={ward}
-                          value={ward[0]}>
-                          {ward[1]}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <label htmlFor="houseAddress">House Address</label>
-                  <input type="text"
-                    value={houseAddress}
-                    onChange={(e) => setHouseAddress(e.target.value)}
-                    className="customerName"
-                    name="houseAddress"
-                    placeholder="Boulevard, alley, house number,..."
-                    id="houseAddress" required>
-                  </input>
-
-                  <label htmlFor="customerPhone">Phone Number</label>
-                  <div className="phone-wrapper">
-                    <span className="phone-prefix">+84</span>
-                    <input type="tel" className="customerPhone"
-                      value={customerPhone}
-                      onChange={(e) => setCustomerPhone(e.target.value)}
-                      name="customerPhone"
-                      id="customerPhone" required>
-                    </input>
-                  </div>
-
-                  <label htmlFor="customerEmail">Email</label>
-                  <input type="email" className="customerEmail"
-                    value={customerEmail}
-                    onChange={(e) => setCustomerEmail(e.target.value)}
-                    name="customerEmail"
-                    placeholder="example@gmail.com"
-                    id="customerEmail" required></input>
-
-                  <button type="submit">Confirm Order</button>
-                </form>
-              </div>
+                <button type="submit">Confirm Order</button>
+              </form>
             </div>
-          </>
-        )}
+          </div>
+        </>
+      )}
     </div>
   )
 };

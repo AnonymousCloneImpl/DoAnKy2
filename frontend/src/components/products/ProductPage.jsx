@@ -101,8 +101,9 @@ const ProductPage = ({ productBE }) => {
 
   const handleCheckboxChange = (itemId) => {
     setCheckedItems((prevCheckedItems) => {
-      const updatedCheckedItems = prevCheckedItems.includes(itemId) ?
-        prevCheckedItems.filter((id) => id !== itemId) : [...prevCheckedItems, itemId];
+      const updatedCheckedItems = prevCheckedItems.includes(itemId)
+        ? prevCheckedItems.filter((id) => id !== itemId)
+        : [...prevCheckedItems, itemId];
       return updatedCheckedItems;
     });
   };
@@ -220,15 +221,6 @@ const ProductPage = ({ productBE }) => {
     }
 
     // get combo items
-    const handleCheckboxChange = (productId) => {
-      const isChecked = checkedItems.includes(productId);
-      if (isChecked) {
-        setCheckedItems(checkedItems.filter((id) => id !== productId));
-      } else {
-        setCheckedItems([...checkedItems, productId]);
-      }
-    };
-
     const selectedCombo = product.purchaseComboItem.productList.filter((item) =>
       checkedItems.includes(item.id)
     );
@@ -273,7 +265,7 @@ const ProductPage = ({ productBE }) => {
     }
   };
 
-  // Validate Order
+  // Validate Order----------------------------------------------------------------------------------------------
   const validName = (name) => {
     const nameRegex = /^[a-zA-ZÀ-ỹ\s]+$/;
     return nameRegex.test(name);
@@ -306,6 +298,7 @@ const ProductPage = ({ productBE }) => {
     if (existingProductIndex !== -1) {
       const updatedCartItemList = [...cartItemList];
       updatedCartItemList[existingProductIndex] = {
+        "id": product.id,
         "image": product.image,
         "name": product.name,
         "price": product.price,
@@ -316,6 +309,7 @@ const ProductPage = ({ productBE }) => {
       cartItemList = updatedCartItemList;
     } else {
       cartItemList.push({
+        "id": product.id,
         "image": product.image,
         "name": product.name,
         "price": product.price,
