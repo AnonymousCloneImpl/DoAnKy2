@@ -1,10 +1,12 @@
 package project.specification;
 
-import jakarta.persistence.criteria.*;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Path;
+import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 import project.product.dto.SearchDto;
-import project.product.entity.LaptopDetail;
 import project.product.entity.Producer;
 import project.product.entity.Product;
 import project.product.entity.ProductDetail;
@@ -17,8 +19,7 @@ import java.util.Objects;
 
 @Component
 public class ProductSpecification {
-
-	public Specification<Product> filterOfProduct(SearchDto searchDto) {
+public Specification<Product> filterOfProduct(SearchDto searchDto) {
 		return (root, query, criteriaBuilder) -> {
 			Specification<Product> specification = Specification.where(null);
 

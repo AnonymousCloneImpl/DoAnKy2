@@ -2,7 +2,6 @@ package project.product.dto;
 
 import lombok.*;
 import project.product.entity.Producer;
-import project.product.entity.ProductDetail;
 
 import java.util.List;
 
@@ -12,6 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductsByTypePageDto {
-	private List<Producer> producers;
-	private List<ProductSummaryDto> productSummaryDtoList;
+    private List<Producer> producers;
+    private List<ProductSummaryDto> productSummaryDtoList;
 }

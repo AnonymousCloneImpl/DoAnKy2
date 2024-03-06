@@ -19,47 +19,47 @@ import project.specification.ProductSpecification;
 
 @Service
 public class SearchServiceImpl implements SearchService {
-	@Autowired
-	private ProductRepository productRepo;
-	@Autowired
-	private ProductDetailRepository productDetailRepo;
-	@Autowired
-	private StockRepository stockRepo;
-	@Autowired
-	private ModelMapper modelMapper;
-	@Autowired
-	private ProductSpecification productSpecification;
-	@Autowired
-	private ProducerService producerService;
+    @Autowired
+    private ProductRepository productRepo;
+    @Autowired
+    private ProductDetailRepository productDetailRepo;
+    @Autowired
+    private StockRepository stockRepo;
+    @Autowired
+    private ModelMapper modelMapper;
+    @Autowired
+    private ProductSpecification productSpecification;
+    @Autowired
+    private ProducerService producerService;
 
 
-	@Override
-	public Pagination getProductsByTypeWithPaging(RequestDto requestDto, Integer page, Integer limit) {
-		if (page == null) {
-			page = 1;
-		}
+    @Override
+    public Pagination getProductsByTypeWithPaging(RequestDto requestDto, Integer page, Integer limit) {
+        if (page == null) {
+            page = 1;
+        }
 
-		if (limit == null) {
-			limit = 10;
-		}
+        if (limit == null) {
+            limit = 10;
+        }
 
-		Specification<Product> spec = productSpecification.specificationBuilder(requestDto);
+        Specification<Product> spec = productSpecification.specificationBuilder(requestDto);
 
-		Pageable pageable = PageRequest.of(page - 1, limit);
+        Pageable pageable = PageRequest.of(page - 1, limit);
 
-		try {
-			Page<Product> productList = productRepo.findAll(spec, pageable);
-			Pagination pagination = ProductUtils
-					.convertPageProductToPaginationObject(productList, modelMapper);
+        try {
+            Page<Product> productList = productRepo.findAll(spec, pageable);
+            Pagination pagination = ProductUtils
+                .convertPageProductToPaginationObject(productList, modelMapper);
 
-			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailRepo);
+            ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailRepo);
 
-			pagination.setElementPerPage(productList.getNumberOfElements());
+            pagination.setElementPerPage(productList.getNumberOfElements());
 
-			return pagination;
-		} catch (Exception e) {
-			System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
-			return null;
-		}
-	}
+            return pagination;
+        } catch (Exception e) {
+            System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
+            return null;
+        }
+    }
 }
