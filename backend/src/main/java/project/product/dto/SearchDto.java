@@ -8,11 +8,11 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class SearchDto {
-	private String type;
-	private Integer page;
-	private Integer limit;
-	private Integer minPrice;
-	private Integer maxPrice;
-	private String producer;
-	private String cpu;
+    private String type;
+    private Integer page;
+    private Integer limit;
+    private Integer minPrice;
+    private Integer maxPrice;
+    private String producer;
+    private String cpu;
 }

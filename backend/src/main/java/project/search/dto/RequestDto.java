@@ -10,11 +10,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestDto {
-	private List<SearchRequestDto> searchRequestDtoList;
+    private List<SearchRequestDto> searchRequestDtoList;
 
-	private GLOBAL_OPERATOR globalOperator;
+    private GLOBAL_OPERATOR globalOperator;
 
-	public enum GLOBAL_OPERATOR {
-		AND, OR;
-	}
+    public enum GLOBAL_OPERATOR {
+        AND, OR;
+    }
 }
