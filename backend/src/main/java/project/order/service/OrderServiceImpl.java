@@ -6,7 +6,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
-import project.common.InputValidUtils;
 import project.const_.ORDER_STATUS;
 import project.email.EmailService;
 import project.order.dto.OrderDto;
@@ -57,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         orderItemRepo.saveAll(orderItems);
-        System.err.println("Order time : " + (System.currentTimeMillis() -startTime));
+        System.err.println("Order time : " + (System.currentTimeMillis() - startTime));
         return order;
     }
 
@@ -99,8 +98,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getOrderByPhoneNumber(String phone) {
-		return orderRepo.findByCustomerPhone(phone);
-	}
+        return orderRepo.findByCustomerPhone(phone);
+    }
 
     @Async
     @Override

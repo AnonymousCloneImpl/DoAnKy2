@@ -14,9 +14,11 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o WHERE o.customerPhone = :number")
     List<OrderDto> getByCustomerPhone(@Param("number") String number);
+
     @Query(nativeQuery = true,
         value = "select * from orders o where o.customer_phone = :phone")
     List<Order> findByCustomerPhone(String phone);
+
     @Query(nativeQuery = true,
         value = "select * from product p \n" +
             "join order_item oi on p.id = oi.product_id\n" +

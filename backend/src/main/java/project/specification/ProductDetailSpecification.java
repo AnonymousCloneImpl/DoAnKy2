@@ -10,19 +10,19 @@ import project.product.entity.ProductDetail;
 @Component
 public class ProductDetailSpecification {
 
-	public Specification<ProductDetail> distinctCpuType() {
-		return (root, query, criteriaBuilder) -> {
-			query.distinct(true);
+    public Specification<ProductDetail> distinctCpuType() {
+        return (root, query, criteriaBuilder) -> {
+            query.distinct(true);
 
-			Root<ProductDetail> productDetailRoot = query.from(ProductDetail.class);
-			Root<LaptopDetail> laptopDetailRoot = query.from(LaptopDetail.class);
+            Root<ProductDetail> productDetailRoot = query.from(ProductDetail.class);
+            Root<LaptopDetail> laptopDetailRoot = query.from(LaptopDetail.class);
 
-			query.multiselect(laptopDetailRoot.get("cpuType"));
+            query.multiselect(laptopDetailRoot.get("cpuType"));
 
-			Predicate joinCondition = criteriaBuilder.equal(productDetailRoot.get("id"), laptopDetailRoot.get("id"));
-			query.where(joinCondition);
+            Predicate joinCondition = criteriaBuilder.equal(productDetailRoot.get("id"), laptopDetailRoot.get("id"));
+            query.where(joinCondition);
 
-			return query.getRestriction();
-		};
-	}
+            return query.getRestriction();
+        };
+    }
 }

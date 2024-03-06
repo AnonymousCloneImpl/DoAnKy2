@@ -2,8 +2,6 @@ package project.product.dto;
 
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @Setter
 @Builder

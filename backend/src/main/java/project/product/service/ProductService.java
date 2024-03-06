@@ -11,14 +11,15 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
-	Pagination getWithPaging(Integer page, Integer limit);
+    Pagination getWithPaging(Integer page, Integer limit);
 
-	StaticDataProductPage getStaticDataByType(String type, Integer limit);
+    StaticDataProductPage getStaticDataByType(String type, Integer limit);
 
-	Pagination getProductsByTypeWithPaging(SearchDto searchDto);
+    Pagination getProductsByTypeWithPaging(SearchDto searchDto);
 
-	Optional<Object> getByProductTypeAndByName(String type, String name);
+    Optional<Object> getByProductTypeAndByName(String type, String name);
 
-	List<ProductSummaryDto> getByName(String name, Integer limit);
+    List<ProductSummaryDto> getByName(String name, Integer limit);
+
 
 }

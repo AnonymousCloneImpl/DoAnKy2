@@ -3,7 +3,6 @@ package project.order.entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.BatchSize;
 import project.const_.ORDER_STATUS;
 
 import java.time.LocalDateTime;
