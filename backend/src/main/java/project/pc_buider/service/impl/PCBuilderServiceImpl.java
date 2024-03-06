@@ -1,4 +1,4 @@
-package project.pc_buider.service;
+package project.pc_buider.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import project.const_.PC_PART_TYPE;
 import project.pc_buider.dto.PCBuilderPartDto;
 import project.pc_buider.dto.PCBuilderPartResponse;
+import project.pc_buider.service.PCBuilderService;
 import project.product.dto.StockDto;
 import project.product.entity.Product;
 import project.product.entity.Stock;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PCBuilderServiceImpl implements PCBuilderService{
+public class PCBuilderServiceImpl implements PCBuilderService {
     @Autowired
     public ProductRepository productRepo;
     @Autowired

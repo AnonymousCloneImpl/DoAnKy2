@@ -1,4 +1,4 @@
-package project.order.service;
+package project.order.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,7 @@ import project.order.entity.Order;
 import project.order.entity.OrderItem;
 import project.order.repository.OrderItemRepository;
 import project.order.repository.OrderRepository;
+import project.order.service.OrderService;
 import project.product.dto.StockDto;
 import project.product.entity.Product;
 import project.product.entity.Stock;

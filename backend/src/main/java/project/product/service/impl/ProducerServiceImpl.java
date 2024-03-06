@@ -1,4 +1,4 @@
-package project.product.service;
+package project.product.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
@@ -7,6 +7,7 @@ import project.product.entity.Producer;
 import project.product.entity.Product;
 import project.product.repository.ProducerRepository;
 import project.product.repository.ProductRepository;
+import project.product.service.ProducerService;
 import project.specification.ProductSpecification;
 
 import java.util.List;
