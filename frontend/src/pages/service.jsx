@@ -66,7 +66,7 @@ const service = () => {
         </ul>
         <p className="ml-10">Warranty conditions: Product defects due to manufacturing.</p>
         <p className="ml-10">Note: The warranty package is not valid for products that are deformed from the original state (dents, dings, bends, cracks...) and products that have been immersed in water or have been repaired.</p>
-        <p className="ml-10">Processing time: Within 24 hours and a maximum of 14 working days depending on the product's condition.</p>
+        <p className="ml-10">Processing time: Within 24 hours and a maximum of 14 working days depending on the product&apos;s condition.</p>
 
         <p className="text-lg font-semibold pb-1 pt-5">II. Drop and Water Damage Warranty (BHRV-NN):</p>
         <p className="ml-10 font-semibold">Applicable products: New/used phones, tablets.</p>
@@ -78,11 +78,11 @@ const service = () => {
           <li className="ml-20">+ 90% repair cost support for dropped or water-damaged devices.</li>
           <li className="ml-20">+ Equivalent product replacement for irreparable severe damages.</li>
           <li className="ml-20">+ Assistance for trading in damaged products for an upgrade if no replacement product is available.</li>
-          <li className="ml-20">+ Warranty repair fund based on the product's Listed Price.</li>
+          <li className="ml-20">+ Warranty repair fund based on the product&apos;s Listed Price.</li>
         </ul>
         <p className="ml-10">Warranty conditions: Product damaged by external forces causing breakage or water immersion, leading to abnormal operation.</p>
         <p className="ml-10">Note: The VIP 1-to-1 warranty package is not valid for products that are deformed from the original state (dents, dings, bends, cracks...) and products that have been immersed in water or have been repaired.</p>
-        <p className="ml-10">Processing time: Repair time from 7 to 14 working days depending on the product's condition.</p>
+        <p className="ml-10">Processing time: Repair time from 7 to 14 working days depending on the product&apos;s condition.</p>
 
         <p className="text-lg font-semibold pb-1 pt-5">III. Extended Warranty S24+:</p>
         <p className="ml-10 font-semibold">Applicable products: High-end accessories, Macbook, new phones.</p>
@@ -95,10 +95,10 @@ const service = () => {
           <li className="ml-20">+ Equivalent product replacement for irreparable severe damages.</li>
           <li className="ml-20">+ Assistance for trading in damaged products for an upgrade if no replacement product is available.</li>
         </ul>
-        <p className="ml-10">Warranty conditions: After the manufacturer's warranty period. Product with defects due to manufacturing.</p>
+        <p className="ml-10">Warranty conditions: After the manufacturer&apos;s warranty period. Product with defects due to manufacturing.</p>
         <p className="ml-10">Note: The S24+ warranty package is not valid for products that are deformed from the original state (dents, dings, bends, cracks...) and products that have been immersed in water or have been repaired.</p>
-        <p className="ml-10">Processing time: Repair time from 7 to 14 working days depending on the product's condition. For Macbook, the manufacturer's warranty processing time may extend to 3 to 4 weeks.</p>
-        <p className="ml-10">Location for fault check and warranty: At CellphoneS service centers or manufacturer's service centers.</p>
+        <p className="ml-10">Processing time: Repair time from 7 to 14 working days depending on the product&apos;s condition. For Macbook, the manufacturer&apos;s warranty processing time may extend to 3 to 4 weeks.</p>
+        <p className="ml-10">Location for fault check and warranty: At CellphoneS service centers or manufacturer&apos;s service centers.</p>
         <p className="ml-10">Not in original condition, unclear tampered date.</p>
       </div>
 

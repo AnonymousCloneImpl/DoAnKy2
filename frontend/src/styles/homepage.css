@@ -21,6 +21,7 @@
     color: #DC2626;
     font-size: 20px;
     transition: color 0.3s ease;
+}
 
 .button-style:hover .icon-style {
   color: white;
@@ -30,7 +31,6 @@
   max-width: 800px;
   margin: 20px auto;
   padding: 20px;
-
 }
 
 table {

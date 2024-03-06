@@ -95,10 +95,10 @@ export default function Header() {
         <nav>
           <ul className="info-menu1">
             <li className="info-menu1-li">
-              <a className="info-menu1-a" href="/service"><p>Schedule A Repair</p></a>
+              <Link className="info-menu1-a" href="/service"><p>Schedule A Repair</p></Link>
             </li>
             <li className="info-menu1-li">
-              <a className="info-menu1-a" href="/about-us"><p>About Us</p></a>
+              <Link className="info-menu1-a" href="/about-us"><p>About Us</p></Link>
             </li>
           </ul>
         </nav>
