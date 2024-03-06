@@ -95,6 +95,11 @@ export default function ProductCardComponent({productData, type}) {
                                     <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
                                 </Link>
                             </div>
+                            <div className="flex items-center justify-around h-10">
+                                <p className="price_discount"><FormatPrice
+                                    price={p.price - (p.price * p.discountPercentage / 100)}/>đ</p>
+                                <p className="price"><FormatPrice price={p.price}/>đ</p>
+                            </div>
                             <div
                                 className="flex flex-wrap justify-around items-center text-sm text-gray-600">
                                 <div className="flex justify-center items-center">
@@ -119,14 +124,9 @@ export default function ProductCardComponent({productData, type}) {
                                     <p>{p.configuration?.graphicsCard?.split(",")[0]}</p>
                                 </div>
                             </div>
-                            <div className="flex items-center justify-around h-10">
-                                <p className="price_discount"><FormatPrice
-                                    price={p.price - (p.price * p.discountPercentage / 100)}/>đ</p>
-                                <p className="price"><FormatPrice price={p.price}/>đ</p>
-                            </div>
                             <div className="w-full h-16 flex justify-center items-center ">
                                 <button onClick={() => AddToCard({product: p})}
-                                        className="h-3/4 rounded-md w-5/12 button-style">
+                                        className="h-3/4 rounded-md w-4/12 button-style">
                                     <FontAwesomeIcon
                                         icon={faCartPlus}
                                         className="icon-style"

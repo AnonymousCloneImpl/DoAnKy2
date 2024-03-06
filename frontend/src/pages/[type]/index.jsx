@@ -86,7 +86,7 @@ const ProductsPageRoute = () => {
             "operator": "EQUAL"
         });
     }
-    console.log(body)
+
     const { data, isLoading, error, revalidate } = useSWR(
         firstProductDataUrl,
         () => postMethodFetcher(firstProductDataUrl, body),
