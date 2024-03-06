@@ -57,7 +57,7 @@ export default function Home() {
                             </p>
                             <Link
                                 href=""
-                                className="text-2xl w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600"
+                                className="w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600"
                             >
                                 <p className="w-full h-full flex items-center justify-center text-white">
                                     CHECK OUT
@@ -83,7 +83,7 @@ export default function Home() {
                             </p>
                             <Link
                                 href=""
-                                className="text-2xl w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600"
+                                className="w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600"
                             >
                                 <p className="w-full h-full flex items-center justify-center text-white">
                                     CHECK OUT
@@ -109,7 +109,7 @@ export default function Home() {
                             </p>
                             <Link
                                 href=""
-                                className="text-2xl w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600"
+                                className="w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600"
                             >
                                 <p className="w-full h-full flex items-center justify-center text-white">
                                     CHECK OUT
@@ -127,7 +127,8 @@ export default function Home() {
                     </p>
                     <span className="w-20 border border-b-black"></span>
                 </div>
-                <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"} renderFromHomePage={false}/>
+                <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"}
+                                      renderFromHomePage={false}/>
             </div>
 
 

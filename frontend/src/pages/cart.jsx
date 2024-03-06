@@ -4,20 +4,58 @@ import { faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-so
 import Link from "next/link";
 
 import FormatPrice from "@/components/FormatPrice";
+import useSWR from "swr";
+import {bold} from "next/dist/lib/picocolors";
+
+const postMethodFetcher = async (url, body) => {
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return response.json();
+};
 
 const CartPage = () => {
   const [items, setItems] = useState([]);
+  let body = {
+    "cartItemDtoList" : []
+  }
 
   useEffect(() => {
     const storedItemList = localStorage.getItem('itemList');
-
+    let arr;
     if (storedItemList) {
       const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item, quantity: 1 }));
+      arr = loadedItems.map(item => item.id);
+      arr.map((item) => {
+        body.cartItemDtoList.push(
+            {
+              "productId" : item,
+              "quantity" : null
+            }
+        );
+      })
       setItems(loadedItems);
     } else {
       console.log('Undefined itemList');
     }
   }, []);
+
+  const quantityApi = `${process.env.DOMAIN}/`;
+  const { data, isLoading, error, revalidate } = useSWR(
+      quantityApi,
+      () => postMethodFetcher(quantityApi, body)
+  );
+
+  console.log(body)
 
   const removeItem = (index) => {
     const updatedItems = [...items];
