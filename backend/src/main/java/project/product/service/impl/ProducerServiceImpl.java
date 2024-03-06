@@ -8,7 +8,7 @@ import project.product.entity.Product;
 import project.product.repository.ProducerRepository;
 import project.product.repository.ProductRepository;
 import project.product.service.ProducerService;
-import project.specification.ProductSpecification;
+import project.search.specification.ProductSpecification;
 
 import java.util.List;
 import java.util.stream.Collectors;

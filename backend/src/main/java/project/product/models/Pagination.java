@@ -1,4 +1,4 @@
-package project.models;
+package project.product.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package project.specification;
+package project.search.specification;
 
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;

@@ -1,4 +1,4 @@
-package project.product.utils;
+package project.product;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -7,15 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import project.models.Pagination;
+import project.product.models.Pagination;
 import project.product.dto.*;
 import project.product.entity.*;
 import project.product.repository.ProductDetailRepository;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
-import project.product.service.ProducerService;
-import project.product.service.ProductDetailService;
-import project.specification.ProductSpecification;
 
 import java.util.ArrayList;
 import java.util.Collections;

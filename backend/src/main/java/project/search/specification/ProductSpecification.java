@@ -1,4 +1,4 @@
-package project.specification;
+package project.search.specification;
 
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;

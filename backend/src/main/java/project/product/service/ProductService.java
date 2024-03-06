@@ -1,7 +1,7 @@
 package project.product.service;
 
 import org.springframework.stereotype.Service;
-import project.models.Pagination;
+import project.product.models.Pagination;
 import project.product.dto.ProductSummaryDto;
 import project.product.dto.SearchDto;
 import project.product.dto.StaticDataProductPage;

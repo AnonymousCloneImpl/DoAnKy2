@@ -7,15 +7,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import project.models.Pagination;
+import project.product.models.Pagination;
 import project.product.entity.Product;
 import project.product.repository.ProductDetailRepository;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
 import project.product.service.ProducerService;
-import project.product.utils.ProductUtils;
+import project.product.ProductUtils;
 import project.search.dto.RequestDto;
-import project.specification.ProductSpecification;
+import project.search.specification.ProductSpecification;
 
 @Service
 public class SearchServiceImpl implements SearchService {
