@@ -2,11 +2,9 @@ package project.product.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import project.product.entity.Product;
 import project.product.entity.ProductDetail;
 import project.product.entity.PurchaseComboItem;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Getter

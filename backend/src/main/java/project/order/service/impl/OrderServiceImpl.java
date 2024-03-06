@@ -1,4 +1,4 @@
-package project.order.service;
+package project.order.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,7 +6,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
-import project.common.InputValidUtils;
 import project.const_.ORDER_STATUS;
 import project.email.EmailService;
 import project.order.dto.OrderDto;
@@ -15,6 +14,7 @@ import project.order.entity.Order;
 import project.order.entity.OrderItem;
 import project.order.repository.OrderItemRepository;
 import project.order.repository.OrderRepository;
+import project.order.service.OrderService;
 import project.product.dto.StockDto;
 import project.product.entity.Product;
 import project.product.entity.Stock;
@@ -57,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         orderItemRepo.saveAll(orderItems);
-        System.err.println("Order time : " + (System.currentTimeMillis() -startTime));
+        System.err.println("Order time : " + (System.currentTimeMillis() - startTime));
         return order;
     }
 
@@ -99,8 +99,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getOrderByPhoneNumber(String phone) {
-		return orderRepo.findByCustomerPhone(phone);
-	}
+        return orderRepo.findByCustomerPhone(phone);
+    }
 
     @Async
     @Override
