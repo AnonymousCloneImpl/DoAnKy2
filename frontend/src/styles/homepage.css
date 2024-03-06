@@ -1,26 +1,27 @@
 .slider {
-    height: 560px;
+  height: 560px;
 }
 
 .homepage-card-item {
-    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
 }
 
 .button-style {
-    background-color: white;
-    border: 1px solid #DC2626;
-    transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: white;
+  border: 1px solid #DC2626;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .button-style:hover {
-    background-color: #DC2626;
-    color: white;
+  background-color: #DC2626;
+  color: white;
 }
 
 .icon-style {
-    color: #DC2626;
-    font-size: 20px;
-    transition: color 0.3s ease;
+  color: #DC2626;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
 
 .button-style:hover .icon-style {
   color: white;

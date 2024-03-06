@@ -51,7 +51,9 @@ const service = () => {
           </div>
         </form>
       </div>
-      <div className="whatever">
+
+
+      <div style={{ margin: "0 auto" }} className="w-5/6 whatever">
         <h1 className="text-2xl font-bold pb-1 pt-10">Device Warranty Services:</h1>
 
         <p className="text-lg font-semibold pb-1 pt-2">I. VIP 1-to-1 Replacement Warranty:</p>

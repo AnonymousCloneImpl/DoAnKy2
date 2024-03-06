@@ -340,7 +340,7 @@ const ProductPage = ({ productBE }) => {
     )
   } else {
     return (
-      <div className="body-wrapper">
+      <div className="body-wrapper w-11/12">
         <Head>
           <title>
             {product.name}

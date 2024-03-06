@@ -233,7 +233,7 @@ const CartPage = () => {
 
 
   return (
-    <div className="bg-gray-100">
+    <div style={{ margin: "0 auto" }} className="bg-gray-100 w-11/12">
       <div className="container mx-auto mt-10">
         <div className="bg-white flex justify-between pb-8">
           <h1 className="font-semibold text-3xl">Shopping Cart</h1>
