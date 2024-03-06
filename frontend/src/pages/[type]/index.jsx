@@ -30,9 +30,9 @@ const ProductsPageRoute = () => {
 
     let producer = router.query.producer || null;
 
-    let minPrice = router.query.minprice || null;
+    let minPrice = router.query.minPrice || null;
 
-    let maxPrice = router.query.maxprice || null;
+    let maxPrice = router.query.maxPrice || null;
 
     let cpu = router.query.cpu || null;
 
@@ -86,6 +86,7 @@ const ProductsPageRoute = () => {
             "operator": "EQUAL"
         });
     }
+    console.log(body)
     const { data, isLoading, error, revalidate } = useSWR(
         firstProductDataUrl,
         () => postMethodFetcher(firstProductDataUrl, body),

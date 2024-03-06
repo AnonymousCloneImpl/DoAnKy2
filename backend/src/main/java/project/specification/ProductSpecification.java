@@ -71,7 +71,6 @@ public class ProductSpecification {
 
 			for (SearchRequestDto searchRequestDto : requestDto.getSearchRequestDtoList()) {
 				String column = searchRequestDto.getColumn();
-
 				Path<Object> attributePath;
 				if (column.equals("cpuType") || column.equals("ram") || column.equals("hardDisk")) {
 					attributePath = productDetailsJoin.get(column);
@@ -107,9 +106,9 @@ public class ProductSpecification {
 					case BETWEEN -> {
 						String[] obj = searchRequestDto.getValue().split(",");
 						Predicate between = criteriaBuilder.between(
-								criteriaBuilder.upper(attributePath.as(String.class)),
-								obj[0],
-								obj[1]
+								root.get(column),
+								Long.parseLong(obj[0]),
+								Long.parseLong(obj[1])
 						);
 						predicateList.add(between);
 					}

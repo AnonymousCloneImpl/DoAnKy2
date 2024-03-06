@@ -1,25 +1,24 @@
 .slider {
-    height: 480px;
-    position: relative;
+    height: 560px;
 }
 
 .homepage-card-item {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
 }
 
 .button-style {
     background-color: white;
-    border: 1px solid red;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    border: 1px solid #DC2626;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .button-style:hover {
-    background-color: red;
+    background-color: #DC2626;
     color: white;
 }
 
 .icon-style {
-    color: red;
+    color: #DC2626;
     font-size: 20px;
     transition: color 0.3s ease;
 }
@@ -28,44 +27,26 @@
     color: white;
 }
 
-body {
-
-    font-family: Arial, sans-serif;
-
-}
 
 
 
 .abc {
-
     max-width: 800px;
-
     margin: 20px auto;
-
     padding: 20px;
-
 }
 
 table {
-
     width: 100%;
-
     border-collapse: collapse;
-
 }
 
 th, td {
-
     border: 1px solid #ddd;
-
     padding: 8px;
-
     text-align: left;
-
 }
 
 th {
-
     background-color: #f2f2f2;
-
 }
