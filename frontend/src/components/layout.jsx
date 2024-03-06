@@ -34,7 +34,7 @@ export default function Layout({ children }) {
         <div>
             <Header/>
             <div className="w-full flex justify-center">
-                <div className="w-11/12">
+                <div className="w-full">
                     {children}
                 </div>
             </div>

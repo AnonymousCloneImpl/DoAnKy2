@@ -1,6 +1,5 @@
-import fetcher from "@/utils/fetchAPI";
+
 import ProductCardComponent from "@/components/home/Component.ProductCard";
-import Link from "next/link";
 import {getTrackBackground, Range} from "react-range";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
@@ -8,7 +7,6 @@ import ProductList from "@/components/home/ProductList";
 import FormatPrice from "@/components/FormatPrice";
 import {faFilter, faMemory, faMicrochip, faMoneyBill} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import FilterProduct from "@/components/FilterProduct";
 
 const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     const router = useRouter();
@@ -59,8 +57,10 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
         if (staticData) {
             setTopSeller(staticData.productSummaryDtoList);
             setProducers(staticData.producerList);
-            setCpuFilter(staticData.cpuList);
-            setRamFilter(staticData.ramList);
+            if (pageType?.toLowerCase() === 'laptop') {
+                setCpuFilter(staticData.cpuList);
+                setRamFilter(staticData.ramList);
+            }
         }
 
         setCurrentPage(page);
@@ -128,14 +128,14 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
 
     const handleRamTypeClick = async ({value}) => {
         if (query.ram === value) {
-            const { cpu, ...newQuery } = query;
+            const { ram, ...newQuery } = query;
             await new Promise((resolve) => {
                 router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
                 resolve();
             });
         } else {
             if (query.ram) {
-                const { cpu, ...newQuery } = query;
+                const { ram, ...newQuery } = query;
                 await new Promise((resolve) => {
                     router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
                     resolve();
@@ -154,8 +154,8 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 pathname: router.pathname,
                 query: {
                     ...query,
-                    minprice: minPrice || 0,
-                    maxprice: maxPrice || undefined,
+                    minPrice: minPrice || 0,
+                    maxPrice: maxPrice || undefined,
                 }},
                 undefined,
                 { shallow: true, scroll: false, }
@@ -230,14 +230,14 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
             {/* FILTER */}
             <div className="mt-6">
                 <div className="text-xl flex items-center">
+                    <FontAwesomeIcon className="text-lg mr-1" icon={faFilter}/>
                     FILTER
-                    <FontAwesomeIcon className="text-sm" icon={faFilter}/>
                 </div>
                 <div className="mt-3">
                     <div className="flex justify-start items-center">
                         <div className="h-10 w-20 mr-5">
                             <button onClick={handlePriceClick}
-                                    className="h-full w-full rounded-md overflow-hidden bg-gray-300 flex justify-center items-center">
+                                    className="h-full w-full rounded-md overflow-hidden bg-gray-200 hover:bg-gray-400 flex justify-center items-center">
                                 <FontAwesomeIcon className="w-2/6" icon={faMoneyBill}/>
                                 <p className="h-full w-4/6 flex items-center">
                                     Price
@@ -248,7 +248,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                             <>
                                 <div className="h-10 w-20 mr-5">
                                     <button onClick={handleCpuClick}
-                                            className="h-full w-full rounded-md overflow-hidden bg-gray-300 flex justify-center items-center">
+                                            className="h-full w-full rounded-md overflow-hidden bg-gray-200 hover:bg-gray-400  flex justify-center items-center">
                                         <FontAwesomeIcon className="w-2/6" icon={faMicrochip}/>
                                         <p className="h-full w-4/6 flex items-center">
                                             CPU
@@ -257,7 +257,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                                 </div>
                                 <div className="h-10 w-20 mr-5">
                                     <button onClick={handleRamClick}
-                                            className="h-full w-full rounded-md overflow-hidden bg-gray-300 flex justify-center items-center">
+                                            className="h-full w-full rounded-md overflow-hidden bg-gray-200 hover:bg-gray-400 flex justify-center items-center">
                                         <FontAwesomeIcon className="w-2/6" icon={faMemory}/>
                                         <p className="h-full w-4/6 flex items-center">
                                             RAM
@@ -274,7 +274,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 <div>
                     {/* Ô input cho giá min và max */}
                     {showPriceInput && (
-                        <div className="absolute mt-1 left-8 w-1/2">
+                        <div className="absolute mt-1 left-10 w-1/2">
                             <div
                                 className="flex items-center justify-center rounded-lg overflow-hidden h-12 w-full">
                                 <PriceRangeSlider
@@ -283,18 +283,20 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                                     setMinPrice={setMinPrice}
                                     setMaxPrice={setMaxPrice}
                                 />
-                                <button onClick={handleApplyPriceFilter} className="ml-6">Apply</button>
+                                <button onClick={handleApplyPriceFilter} className="ml-6 text-white bg-red-500 w-20 h-8 rounded-sm">Apply</button>
                             </div>
                         </div>
                     )}
 
                     {/* Ô input cho cpu */}
                     {showCpuOption && (
-                        <div className="absolute mt-4 w-1/2 flex justify-start left-48">
+                        <div className="absolute mt-4 w-1/2 flex justify-start left-40">
                         {cpuFilter.map((p, index) => (
-                                <div key={index} className="mr-8">
-                                    <button onClick={() => {
-                                        handleRamTypeClick({value: p})
+                                <div key={index} className="mr-8 bg-gray-300 h-8 w-20 rounded-sm">
+                                    <button
+                                        className="w-full h-full"
+                                        onClick={() => {
+                                            handleCpuTypeClick({value: p})
                                     }}>
                                         {p}
                                     </button>
@@ -305,12 +307,14 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
 
                     {/* Ô input cho cpu */}
                     {showRamOption && (
-                        <div className="absolute mt-4 w-1/2 flex justify-start left-60">
+                        <div className="absolute mt-4 w-1/2 flex justify-start left-64">
                             {ramFilter.map((p, index) => (
-                                <div key={index} className="mr-8">
-                                    <button onClick={() => {
-                                        handleCpuTypeClick({value: p})
-                                    }}>
+                                <div key={index} className="mr-8 bg-gray-300 h-8 w-20 rounded-sm">
+                                    <button
+                                        className="w-full h-full"
+                                        onClick={() => {
+                                            handleRamTypeClick({value: p})
+                                        }}>
                                         {p}
                                     </button>
                                 </div>
