@@ -34,28 +34,39 @@ const CartPage = () => {
     let arr;
     if (storedItemList) {
       const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item, quantity: 1 }));
-      arr = loadedItems.map(item => item.id);
-      arr.map((item) => {
-        body.cartItemDtoList.push(
-            {
-              "productId" : item,
-              "quantity" : null
-            }
-        );
-      })
       setItems(loadedItems);
     } else {
       console.log('Undefined itemList');
     }
   }, []);
 
-  const quantityApi = `${process.env.DOMAIN}/`;
-  const { data, isLoading, error, revalidate } = useSWR(
-      quantityApi,
-      () => postMethodFetcher(quantityApi, body)
-  );
+  const quantityApi = `${process.env.DOMAIN}/cart`;
 
-  console.log(body)
+  const sendPostRequest = async () => {
+    const result = await postMethodFetcher(quantityApi, body);
+
+    for (let i = 0; i < items.length; i++) {
+      for (let j = 0; j < result?.cartItemDtoList.length; j++) {
+        if (items[i].id === result.cartItemDtoList[j].productId) {
+          items[i].stock = result.cartItemDtoList[j].quantity;
+          break;
+        }
+      }
+    }
+  }
+
+  if (items !== [] && items !== undefined) {
+    let arr = items.map(item => item.id);
+    arr.map((item) => {
+      body.cartItemDtoList.push(
+          {
+            "productId" : item,
+            "quantity" : null
+          }
+      );
+    });
+    sendPostRequest();
+  }
 
   const removeItem = (index) => {
     const updatedItems = [...items];
@@ -268,7 +279,6 @@ const CartPage = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-
 
   return (
     <div style={{ margin: "0 auto" }} className="bg-gray-100 w-11/12">

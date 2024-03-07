@@ -304,7 +304,7 @@ const ProductPage = ({ productBE }) => {
         "price": product.price,
         "discountPercentage": product.discountPercentage,
         "type": product.type,
-        "stock": product.stock.quantity
+        "stock": null
       };
       cartItemList = updatedCartItemList;
     } else {
@@ -315,7 +315,7 @@ const ProductPage = ({ productBE }) => {
         "price": product.price,
         "discountPercentage": product.discountPercentage,
         "type": product.type,
-        "stock": product.stock.quantity
+        "stock": null
       });
     }
 

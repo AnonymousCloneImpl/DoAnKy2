@@ -6,6 +6,7 @@ import fetcher from "@/utils/fetchAPI";
 import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
 import Image from "next/image";
+import CartIcon from "@/components/CartNumber";
 
 library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
 
@@ -158,10 +159,7 @@ export default function Header() {
                   Check oder</Link>
               </li>
               <li className="main-menu-right flex">
-                <Link className="main-menu-a hover:text-red-800" href="/cart">
-                  <FontAwesomeIcon icon={faCartShopping} className="main-menu-i" />
-                  My cart</Link>
-                <div className="cart-number-list">{cartNumber}</div>
+                <CartIcon />
               </li>
             </ul>
           </div>
