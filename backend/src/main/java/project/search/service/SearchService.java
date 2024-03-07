@@ -1,6 +1,6 @@
 package project.search.service;
 
-import project.models.Pagination;
+import project.product.models.Pagination;
 import project.search.dto.RequestDto;
 
 public interface SearchService {
