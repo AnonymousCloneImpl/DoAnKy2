@@ -9,13 +9,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "laptop_detail")
-public class LaptopDetail extends ProductDetail {
+public class LaptopDetail extends ProductDetail{
 	@Column(name = "cpu_type")
 	private String cpuType;
 	private String cpu;

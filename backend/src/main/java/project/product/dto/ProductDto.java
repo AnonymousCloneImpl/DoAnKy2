@@ -3,8 +3,6 @@ package project.product.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
-import project.product.entity.ProductDetail;
-import project.product.entity.PurchaseComboItem;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,12 +20,12 @@ public class ProductDto implements Serializable {
 	private String name;
 	private String type;
 	@JsonIgnoreProperties({"id", "product"})
-	private ProductDetail productDetail;
+	private ProductDetailDto productDetail;
 	private Long price;
 	private List<String> imageList;
 	private byte discountPercentage;
 	private BlogDto blog;
-	private PurchaseComboItem purchaseComboItem;
+	private StaticDataProductPage.PurchaseComboItem purchaseComboItem;
 	private List<SimilarProductDto> similarProductList;
 	private StockDto stock;
 	private List<String> configurationList;

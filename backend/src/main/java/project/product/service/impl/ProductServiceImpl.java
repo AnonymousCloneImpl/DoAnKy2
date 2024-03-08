@@ -1,6 +1,7 @@
 package project.product.service.impl;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -146,7 +147,6 @@ public class ProductServiceImpl implements ProductService {
 		String namePath = name.replace("-", " ");
 		Product p = productRepository.getByProductTypeAndByName(type, namePath);
 		ProductDto productDto = productUtils.createProductDto(p);
-		productUtils.setProductDetail(productDto, p);
 		productUtils.setPurchaseComboItem(productDto);
 
 		Blog blog = p.getBlog();
@@ -163,6 +163,28 @@ public class ProductServiceImpl implements ProductService {
 		productDto.setStock(stockDto);
 		productDto.setConfigurationList(productRepository.getListConfiguration(namePath));
 
+		ProductDetail pDetail = productDetailRepo.findByProductId(p.getId());
+		ModelMapper modelMapper = new ModelMapper();
+
+		switch (type.toLowerCase()) {
+			case "laptop" -> {
+				LaptopDetailDto lDto = modelMapper.map(pDetail, LaptopDetailDto.class);
+				productDto.setProductDetail(lDto);
+				System.err.println(pDetail.toString());
+			}
+			case "keyboard" -> {
+				KeyboardDetailDto kDto = modelMapper.map(pDetail, KeyboardDetailDto.class);
+				productDto.setProductDetail(kDto);
+			}
+			case "mouse" -> {
+				MouseDetailDto mDto = modelMapper.map(pDetail, MouseDetailDto.class);
+				productDto.setProductDetail(mDto);
+			}
+			case "headphone" -> {
+				HeadphoneDetailDto hDto = modelMapper.map(pDetail, HeadphoneDetailDto.class);
+				productDto.setProductDetail(hDto);
+			}
+		}
 		return Optional.of(productDto);
 	}
 }
