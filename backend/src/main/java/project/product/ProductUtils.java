@@ -13,6 +13,7 @@ import project.product.entity.*;
 import project.product.repository.ProductDetailRepository;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
+import project.product.service.ProductDetailService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -63,10 +64,10 @@ public class ProductUtils {
 
 	public static void getConfigurationForDto(
 			List<ProductSummaryDto> productSummaryDtoList,
-			ProductDetailRepository productDetailRepository
+			ProductDetailService productDetailService
 	) {
 		for (ProductSummaryDto p : productSummaryDtoList) {
-			p.setConfiguration(productDetailRepository.findAllDetailByProductId(p.getId()));
+			p.setConfiguration(productDetailService.getById(p.getId()));
 		}
 	}
 

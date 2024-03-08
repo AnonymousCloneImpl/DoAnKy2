@@ -9,28 +9,22 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.product.models.Pagination;
 import project.product.entity.Product;
-import project.product.repository.ProductDetailRepository;
-import project.product.repository.ProductRepository;
-import project.product.repository.StockRepository;
-import project.product.service.ProducerService;
 import project.product.ProductUtils;
+import project.product.service.ProductDetailService;
+import project.product.service.ProductService;
 import project.search.dto.RequestDto;
 import project.search.specification.ProductSpecification;
 
 @Service
 public class SearchServiceImpl implements SearchService {
 	@Autowired
-	private ProductRepository productRepo;
+	private ProductService productService;
 	@Autowired
-	private ProductDetailRepository productDetailRepo;
-	@Autowired
-	private StockRepository stockRepo;
+	private ProductDetailService productDetailService;
 	@Autowired
 	private ModelMapper modelMapper;
 	@Autowired
 	private ProductSpecification productSpecification;
-	@Autowired
-	private ProducerService producerService;
 
 
 	@Override
@@ -48,12 +42,12 @@ public class SearchServiceImpl implements SearchService {
 		Pageable pageable = PageRequest.of(page - 1, limit);
 
 		try {
-			Page<Product> productList = productRepo.findAll(spec, pageable);
+			Page<Product> productList = productService.getAllBySpecification(spec, pageable);
 
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
-			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailRepo);
+			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailService);
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 

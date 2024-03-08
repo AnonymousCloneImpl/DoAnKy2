@@ -8,9 +8,9 @@ import java.util.List;
 
 @Service
 public interface ProductDetailService {
-    List<ProductDetail> getProductDetailsByProducts(List<Product> products);
+	ProductDetail getById(Long id);
 
-    List<String> getCpuList();
+	List<String> getCpuList();
 
-    List<String> getRamList();
+	List<String> getRamList();
 }

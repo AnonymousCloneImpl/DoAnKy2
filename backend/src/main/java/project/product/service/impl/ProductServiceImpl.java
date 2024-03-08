@@ -43,6 +43,11 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductUtils productUtils;
 
+	@Override
+	public Page<Product> getAllBySpecification(Specification<Product> spec, Pageable pageable) {
+		return productRepository.findAll(spec, pageable);
+	}
+
 	@Deprecated
 	@Override
 	public Pagination getWithPaging(Integer page, Integer limit) {
@@ -76,10 +81,10 @@ public class ProductServiceImpl implements ProductService {
 					.convertProductsToProductSummaryDtoList(productList, modelMapper);
 
 			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setConfiguration(productDetailRepo.findAllDetailByProductId(p.getId()));
+				p.setConfiguration(productDetailRepo.findById(p.getId()));
 			}
 
-			ProductUtils.getConfigurationForDto(productSummaryDtoList, productDetailRepo);
+			ProductUtils.getConfigurationForDto(productSummaryDtoList, productDetailService);
 
 			List<ProductDetail> productDetailList = productDetailRepo.findAll(productSpecification.getByProductType(type));
 
@@ -106,7 +111,7 @@ public class ProductServiceImpl implements ProductService {
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
-			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailRepo);
+			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailService);
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 

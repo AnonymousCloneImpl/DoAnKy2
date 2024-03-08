@@ -19,7 +19,7 @@ import java.util.Objects;
 
 @Component
 public class ProductSpecification {
-public Specification<Product> filterOfProduct(SearchDto searchDto) {
+	public Specification<Product> filterOfProduct(SearchDto searchDto) {
 		return (root, query, criteriaBuilder) -> {
 			Specification<Product> specification = Specification.where(null);
 
@@ -69,7 +69,6 @@ public Specification<Product> filterOfProduct(SearchDto searchDto) {
 			Join<Product, Producer> producerJoin = root.join("producer", JoinType.INNER);
 
 			List<Predicate> predicateList = new ArrayList<>();
-
 			for (SearchRequestDto searchRequestDto : requestDto.getSearchRequestDtoList()) {
 				String column = searchRequestDto.getColumn();
 				Path<Object> attributePath;

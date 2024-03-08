@@ -1,5 +1,8 @@
 package project.product.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.product.entity.Product;
 import project.product.models.Pagination;
@@ -12,6 +15,8 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
+
+	Page<Product> getAllBySpecification(Specification<Product> spec, Pageable pageable);
 
 	Pagination getWithPaging(Integer page, Integer limit);
 
