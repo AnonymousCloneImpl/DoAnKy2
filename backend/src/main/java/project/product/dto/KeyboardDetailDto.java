@@ -14,5 +14,5 @@ public class KeyboardDetailDto extends ProductDetailDto{
     private String switchType;
     private String cableLength;
     private String connectionType;
-    private boolean led;
+    private String led;
 }

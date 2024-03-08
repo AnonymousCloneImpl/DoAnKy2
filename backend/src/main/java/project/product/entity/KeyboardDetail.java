@@ -25,5 +25,6 @@ public class KeyboardDetail extends ProductDetail {
 	private String cableLength;
 	@Column(name = "connection_type")
 	private String connectionType;
-	private boolean led;
+	@Column(length = 10)
+	private String led;
 }

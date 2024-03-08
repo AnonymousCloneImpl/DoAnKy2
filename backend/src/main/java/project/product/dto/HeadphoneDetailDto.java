@@ -1,5 +1,12 @@
 package project.product.dto;
 
-public class HeadphoneDetailDto extends ProductDetailDto{
+import lombok.*;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class HeadphoneDetailDto extends ProductDetailDto{
+    private String led;
 }

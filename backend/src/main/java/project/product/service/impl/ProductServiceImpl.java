@@ -19,6 +19,7 @@ import project.product.service.ProducerService;
 import project.product.service.ProductDetailService;
 import project.product.service.ProductService;
 import project.product.ProductUtils;
+import project.product.service.StockService;
 import project.search.specification.ProductSpecification;
 
 import java.util.List;
@@ -27,25 +28,28 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 	@Autowired
-	private ProductRepository productRepository;
-	@Autowired
-	private ProductDetailRepository productDetailRepo;
-	@Autowired
-	private StockRepository stockRepo;
-	@Autowired
-	private ModelMapper modelMapper;
+	private ProductRepository productRepo;
 	@Autowired
 	private ProductSpecification productSpecification;
+	@Autowired
+	private StockService stockService;
 	@Autowired
 	private ProducerService producerService;
 	@Autowired
 	private ProductDetailService productDetailService;
 	@Autowired
+	private ModelMapper modelMapper;
+	@Autowired
 	private ProductUtils productUtils;
 
 	@Override
+	public Optional<Product> getById(long id) {
+		return productRepo.findById(id);
+	}
+
+	@Override
 	public Page<Product> getAllBySpecification(Specification<Product> spec, Pageable pageable) {
-		return productRepository.findAll(spec, pageable);
+		return productRepo.findAll(spec, pageable);
 	}
 
 	@Deprecated
@@ -54,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
 		Pageable pageable = PageRequest.of((page - 1), Pagination.PAGE_SIZE);
 
 		try {
-			Page<Product> productPage = productRepository.findAll(pageable);
+			Page<Product> productPage = productRepo.findAll(pageable);
 
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productPage, modelMapper);
@@ -75,18 +79,18 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public StaticDataProductPage getStaticDataByType(String type, Integer limit) {
 		try {
-			List<Product> productList = productRepository.getTopSellerByType(type, limit);
+			List<Product> productList = productRepo.getTopSellerByType(type, limit);
 
 			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
 					.convertProductsToProductSummaryDtoList(productList, modelMapper);
 
 			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setConfiguration(productDetailRepo.findById(p.getId()));
+				p.setConfiguration(productDetailService.getById(p.getId()));
 			}
 
 			ProductUtils.getConfigurationForDto(productSummaryDtoList, productDetailService);
 
-			List<ProductDetail> productDetailList = productDetailRepo.findAll(productSpecification.getByProductType(type));
+			List<ProductDetail> productDetailList = productDetailService.findAll(productSpecification.getByProductType(type));
 
 			return StaticDataProductPage.builder()
 					.productSummaryDtoList(productSummaryDtoList)
@@ -107,7 +111,7 @@ public class ProductServiceImpl implements ProductService {
 		Pageable pageable = PageRequest.of((searchDto.getPage() - 1), searchDto.getLimit() == null ? Pagination.PAGE_SIZE : searchDto.getLimit());
 
 		try {
-			Page<Product> productList = productRepository.findAll(spec, pageable);
+			Page<Product> productList = productRepo.findAll(spec, pageable);
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
@@ -128,7 +132,7 @@ public class ProductServiceImpl implements ProductService {
 			limit = Pagination.PAGE_SIZE;
 		}
 
-		Page<Product> productList = productRepository
+		Page<Product> productList = productRepo
 				.findAll(productSpecification.nameLike(name), PageRequest.of(0, limit));
 
 		if (!productList.isEmpty()) {
@@ -150,7 +154,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String namePath = name.replace("-", " ");
-		Product p = productRepository.getByProductTypeAndByName(type, namePath);
+		Product p = productRepo.getByProductTypeAndByName(type, namePath);
 		ProductDto productDto = productUtils.createProductDto(p);
 		productUtils.setPurchaseComboItem(productDto);
 
@@ -158,7 +162,7 @@ public class ProductServiceImpl implements ProductService {
 		BlogDto blogDto = productUtils.createBlogDto(blog);
 		productUtils.setBlogImageAndContent(blogDto, blog);
 
-		Optional<Stock> stock = stockRepo.findByProductDetailId(p.getId());
+		Optional<Stock> stock = stockService.findByProductDetailId(p.getId());
 		StockDto stockDto = productUtils.createStockDto(stock, p.getId());
 
 		productDto.setProducer(p.getProducer().getName());
@@ -166,16 +170,15 @@ public class ProductServiceImpl implements ProductService {
 		productDto.setBlog(blogDto);
 		productDto.setSimilarProductList(productUtils.findTopSimilarProducts(p));
 		productDto.setStock(stockDto);
-		productDto.setConfigurationList(productRepository.getListConfiguration(namePath));
+		productDto.setConfigurationList(productRepo.getListConfiguration(namePath));
 
-		ProductDetail pDetail = productDetailRepo.findByProductId(p.getId());
+		ProductDetail pDetail = productDetailService.getById(p.getId());
 		ModelMapper modelMapper = new ModelMapper();
 
 		switch (type.toLowerCase()) {
 			case "laptop" -> {
 				LaptopDetailDto lDto = modelMapper.map(pDetail, LaptopDetailDto.class);
 				productDto.setProductDetail(lDto);
-				System.err.println(pDetail.toString());
 			}
 			case "keyboard" -> {
 				KeyboardDetailDto kDto = modelMapper.map(pDetail, KeyboardDetailDto.class);

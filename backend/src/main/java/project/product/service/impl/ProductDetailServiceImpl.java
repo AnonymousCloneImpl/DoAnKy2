@@ -1,6 +1,7 @@
 package project.product.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.product.entity.Product;
 import project.product.entity.ProductDetail;
@@ -32,5 +33,10 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 				.map(item -> item.split(" ")[0])
 				.distinct()
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<ProductDetail> findAll(Specification<ProductDetail> byProductType) {
+		return productDetailRepository.findAll();
 	}
 }

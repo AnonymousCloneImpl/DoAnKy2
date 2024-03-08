@@ -11,7 +11,7 @@ public class MouseDetailDto extends ProductDetailDto {
 	private String sensor;
 	private String connection;
 	private String dpi;
-	private boolean led;
+	private String led;
 	private String chargingPort;
 	private String battery;
 	private String buttons;
