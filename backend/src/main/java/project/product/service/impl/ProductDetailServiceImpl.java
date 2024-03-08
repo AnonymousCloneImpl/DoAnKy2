@@ -15,11 +15,10 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	@Autowired
 	private ProductDetailRepository productDetailRepository;
 
+
 	@Override
-	public List<ProductDetail> getProductDetailsByProducts(List<Product> products) {
-		return products.stream()
-				.map(product -> productDetailRepository.findByProductId(product.getId()))
-				.collect(Collectors.toList());
+	public ProductDetail getById(Long id) {
+		return productDetailRepository.findByProductId(id);
 	}
 
 	@Override

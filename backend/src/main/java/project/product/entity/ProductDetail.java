@@ -2,10 +2,7 @@ package project.product.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
@@ -17,8 +14,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "product_detail")
 @Inheritance(strategy = InheritanceType.JOINED)
-@RedisHash("ProductDetail")
-public class ProductDetail implements Serializable {
+@ToString
+public class ProductDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
