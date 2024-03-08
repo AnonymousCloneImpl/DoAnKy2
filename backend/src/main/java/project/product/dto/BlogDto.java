@@ -2,6 +2,7 @@ package project.product.dto;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -9,7 +10,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BlogDto {
+public class BlogDto implements Serializable {
     private Long id;
     private List<String> imageList;
     private String header;

@@ -1,11 +1,23 @@
 package project.product.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public class LaptopDetailDto {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
-	private String material;
-	private String dimensions;
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class LaptopDetailDto extends ProductDetailDto {
+	private String cpuType;
+	private String cpu;
+	private String ram;
+	private String screenSize;
+	private String screenResolution;
+	private String storage;
+	private String graphicsCard;
+	private String ports;
+	private String os;
 }

@@ -6,6 +6,8 @@ import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter

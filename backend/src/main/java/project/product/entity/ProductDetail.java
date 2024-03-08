@@ -7,14 +7,16 @@ import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@ToString
 @Table(name = "product_detail")
 @Inheritance(strategy = InheritanceType.JOINED)
-@ToString
 public class ProductDetail {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

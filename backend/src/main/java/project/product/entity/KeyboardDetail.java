@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter

@@ -78,13 +78,8 @@ public class ProductUtils {
 		return productDto;
 	}
 
-	public void setProductDetail(ProductDto productDto, Product p) {
-		ProductDetail detail = productDetailRepo.findByProductId(p.getId());
-		productDto.setProductDetail(detail);
-	}
-
 	public void setPurchaseComboItem(ProductDto productDto) {
-		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
+		StaticDataProductPage.PurchaseComboItem purchaseComboItem = new StaticDataProductPage.PurchaseComboItem();
 		Pageable pageable = PageRequest.of(0, 1);
 		try {
 			String type = "";

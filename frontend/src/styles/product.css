@@ -756,6 +756,9 @@
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
+}
+
+.call-button:hover {
   animation: pulse 0.1s infinite;
   transition: box-shadow 0.1s ease-in-out;
 }
