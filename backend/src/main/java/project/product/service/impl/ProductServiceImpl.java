@@ -172,6 +172,11 @@ public class ProductServiceImpl implements ProductService {
 		productDto.setStock(stockDto);
 		productDto.setConfigurationList(productRepo.getListConfiguration(namePath));
 
+		switchCase(type, p, productDto);
+		return Optional.of(productDto);
+	}
+
+	void switchCase(String type, Product p, ProductDto productDto) {
 		ProductDetail pDetail = productDetailService.getById(p.getId());
 		ModelMapper modelMapper = new ModelMapper();
 
@@ -193,6 +198,5 @@ public class ProductServiceImpl implements ProductService {
 				productDto.setProductDetail(hDto);
 			}
 		}
-		return Optional.of(productDto);
 	}
 }
