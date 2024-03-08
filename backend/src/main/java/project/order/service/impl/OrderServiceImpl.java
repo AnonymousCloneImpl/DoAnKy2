@@ -20,6 +20,8 @@ import project.product.entity.Product;
 import project.product.entity.Stock;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
+import project.product.service.ProductService;
+import project.product.service.StockService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,11 +33,11 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderRepository orderRepo;
 	@Autowired
-	private ProductRepository productRepo;
-	@Autowired
 	private OrderItemRepository orderItemRepo;
 	@Autowired
-	private StockRepository stockRepo;
+	private ProductService productService;
+	@Autowired
+	private StockService stockService;
 	@Autowired
 	private EmailService emailService;
 
@@ -70,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	private OrderItem createOrderItem(Order order, OrderItemDto item) {
-		Optional<Product> productOptional = productRepo.findById(item.getProductId());
+		Optional<Product> productOptional = productService.getById(item.getProductId());
 		if (productOptional.isPresent()) {
 			Product product = productOptional.get();
 			return OrderItem.builder()
@@ -84,7 +86,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void updateStock(OrderItemDto item) {
-		Optional<Stock> stockOptional = stockRepo.findById(item.getProductId());
+		Optional<Stock> stockOptional = stockService.getById(item.getProductId());
 
 		if (stockOptional.isPresent()) {
 			Stock stock = stockOptional.get();
@@ -93,7 +95,7 @@ public class OrderServiceImpl implements OrderService {
 					.sold(stock.getSold() + item.getQuantity())
 					.build();
 			BeanUtils.copyProperties(stockDto, stock);
-			stockRepo.save(stock);
+			stockService.save(stock);
 		}
 	}
 

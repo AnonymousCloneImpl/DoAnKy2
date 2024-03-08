@@ -15,6 +15,7 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
+	Optional<Product> getById(long id);
 
 	Page<Product> getAllBySpecification(Specification<Product> spec, Pageable pageable);
 

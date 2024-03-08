@@ -14,12 +14,12 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "mouse_detail")
-@ToString
 public class MouseDetail extends ProductDetail {
 	private String sensor;
 	private String connection;
 	private String dpi;
-	private boolean led;
+	@Column(length = 10)
+	private String led;
 	@Column(name = "charging_port")
 	private String chargingPort;
 	private String battery;
