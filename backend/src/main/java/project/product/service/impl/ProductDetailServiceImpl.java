@@ -12,26 +12,26 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProductDetailServiceImpl implements ProductDetailService {
-    @Autowired
-    private ProductDetailRepository productDetailRepository;
+	@Autowired
+	private ProductDetailRepository productDetailRepository;
 
-    @Override
-    public List<ProductDetail> getProductDetailsByProducts(List<Product> products) {
-        return products.stream()
-            .map(product -> productDetailRepository.findByProductId(product.getId()))
-            .collect(Collectors.toList());
-    }
+	@Override
+	public List<ProductDetail> getProductDetailsByProducts(List<Product> products) {
+		return products.stream()
+				.map(product -> productDetailRepository.findByProductId(product.getId()))
+				.collect(Collectors.toList());
+	}
 
-    @Override
-    public List<String> getCpuList() {
-        return productDetailRepository.getCpuList();
-    }
+	@Override
+	public List<String> getCpuList() {
+		return productDetailRepository.getCpuList();
+	}
 
-    @Override
-    public List<String> getRamList() {
-        return productDetailRepository.getRamList().stream()
-            .map(item -> item.split(" ")[0])
-            .distinct()
-            .collect(Collectors.toList());
-    }
+	@Override
+	public List<String> getRamList() {
+		return productDetailRepository.getRamList().stream()
+				.map(item -> item.split(" ")[0])
+				.distinct()
+				.collect(Collectors.toList());
+	}
 }

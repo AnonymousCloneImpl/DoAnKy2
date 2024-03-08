@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.redis.core.RedisHash;
 
 @Getter
 @Setter
@@ -15,15 +16,15 @@ import lombok.Setter;
 @Table(name = "product_detail")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class ProductDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private String material;
-    private String dimensions;
-    @Column(name = "release_date")
-    private String releaseDate;
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
-    private Product product;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+	private String material;
+	private String dimensions;
+	@Column(name = "release_date")
+	private String releaseDate;
+	@JsonBackReference
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_id")
+	private Product product;
 }

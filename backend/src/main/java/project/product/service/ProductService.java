@@ -1,7 +1,8 @@
 package project.product.service;
 
 import org.springframework.stereotype.Service;
-import project.models.Pagination;
+import project.product.entity.Product;
+import project.product.models.Pagination;
 import project.product.dto.ProductSummaryDto;
 import project.product.dto.SearchDto;
 import project.product.dto.StaticDataProductPage;
@@ -11,15 +12,16 @@ import java.util.Optional;
 
 @Service
 public interface ProductService {
-    Pagination getWithPaging(Integer page, Integer limit);
 
-    StaticDataProductPage getStaticDataByType(String type, Integer limit);
+	Pagination getWithPaging(Integer page, Integer limit);
 
-    Pagination getProductsByTypeWithPaging(SearchDto searchDto);
+	StaticDataProductPage getStaticDataByType(String type, Integer limit);
 
-    Optional<Object> getByProductTypeAndByName(String type, String name);
+	Pagination getProductsByTypeWithPaging(SearchDto searchDto);
 
-    List<ProductSummaryDto> getByName(String name, Integer limit);
+	Optional<Object> getByProductTypeAndByName(String type, String name);
+
+	List<ProductSummaryDto> getByName(String name, Integer limit);
 
 
 }

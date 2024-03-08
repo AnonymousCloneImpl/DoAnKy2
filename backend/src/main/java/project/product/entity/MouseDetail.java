@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.redis.core.RedisHash;
 
 @Entity
 @Getter
@@ -15,13 +16,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "mouse_detail")
 public class MouseDetail extends ProductDetail {
-    private String sensor;
-    private String connection;
-    private String dpi;
-    private boolean led;
-    @Column(name = "charging_port")
-    private String chargingPort;
-    private String battery;
-    private String buttons;
-    private String compatibility;
+	private String sensor;
+	private String connection;
+	private String dpi;
+	private boolean led;
+	@Column(name = "charging_port")
+	private String chargingPort;
+	private String battery;
+	private String buttons;
+	private String compatibility;
 }
