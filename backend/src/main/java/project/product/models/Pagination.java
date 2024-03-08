@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.redis.core.RedisHash;
 import project.product.dto.ProductSummaryDto;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@RedisHash("Pagination")
 public class Pagination implements Serializable {
 	public static final int PAGE_SIZE = 15;
 	private int totalPageNumber;

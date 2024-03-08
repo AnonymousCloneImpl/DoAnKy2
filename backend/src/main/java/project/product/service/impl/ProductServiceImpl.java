@@ -26,7 +26,7 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService {
 	@Autowired
-	private ProductRepository jpaProductRepository;
+	private ProductRepository productRepository;
 	@Autowired
 	private ProductDetailRepository productDetailRepo;
 	@Autowired
@@ -48,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
 		Pageable pageable = PageRequest.of((page - 1), Pagination.PAGE_SIZE);
 
 		try {
-			Page<Product> productPage = jpaProductRepository.findAll(pageable);
+			Page<Product> productPage = productRepository.findAll(pageable);
 
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productPage, modelMapper);
@@ -69,7 +69,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public StaticDataProductPage getStaticDataByType(String type, Integer limit) {
 		try {
-			List<Product> productList = jpaProductRepository.getTopSellerByType(type, limit);
+			List<Product> productList = productRepository.getTopSellerByType(type, limit);
 
 			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
 					.convertProductsToProductSummaryDtoList(productList, modelMapper);
@@ -101,7 +101,7 @@ public class ProductServiceImpl implements ProductService {
 		Pageable pageable = PageRequest.of((searchDto.getPage() - 1), searchDto.getLimit() == null ? Pagination.PAGE_SIZE : searchDto.getLimit());
 
 		try {
-			Page<Product> productList = jpaProductRepository.findAll(spec, pageable);
+			Page<Product> productList = productRepository.findAll(spec, pageable);
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
@@ -122,7 +122,7 @@ public class ProductServiceImpl implements ProductService {
 			limit = Pagination.PAGE_SIZE;
 		}
 
-		Page<Product> productList = jpaProductRepository
+		Page<Product> productList = productRepository
 				.findAll(productSpecification.nameLike(name), PageRequest.of(0, limit));
 
 		if (!productList.isEmpty()) {
@@ -144,7 +144,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String namePath = name.replace("-", " ");
-		Product p = jpaProductRepository.getByProductTypeAndByName(type, namePath);
+		Product p = productRepository.getByProductTypeAndByName(type, namePath);
 		ProductDto productDto = productUtils.createProductDto(p);
 		productUtils.setProductDetail(productDto, p);
 		productUtils.setPurchaseComboItem(productDto);
@@ -161,7 +161,7 @@ public class ProductServiceImpl implements ProductService {
 		productDto.setBlog(blogDto);
 		productDto.setSimilarProductList(productUtils.findTopSimilarProducts(p));
 		productDto.setStock(stockDto);
-		productDto.setConfigurationList(jpaProductRepository.getListConfiguration(namePath));
+		productDto.setConfigurationList(productRepository.getListConfiguration(namePath));
 
 		return Optional.of(productDto);
 	}

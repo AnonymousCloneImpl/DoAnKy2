@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.redis.core.RedisHash;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,7 +17,8 @@ import org.springframework.data.redis.core.RedisHash;
 @Entity
 @Table(name = "product_detail")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class ProductDetail {
+@RedisHash("ProductDetail")
+public class ProductDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
