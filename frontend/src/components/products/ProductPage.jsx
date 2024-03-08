@@ -304,6 +304,7 @@ const ProductPage = ({ productBE }) => {
         "price": product.price,
         "discountPercentage": product.discountPercentage,
         "type": product.type,
+        "quantity": null,
         "stock": null
       };
       cartItemList = updatedCartItemList;
@@ -315,6 +316,7 @@ const ProductPage = ({ productBE }) => {
         "price": product.price,
         "discountPercentage": product.discountPercentage,
         "type": product.type,
+        "quantity": null,
         "stock": null
       });
     }

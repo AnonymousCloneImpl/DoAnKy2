@@ -31,9 +31,8 @@ const CartPage = () => {
 
   useEffect(() => {
     const storedItemList = localStorage.getItem('itemList');
-    let arr;
     if (storedItemList) {
-      const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item, quantity: 1 }));
+      const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item}));
       setItems(loadedItems);
     } else {
       console.log('Undefined itemList');
@@ -46,9 +45,10 @@ const CartPage = () => {
     const result = await postMethodFetcher(quantityApi, body);
 
     for (let i = 0; i < items.length; i++) {
-      for (let j = 0; j < result?.cartItemDtoList.length; j++) {
+      for (let j = 0; j < result.cartItemDtoList.length; j++) {
         if (items[i].id === result.cartItemDtoList[j].productId) {
           items[i].stock = result.cartItemDtoList[j].quantity;
+          console.log(items[i])
           break;
         }
       }
@@ -99,7 +99,7 @@ const CartPage = () => {
 
   const resetIfEmpty = (index, value) => {
     const updatedItems = [...items];
-    if (value === '' || updatedItems[index].stock.quantity === 0) {
+    if (value === '' || updatedItems[index].stock === 0) {
       updatedItems[index].quantity = 1;
       setItems(updatedItems);
       localStorage.setItem('itemList', JSON.stringify(updatedItems));
@@ -197,7 +197,7 @@ const CartPage = () => {
     };
 
     fetchData();
-  }, []);
+  });
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -305,7 +305,7 @@ const CartPage = () => {
                   />
                 </div>
                 <div className="flex w-2/5">
-                  <div className="w-1/3 h-12">
+                  <div className="w-1/3">
                     <img className="h-20" src={item.image} alt={item.name} />
                   </div>
                   <div className="w-2/3 flex flex-col justify-between ml-4 flex-grow">
@@ -332,7 +332,9 @@ const CartPage = () => {
                     />
                     <button className="quantity-increase" onClick={() => increaseQuantity(index)}><FontAwesomeIcon icon={faPlus} /></button>
                   </div>
-                  <div className="text-center text-red-600 font-semibold">{item.stock} Left in Stock</div>
+                  <div className="text-center text-red-600 font-semibold">
+                    {item.stock} Left in Stock
+                  </div>
                 </div>
 
 

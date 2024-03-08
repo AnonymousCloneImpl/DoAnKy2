@@ -21,8 +21,6 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000/")
 public class SearchController {
 	@Autowired
-	private ProductService productService;
-	@Autowired
 	private SearchService searchService;
 
 	@PostMapping("/searchByCondition")
@@ -31,10 +29,6 @@ public class SearchController {
 	                               @Param(value = "limit") Integer limit
 	) {
 
-		Pagination pagination = searchService.getProductsByTypeWithPaging(requestDto, page, limit);
-		if (pagination != null) {
-			return pagination;
-		}
-		return new Pagination();
+		return searchService.getProductsByTypeWithPaging(requestDto, page, limit);
 	}
 }

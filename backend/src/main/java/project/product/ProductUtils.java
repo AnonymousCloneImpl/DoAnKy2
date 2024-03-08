@@ -25,8 +25,6 @@ public class ProductUtils {
 	@Autowired
 	private ProductRepository productRepo;
 	@Autowired
-	private ProductDetailRepository productDetailRepo;
-	@Autowired
 	private StockRepository stockRepo;
 
 	public static String getFirstImageUrl(String imageList) {
