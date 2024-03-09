@@ -17,6 +17,8 @@ import java.util.Optional;
 public interface ProductService {
 	Optional<Product> getById(long id);
 
+	Page<Product> getAll(Specification<Product> specification, Pageable pageable);
+
 	Page<Product> getAllBySpecification(Specification<Product> spec, Pageable pageable);
 
 	Pagination getWithPaging(Integer page, Integer limit);
@@ -26,8 +28,6 @@ public interface ProductService {
 	Pagination getProductsByTypeWithPaging(SearchDto searchDto);
 
 	Optional<Object> getByProductTypeAndByName(String type, String name);
-
-	List<ProductSummaryDto> getByName(String name, Integer limit);
 
 
 }

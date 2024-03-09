@@ -48,6 +48,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public Page<Product> getAll(Specification<Product> specification, Pageable pageable) {
+		return productRepo.findAll(specification, pageable);
+	}
+
+	@Override
 	public Page<Product> getAllBySpecification(Specification<Product> spec, Pageable pageable) {
 		return productRepo.findAll(spec, pageable);
 	}
@@ -122,30 +127,6 @@ public class ProductServiceImpl implements ProductService {
 			return pagination;
 		} catch (Exception e) {
 			System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
-			return null;
-		}
-	}
-
-	@Override
-	public List<ProductSummaryDto> getByName(String name, Integer limit) {
-		if (limit == null) {
-			limit = Pagination.PAGE_SIZE;
-		}
-
-		Page<Product> productList = productRepo
-				.findAll(productSpecification.nameLike(name), PageRequest.of(0, limit));
-
-		if (!productList.isEmpty()) {
-
-			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
-					.convertProductsToProductSummaryDtoList(productList.getContent(), modelMapper);
-
-			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
-			}
-			return productSummaryDtoList;
-		} else {
-			System.err.println("Error in getByName function : productList is null");
 			return null;
 		}
 	}

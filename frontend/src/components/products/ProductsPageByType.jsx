@@ -184,7 +184,8 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     };
 
     return (
-        <div className="h-full">
+        <div style={{margin: "auto"}}
+            className="h-full w-11/12">
             <div>
                 <p>This should be small slider</p>
             </div>

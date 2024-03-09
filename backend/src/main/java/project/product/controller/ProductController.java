@@ -73,18 +73,6 @@ public class ProductController {
 		return ResponseEntity.ok().body(list);
 	}
 
-	@GetMapping("/search")
-	ResponseEntity<List<ProductSummaryDto>> search(@RequestParam String name, @Param(value = "limit") Integer limit) {
-		if (limit == null) {
-			limit = 5;
-		}
-		List<ProductSummaryDto> productSummaryDtoList = productService.getByName(name, limit);
-		if (productSummaryDtoList != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-	}
-
 	@GetMapping("/staticData")
 	public ResponseEntity<StaticDataProductPage> getStaticDataByType(@RequestParam String type, @Param(value = "limit") Integer limit) {
 		if (limit == null) {

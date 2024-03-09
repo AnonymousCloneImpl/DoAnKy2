@@ -18,10 +18,22 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/search")
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "*")
 public class SearchController {
 	@Autowired
 	private SearchService searchService;
+
+	@GetMapping("")
+	ResponseEntity<List<ProductSummaryDto>> search(@RequestParam String q, @Param(value = "limit") Integer limit) {
+		if (limit == null) {
+			limit = 5;
+		}
+		List<ProductSummaryDto> productSummaryDtoList = searchService.getByName(q, limit);
+		if (productSummaryDtoList != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	}
 
 	@PostMapping("/searchByCondition")
 	public Object getProductByType(@RequestBody RequestDto requestDto,

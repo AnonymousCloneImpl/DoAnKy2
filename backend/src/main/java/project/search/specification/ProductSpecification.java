@@ -79,7 +79,7 @@ public class ProductSpecification {
 				} else {
 					attributePath = root.get(column);
 				}
-
+				
 				switch (searchRequestDto.getOperator()) {
 					case IN -> {
 						String[] obj = searchRequestDto.getValue().split(",");
@@ -97,7 +97,7 @@ public class ProductSpecification {
 
 					case LIKE -> {
 						Predicate like = criteriaBuilder.like(
-								criteriaBuilder.upper(attributePath.as(String.class)),
+								attributePath.as(String.class),
 								"%" + searchRequestDto.getValue() + "%"
 						);
 						predicateList.add(like);

@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import project.product.dto.ProductSummaryDto;
 import project.product.models.Pagination;
 import project.product.entity.Product;
 import project.product.ProductUtils;
@@ -14,6 +15,8 @@ import project.product.service.ProductDetailService;
 import project.product.service.ProductService;
 import project.search.dto.RequestDto;
 import project.search.specification.ProductSpecification;
+
+import java.util.List;
 
 @Service
 public class SearchServiceImpl implements SearchService {
@@ -26,6 +29,29 @@ public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private ProductSpecification productSpecification;
 
+	@Override
+	public List<ProductSummaryDto> getByName(String name, Integer limit) {
+		if (limit == null) {
+			limit = Pagination.PAGE_SIZE;
+		}
+
+		Page<Product> productList = productService
+				.getAll(productSpecification.nameLike(name), PageRequest.of(0, limit));
+
+		if (!productList.isEmpty()) {
+
+			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
+					.convertProductsToProductSummaryDtoList(productList.getContent(), modelMapper);
+
+			for (ProductSummaryDto p : productSummaryDtoList) {
+				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+			}
+			return productSummaryDtoList;
+		} else {
+			System.err.println("Error in getByName function : productList is null");
+			return null;
+		}
+	}
 
 	@Override
 	public Pagination getProductsByTypeWithPaging(RequestDto requestDto, Integer page, Integer limit) {
@@ -43,7 +69,7 @@ public class SearchServiceImpl implements SearchService {
 
 		try {
 			Page<Product> productList = productService.getAllBySpecification(spec, pageable);
-
+			
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 

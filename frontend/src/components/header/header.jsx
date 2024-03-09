@@ -28,7 +28,7 @@ export default function Header() {
       });
       setShowResults(true);
     } else {
-      let url = `${process.env.DOMAIN}/products/search?name=${inputValue}&limit=5`;
+      let url = `${process.env.DOMAIN}/search?q=${inputValue}&limit=5`;
 
       try {
         const data = await fetcher(url);

@@ -36,6 +36,8 @@ const ProductsPageRoute = () => {
 
     let cpu = router.query.cpu || null;
 
+    let ram = router.query.ram || null;
+
     let limit = router.query.limit || null;
 
     let firstProductDataUrl = `${process.env.DOMAIN}/search/searchByCondition?page=${page}&limit=5`;
@@ -56,6 +58,14 @@ const ProductsPageRoute = () => {
             "column": "producer",
             "value": producer,
             "operator": "EQUAL"
+        });
+    }
+
+    if (ram !== null) {
+        body.searchRequestDtoList.push({
+            "column": "ram",
+            "value": ram,
+            "operator": "LIKE"
         });
     }
 
@@ -89,17 +99,16 @@ const ProductsPageRoute = () => {
 
     const { data, isLoading, error, revalidate } = useSWR(
         firstProductDataUrl,
-        () => postMethodFetcher(firstProductDataUrl, body),
-        {
+        () => postMethodFetcher(firstProductDataUrl, body),{
+            revalidateIfStale: false,
             revalidateOnFocus: false,
-            revalidateOnReconnect: true,
-            revalidateOnMount: false
+            revalidateOnReconnect: true
         }
     );
 
     useEffect(() => {
         mutate(firstProductDataUrl);
-    }, [page, type, producer, minPrice, maxPrice, cpu, limit]);
+    }, [page, type, producer, minPrice, maxPrice, cpu, limit, ram]);
 
     const staticData = `${process.env.DOMAIN}/products/staticData?type=${type}`;
 
