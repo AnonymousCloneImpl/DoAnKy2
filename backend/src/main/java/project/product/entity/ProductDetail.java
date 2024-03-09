@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisHash;
 import java.io.Serializable;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
@@ -29,4 +30,6 @@ public class ProductDetail {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id")
 	private Product product;
+	@OneToMany
+	private List<Stock> stockList;
 }

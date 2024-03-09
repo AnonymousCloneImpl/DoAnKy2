@@ -40,6 +40,8 @@ const ProductsPageRoute = () => {
 
     let limit = router.query.limit || null;
 
+    let sale = router.query.sale || null;
+
     let firstProductDataUrl = `${process.env.DOMAIN}/search/searchByCondition?page=${page}&limit=5`;
 
     let body = {
@@ -93,6 +95,14 @@ const ProductsPageRoute = () => {
         body.searchRequestDtoList.push({
             "column": "cpuType",
             "value": cpu.replace("-", " "),
+            "operator": "EQUAL"
+        });
+    }
+
+    if (sale !== null) {
+        body.searchRequestDtoList.push({
+            "column": "discount",
+            "value": sale,
             "operator": "EQUAL"
         });
     }

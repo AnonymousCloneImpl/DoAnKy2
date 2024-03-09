@@ -10,6 +10,7 @@ import project.product.dto.SearchDto;
 import project.product.entity.Producer;
 import project.product.entity.Product;
 import project.product.entity.ProductDetail;
+import project.product.entity.Stock;
 import project.search.dto.RequestDto;
 import project.search.dto.SearchRequestDto;
 
@@ -66,6 +67,7 @@ public class ProductSpecification {
 	public Specification<Product> specificationBuilder(RequestDto requestDto) {
 		return (root, query, criteriaBuilder) -> {
 			Join<Product, ProductDetail> productDetailsJoin = root.join("productDetails", JoinType.INNER);
+			Join<ProductDetail, Stock> stockJoin = root.join("stockList", JoinType.INNER);
 			Join<Product, Producer> producerJoin = root.join("producer", JoinType.INNER);
 
 			List<Predicate> predicateList = new ArrayList<>();
@@ -79,7 +81,7 @@ public class ProductSpecification {
 				} else {
 					attributePath = root.get(column);
 				}
-				
+
 				switch (searchRequestDto.getOperator()) {
 					case IN -> {
 						String[] obj = searchRequestDto.getValue().split(",");
