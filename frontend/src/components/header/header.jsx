@@ -168,7 +168,7 @@ export default function Header() {
 
       {/*SUB MENU*/}
       <nav id="sub-menu-nav">
-        <ul id="sub-menu" className="font-semibold">
+        <ul id="sub-menu" className="font-semibold uppercase">
           <li>
             <Link href="/laptop" className="flex justify-center items-center m-1">
               <FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />

@@ -153,31 +153,7 @@ public class ProductServiceImpl implements ProductService {
 		productDto.setStock(stockDto);
 		productDto.setConfigurationList(productRepo.getListConfiguration(namePath));
 
-		switchCase(type, p, productDto);
+		productUtils.switchCase(type, p, productDto);
 		return Optional.of(productDto);
-	}
-
-	void switchCase(String type, Product p, ProductDto productDto) {
-		ProductDetail pDetail = productDetailService.getById(p.getId());
-		ModelMapper modelMapper = new ModelMapper();
-
-		switch (type.toLowerCase()) {
-			case "laptop" -> {
-				LaptopDetailDto lDto = modelMapper.map(pDetail, LaptopDetailDto.class);
-				productDto.setProductDetail(lDto);
-			}
-			case "keyboard" -> {
-				KeyboardDetailDto kDto = modelMapper.map(pDetail, KeyboardDetailDto.class);
-				productDto.setProductDetail(kDto);
-			}
-			case "mouse" -> {
-				MouseDetailDto mDto = modelMapper.map(pDetail, MouseDetailDto.class);
-				productDto.setProductDetail(mDto);
-			}
-			case "headphone" -> {
-				HeadphoneDetailDto hDto = modelMapper.map(pDetail, HeadphoneDetailDto.class);
-				productDto.setProductDetail(hDto);
-			}
-		}
 	}
 }

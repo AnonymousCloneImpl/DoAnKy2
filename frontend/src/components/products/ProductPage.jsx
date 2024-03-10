@@ -13,6 +13,7 @@ const ProductPage = ({ productBE }) => {
   const [mainImg, setMainImg] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const subImgItems = product.imageList;
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     setMainImg(subImgItems[activeIndex]);
@@ -20,6 +21,17 @@ const ProductPage = ({ productBE }) => {
 
   const handleClick = (index) => {
     setActiveIndex(index);
+    if (index === 0) {
+      openPopup();
+    }
+  };
+
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
   };
 
   // set choose product ram----------------------------------------------------------------------------------------------
@@ -120,7 +132,7 @@ const ProductPage = ({ productBE }) => {
       },
       0
     );
-    setTotalPrice(calculatedTotalPrice + discountedPrice);
+    setTotalPrice(calculatedTotalPrice * 90 / 100 + discountedPrice);
   }, [product.purchaseComboItem, checkedItems]);
 
   useEffect(() => {
@@ -360,7 +372,11 @@ const ProductPage = ({ productBE }) => {
 
         <div className="product-box">
           <div className="left-box">
-            <div className="main-img">
+            <div className="main-img" onClick={openPopup}>
+              <img src={mainImg} alt="Main Image" />
+            </div>
+
+            <div className={`img-popup ${isPopupOpen ? 'open' : ''}`} onClick={closePopup}>
               <img src={mainImg} alt="Main Image" />
             </div>
 
@@ -507,7 +523,7 @@ const ProductPage = ({ productBE }) => {
             <div className="right-box-bottom">
 
               {/* Detail table */}
-              <h1 className="detail-name">Thông Tin Chi Tiết</h1>
+              <h1 className="detail-name">The detail information of product</h1>
 
               <table className="detail-table">
                 <tbody>
@@ -577,13 +593,15 @@ const ProductPage = ({ productBE }) => {
                   ))}
                 </ul>
 
-                <div className="recommended-accessories-line"></div>
+                <div className="recommended-accessories-slogan">
+                  Save an additional 10% on all bundled products
+                </div>
 
                 <div className="total-price">
                   <h1>Total Price:</h1>
                   <b><FormatPrice price={totalPrice} /></b>
                   <b className="money-unit">đ</b>
-                  <p><FormatPrice price={totalOriginalPrice} /></p>
+                  <p><FormatPrice price={totalPrice * 100 / 90} /></p>
                 </div>
                 <div className="buy-recommend">
                   <button className="buy-recommend-btn" onClick={openForm}>
@@ -598,7 +616,7 @@ const ProductPage = ({ productBE }) => {
 
         {/* Similar products */}
         <div className="similar-product">
-          <h1 className="similar-product-header">Similar Products</h1>
+          <h1 className="similar-product-header uppercase">Similar Products</h1>
 
           <div className="similar-product-line"></div>
           <ul className="similar-product-list">
@@ -621,12 +639,12 @@ const ProductPage = ({ productBE }) => {
                     <div className="similar-product-price-ratio">
                       <p>{`Down ${item.discountPercentage}%`}</p>
                     </div>
+                    <div className="similar-product-btn-box">
+                      <button className="cart-btn" onClick={() => addToCart(item)}>
+                        <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <div className="similar-product-btn-box">
-                  <button className="cart-btn" onClick={() => addToCart(item)}>
-                    <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
-                  </button>
                 </div>
               </li>
             ))}
@@ -722,7 +740,6 @@ const ProductPage = ({ productBE }) => {
 
                   <label htmlFor="customerPhone">Phone Number</label>
                   <div className="phone-wrapper">
-                    <span className="phone-prefix">+84</span>
                     <input type="tel" className="customerPhone"
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
