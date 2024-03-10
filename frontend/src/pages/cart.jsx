@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import FormatPrice from "@/components/FormatPrice";
 import useSWR from "swr";
-import {bold} from "next/dist/lib/picocolors";
+import { bold } from "next/dist/lib/picocolors";
 
 const postMethodFetcher = async (url, body) => {
   const response = await fetch(url, {
@@ -26,13 +26,13 @@ const postMethodFetcher = async (url, body) => {
 const CartPage = () => {
   const [items, setItems] = useState([]);
   let body = {
-    "cartItemDtoList" : []
+    "cartItemDtoList": []
   }
 
   useEffect(() => {
     const storedItemList = localStorage.getItem('itemList');
     if (storedItemList) {
-      const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item}));
+      const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item }));
       setItems(loadedItems);
     } else {
       console.log('Undefined itemList');
@@ -59,10 +59,10 @@ const CartPage = () => {
     let arr = items.map(item => item.id);
     arr.map((item) => {
       body.cartItemDtoList.push(
-          {
-            "productId" : item,
-            "quantity" : null
-          }
+        {
+          "productId": item,
+          "quantity": null
+        }
       );
     });
     sendPostRequest();
@@ -284,16 +284,16 @@ const CartPage = () => {
     <div style={{ margin: "0 auto" }} className="bg-gray-100 w-11/12">
       <div className="container mx-auto mt-10">
         <div className="bg-white flex justify-between pb-8">
-          <h1 className="font-semibold text-3xl">Shopping Cart</h1>
-          <h2 className="font-semibold text-3xl">{items.length} Items</h2>
+          <h1 className="font-semibold text-3xl uppercase">Shopping Cart</h1>
+          <h2 className="font-semibold text-2xl uppercase">{items.length} Items</h2>
         </div>
         <div className="flex shadow-md">
-          <div className="w-3/4 bg-white px-10 py-10">
-            <div className="flex border-b text-xl">
-              <h3 className="font-semibold text-600 uppercase w-1/2 pb-5">Product Details</h3>
-              <h3 className="font-semibold text-center text-700 uppercase w-1/5">Quantity</h3>
-              <h3 className="font-semibold text-center text-700 uppercase w-1/5">Price</h3>
-              <h3 className="font-semibold text-center text-700 uppercase w-1/5">Total</h3>
+          <div className="w-3/4 bg-white px-10 py-5">
+            <div className="flex border-b text-xl text-700 pb-5 font-semibold uppercase">
+              <h3 className="w-1/">Product Details</h3>
+              <h3 className="w-1/5">Quantity</h3>
+              <h3 className="w-1/5">Price</h3>
+              <h3 className="w-1/5">Total</h3>
             </div>
 
             {items.map((item, index) => (
@@ -309,11 +309,11 @@ const CartPage = () => {
                     <img className="h-20" src={item.image} alt={item.name} />
                   </div>
                   <div className="w-2/3 flex flex-col justify-between ml-4 flex-grow">
-                    <Link href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-sm">
+                    <Link href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
                       {item.name}
                     </Link>
-                    <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-base" onClick={() => removeItem(index)}>
-                      <FontAwesomeIcon icon={faTrashCan} /> Remove
+                    <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm" onClick={() => removeItem(index)}>
+                      <FontAwesomeIcon icon={faTrashCan} /> REMOVE
                     </b>
                   </div>
                 </div>
@@ -332,7 +332,7 @@ const CartPage = () => {
                     />
                     <button className="quantity-increase" onClick={() => increaseQuantity(index)}><FontAwesomeIcon icon={faPlus} /></button>
                   </div>
-                  <div className="text-center text-red-600 font-semibold">
+                  <div className="text-center text-red-600 font-semibold text-sm uppercase">
                     {item.stock} Left in Stock
                   </div>
                 </div>
@@ -348,7 +348,7 @@ const CartPage = () => {
               </div>
             ))}
 
-            <Link href="/" className="flex font-semibold text-indigo-600 text-base mt-10">
+            <Link href="/" className="flex font-semibold text-indigo-600 text-base uppercase mt-10">
 
               <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
                 <path
@@ -359,13 +359,13 @@ const CartPage = () => {
           </div>
 
           <div id="summary" className="w-1/4 px-8 py-10">
-            <h1 className="font-semibold text-3xl border-b pb-8">Order Summary</h1>
+            <h1 className="font-semibold text-2xl border-b pb-8">ORDER SUMARY</h1>
 
-            <h1 className="font-semibold text-3xl my-3">TOTAL COST</h1>
+            <h1 className="font-semibold text-2xl my-3">TOTAL COST</h1>
             <h1 className="font-semibold text-2xl text-red-600 mb-7"><FormatPrice price={totalPrice} /> đ</h1>
 
             <div>
-              <label htmlFor="shipping" className="font-medium inline-block mb-3 text-sm uppercase">Shipping</label>
+              <label htmlFor="shipping" className="font-medium inline-block mb-3 text-sm uppercase">SHIPPING</label>
               <select className="block p-2 text-gray-600 w-full text-sm" onChange={handleShippingChange}>
                 <option>Standard shipping - 50.000 đ</option>
                 <option>Fast shipping - 100.000 đ</option>

@@ -13,6 +13,7 @@ const ProductPage = ({ productBE }) => {
   const [mainImg, setMainImg] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const subImgItems = product.imageList;
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     setMainImg(subImgItems[activeIndex]);
@@ -20,6 +21,17 @@ const ProductPage = ({ productBE }) => {
 
   const handleClick = (index) => {
     setActiveIndex(index);
+    if (index === 0) {
+      openPopup();
+    }
+  };
+
+  const openPopup = () => {
+    setIsPopupOpen(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false);
   };
 
   // set choose product ram----------------------------------------------------------------------------------------------
@@ -360,7 +372,11 @@ const ProductPage = ({ productBE }) => {
 
         <div className="product-box">
           <div className="left-box">
-            <div className="main-img">
+            <div className="main-img" onClick={openPopup}>
+              <img src={mainImg} alt="Main Image" />
+            </div>
+
+            <div className={`img-popup ${isPopupOpen ? 'open' : ''}`} onClick={closePopup}>
               <img src={mainImg} alt="Main Image" />
             </div>
 
