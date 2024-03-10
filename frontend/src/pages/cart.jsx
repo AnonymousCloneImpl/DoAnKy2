@@ -471,7 +471,6 @@ const CartPage = () => {
 
                 <label htmlFor="customerPhone">Phone Number</label>
                 <div className="phone-wrapper">
-                  <span className="phone-prefix">+84</span>
                   <input type="tel" className="customerPhone"
                     value={customerPhone}
                     onChange={(e) => setCustomerPhone(e.target.value)}

@@ -35,26 +35,27 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 			"JOIN product_detail pd ON p.id = pd.product_id " +
 			"JOIN stock s ON pd.id = s.product_detail_id " +
 			"WHERE p.type = :type " +
-			"AND s.updated_time <= DATE_SUB(CURRENT_DATE, INTERVAL 6 MONTH) " +
-			"ORDER BY s.quantity DESC")
+			"ORDER BY s.updated_time DESC, s.quantity DESC")
 	List<Product> findMostPurchaseByType(@Param("type") String type, Pageable pageable);
 
 	@Query(nativeQuery = true,
-			value = "SELECT p.* FROM product p " +
-					"JOIN (" +
-					"    SELECT pd.product_id " +
-					"    FROM stock s " +
-					"    JOIN product_detail pd ON s.product_detail_id = pd.id " +
-					"    JOIN product p2 ON pd.product_id = p2.id " +
-					"    WHERE p2.type = :type " +
-					"    ORDER BY s.sold DESC " +
-					"    LIMIT :limit " +
-					") s ON p.id = s.product_id " +
-					"WHERE p.type = :type")
+		value = "SELECT p.* FROM product p " +
+				"JOIN (SELECT pd.product_id FROM stock s " +
+					"JOIN product_detail pd ON s.product_detail_id = pd.id " +
+					"JOIN product p2 ON pd.product_id = p2.id " +
+					"WHERE p2.type = :type " +
+					"ORDER BY s.sold DESC " +
+					"LIMIT :limit ) " +
+				"s ON p.id = s.product_id " +
+				"WHERE p.type = :type")
 	List<Product> getTopSellerByType(@Param("type") String type, @Param("limit") Integer limit);
 
 	@Query(nativeQuery = true,
-			value = "SELECT ld.ram FROM laptop_detail ld JOIN stock s ON ld.id = s.id JOIN product_detail pd ON s.product_detail_id = pd.id JOIN product p ON pd.product_id = p.id WHERE p.name = :name")
+			value = "SELECT ld.ram FROM laptop_detail ld " +
+				"JOIN stock s ON ld.id = s.id " +
+				"JOIN product_detail pd ON s.product_detail_id = pd.id " +
+				"JOIN product p ON pd.product_id = p.id " +
+				"WHERE p.name = :name")
 	List<String> getListConfiguration(String name);
 
 	@Query("SELECT p FROM Product p WHERE p.type LIKE :type ORDER BY p.name")
