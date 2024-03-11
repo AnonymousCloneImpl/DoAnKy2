@@ -209,7 +209,7 @@ export default function Header() {
                         </li>
                     <li>
                         <div className="">
-                            <Link href="/buildpc" className="flex justify-center items-center m-1">
+                            <Link href="/build-pc" className="flex justify-center items-center m-1">
                                 <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
                                 <p className="text-xl pl-2">Build PC</p>
                             </Link>
