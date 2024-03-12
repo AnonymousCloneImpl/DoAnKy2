@@ -166,27 +166,26 @@ const PartsList = ({onPartSelect}) => {
 
     return (
         <div className="w-full" style={{backgroundColor: "#EDEEF2"}}>
-            <div className="fixed left-0 top-40 bottom-0 flex-none custom-width-5 bg-red-200 h-96">AD HERE</div>
-            <div className="fixed top-40 bottom-0 flex-none custom-width-5 bg-blue-200 right-0 h-96">AD HERE</div>
+            {/*<div className="fixed left-0 top-40 bottom-0 flex-none custom-width-5 bg-red-200 h-96">AD HERE</div>*/}
+            {/*<div className="fixed top-40 bottom-0 flex-none custom-width-5 bg-blue-200 right-0 h-96">AD HERE</div>*/}
             <div className="build-pc-wrapper flex justify-center pt-8 custom-width-11-12 bg-white">
                 <div className="w-full max-w-screen-xl">
                     <div className="build-pc-header text-left mb-4">
                         <h2 className="text-2xl font-bold">
-                            Build PC - Xây dựng cấu hình máy tính mạnh - giá rẻ nhất
+                            Build your own best PC build for the cheapest price
                         </h2>
                         <hr className="my-2"/>
                         <p className="text-sm font-semibold">
-                            Vui lòng chọn linh kiện bạn cần để xây dựng cấu hình máy tính riêng cho bạn
+                            Please select the component you want for your own PC build
                         </p>
                     </div>
                     <div className="support-info bg-yellow-300 text-black text-center p-4 mb-4">
                         <p className="mb-2 font-semibold">
-                            Bạn không rõ phải build cấu hình như thế nào? Hãy để đội ngũ chuyên nghiệp của chúng tôi tư
-                            vấn cho bạn nhé.
+                           Not sure how to get the best bang for your buck? Let our professional advisor team help with your dream PC build.
                         </p>
                         <button
                             className="chat-button bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition duration-300">
-                            Tư vấn build máy
+                            Contact an Advisor now
                         </button>
                     </div>
 
