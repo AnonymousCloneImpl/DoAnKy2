@@ -49,7 +49,6 @@ public class OrderServiceImpl implements OrderService {
 		orderRepo.save(order);
 
 		List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();
-		long startTime = System.currentTimeMillis();
 		List<OrderItem> orderItems = new ArrayList<>();
 		for (OrderItemDto item : orderItemDtoList) {
 			OrderItem orderItem = createOrderItem(order, item);
@@ -59,7 +58,6 @@ public class OrderServiceImpl implements OrderService {
 			}
 		}
 		orderItemRepo.saveAll(orderItems);
-		System.err.println("Order time : " + (System.currentTimeMillis() - startTime));
 		return order;
 	}
 

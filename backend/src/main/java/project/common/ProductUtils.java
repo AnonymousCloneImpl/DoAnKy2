@@ -1,4 +1,4 @@
-package project.product;
+package project.common;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
