@@ -1,24 +1,20 @@
 package project.product.service.impl;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import project.product.models.Pagination;
 import project.product.dto.*;
 import project.product.entity.*;
-import project.product.repository.ProductDetailRepository;
 import project.product.repository.ProductRepository;
-import project.product.repository.StockRepository;
 import project.product.service.ProducerService;
 import project.product.service.ProductDetailService;
 import project.product.service.ProductService;
-import project.product.ProductUtils;
+import project.common.ProductUtils;
 import project.product.service.StockService;
 import project.search.specification.ProductSpecification;
 
@@ -131,7 +127,6 @@ public class ProductServiceImpl implements ProductService {
 		}
 	}
 
-	@Transactional
 	@Override
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String namePath = name.replace("-", " ");

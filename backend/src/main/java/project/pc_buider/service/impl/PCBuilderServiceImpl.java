@@ -27,26 +27,25 @@ public class PCBuilderServiceImpl implements PCBuilderService {
 	@Autowired
 	public ProductDetailRepository productDetailRepo;
 
-	@Autowired
+	@Override
 	public PCBuilderPartResponse getAllListPart() {
-		PCBuilderPartResponse response = new PCBuilderPartResponse();
-		response.setCpuList(getPartListByType(PC_PART_TYPE.CPU));
-		response.setCpuCoolerList(getPartListByType(PC_PART_TYPE.CPU_COOLER));
-		response.setMotherBoardList(getPartListByType(PC_PART_TYPE.MOTHER_BOARD));
-		response.setMemoryList(getPartListByType(PC_PART_TYPE.MEMORY));
-		response.setStorageList(getPartListByType(PC_PART_TYPE.STORAGE));
-		response.setGpuList(getPartListByType(PC_PART_TYPE.GPU));
-		response.setCaseList(getPartListByType(PC_PART_TYPE.CASE));
-		response.setCaseFanList(getPartListByType(PC_PART_TYPE.CASE_FAN));
-		response.setPsuList(getPartListByType(PC_PART_TYPE.PSU));
-		response.setMoniterList(getPartListByType(PC_PART_TYPE.MONITOR));
-		response.setKeyboardList(getPartListByType(PC_PART_TYPE.KEYBOARD));
-		response.setMouseList(getPartListByType(PC_PART_TYPE.MOUSE));
-		return response;
+		return PCBuilderPartResponse.builder()
+			.cpuList(getPartListByType(PC_PART_TYPE.CPU))
+			.cpuCoolerList(getPartListByType(PC_PART_TYPE.CPU_COOLER))
+			.motherBoardList(getPartListByType(PC_PART_TYPE.MOTHER_BOARD))
+			.memoryList(getPartListByType(PC_PART_TYPE.MEMORY))
+			.storageList(getPartListByType(PC_PART_TYPE.STORAGE))
+			.gpuList(getPartListByType(PC_PART_TYPE.GPU))
+			.caseList(getPartListByType(PC_PART_TYPE.CASE))
+			.caseFanList(getPartListByType(PC_PART_TYPE.CASE_FAN))
+			.psuList(getPartListByType(PC_PART_TYPE.PSU))
+			.moniterList(getPartListByType(PC_PART_TYPE.MONITOR))
+			.keyboardList(getPartListByType(PC_PART_TYPE.KEYBOARD))
+			.mouseList(getPartListByType(PC_PART_TYPE.MOUSE))
+			.build();
 	}
 
 	private List<PCBuilderPartDto> getPartListByType(PC_PART_TYPE type) {
-		long startTime = System.currentTimeMillis();
 		List<PCBuilderPartDto> partList = new ArrayList<>();
 		PCBuilderPartDto pcBuilderPartDto = new PCBuilderPartDto();
 
@@ -63,7 +62,6 @@ public class PCBuilderServiceImpl implements PCBuilderService {
 			pcBuilderPartDto.setDetail(productDetailRepo.findPartDetailByProductId(p.getId()));
 			partList.add(pcBuilderPartDto);
 		}
-		System.err.println(System.currentTimeMillis() - startTime);
 		return partList;
 	}
 

@@ -284,7 +284,7 @@ const ProductPage = ({ productBE }) => {
   };
 
   const validPhoneNumber = (phoneNumber) => {
-    const phoneNumberRegex = /^[0-9]+$/;
+    const phoneNumberRegex = /^(\+?84|0)(3[2-9]|5[689]|7[06-9]|8[1-9]|9\d)\d{7}$/;
     return phoneNumberRegex.test(phoneNumber) && phoneNumber.length <= 10 && phoneNumber.length >= 9;
   };
 

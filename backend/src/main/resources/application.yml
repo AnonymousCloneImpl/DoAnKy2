@@ -1,0 +1,47 @@
+server:
+  port: 8080
+
+#Database
+spring:
+  datasource:
+    url: "jdbc:mysql://127.0.0.1:3306/dak2-2024"
+    username: "root"
+    password: "Lyh30121501"
+
+#Hikari Connection Pooling
+    hikari:
+      connection-timeout: 20000
+      minimum-idle: 5
+      maximum-pool-size: 12
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      auto-commit: true
+
+#Hibernate
+  jpa:
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.MySQLDialect"
+        ddl-auto: "update"
+    show-sql: "true"
+
+  #Redis
+  cache:
+    type: "redis"
+  data:
+    redis:
+      host: "localhost"
+      port: 6379
+
+#Mail
+  mail:
+    host: "smtp.gmail.com"
+    port: 587
+    username: "mos98er@gmail.com"
+    password: "tpfqmbtzvgwhfgqo"
+  properties:
+    mail:
+      smtp:
+        auth: "true"
+        starttls:
+          enable: "true"
