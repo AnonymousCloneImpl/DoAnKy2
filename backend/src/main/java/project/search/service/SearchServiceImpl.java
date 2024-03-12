@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import project.product.dto.ProductSummaryDto;
 import project.product.models.Pagination;
 import project.product.entity.Product;
-import project.product.ProductUtils;
+import project.common.ProductUtils;
 import project.product.service.ProductDetailService;
 import project.product.service.ProductService;
 import project.search.dto.RequestDto;
