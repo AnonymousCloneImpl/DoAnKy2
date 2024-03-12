@@ -27,7 +27,7 @@ public class PCBuilderServiceImpl implements PCBuilderService {
 	@Autowired
 	public ProductDetailRepository productDetailRepo;
 
-	@Autowired
+	@Override
 	public PCBuilderPartResponse getAllListPart() {
 		PCBuilderPartResponse response = new PCBuilderPartResponse();
 		response.setCpuList(getPartListByType(PC_PART_TYPE.CPU));
@@ -63,7 +63,6 @@ public class PCBuilderServiceImpl implements PCBuilderService {
 			pcBuilderPartDto.setDetail(productDetailRepo.findPartDetailByProductId(p.getId()));
 			partList.add(pcBuilderPartDto);
 		}
-		System.err.println(System.currentTimeMillis() - startTime);
 		return partList;
 	}
 

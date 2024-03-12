@@ -67,7 +67,6 @@ public class ProductSpecification {
 	public Specification<Product> specificationBuilder(RequestDto requestDto) {
 		return (root, query, criteriaBuilder) -> {
 			Join<Product, ProductDetail> productDetailsJoin = root.join("productDetails", JoinType.INNER);
-			Join<ProductDetail, Stock> stockJoin = root.join("stockList", JoinType.INNER);
 			Join<Product, Producer> producerJoin = root.join("producer", JoinType.INNER);
 
 			List<Predicate> predicateList = new ArrayList<>();

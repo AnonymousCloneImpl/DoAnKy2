@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import project.product.models.Pagination;
 import project.product.dto.*;
 import project.product.entity.*;
-import project.product.repository.ProductDetailRepository;
 import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
 import project.product.service.ProductDetailService;
@@ -145,7 +144,6 @@ public class ProductUtils {
 		}
 		return list;
 	}
-
 
 
 	public void switchCase(String type, Product p, ProductDto productDto) {
