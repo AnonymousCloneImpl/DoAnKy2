@@ -10,7 +10,12 @@ const CartIcon = () => {
         // Hàm để lấy giá trị từ localStorage
         const getValueFromLocalStorage = () => {
             const storedItemList = JSON.parse(localStorage.getItem('itemList'));
-            setValue(storedItemList.length);
+            try {
+                setValue(storedItemList.length);
+            } catch (e){
+                
+            }
+
         };
 
         // Gọi hàm ban đầu để cập nhật giá trị
