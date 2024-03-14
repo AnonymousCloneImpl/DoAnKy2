@@ -5,7 +5,17 @@ button {
 
 .build-pc-wrapper {
   margin: 0 auto;
+  padding: 0.5em ;
 }
+
+.custom-width-11-12 {
+  width: 90%;
+}
+
+.custom-width-5 {
+  width: 5.5%;
+}
+
 
 .fill {
   position: absolute;
