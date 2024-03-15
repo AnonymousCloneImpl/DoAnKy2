@@ -146,7 +146,6 @@ public class ProductUtils {
 	}
 
 
-
 	public void switchCase(String type, Product p, ProductDto productDto) {
 		ProductDetail pDetail = productDetailService.getById(p.getId());
 		ModelMapper modelMapper = new ModelMapper();

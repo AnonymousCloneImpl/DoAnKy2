@@ -45,7 +45,9 @@ export default function Home() {
                             height: '550px',
                             backgroundImage: 'url("https://images.acer.com/is/image/acer/predator-helios-16-ph16-72-perkey-backlit-on-wp-black-01-1?$Series-Component-XL$")',
                             backgroundSize: 'contain',
-                            backgroundRepeat: 'no-repeat'
+                            backgroundRepeat: 'no-repeat',
+                            backgroundColor:'#F3F2F2',
+                            borderRadius:'16px'
                         }}
                         className="w-1/3 bg-gray-100 relative ml-1 mr-1">
                         <div className="absolute bottom-12 left-10">
@@ -71,7 +73,9 @@ export default function Home() {
                             height: '550px',
                             backgroundImage: 'url("https://images.acer.com/is/image/acer/predator-helios-16-ph16-72-perkey-backlit-on-wp-black-01-1?$Series-Component-XL$")',
                             backgroundSize: 'contain',
-                            backgroundRepeat: 'no-repeat'
+                            backgroundRepeat: 'no-repeat',
+                            backgroundColor:'#F3F2F2',
+                            borderRadius:'16px'
                         }}
                         className="w-1/3 bg-gray-100 relative ml-1 mr-1">
                         <div className="absolute bottom-12 left-10">
@@ -97,7 +101,9 @@ export default function Home() {
                             height: '550px',
                             backgroundImage: 'url("https://images.acer.com/is/image/acer/predator-helios-16-ph16-72-perkey-backlit-on-wp-black-01-1?$Series-Component-XL$")',
                             backgroundSize: 'contain',
-                            backgroundRepeat: 'no-repeat'
+                            backgroundRepeat: 'no-repeat',
+                            backgroundColor:'#F3F2F2',
+                            borderRadius:'16px'
                         }}
                         className="w-1/3 bg-gray-100 relative ml-1 mr-1">
                         <div className="absolute bottom-12 left-10">
@@ -201,7 +207,7 @@ export default function Home() {
                 <ProductListComponent productData={mouseData.productSummaryDtoList} renderFromHomePage={true}/>
             </div>
 
-            <div className="category-hompage w-11/12 flex justify-center flex-wrap h-80">
+            <div className="category-hompage w-full flex justify-center flex-wrap h-80 pb-4" style={{background:'#FBC303'}}>
                 <div className="w-full h-2/5 flex flex-wrap">
                     <div className="w-full h-full flex items-center justify-center">
                         <p className="text-center w-full text-5xl">
@@ -209,7 +215,7 @@ export default function Home() {
                         </p>
                     </div>
                 </div>
-                <div className="w-full h-3/5 flex justify-around">
+                <div className="w-10/12 h-3/5 flex justify-around">
                     <Link
                         className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
                         href="/laptop">
