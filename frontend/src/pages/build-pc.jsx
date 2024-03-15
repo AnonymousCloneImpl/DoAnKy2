@@ -44,7 +44,6 @@ const PartsList = ({onPartSelect}) => {
         mouse: ''
     });
 
-    const [currentComponent, setCurrentComponent] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const cpuPrice = selectedProducts.cpu === 'Intel Core i9-10900K' ? 399 :
         selectedProducts.cpu === 'AMD Ryzen 9 5900X' ? 499 : 0;

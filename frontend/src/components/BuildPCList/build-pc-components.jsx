@@ -1,15 +1,25 @@
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
+import CustomErrorPage from "@/pages/error";
+import ComponentList from "@/components/BuildPCList/ComponentList";
 
 function BuildPcComponents(data){
-
+    const [currentComponent, setCurrentComponent] = useState('');
+    const [ProductList,setProductList] = useState([]);
     const [keyboard,setKeyboard] = useState([]);
+    const [cpu,setCpu] = useState([]);
+    const [mouse,setMouse] = useState([]);
 
-    if(data !== undefined){
-        setKeyboard(data.keyboardList);
-    }
+    useEffect(() => {
+        if (data === undefined) {
+            return <CustomErrorPage />;
+        }
+        setKeyboard(data.data.keyboardList);
+        setCpu(data.data.cpuList);
+        setMouse(data.data.mouselist);
+    }, []);
 
     const [selectedProducts, setSelectedProducts] = useState({
         cpu: '',
@@ -75,6 +85,20 @@ function BuildPcComponents(data){
     const openForm = (component) => {
         setCurrentComponent(component);
         setFormVisible(true);
+        switch (component) {
+            case 'kb':
+                setProductList(keyboard);
+                break;
+            case 'cpu':
+                setProductList(cpu);
+                break;
+            case 'mouse':
+                setProductList(mouse);
+                break;
+            default:
+                setProductList([]);
+                break;
+        }
     };
 
     const closeForm = () => {
@@ -83,6 +107,7 @@ function BuildPcComponents(data){
     };
 
     const hasSelectedProducts = Object.values(selectedProducts).some(product => product !== '');
+
     const totalPrice =
         (cpuPrice * quantities.cpu) +
         (cpuCoolerPrice * quantities.cpuCooler) +
@@ -97,7 +122,6 @@ function BuildPcComponents(data){
         (kbPrice * quantities.kb) +
         (mousePrice * quantities.mouse);
 
-
     const handleSelectProduct = (partType, productName) => {
         setSelectedProducts({...selectedProducts, [partType]: productName});
         setQuantities({...quantities, [partType]: 1});
@@ -110,7 +134,44 @@ function BuildPcComponents(data){
             setSelectedProducts({...selectedProducts, [partType]: ''});
             setQuantities({...quantities, [partType]: ''});
         }
-        ;
+    };
+
+    const handleRemoveAllProducts = () => {
+        const confirmed = window.confirm('Are you sure you want to start a new build?');
+        if (confirmed) {
+            setSelectedProducts({
+                cpu: '',
+                cpuCooler: '',
+                mobo: '',
+                memory: '',
+                storage: '',
+                gpu: '',
+                case: '',
+                caseFan: '',
+                psu: '',
+                monitor: '',
+                kb: '',
+                mouse: ''
+            });
+            setQuantities({
+                cpu: '',
+                cpuCooler: '',
+                mobo: '',
+                memory: '',
+                storage: '',
+                gpu: '',
+                case: '',
+                caseFan: '',
+                psu: '',
+                monitor: '',
+                kb: '',
+                mouse: ''
+            });
+        }
+    };
+
+    const handleQuantityChange = (partType, value) => {
+        setQuantities({...quantities, [partType]: value});
     };
 
 
@@ -826,67 +887,7 @@ function BuildPcComponents(data){
                                 />
                             </div>
                             <div className="grid grid-cols-1 gap-4">
-                                {availableProducts[currentComponent]
-                                    .filter(productName => productName.toLowerCase().includes(searchQuery.toLowerCase()))
-                                    .map(productName => {
-                                        let price = 0;
-                                        // Get the price based on the current product name
-                                        if (currentComponent === 'cpu') {
-                                            price = productName === 'Intel Core i9-10900K' ? 399 :
-                                                productName === 'AMD Ryzen 9 5900X' ? 499 : 0;
-                                        } else if (currentComponent === 'monitor') {
-                                            price = productName === 'Dell S2721QS' ? 299 : 0;
-                                        } else if (currentComponent === 'cpuCooler') {
-                                            price = productName === 'Cooler A' ? 100 :
-                                                productName === 'Cooler B' ? 150 : 0;
-                                        } else if (currentComponent === 'mobo') {
-                                            price = productName === 'Motherboard X' ? 200 :
-                                                productName === 'Motherboard Y' ? 250 : 0;
-                                        } else if (currentComponent === 'memory') {
-                                            price = productName === 'Memory A' ? 50 :
-                                                productName === 'Memory B' ? 75 : 0;
-                                        } else if (currentComponent === 'storage') {
-                                            price = productName === 'SSD X' ? 80 :
-                                                productName === 'SSD Y' ? 100 : 0;
-                                        } else if (currentComponent === 'gpu') {
-                                            price = productName === 'GPU A' ? 300 :
-                                                productName === 'GPU B' ? 400 : 0;
-                                        } else if (currentComponent === 'case') {
-                                            price = productName === 'Case A' ? 70 :
-                                                productName === 'Case B' ? 90 : 0;
-                                        } else if (currentComponent === 'caseFan') {
-                                            price = productName === 'Fan A' ? 20 :
-                                                productName === 'Fan B' ? 30 : 0;
-                                        } else if (currentComponent === 'psu') {
-                                            price = productName === 'PSU A' ? 100 :
-                                                productName === 'PSU B' ? 120 : 0;
-                                        } else if (currentComponent === 'kb') {
-                                            price = productName === 'Keyboard A' ? 50 :
-                                                productName === 'Keyboard B' ? 60 : 0;
-                                        } else if (currentComponent === 'mouse') {
-                                            price = productName === 'Mouse A' ? 20 :
-                                                productName === 'Mouse B' ? 30 : 0;
-                                        }
-                                        return (
-                                            <div key={productName}
-                                                 className="flex p-4 bg-gray-100 rounded-md mb-4 items-center">
-                                                <div className="flex-none w-16 h-16 bg-gray-200 mr-4">
-                                                    <img src="https://phucanhcdn.com/media/product/42173_s2721h_ha1.jpg"
-                                                         alt=""></img>
-                                                </div>
-                                                {/* Placeholder for image */}
-                                                <div className="flex-grow">
-                                                    <h3 className="text-lg font-semibold">{productName}</h3>
-                                                    <p className="text-gray-600">${price}</p>
-                                                    <p>lorem ipsum</p>
-                                                </div>
-                                                <button
-                                                    onClick={() => handleSelectProduct(currentComponent, productName)}
-                                                    className="ml-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add
-                                                </button>
-                                            </div>
-                                        );
-                                    })}
+                                <ComponentList data={ProductList} currentComponent={currentComponent} handleSelectProduct={handleSelectProduct} />
                             </div>
                             <div className="mt-4 flex justify-end">
                                 <button onClick={closeForm}
