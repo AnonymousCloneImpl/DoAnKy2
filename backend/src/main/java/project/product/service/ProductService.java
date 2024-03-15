@@ -29,5 +29,5 @@ public interface ProductService {
 
 	Optional<Object> getByProductTypeAndByName(String type, String name);
 
-
+	List<Product> findAllByNameAndSortBySold(String name, Pageable pageable);
 }

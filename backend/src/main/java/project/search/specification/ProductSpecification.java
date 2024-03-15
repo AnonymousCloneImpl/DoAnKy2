@@ -169,8 +169,12 @@ public class ProductSpecification {
 		};
 	}
 
-	public Specification<Product> nameLike(String name) {
-		return (root, query, criteriaBuilder)
-				-> criteriaBuilder.like(root.get("name"), "%" + name + "%");
+	public Specification<Product> joinProductDetailAndStockOrderBySold(String name) {
+		return (root, query, criteriaBuilder) -> {
+			Join<Product, ProductDetail> productDetailJoin = root.join("productDetails");
+			Join<ProductDetail, Stock> stockJoin = productDetailJoin.join("stockList");
+			Path<String> productNamePath = root.get("name");
+			return criteriaBuilder.like(productNamePath, "%a%");
+		};
 	}
 }

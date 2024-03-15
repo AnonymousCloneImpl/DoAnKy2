@@ -49,6 +49,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public List<Product> findAllByNameAndSortBySold(String name, Pageable pageable) {
+		return productRepo.findAllByNameSortBySold(name, pageable);
+	}
+
+	@Override
 	public Page<Product> getAllBySpecification(Specification<Product> spec, Pageable pageable) {
 		return productRepo.findAll(spec, pageable);
 	}
