@@ -4,6 +4,7 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {useEffect, useRef, useState} from "react";
 import CustomErrorPage from "@/pages/error";
 import ComponentList from "@/components/BuildPCList/ComponentList";
+import FormatPrice from "@/components/FormatPrice";
 
 function BuildPcComponents(data) {
     const [currentComponent, setCurrentComponent] = useState('');
@@ -92,6 +93,32 @@ function BuildPcComponents(data) {
     const [monitorStock, setMonitorStock] = useState(0);
     const [kbStock, setKbStock] = useState(0);
     const [mouseStock, setMouseStock] = useState(0);
+    //define link
+    const [cpuLink, setCpuLink] = useState('');
+    const [cpuCoolerLink, setCpuCoolerLink] = useState('');
+    const [moboLink, setMoboLink] = useState('');
+    const [memoryLink, setMemoryLink] = useState('');
+    const [storageLink, setStorageLink] = useState('');
+    const [gpuLink, setGpuLink] = useState('');
+    const [pcCaseLink, setPcCaseLink] = useState('');
+    const [caseFanLink, setCaseFanLink] = useState('');
+    const [psuLink, setPsuLink] = useState('');
+    const [monitorLink, setMonitorLink] = useState('');
+    const [kbLink, setKbLink] = useState('');
+    const [mouseLink, setMouseLink] = useState('');
+    //define discount
+    const [cpuDiscount, setCpuDiscount] = useState(0);
+    const [cpuCoolerDiscount, setCpuCoolerDiscount] = useState(0);
+    const [moboDiscount, setMoboDiscount] = useState(0);
+    const [memoryDiscount, setMemoryDiscount] = useState(0);
+    const [storageDiscount, setStorageDiscount] = useState(0);
+    const [gpuDiscount, setGpuDiscount] = useState(0);
+    const [pcCaseDiscount, setPcCaseDiscount] = useState(0);
+    const [caseFanDiscount, setCaseFanDiscount] = useState(0);
+    const [psuDiscount, setPsuDiscount] = useState(0);
+    const [monitorDiscount, setMonitorDiscount] = useState(0);
+    const [kbDiscount, setKbDiscount] = useState(0);
+    const [mouseDiscount, setMouseDiscount] = useState(0);
 
 
     useEffect(() => {
@@ -178,73 +205,98 @@ function BuildPcComponents(data) {
         (monitorPrice * quantities.monitor) +
         (kbPrice * quantities.keyboard) +
         (mousePrice * quantities.mouse);
-
-    const handleSelectProduct = (partType, productName, productPrice, productImage, productStock) => {
-        setSelectedProducts({...selectedProducts, [partType]: productName});
+    console.log(kbImage)
+    const handleSelectProduct = (partType, product, productLink) => {
+        setSelectedProducts({...selectedProducts, [partType]: product.name});
         setQuantities({...quantities, [partType]: 1});
         setFormVisible(false); // Close the modal after selecting a product
-
+        console.log(product)
+        console.log(productLink)
         // Update the price state variable based on the selected product
         switch (partType) {
             case 'cpu':
-                setCpuPrice(productPrice);
-                setCpuImage(productImage);
-                setCpuStock(productStock);
+                setCpuLink(productLink);
+                setCpuPrice(product.price);
+                setCpuImage(product.image);
+                setCpuStock(product.stock);
+                setCpuDiscount(product.discountPercentage);
                 break;
             case 'cpuCooler':
-                setCpuCoolerPrice(productPrice);
-                setCpuCoolerImage(productImage);
-                setCpuCoolerStock(productStock);
+                setCpuCoolerLink(productLink);
+                setCpuCoolerPrice(product.price);
+                setCpuCoolerImage(product.image);
+                setCpuCoolerStock(product.stock);
+                setCpuCoolerDiscount(product.discountPercentage);
                 break;
             case 'mobo':
-                setMoboPrice(productPrice);
-                setMoboImage(productImage);
-                setMoboStock(productStock);
+                setMoboLink(productLink);
+                setMoboPrice(product.price);
+                setMoboImage(product.image);
+                setMoboStock(product.stock);
+                setMoboDiscount(product.discountPercentage);
                 break;
             case 'memory':
-                setMemoryPrice(productPrice);
-                setMemoryImage(productImage);
-                setMemoryStock(productStock);
+                setMemoryLink(productLink);
+                setMemoryPrice(product.price);
+                setMemoryImage(product.image);
+                setMemoryStock(product.stock);
+                setMemoryDiscount(product.discountPercentage);
                 break;
             case 'storage':
-                setStoragePrice(productPrice);
-                setStorageImage(productImage);
-                setStorageStock(productStock);
+                setStorageLink(productLink);
+                setStoragePrice(product.price);
+                setStorageImage(product.image);
+                setStorageStock(product.stock);
+                setStorageDiscount(product.discountPercentage);
                 break;
             case 'gpu':
-                setGpuPrice(productPrice);
-                setGpuImage(productImage);
-                setGpuStock(productStock);
+                setGpuLink(productLink);
+                setGpuPrice(product.price);
+                setGpuImage(product.image);
+                setGpuStock(product.stock);
+                setGpuDiscount(product.discountPercentage);
                 break;
             case 'pcCase':
-                setPcCasePrice(productPrice);
-                setPcCaseImage(productImage);
-                setPcCaseStock(productStock);
+                setPcCaseLink(productLink);
+                setPcCasePrice(product.price);
+                setPcCaseImage(product.image);
+                setPcCaseStock(product.stock);
+                setPcCaseDiscount(product.discountPercentage);
                 break;
             case 'caseFan':
-                setCaseFanPrice(productPrice);
-                setCaseFanImage(productImage);
-                setCaseFanStock(productStock);
+                setCaseFanLink(productLink);
+                setCaseFanPrice(product.price);
+                setCaseFanImage(product.image);
+                setCaseFanStock(product.stock);
+                setCaseFanDiscount(product.discountPercentage);
                 break;
             case 'psu':
-                setPsuPrice(productPrice);
-                setPsuImage(productImage);
-                setPsuStock(productStock);
+                setPsuLink(productLink);
+                setPsuPrice(product.price);
+                setPsuImage(product.image);
+                setPsuStock(product.stock);
+                setPsuDiscount(product.discountPercentage);
                 break;
             case 'monitor':
-                setMonitorPrice(productPrice);
-                setMonitorImage(productImage);
-                setMonitorStock(productStock);
+                setMonitorLink(productLink);
+                setMonitorPrice(product.price);
+                setMonitorImage(product.image);
+                setMonitorStock(product.stock);
+                setMonitorDiscount(product.discountPercentage);
                 break;
             case 'keyboard':
-                setKbPrice(productPrice);
-                setKbImage(productImage);
-                setKbStock(productStock);
+                setKbLink(productLink);
+                setKbPrice(product.price);
+                setKbImage(product.image);
+                setKbStock(product.stock.quantity);
+                setKbDiscount(product.discountPercentage);
                 break;
             case 'mouse':
-                setMousePrice(productPrice);
-                setMouseImage(productImage);
-                setMouseStock(productStock);
+                setMouseLink(productLink);
+                setMousePrice(product.price);
+                setMouseImage(product.image);
+                setMouseStock(product.stock);
+                setMouseDiscount(product.discountPercentage);
                 break;
             default:
                 break;
@@ -408,7 +460,8 @@ function BuildPcComponents(data) {
                 <div className="w-full max-w-screen-xl">
                     <div className="banner w-full h-96 bg-cover bg-center mb-2"
                          style={{backgroundImage: "url('https://smcinternational.in/extra/images/SMC%20Banner.jpg')"}}>
-                        <div className="h-16 w-64 bg-black" style={{top:"59%", left:"24%", position:"absolute"}}></div>
+                        <div className="h-16 w-64 bg-black"
+                             style={{top: "59%", left: "24%", position: "absolute"}}></div>
                     </div>
                     <div className="build-pc-header text-left mb-4">
                         <h2 className="text-2xl font-bold">
@@ -464,7 +517,7 @@ function BuildPcComponents(data) {
                             <th className="px-6 py-3">Product</th>
                             <th className="px-6 py-3">Price</th>
                             <th className="px-6 py-3">Quantity</th>
-                            <th className="px-6 py-3">Total</th>
+                            <th className="px-6 py-3 w-2/12">Total</th>
                             <th className="px-6 py-3"></th>
                         </tr>
                         </thead>
@@ -480,7 +533,7 @@ function BuildPcComponents(data) {
                                                  alt="no image"/>
                                             <p>
                                                 <span className="ml-1 font-bold">
-                                                    <Link href="/public">
+                                                    <Link href={cpuLink}>
                                                         {selectedProducts.cpu}
                                                     </Link>
                                                 </span>
@@ -513,6 +566,8 @@ function BuildPcComponents(data) {
                                        onChange={(e) => {
                                            if (e.target.value < 1) {
                                                handleQuantityChange('cpu', 1);
+                                           } else if (e.target.value >= cpuStock) {
+                                               e.target.value = cpuStock;
                                            } else {
                                                handleQuantityChange('cpu', e.target.value);
                                            }
@@ -520,11 +575,7 @@ function BuildPcComponents(data) {
                                        className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{
-                                    width: '5%',
-                                    color: "red",
-                                    fontWeight: "bold"
-                                }}>${cpuPrice * quantities.cpu}</td>
+                            >${cpuPrice * quantities.cpu}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40" style={{width: '15%'}}>
                                 {selectedProducts.cpu && (
                                     <div className="flex justify-center w-full">
@@ -1158,7 +1209,8 @@ function BuildPcComponents(data) {
                                 ) : (
                                     <button onClick={() => openForm('monitor')}
                                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                        <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus}/> Select Monitor
+                                        <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus}/> Select
+                                        Monitor
                                     </button>
                                 )}
                             </td>
@@ -1212,7 +1264,7 @@ function BuildPcComponents(data) {
                                                  alt="no image"/>
                                             <p>
                                                 <span className="ml-1 font-bold">
-                                                    <Link href="/public">
+                                                    <Link target="_blank" href={kbLink}>
                                                         {selectedProducts.keyboard}
                                                     </Link>
                                                 </span>
@@ -1229,6 +1281,8 @@ function BuildPcComponents(data) {
                                                         </span>
                                                     ) : null}
                                                 </span>
+                                                <br/>
+                                                <span className="ml-1">hi</span>
                                             </p>
                                         </div>
                                     </div>
@@ -1240,24 +1294,28 @@ function BuildPcComponents(data) {
                                     </button>
                                 )}
                             </td>
-                            <td className="border text-center px-6 py-3">${kbPrice}</td>
+                            <td className="border text-center px-6 py-3">
+                                {/*${kbPrice}*/}
+                                <FormatPrice price={kbPrice}/>
+                                <FormatPrice price={kbPrice - kbPrice * kbDiscount/100} type={"discount"}/>
+                            </td>
                             <td className="border text-center px-6 py-3">
                                 <input type="number" min="1" value={quantities.keyboard}
                                        onChange={(e) => {
                                            if (e.target.value < 1) {
                                                handleQuantityChange('keyboard', 1);
-                                           } else {
+                                           } else if (e.target.value > kbStock){
+                                               handleQuantityChange('keyboard', kbStock);
+                                           }
+                                           else {
                                                handleQuantityChange('keyboard', e.target.value);
                                            }
                                        }}
                                        className="w-16 px-2 py-1 border rounded"/>
                             </td>
-                            <td className="border-b border-t text-center py-3"
-                                style={{
-                                    width: '5%',
-                                    color: "red",
-                                    fontWeight: "bold"
-                                }}>${kbPrice * quantities.keyboard}</td>
+                            <td className="border-b border-t text-center py-3 w-full">
+                                <FormatPrice price={(kbPrice - kbPrice * kbDiscount/100) * quantities.keyboard} type={"discount"}/>
+                                </td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
                                 {selectedProducts.keyboard && (
                                     <div className="flex justify-center w-full">
