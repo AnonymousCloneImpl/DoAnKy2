@@ -323,6 +323,7 @@ const CartPage = () => {
                     <input
                       type="number"
                       min="1"
+                      defaultValue={1}
                       max={item.stock}
                       value={item.quantity}
                       onChange={(e) => limitQuantity(index, parseInt(e.target.value, 10))}
