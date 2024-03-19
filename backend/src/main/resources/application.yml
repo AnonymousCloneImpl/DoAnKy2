@@ -4,9 +4,9 @@ server:
 #Database
 spring:
   datasource:
-    url: "jdbc:mysql://127.0.0.1:1711/dak2"
+    url: "jdbc:mysql://127.0.0.1:3306/dak2-2024"
     username: "root"
-    password: "Shimakaze1920"
+    password: "admin@123"
 
 #Hikari Connection Pooling
     hikari:
