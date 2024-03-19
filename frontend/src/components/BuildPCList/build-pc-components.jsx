@@ -120,31 +120,31 @@ function BuildPcComponents(data) {
                 setProductList(cpu);
                 break;
             case 'cpuCooler':
-                setCpuCooler(cpuCooler);
+                setProductList(cpuCooler);
                 break;
             case 'motherboard':
-                setMobo(mobo);
+                setProductList(mobo);
                 break;
             case 'memory':
-                setMemory(memory);
+                setProductList(memory);
                 break;
             case 'storage':
-                setStorage(storage);
+                setProductList(storage);
                 break;
             case 'gpu':
-                setGpu(gpu);
+                setProductList(gpu);
                 break;
             case 'pcCase':
-                setPcCase(pcCase);
+                setProductList(pcCase);
                 break;
             case 'caseFan':
-                setCaseFan(caseFan);
+                setProductList(caseFan);
                 break;
             case 'psu':
-                setPsu(psu);
+                setProductList(psu);
                 break;
             case 'monitor':
-                setMonitor(monitor);
+                setProductList(monitor);
                 break;
             case 'keyboard':
                 setProductList(keyboard);
@@ -161,14 +161,14 @@ function BuildPcComponents(data) {
     const closeForm = () => {
         setCurrentComponent('');
         setFormVisible(false);
-    };
 
+    };
     const hasSelectedProducts = Object.values(selectedProducts).some(product => product !== '');
 
     const totalPrice =
         (cpuPrice * quantities.cpu) +
         (cpuCoolerPrice * quantities.cpuCooler) +
-        (moboPrice * quantities.mobo) +
+        (moboPrice * quantities.motherboard) +
         (memoryPrice * quantities.memory) +
         (storagePrice * quantities.storage) +
         (gpuPrice * quantities.gpu) +
@@ -408,6 +408,7 @@ function BuildPcComponents(data) {
                 <div className="w-full max-w-screen-xl">
                     <div className="banner w-full h-96 bg-cover bg-center mb-2"
                          style={{backgroundImage: "url('https://smcinternational.in/extra/images/SMC%20Banner.jpg')"}}>
+                        <div className="h-16 w-64 bg-black" style={{top:"59%", left:"24%", position:"absolute"}}></div>
                     </div>
                     <div className="build-pc-header text-left mb-4">
                         <h2 className="text-2xl font-bold">
@@ -415,7 +416,7 @@ function BuildPcComponents(data) {
                         </h2>
                         <hr className="my-2"/>
                         <p className="text-sm font-semibold">
-                            Please select the component you want for your own PC build
+                            Please select the component you want for your dream PC
                         </p>
                     </div>
                     <div className="support-info bg-yellow-300 text-black text-center p-4 mb-4">
@@ -670,7 +671,7 @@ function BuildPcComponents(data) {
                                     width: '5%',
                                     color: "red",
                                     fontWeight: "bold"
-                                }}>${moboPrice * quantities.mobo}</td>
+                                }}>${moboPrice * quantities.motherboard}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
                                 {selectedProducts.motherboard && (
                                     <div className="flex justify-center w-full">
@@ -1157,7 +1158,7 @@ function BuildPcComponents(data) {
                                 ) : (
                                     <button onClick={() => openForm('monitor')}
                                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                        <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus}/> Select CPU
+                                        <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus}/> Select Monitor
                                     </button>
                                 )}
                             </td>
@@ -1381,7 +1382,7 @@ function BuildPcComponents(data) {
                         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"
                              onClick={closeForm}></div>
                         <div className="bg-white p-8 rounded shadow-xl max-w-3xl mx-auto z-50">
-                            <h2 className="text-lg font-semibold mb-4">Select {currentComponent.toUpperCase()}</h2>
+                            <h2 className="text-lg font-semibold mb-4">Select a component</h2>
                             <div className="mb-4">
                                 <input
                                     type="text"
