@@ -661,6 +661,7 @@ const ProductPage = ({ productBE }) => {
                 <span className="close-form-btn" onClick={closeForm}>
                   <FontAwesomeIcon icon={faCircleXmark} />
                 </span>
+                <img className='order-logo' src='/favico.png'></img>
                 <h1>Order Form</h1>
 
                 <form className="order-form" onSubmit={handleFormSubmit}>

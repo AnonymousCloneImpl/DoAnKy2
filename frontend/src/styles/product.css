@@ -642,7 +642,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background: #fff;
-  padding: 5px 15px;
+  padding: 10px 40px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
@@ -684,34 +684,39 @@
 .order-form label {
   float: left;
   display: block;
-  margin: 5px 0;
+  margin: 10px 0 5px 0;
   color: #333;
   font-weight: 700;
 }
 
 .order-form input {
   width: 100%;
-  padding: 5px 15px;
+  height: 40px;
+  padding: 5px 20px;
   margin-bottom: 10px;
   box-sizing: border-box;
-  border: 1px solid grey;
-  border-radius: 3px;
+  border: 1px solid rgb(217, 217, 217);
+  background: rgb(244, 244, 244);
+  border-radius: 20px;
   outline: none;
+  letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .order-form button {
-  background-color: #2F80ED;
+  background: linear-gradient(70.06deg, #00bfff -5%, #00ffd5 106%);
   color: #fff;
-  font-size: 16px;
+  font-size: 18px;
+  font-weight: 500;
   padding: 10px 15px;
   border: none;
-  border-radius: 3px;
+  border-radius: 25px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 .order-form button:hover {
-  background-color: #0000FF;
+  background: linear-gradient(70.06deg, #00e1ff -5%, #00ffd0 106%);
 }
 
 .phone-wrapper {
@@ -719,13 +724,9 @@
   display: flex;
 }
 
-.phone-prefix {
-  background-color: #f4f4f4;
-  height: 35px;
-  border: 1px solid grey;
-  border-radius: 3px;
-  padding: 4px 5px;
-  font-weight: 500;
+.order-logo {
+  width: 60px;
+  margin: 10px auto 0 auto;
 }
 
 .address-selects {
@@ -739,8 +740,10 @@
 .address-selects select {
   width: 32%;
   text-align: center;
-  border: 1px solid grey;
-  border-radius: 5px;
+  height: 40px;
+  border: 1px solid rgb(217, 217, 217);
+  background: rgb(244, 244, 244);
+  border-radius: 20px;
 }
 
 .scroll-to-top-button {
@@ -780,6 +783,38 @@
   }
 }
 
+@keyframes shake {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.3);
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+  }
+
+  10% {
+    -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+  }
+
+  20% {
+    -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+  }
+
+  30% {
+    -webkit-transform: rotate(-25deg) scale(1) skew(1deg);
+  }
+
+  40% {
+    -webkit-transform: rotate(25deg) scale(1) skew(1deg);
+  }
+
+  50% {
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+  }
+
+  100% {
+    box-shadow: 0 0 20px 10px rgba(255, 0, 0, 0.5);
+    -webkit-transform: rotate(0) scale(1) skew(1deg);
+  }
+}
+
 .call-button {
   position: fixed;
   bottom: 30px;
@@ -792,6 +827,8 @@
   height: 50px;
   border-radius: 50%;
   cursor: pointer;
+  animation: shake 1s infinite ease-in-out;
+  transition: box-shadow 1s ease-in-out;
 }
 
 .call-button:hover {
@@ -968,4 +1005,77 @@
 .disabled-btn:hover {
   background: #2F80ED;
   pointer-events: none;
+}
+
+@keyframes chats {
+  0% {
+    box-shadow: 0 0 0 0 red, 0 0 0 0 orange, 0 0 0 0 yellow, 0 0 0 0 green, 0 0 0 0 blue, 0 0 0 0 indigo, 0 0 0 0 violet;
+  }
+
+  100% {
+    box-shadow: 0 0 10px 10px red, 0 0 20px 20px orange, 0 0 30px 30px yellow, 0 0 40px 40px green, 0 0 50px 50px blue, 0 0 60px 60px indigo, 0 0 70px 70px violet;
+  }
+}
+
+.chat-popup {
+  border-radius: 10px;
+  position: fixed;
+  bottom: -23%;
+  right: -7.7%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  background: rgb(244, 244, 244);
+  z-index: 2;
+  animation: chats 0.1s infinite;
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+.chat-form {
+  width: 350px;
+  height: 350px;
+}
+
+.chat-content {
+  background: white;
+}
+
+.chat-form input {
+  width: 95%;
+  height: 40px;
+  padding: 5px 10px;
+  margin: 300px 9px 0 9px;
+  box-sizing: border-box;
+  border: 1px solid rgb(217, 217, 217);
+  background: rgb(244, 244, 244);
+  border-radius: 7px;
+  outline: none;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.chat-logo {
+  width: 40px;
+  height: 40px;
+  margin: 5px 10px 7px 10px;
+}
+
+.chat-header h1 {
+  font-size: 25px;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.chat-header {
+  display: flex;
+  background: rgb(244, 244, 244);
+}
+
+.close-chat-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 25px;
+  cursor: pointer;
 }
