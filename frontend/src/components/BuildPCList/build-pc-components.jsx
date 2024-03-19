@@ -5,92 +5,149 @@ import {useEffect, useRef, useState} from "react";
 import CustomErrorPage from "@/pages/error";
 import ComponentList from "@/components/BuildPCList/ComponentList";
 
-function BuildPcComponents(data){
+function BuildPcComponents(data) {
     const [currentComponent, setCurrentComponent] = useState('');
-    const [ProductList,setProductList] = useState([]);
-    const [keyboard,setKeyboard] = useState([]);
-    const [cpu,setCpu] = useState([]);
-    const [mouse,setMouse] = useState([]);
-
-    useEffect(() => {
-        if (data === undefined) {
-            return <CustomErrorPage />;
-        }
-        setKeyboard(data.data.keyboardList);
-        setCpu(data.data.cpuList);
-        setMouse(data.data.mouselist);
-    }, []);
+    const [ProductList, setProductList] = useState([]);
+    const [cpu, setCpu] = useState([]);
+    const [cpuCooler, setCpuCooler] = useState([]);
+    const [mobo, setMobo] = useState([]);
+    const [memory, setMemory] = useState([]);
+    const [storage, setStorage] = useState([]);
+    const [gpu, setGpu] = useState([]);
+    const [pcCase, setPcCase] = useState([]);
+    const [caseFan, setCaseFan] = useState([]);
+    const [psu, setPsu] = useState([]);
+    const [monitor, setMonitor] = useState([]);
+    const [keyboard, setKeyboard] = useState([]);
+    const [mouse, setMouse] = useState([]);
+    const [searchQuery, setSearchQuery] = useState([]);
+    const [isFormVisible, setFormVisible] = useState(false);
+    const formRef = useRef(null);
 
     const [selectedProducts, setSelectedProducts] = useState({
         cpu: '',
         cpuCooler: '',
-        mobo: '',
+        motherboard: '',
         memory: '',
         storage: '',
         gpu: '',
-        case: '',
+        pcCase: '',
         caseFan: '',
         psu: '',
         monitor: '',
-        kb: '',
+        keyboard: '',
         mouse: ''
     });
 
     const [quantities, setQuantities] = useState({
         cpu: '',
         cpuCooler: '',
-        mobo: '',
+        motherboard: '',
         memory: '',
         storage: '',
         gpu: '',
-        case: '',
+        pcCase: '',
         caseFan: '',
         psu: '',
         monitor: '',
-        kb: '',
+        keyboard: '',
         mouse: ''
     });
+//define prices
+    const [cpuPrice, setCpuPrice] = useState(0);
+    const [cpuCoolerPrice, setCpuCoolerPrice] = useState(0);
+    const [moboPrice, setMoboPrice] = useState(0);
+    const [memoryPrice, setMemoryPrice] = useState(0);
+    const [storagePrice, setStoragePrice] = useState(0);
+    const [gpuPrice, setGpuPrice] = useState(0);
+    const [pcCasePrice, setPcCasePrice] = useState(0);
+    const [caseFanPrice, setCaseFanPrice] = useState(0);
+    const [psuPrice, setPsuPrice] = useState(0);
+    const [monitorPrice, setMonitorPrice] = useState(0);
+    const [kbPrice, setKbPrice] = useState(0);
+    const [mousePrice, setMousePrice] = useState(0);
+//define image paths
+    const [cpuImage, setCpuImage] = useState('');
+    const [cpuCoolerImage, setCpuCoolerImage] = useState('');
+    const [moboImage, setMoboImage] = useState('');
+    const [memoryImage, setMemoryImage] = useState('');
+    const [storageImage, setStorageImage] = useState('');
+    const [gpuImage, setGpuImage] = useState('');
+    const [pcCaseImage, setPcCaseImage] = useState('');
+    const [caseFanImage, setCaseFanImage] = useState('');
+    const [psuImage, setPsuImage] = useState('');
+    const [monitorImage, setMonitorImage] = useState('');
+    const [kbImage, setKbImage] = useState('');
+    const [mouseImage, setMouseImage] = useState('');
+    //define stock number
+    const [cpuStock, setCpuStock] = useState(0);
+    const [cpuCoolerStock, setCpuCoolerStock] = useState(0);
+    const [moboStock, setMoboStock] = useState(0);
+    const [memoryStock, setMemoryStock] = useState(0);
+    const [storageStock, setStorageStock] = useState(0);
+    const [gpuStock, setGpuStock] = useState(0);
+    const [pcCaseStock, setPcCaseStock] = useState(0);
+    const [caseFanStock, setCaseFanStock] = useState(0);
+    const [psuStock, setPsuStock] = useState(0);
+    const [monitorStock, setMonitorStock] = useState(0);
+    const [kbStock, setKbStock] = useState(0);
+    const [mouseStock, setMouseStock] = useState(0);
 
 
-    const cpuPrice = selectedProducts.cpu === 'Intel Core i9-10900K' ? 399 :
-        selectedProducts.cpu === 'AMD Ryzen 9 5900X' ? 499 : 0;
-    const monitorPrice = selectedProducts.monitor === 'Dell S2721QS' ? 299 :
-        selectedProducts.monitor === 'Monitor B' ? 199 : selectedProducts.monitor === 'Monitor C' ? 249 : 0;
-    const cpuCoolerPrice = selectedProducts.cpuCooler === 'Cooler A' ? 100 :
-        selectedProducts.cpuCooler === 'Cooler B' ? 150 : 0;
-    const moboPrice = selectedProducts.mobo === 'Motherboard X' ? 200 :
-        selectedProducts.mobo === 'Motherboard Y' ? 250 : 0;
-    const memoryPrice = selectedProducts.memory === 'Memory A' ? 50 :
-        selectedProducts.memory === 'Memory B' ? 75 : 0;
-    const storagePrice = selectedProducts.storage === 'SSD X' ? 80 :
-        selectedProducts.storage === 'SSD Y' ? 100 : 0;
-    const gpuPrice = selectedProducts.gpu === 'GPU A' ? 300 :
-        selectedProducts.gpu === 'GPU B' ? 400 : 0;
-    const casePrice = selectedProducts.case === 'Case A' ? 70 :
-        selectedProducts.case === 'Case B' ? 90 : 0;
-    const caseFanPrice = selectedProducts.caseFan === 'Fan A' ? 20 :
-        selectedProducts.caseFan === 'Fan B' ? 30 : 0;
-    const psuPrice = selectedProducts.psu === 'PSU A' ? 100 :
-        selectedProducts.psu === 'PSU B' ? 120 : 0;
-    const kbPrice = selectedProducts.kb === 'Keyboard A' ? 50 :
-        selectedProducts.kb === 'Keyboard B' ? 60 : 0;
-    const mousePrice = selectedProducts.mouse === 'Mouse A' ? 20 :
-        selectedProducts.mouse === 'Mouse B' ? 30 : 0;
-
-
-    //pop-up for list
-    const [isFormVisible, setFormVisible] = useState(false);
-    const formRef = useRef(null);
+    useEffect(() => {
+        if (data === undefined) {
+            return <CustomErrorPage/>;
+        }
+        setCpu(data.data.cpuList);
+        setCpuCooler(data.data.cpuCoolerList)
+        setMobo(data.data.motherBoardList)
+        setMemory(data.data.memoryList)
+        setStorage(data.data.storageList)
+        setGpu(data.data.gpuList)
+        setPcCase(data.data.caseList)
+        setCaseFan(data.data.caseFanList)
+        setPsu(data.data.psuList)
+        setMonitor(data.data.moniterList)
+        setKeyboard(data.data.keyboardList);
+        setMouse(data.data.mouseList);
+    }, []);
 
     const openForm = (component) => {
         setCurrentComponent(component);
         setFormVisible(true);
         switch (component) {
-            case 'kb':
-                setProductList(keyboard);
-                break;
             case 'cpu':
                 setProductList(cpu);
+                break;
+            case 'cpuCooler':
+                setProductList(cpuCooler);
+                break;
+            case 'motherboard':
+                setProductList(mobo);
+                break;
+            case 'memory':
+                setProductList(memory);
+                break;
+            case 'storage':
+                setProductList(storage);
+                break;
+            case 'gpu':
+                setProductList(gpu);
+                break;
+            case 'pcCase':
+                setProductList(pcCase);
+                break;
+            case 'caseFan':
+                setProductList(caseFan);
+                break;
+            case 'psu':
+                setProductList(psu);
+                break;
+            case 'monitor':
+                setProductList(monitor);
+                break;
+            case 'keyboard':
+                setProductList(keyboard);
                 break;
             case 'mouse':
                 setProductList(mouse);
@@ -104,28 +161,95 @@ function BuildPcComponents(data){
     const closeForm = () => {
         setCurrentComponent('');
         setFormVisible(false);
-    };
 
+    };
     const hasSelectedProducts = Object.values(selectedProducts).some(product => product !== '');
 
     const totalPrice =
         (cpuPrice * quantities.cpu) +
         (cpuCoolerPrice * quantities.cpuCooler) +
-        (moboPrice * quantities.mobo) +
+        (moboPrice * quantities.motherboard) +
         (memoryPrice * quantities.memory) +
         (storagePrice * quantities.storage) +
         (gpuPrice * quantities.gpu) +
-        (casePrice * quantities.case) +
+        (pcCasePrice * quantities.pcCase) +
         (caseFanPrice * quantities.caseFan) +
         (psuPrice * quantities.psu) +
         (monitorPrice * quantities.monitor) +
-        (kbPrice * quantities.kb) +
+        (kbPrice * quantities.keyboard) +
         (mousePrice * quantities.mouse);
 
-    const handleSelectProduct = (partType, productName) => {
+    const handleSelectProduct = (partType, productName, productPrice, productImage, productStock) => {
         setSelectedProducts({...selectedProducts, [partType]: productName});
         setQuantities({...quantities, [partType]: 1});
         setFormVisible(false); // Close the modal after selecting a product
+
+        // Update the price state variable based on the selected product
+        switch (partType) {
+            case 'cpu':
+                setCpuPrice(productPrice);
+                setCpuImage(productImage);
+                setCpuStock(productStock);
+                break;
+            case 'cpuCooler':
+                setCpuCoolerPrice(productPrice);
+                setCpuCoolerImage(productImage);
+                setCpuCoolerStock(productStock);
+                break;
+            case 'mobo':
+                setMoboPrice(productPrice);
+                setMoboImage(productImage);
+                setMoboStock(productStock);
+                break;
+            case 'memory':
+                setMemoryPrice(productPrice);
+                setMemoryImage(productImage);
+                setMemoryStock(productStock);
+                break;
+            case 'storage':
+                setStoragePrice(productPrice);
+                setStorageImage(productImage);
+                setStorageStock(productStock);
+                break;
+            case 'gpu':
+                setGpuPrice(productPrice);
+                setGpuImage(productImage);
+                setGpuStock(productStock);
+                break;
+            case 'pcCase':
+                setPcCasePrice(productPrice);
+                setPcCaseImage(productImage);
+                setPcCaseStock(productStock);
+                break;
+            case 'caseFan':
+                setCaseFanPrice(productPrice);
+                setCaseFanImage(productImage);
+                setCaseFanStock(productStock);
+                break;
+            case 'psu':
+                setPsuPrice(productPrice);
+                setPsuImage(productImage);
+                setPsuStock(productStock);
+                break;
+            case 'monitor':
+                setMonitorPrice(productPrice);
+                setMonitorImage(productImage);
+                setMonitorStock(productStock);
+                break;
+            case 'keyboard':
+                setKbPrice(productPrice);
+                setKbImage(productImage);
+                setKbStock(productStock);
+                break;
+            case 'mouse':
+                setMousePrice(productPrice);
+                setMouseImage(productImage);
+                setMouseStock(productStock);
+                break;
+            default:
+                break;
+        }
+
     };
 
     const handleRemoveProduct = (partType) => {
@@ -133,6 +257,70 @@ function BuildPcComponents(data){
         if (confirmed) {
             setSelectedProducts({...selectedProducts, [partType]: ''});
             setQuantities({...quantities, [partType]: ''});
+            switch (partType) {
+                case 'cpu':
+                    setCpuPrice(0);
+                    setCpuImage('');
+                    setCpuStock(0);
+                    break;
+                case 'cpuCooler':
+                    setCpuCoolerPrice(0);
+                    setCpuCoolerImage('');
+                    setCpuCoolerStock(0);
+                    break;
+                case 'mobo':
+                    setMoboPrice(0);
+                    setMoboImage('');
+                    setMoboStock(0);
+                    break;
+                case 'memory':
+                    setMemoryPrice(0);
+                    setMemoryImage('');
+                    setMemoryStock(0);
+                    break;
+                case 'storage':
+                    setStoragePrice(0);
+                    setStorageImage('');
+                    setStorageStock(0);
+                    break;
+                case 'gpu':
+                    setGpuPrice(0);
+                    setGpuImage('');
+                    setGpuStock(0);
+                    break;
+                case 'pcCase':
+                    setPcCasePrice(0);
+                    setPcCaseImage('');
+                    setPcCaseStock(0);
+                    break;
+                case 'caseFan':
+                    setCaseFanPrice(0);
+                    setCaseFanImage('');
+                    setCaseFanStock(0);
+                    break;
+                case 'psu':
+                    setPsuPrice(0);
+                    setPsuImage('');
+                    setPsuStock(0);
+                    break;
+                case 'monitor':
+                    setMonitorPrice(0);
+                    setMonitorImage('');
+                    setMonitorStock(0);
+                    break;
+                case 'keyboard':
+                    setKbPrice(0);
+                    setKbImage('');
+                    setKbStock(0);
+                    break;
+                case 'mouse':
+                    setMousePrice(0);
+                    setMouseImage('');
+                    setMouseStock(0);
+                    break;
+                default:
+                    break;
+            }
         }
     };
 
@@ -142,33 +330,70 @@ function BuildPcComponents(data){
             setSelectedProducts({
                 cpu: '',
                 cpuCooler: '',
-                mobo: '',
+                motherboard: '',
                 memory: '',
                 storage: '',
                 gpu: '',
-                case: '',
+                pcCase: '',
                 caseFan: '',
                 psu: '',
                 monitor: '',
-                kb: '',
+                keyboard: '',
                 mouse: ''
             });
             setQuantities({
                 cpu: '',
                 cpuCooler: '',
-                mobo: '',
+                motherboard: '',
                 memory: '',
                 storage: '',
                 gpu: '',
-                case: '',
+                pcCase: '',
                 caseFan: '',
                 psu: '',
                 monitor: '',
-                kb: '',
+                keyboard: '',
                 mouse: ''
             });
+            setCpuPrice(0);
+            setCpuImage('');
+            setCpuStock(0);
+            setCpuCoolerPrice(0);
+            setCpuCoolerImage('');
+            setCpuCoolerStock(0);
+            setMoboPrice(0);
+            setMoboImage('');
+            setMoboStock(0);
+            setMemoryPrice(0);
+            setMemoryImage('');
+            setMemoryStock(0);
+            setStoragePrice(0);
+            setStorageImage('');
+            setStorageStock(0);
+            setGpuPrice(0);
+            setGpuImage('');
+            setGpuStock(0);
+            setPcCasePrice(0);
+            setPcCaseImage('');
+            setPcCaseStock(0);
+            setCaseFanPrice(0);
+            setCaseFanImage('');
+            setCaseFanStock(0);
+            setPsuPrice(0);
+            setPsuImage('');
+            setPsuStock(0);
+            setMonitorPrice(0);
+            setMonitorImage('');
+            setMonitorStock(0);
+            setKbPrice(0);
+            setKbImage('');
+            setKbStock(0);
+            setMousePrice(0);
+            setMouseImage('');
+            setMouseStock(0);
         }
     };
+
 
     const handleQuantityChange = (partType, value) => {
         setQuantities({...quantities, [partType]: value});
@@ -181,18 +406,23 @@ function BuildPcComponents(data){
             {/*<div className="fixed top-40 bottom-0 flex-none custom-width-5 bg-blue-200 right-0 h-96">AD HERE</div>*/}
             <div className="build-pc-wrapper flex justify-center pt-8 custom-width-11-12 bg-white">
                 <div className="w-full max-w-screen-xl">
+                    <div className="banner w-full h-96 bg-cover bg-center mb-2"
+                         style={{backgroundImage: "url('https://smcinternational.in/extra/images/SMC%20Banner.jpg')"}}>
+                        <div className="h-16 w-64 bg-black" style={{top:"59%", left:"24%", position:"absolute"}}></div>
+                    </div>
                     <div className="build-pc-header text-left mb-4">
                         <h2 className="text-2xl font-bold">
-                            Build your own best PC build for the cheapest price
+                            Build your own dream PC
                         </h2>
                         <hr className="my-2"/>
                         <p className="text-sm font-semibold">
-                            Please select the component you want for your own PC build
+                            Please select the component you want for your dream PC
                         </p>
                     </div>
                     <div className="support-info bg-yellow-300 text-black text-center p-4 mb-4">
                         <p className="mb-2 font-semibold">
-                            Not sure how to get the best bang for your buck? Let our professional advisor team help with your dream PC build.
+                            Not sure how to get the best bang for your buck? Let our professional advisor team help with
+                            your dream PC build.
                         </p>
                         <button
                             className="chat-button bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded transition duration-300">
@@ -246,10 +476,28 @@ function BuildPcComponents(data){
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://hanoicomputercdn.com/media/product/80691_cpu_amd_ryzen_7_5700_4_6_ghz_upto_3_7_ghz_20mb_8_cores_16_threads_65w_socket_am5.jpg"
+                                                 src={cpuImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.cpu}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.cpu}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.cpu ? (
+                                                        <span>
+                                                            {cpuStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {cpuStock > 0 && cpuStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {cpuStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
@@ -272,7 +520,11 @@ function BuildPcComponents(data){
                                        className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${cpuPrice * quantities.cpu}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${cpuPrice * quantities.cpu}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40" style={{width: '15%'}}>
                                 {selectedProducts.cpu && (
                                     <div className="flex justify-center w-full">
@@ -297,10 +549,28 @@ function BuildPcComponents(data){
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://i.pcmag.com/imagery/roundup-products/03fJvvPEIYb8K2OdKYkYNvc..v1646970857.jpg"
+                                                 src={cpuCoolerImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.cpuCooler}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.cpuCooler}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.cpuCooler ? (
+                                                        <span>
+                                                            {cpuCoolerStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {cpuCoolerStock > 0 && cpuCoolerStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {cpuCoolerStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
@@ -323,7 +593,11 @@ function BuildPcComponents(data){
                                        }} className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${cpuCoolerPrice * quantities.cpuCooler}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${cpuCoolerPrice * quantities.cpuCooler}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
                                 {selectedProducts.cpuCooler && (
                                     <div className="flex justify-center w-full">
@@ -343,18 +617,36 @@ function BuildPcComponents(data){
                         <tr>
                             <td className="border px-6 py-3 font-bold">Motherboard</td>
                             <td className="border px-6 py-3">
-                                {selectedProducts.mobo ? (
+                                {selectedProducts.motherboard ? (
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://nguyencongpc.vn/media/product/23490-mainboard-asus-rog-crosshair-x670e-extreme-11.jpg"
+                                                 src={moboImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.mobo}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.motherboard}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.motherboard ? (
+                                                        <span>
+                                                            {moboStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {moboStock > 0 && moboStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {moboStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
-                                    <button onClick={() => openForm('mobo')}
+                                    <button onClick={() => openForm('motherboard')}
                                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                         <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus}/> Select
                                         Motherboard
@@ -364,23 +656,27 @@ function BuildPcComponents(data){
                             <td className="border text-center px-6 py-3"
                             >${moboPrice}</td>
                             <td className="border text-center px-6 py-3">
-                                <input type="number" min="1" value={quantities.mobo}
+                                <input type="number" min="1" value={quantities.motherboard}
                                        onChange={(e) => {
                                            if (e.target.value < 1) {
-                                               handleQuantityChange('mobo', 1);
+                                               handleQuantityChange('motherboard', 1);
                                            } else {
-                                               handleQuantityChange('mobo', e.target.value);
+                                               handleQuantityChange('motherboard', e.target.value);
                                            }
                                        }}
                                        className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${moboPrice * quantities.mobo}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${moboPrice * quantities.motherboard}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
-                                {selectedProducts.mobo && (
+                                {selectedProducts.motherboard && (
                                     <div className="flex justify-center w-full">
                                         <button
-                                            onClick={() => handleRemoveProduct('mobo')}
+                                            onClick={() => handleRemoveProduct('motherboard')}
                                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
                                             style={{transition: "background-color 0.15s"}}
                                         >
@@ -400,10 +696,28 @@ function BuildPcComponents(data){
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://edgeup.asus.com/wp-content/uploads/2023/03/VENGEANCE_RGB_DDR5_BLACK_RENDER_07.jpg"
+                                                 src={memoryImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.memory}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.memory}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.memory ? (
+                                                        <span>
+                                                            {memoryStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {memoryStock > 0 && memoryStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {memoryStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
@@ -426,7 +740,11 @@ function BuildPcComponents(data){
                                        className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${memoryPrice * quantities.memory}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${memoryPrice * quantities.memory}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
                                 {selectedProducts.memory && (
                                     <div className="flex justify-center w-full">
@@ -443,6 +761,7 @@ function BuildPcComponents(data){
                                 )}
                             </td>
                         </tr>
+
                         <tr>
                             <td className="border px-6 py-3 font-bold">Storage</td>
                             <td className="border px-6 py-3">
@@ -450,10 +769,28 @@ function BuildPcComponents(data){
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://product.hstatic.net/200000522285/product/61mo8ug0aqs_81dd526d97a746d78995559902e00535_1024x1024.jpg"
+                                                 src={storageImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.storage}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.storage}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.storage ? (
+                                                        <span>
+                                                            {storageStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {storageStock > 0 && storageStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {storageStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
@@ -477,7 +814,11 @@ function BuildPcComponents(data){
                                        className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${storagePrice * quantities.storage}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${storagePrice * quantities.storage}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
                                 {selectedProducts.storage && (
                                     <div className="flex justify-center w-full">
@@ -494,6 +835,7 @@ function BuildPcComponents(data){
                                 )}
                             </td>
                         </tr>
+
                         <tr>
                             <td className="border px-6 py-3 font-bold">GPU</td>
                             <td className="border px-6 py-3">
@@ -501,10 +843,28 @@ function BuildPcComponents(data){
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://tanthanhdanh.vn/wp-content/uploads/2022/09/ROG-STRIX-RTX4090-O24G-GAMING-TTD-2.jpg"
+                                                 src={gpuImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.gpu}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.gpu}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.gpu ? (
+                                                        <span>
+                                                            {gpuStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {gpuStock > 0 && gpuStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {gpuStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
@@ -523,10 +883,14 @@ function BuildPcComponents(data){
                                            } else {
                                                handleQuantityChange('gpu', e.target.value);
                                            }
-                                       }}className="w-16 px-2 py-1 border rounded"/>
+                                       }} className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${gpuPrice * quantities.gpu}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${gpuPrice * quantities.gpu}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
                                 {selectedProducts.gpu && (
                                     <div className="flex justify-center w-full">
@@ -543,17 +907,36 @@ function BuildPcComponents(data){
                                 )}
                             </td>
                         </tr>
+
                         <tr>
                             <td className="border px-6 py-3 font-bold">Case</td>
                             <td className="border px-6 py-3">
-                                {selectedProducts.case ? (
+                                {selectedProducts.pcCase ? (
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://product.hstatic.net/200000837185/product/case-corsair-5000d-airflow-black-_-atx-dd02e_73a740a3ffd04b1da47a58e56040709a_master.jpg"
+                                                 src={pcCaseImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.case}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.pcCase}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.pcCase ? (
+                                                        <span>
+                                                            {pcCaseStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {pcCaseStock > 0 && pcCaseStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {pcCaseStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
@@ -563,21 +946,25 @@ function BuildPcComponents(data){
                                     </button>
                                 )}
                             </td>
-                            <td className="border text-center px-6 py-3">${casePrice}</td>
+                            <td className="border text-center px-6 py-3">${pcCasePrice}</td>
                             <td className="border text-center px-6 py-3">
-                                <input type="number" min="1" value={quantities.case}
+                                <input type="number" min="1" value={quantities.pcCase}
                                        onChange={(e) => {
                                            if (e.target.value < 1) {
                                                handleQuantityChange('case', 1);
                                            } else {
                                                handleQuantityChange('case', e.target.value);
                                            }
-                                       }}className="w-16 px-2 py-1 border rounded"/>
+                                       }} className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${casePrice * quantities.case}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${pcCasePrice * quantities.pcCase}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
-                                {selectedProducts.case && (
+                                {selectedProducts.pcCase && (
                                     <div className="flex justify-center w-full">
                                         <button
                                             onClick={() => handleRemoveProduct('case')}
@@ -591,6 +978,7 @@ function BuildPcComponents(data){
                                 )}
                             </td>
                         </tr>
+
                         <tr>
                             <td className="border px-6 py-3 font-bold">Case Fan</td>
                             <td className="border px-6 py-3">
@@ -598,10 +986,28 @@ function BuildPcComponents(data){
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://images-cdn.ubuy.co.id/633fedd6ac7db9648f527a13-antec-120mm-case-fan-rgb-case-fans-3.jpg"
+                                                 src={caseFanImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.caseFan}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.caseFan}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.caseFan ? (
+                                                        <span>
+                                                            {caseFanStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {caseFanStock > 0 && caseFanStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {caseFanStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
@@ -625,7 +1031,11 @@ function BuildPcComponents(data){
                                        className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${caseFanPrice * quantities.caseFan}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${caseFanPrice * quantities.caseFan}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
                                 {selectedProducts.caseFan && (
                                     <div className="flex justify-center w-full">
@@ -641,6 +1051,7 @@ function BuildPcComponents(data){
                                 )}
                             </td>
                         </tr>
+
                         <tr>
                             <td className="border px-6 py-3 font-bold">Power Supply Unit</td>
                             <td className="border px-6 py-3">
@@ -648,10 +1059,28 @@ function BuildPcComponents(data){
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://tanthanhdanh.vn/wp-content/uploads/2023/06/CP-9020261_08.png"
+                                                 src={psuImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.psu}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.psu}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.psu ? (
+                                                        <span>
+                                                            {psuStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {psuStock > 0 && psuStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {psuStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
@@ -674,7 +1103,11 @@ function BuildPcComponents(data){
                                        className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${psuPrice * quantities.psu}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${psuPrice * quantities.psu}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
                                 {selectedProducts.psu && (
                                     <div className="flex justify-center w-full">
@@ -690,6 +1123,7 @@ function BuildPcComponents(data){
                                 )}
                             </td>
                         </tr>
+
                         <tr>
                             <td className="border px-6 py-3 font-bold">Monitor</td>
                             <td className="border px-6 py-3">
@@ -697,16 +1131,34 @@ function BuildPcComponents(data){
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://phucanhcdn.com/media/product/42173_s2721h_ha1.jpg"
+                                                 src={monitorImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.monitor}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.monitor}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.monitor ? (
+                                                        <span>
+                                                            {monitorStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {monitorStock > 0 && monitorStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {monitorStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
                                     <button onClick={() => openForm('monitor')}
                                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                        <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus}/> Select CPU
+                                        <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus}/> Select Monitor
                                     </button>
                                 )}
                             </td>
@@ -723,7 +1175,11 @@ function BuildPcComponents(data){
                                        className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${monitorPrice * quantities.monitor}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${monitorPrice * quantities.monitor}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
                                 {selectedProducts.monitor && (
                                     <>
@@ -743,21 +1199,41 @@ function BuildPcComponents(data){
                                 )}
                             </td>
                         </tr>
+
+
                         <tr>
                             <td className="border px-6 py-3 font-bold">Keyboard</td>
                             <td className="border px-6 py-3">
-                                {selectedProducts.kb ? (
+                                {selectedProducts.keyboard ? (
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://m.media-amazon.com/images/I/61vPhOdqAHL._AC_UF894,1000_QL80_.jpg"
+                                                 src={kbImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.kb}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.keyboard}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.keyboard ? (
+                                                        <span>
+                                                            {kbStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {kbStock > 0 && kbStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {kbStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
-                                    <button onClick={() => openForm('kb')}
+                                    <button onClick={() => openForm('keyboard')}
                                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                                         <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus}/> Select
                                         Keyboard
@@ -766,23 +1242,27 @@ function BuildPcComponents(data){
                             </td>
                             <td className="border text-center px-6 py-3">${kbPrice}</td>
                             <td className="border text-center px-6 py-3">
-                                <input type="number" min="1" value={quantities.kb}
+                                <input type="number" min="1" value={quantities.keyboard}
                                        onChange={(e) => {
                                            if (e.target.value < 1) {
-                                               handleQuantityChange('kb', 1);
+                                               handleQuantityChange('keyboard', 1);
                                            } else {
-                                               handleQuantityChange('kb', e.target.value);
+                                               handleQuantityChange('keyboard', e.target.value);
                                            }
                                        }}
                                        className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${kbPrice * quantities.kb}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${kbPrice * quantities.keyboard}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
-                                {selectedProducts.kb && (
+                                {selectedProducts.keyboard && (
                                     <div className="flex justify-center w-full">
                                         <button
-                                            onClick={() => handleRemoveProduct('kb')}
+                                            onClick={() => handleRemoveProduct('keyboard')}
                                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
                                             style={{transition: "background-color 0.15s"}}
                                         >
@@ -793,6 +1273,7 @@ function BuildPcComponents(data){
                                 )}
                             </td>
                         </tr>
+
                         <tr>
                             <td className="border px-6 py-3 font-bold">Mouse</td>
                             <td className="border px-6 py-3">
@@ -800,10 +1281,28 @@ function BuildPcComponents(data){
                                     <div className="flex items-center">
                                         <div className="product-info">
                                             <img className="product-image"
-                                                 src="https://bizweb.dktcdn.net/100/450/414/products/a344c252-2570-4356-90c8-1073a5ea0ded.jpg?v=1648894363560"
+                                                 src={mouseImage}
                                                  alt="no image"/>
-                                            <span className="ml-1 font-bold"><Link
-                                                href="/public">{selectedProducts.mouse}</Link></span>
+                                            <p>
+                                                <span className="ml-1 font-bold">
+                                                    <Link href="/public">
+                                                        {selectedProducts.mouse}
+                                                    </Link>
+                                                </span>
+                                                <br/>
+                                                <span className="ml-1 font-semibold">
+                                                    {selectedProducts.mouse ? (
+                                                        <span>
+                                                            {mouseStock === 0 &&
+                                                                <span style={{color: 'red'}}>Out of Stock</span>}
+                                                            {mouseStock > 0 && mouseStock < 10 && <span
+                                                                style={{color: 'darkorange'}}>Limited Stock left</span>}
+                                                            {mouseStock >= 10 &&
+                                                                <span style={{color: 'green'}}>Available</span>}
+                                                        </span>
+                                                    ) : null}
+                                                </span>
+                                            </p>
                                         </div>
                                     </div>
                                 ) : (
@@ -822,10 +1321,14 @@ function BuildPcComponents(data){
                                            } else {
                                                handleQuantityChange('mouse', e.target.value);
                                            }
-                                       }}className="w-16 px-2 py-1 border rounded"/>
+                                       }} className="w-16 px-2 py-1 border rounded"/>
                             </td>
                             <td className="border-b border-t text-center py-3"
-                                style={{width: '5%', color:"red", fontWeight:"bold"}}>${mousePrice * quantities.mouse}</td>
+                                style={{
+                                    width: '5%',
+                                    color: "red",
+                                    fontWeight: "bold"
+                                }}>${mousePrice * quantities.mouse}</td>
                             <td className="border-b border-r border-t px-3 py-2 w-40">
                                 {selectedProducts.mouse && (
                                     <div className="flex justify-center w-full">
@@ -841,8 +1344,10 @@ function BuildPcComponents(data){
                                 )}
                             </td>
                         </tr>
+
                         </tbody>
                     </table>
+
                     <div className="flex justify-end mt-1">
                         <table style={{width: "732px", borderCollapse: "collapse"}}>
                             <tbody>
@@ -877,7 +1382,7 @@ function BuildPcComponents(data){
                         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"
                              onClick={closeForm}></div>
                         <div className="bg-white p-8 rounded shadow-xl max-w-3xl mx-auto z-50">
-                            <h2 className="text-lg font-semibold mb-4">Select {currentComponent.toUpperCase()}</h2>
+                            <h2 className="text-lg font-semibold mb-4">Select a component</h2>
                             <div className="mb-4">
                                 <input
                                     type="text"
@@ -887,7 +1392,8 @@ function BuildPcComponents(data){
                                 />
                             </div>
                             <div className="grid grid-cols-1 gap-4">
-                                <ComponentList data={ProductList} currentComponent={currentComponent} handleSelectProduct={handleSelectProduct} />
+                                <ComponentList data={ProductList} currentComponent={currentComponent}
+                                               handleSelectProduct={handleSelectProduct}/>
                             </div>
                             <div className="mt-4 flex justify-end">
                                 <button onClick={closeForm}

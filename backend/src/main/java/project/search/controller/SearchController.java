@@ -1,16 +1,11 @@
 package project.search.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.product.dto.ProductSummaryDto;
-import project.product.entity.Product;
-import project.product.models.Pagination;
-import project.product.service.ProductService;
 import project.search.dto.RequestDto;
 import project.search.service.SearchService;
 
@@ -28,7 +23,7 @@ public class SearchController {
 		if (limit == null) {
 			limit = 5;
 		}
-		List<ProductSummaryDto> productSummaryDtoList = searchService.getByName(q, limit);
+		List<ProductSummaryDto> productSummaryDtoList = searchService.findByName(q, limit);
 		if (productSummaryDtoList != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
 		}
@@ -41,6 +36,6 @@ public class SearchController {
 	                               @Param(value = "limit") Integer limit
 	) {
 
-		return searchService.getProductsByTypeWithPaging(requestDto, page, limit);
+		return searchService.findProductsByTypeWithPaging(requestDto, page, limit);
 	}
 }

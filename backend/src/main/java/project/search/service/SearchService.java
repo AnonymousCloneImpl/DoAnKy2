@@ -7,7 +7,7 @@ import project.search.dto.RequestDto;
 import java.util.List;
 
 public interface SearchService {
-	List<ProductSummaryDto> getByName(String name, Integer limit);
+	List<ProductSummaryDto> findByName(String name, Integer limit);
 
-	Pagination getProductsByTypeWithPaging(RequestDto requestDto, Integer page, Integer limit);
+	Pagination findProductsByTypeWithPaging(RequestDto requestDto, Integer page, Integer limit);
 }

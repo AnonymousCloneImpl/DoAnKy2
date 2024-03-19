@@ -30,31 +30,26 @@ public class SearchServiceImpl implements SearchService {
 	private ProductSpecification productSpecification;
 
 	@Override
-	public List<ProductSummaryDto> getByName(String name, Integer limit) {
+	public List<ProductSummaryDto> findByName(String name, Integer limit) {
 		if (limit == null) {
 			limit = Pagination.PAGE_SIZE;
 		}
-
-		Page<Product> productList = productService
-				.getAll(productSpecification.nameLike(name), PageRequest.of(0, limit));
-
+		List<Product> productList = productService.findAllByNameAndSortBySold(name, PageRequest.of(0, limit));
 		if (!productList.isEmpty()) {
-
 			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
-					.convertProductsToProductSummaryDtoList(productList.getContent(), modelMapper);
-
+					.convertProductsToProductSummaryDtoList(productList, modelMapper);
 			for (ProductSummaryDto p : productSummaryDtoList) {
 				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
 			}
 			return productSummaryDtoList;
 		} else {
-			System.err.println("Error in getByName function : productList is null");
+			System.err.println("Error in getByName findByName : productList is null");
 			return null;
 		}
 	}
 
 	@Override
-	public Pagination getProductsByTypeWithPaging(RequestDto requestDto, Integer page, Integer limit) {
+	public Pagination findProductsByTypeWithPaging(RequestDto requestDto, Integer page, Integer limit) {
 		if (page == null) {
 			page = 1;
 		}
@@ -69,7 +64,7 @@ public class SearchServiceImpl implements SearchService {
 
 		try {
 			Page<Product> productList = productService.getAllBySpecification(spec, pageable);
-			
+
 			Pagination pagination = ProductUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
