@@ -8,11 +8,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import project.product.entity.Product;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDetailDto {
+public class ProductDetailDto implements Serializable {
 	private long id;
 	private String material;
 	private String dimensions;

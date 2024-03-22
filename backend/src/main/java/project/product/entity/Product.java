@@ -7,9 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.redis.core.RedisHash;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -38,9 +36,6 @@ public class Product {
 	private String image;
 	@Column(nullable = false)
 	private byte discountPercentage;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "blog_id")
-	private Blog blog;
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
 	private List<ProductDetail> productDetails;

@@ -12,7 +12,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash("Product")
 public class ProductDto implements Serializable {
 	private long id;
 	private String producer;
