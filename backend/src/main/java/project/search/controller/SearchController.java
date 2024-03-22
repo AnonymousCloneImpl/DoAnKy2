@@ -24,10 +24,7 @@ public class SearchController {
 			limit = 5;
 		}
 		List<ProductSummaryDto> productSummaryDtoList = searchService.findByName(q, limit);
-		if (productSummaryDtoList != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
 	}
 
 	@PostMapping("/searchByCondition")

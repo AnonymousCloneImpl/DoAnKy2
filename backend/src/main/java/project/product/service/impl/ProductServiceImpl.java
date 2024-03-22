@@ -2,7 +2,6 @@ package project.product.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -107,10 +106,10 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Pagination getProductsByTypeWithPaging(SearchDto searchDto) {
-		Specification<Product> spec = productSpecification.filterOfProduct(searchDto);
+	public Pagination getProductsByTypeWithPaging(HomePageData homePageData) {
+		Specification<Product> spec = productSpecification.findByType(homePageData);
 
-		Pageable pageable = PageRequest.of((searchDto.getPage() - 1), searchDto.getLimit() == null ? Pagination.PAGE_SIZE : searchDto.getLimit());
+		Pageable pageable = PageRequest.of((homePageData.getPage() - 1), homePageData.getLimit() == null ? Pagination.PAGE_SIZE : homePageData.getLimit());
 
 		try {
 			Page<Product> productList = productRepo.findAll(spec, pageable);

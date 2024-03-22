@@ -6,8 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.product.models.Pagination;
-import project.product.dto.ProductSummaryDto;
-import project.product.dto.SearchDto;
+import project.product.dto.HomePageData;
 import project.product.dto.StaticDataProductPage;
 import project.product.entity.Producer;
 import project.product.service.ProducerService;
@@ -51,7 +50,7 @@ public class ProductController {
 		if (page == null) {
 			page = 1;
 		}
-		SearchDto searchDto = SearchDto.builder()
+		HomePageData searchDto = HomePageData.builder()
 				.type(type)
 				.page(page)
 				.limit(limit)

@@ -1,14 +1,12 @@
 package project.product.service;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.product.entity.Product;
 import project.product.models.Pagination;
-import project.product.dto.ProductSummaryDto;
-import project.product.dto.SearchDto;
+import project.product.dto.HomePageData;
 import project.product.dto.StaticDataProductPage;
 
 import java.util.List;
@@ -26,7 +24,7 @@ public interface ProductService {
 
 	StaticDataProductPage getStaticDataByType(String type, Integer limit);
 
-	Pagination getProductsByTypeWithPaging(SearchDto searchDto);
+	Pagination getProductsByTypeWithPaging(HomePageData searchDto);
 
 	Optional<Object> getByProductTypeAndByName(String type, String name);
 
