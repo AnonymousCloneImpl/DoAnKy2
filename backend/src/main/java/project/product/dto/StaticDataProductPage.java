@@ -18,14 +18,4 @@ public class StaticDataProductPage implements Serializable {
     private List<Producer> producerList;
     private List<String> cpuList;
     private List<String> ramList;
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class PurchaseComboItem {
-        private long id;
-        @JsonIgnoreProperties({"producer", "model", "productDetail", "colorList", "blog", "purchaseComboItemList"})
-        private List<Product> productList;
-    }
 }

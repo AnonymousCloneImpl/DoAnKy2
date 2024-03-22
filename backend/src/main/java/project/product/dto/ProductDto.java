@@ -24,7 +24,7 @@ public class ProductDto implements Serializable {
 	private List<String> imageList;
 	private byte discountPercentage;
 	private BlogDto blog;
-	private StaticDataProductPage.PurchaseComboItem purchaseComboItem;
+	private PurchaseComboItem purchaseComboItem;
 	private List<SimilarProductDto> similarProductList;
 	private StockDto stock;
 	private List<String> configurationList;

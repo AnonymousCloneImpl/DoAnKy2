@@ -101,7 +101,7 @@ public class ProductUtils {
 	}
 
 	public void setPurchaseComboItem(ProductDto productDto) {
-		StaticDataProductPage.PurchaseComboItem purchaseComboItem = new StaticDataProductPage.PurchaseComboItem();
+		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
 		Pageable pageable = PageRequest.of(0, 1);
 		try {
 			String type = "";
