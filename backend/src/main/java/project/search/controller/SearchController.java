@@ -1,6 +1,7 @@
 package project.search.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class SearchController {
 	}
 
 	@PostMapping("/searchByCondition")
+	@Cacheable(key = "#requestDto + '-' + #page", value = "data")
 	public Object getProductByType(@RequestBody RequestDto requestDto,
 	                               @Param(value = "page") Integer page,
 	                               @Param(value = "limit") Integer limit

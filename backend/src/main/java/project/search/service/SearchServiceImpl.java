@@ -12,7 +12,6 @@ import project.product.dto.ProductSummaryDto;
 import project.product.models.Pagination;
 import project.product.entity.Product;
 import project.common.ProductUtils;
-import project.product.repository.ProductRepository;
 import project.product.service.ProductDetailService;
 import project.product.service.ProductService;
 import project.search.dto.RequestDto;
@@ -24,8 +23,6 @@ import java.util.List;
 public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private ProductService productService;
-	@Autowired
-	private ProductDetailService productDetailService;
 	@Autowired
 	private ModelMapper modelMapper;
 	@Autowired

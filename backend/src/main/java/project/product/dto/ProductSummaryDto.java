@@ -12,7 +12,6 @@ import java.io.Serializable;
 @Builder
 @Getter
 @Setter
-@RedisHash("ProductSummary")
 public class ProductSummaryDto implements Serializable {
 	private long id;
 	private String name;

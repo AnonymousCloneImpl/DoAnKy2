@@ -29,6 +29,8 @@ public class ProductUtils {
 	private StockRepository stockRepo;
 	@Autowired
 	private ProductDetailService productDetailService;
+	@Autowired
+	private ModelMapper modelMapper;
 
 	public String getFirstImageUrl(String imageList) {
 		return imageList.split("\\|")[0];
@@ -51,7 +53,6 @@ public class ProductUtils {
 			List<Product> productList,
 			ModelMapper modelMapper
 	) {
-
 		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((
 				product -> modelMapper.map(product, ProductSummaryDto.class)
 		)).toList();
@@ -61,6 +62,22 @@ public class ProductUtils {
 		}
 
 		return productSummaryDtoList;
+	}
+
+	public List<ProducerDto> convertProducerListToProducerDtoList(
+			List<Producer> producerList,
+			ModelMapper modelMapper
+	) {
+
+		List<ProducerDto> producerDtoList = producerList.stream().map((
+				product -> modelMapper.map(product, ProducerDto.class)
+		)).toList();
+
+		for (ProducerDto producerDto : producerDtoList) {
+			producerDto.setImage(getFirstImageUrl(producerDto.getImage()));
+		}
+
+		return producerDtoList;
 	}
 
 	public void getConfigurationForDto(
@@ -74,26 +91,12 @@ public class ProductUtils {
 
 	public ProductDetailDto getDetailDto(String type, ProductDetail productDetail) {
 		ProductDetailDto detailDto = new ProductDetailDto();
-		Object detail = null;
 		switch (type) {
-			case "laptop" -> {
-				detail = new LaptopDetail();
-				BeanUtils.copyProperties(productDetail, detail);
-			}
-			case "keyboard" -> {
-				detail = new KeyboardDetail();
-				BeanUtils.copyProperties(productDetail, detail);
-			}
-			case "mouse" -> {
-				detail = new MouseDetail();
-				BeanUtils.copyProperties(productDetail, detail);
-			}
-			case "headphone" -> {
-				detail = new HeadphoneDetailDto();
-				BeanUtils.copyProperties(productDetail, detail);
-			}
+			case "laptop" -> detailDto = modelMapper.map(productDetail, LaptopDetailDto.class);
+			case "keyboard" -> detailDto = modelMapper.map(productDetail, KeyboardDetailDto.class);
+			case "mouse" -> detailDto = modelMapper.map(productDetail, MouseDetailDto.class);
+			case "headphone" -> detailDto = modelMapper.map(productDetail, HeadphoneDetailDto.class);
 		}
-		detailDto.setDetail(detail);
 		return detailDto;
 	}
 

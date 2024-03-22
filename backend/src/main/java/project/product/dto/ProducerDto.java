@@ -11,10 +11,8 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class KeyboardDetailDto extends ProductDetailDto implements Serializable {
-	private String type;
-	private String switchType;
-	private String cableLength;
-	private String connectionType;
-	private String led;
+public class ProducerDto implements Serializable {
+	private long id;
+	private String name;
+	private String image;
 }
