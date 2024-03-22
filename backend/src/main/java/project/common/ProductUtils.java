@@ -67,7 +67,7 @@ public class ProductUtils {
 			List<ProductSummaryDto> productSummaryDtoList
 	) {
 		for (ProductSummaryDto p : productSummaryDtoList) {
-			ProductDetail detail = productDetailService.getById(p.getId());
+			ProductDetail detail = productDetailService.getByProductId(p.getId());
 			p.setConfiguration(getDetailDto(p.getType().toLowerCase(), detail));
 		}
 	}
@@ -98,9 +98,9 @@ public class ProductUtils {
 	}
 
 
-	public ProductDto createProductDto(Product product) {
+	public ProductDto createProductDto(Product p) {
 		ProductDto productDto = new ProductDto();
-		BeanUtils.copyProperties(product, productDto);
+		BeanUtils.copyProperties(p, productDto);
 		return productDto;
 	}
 
@@ -172,7 +172,7 @@ public class ProductUtils {
 
 
 	public void switchCase(String type, Product p, ProductDto productDto) {
-		ProductDetail pDetail = productDetailService.getById(p.getId());
+		ProductDetail pDetail = productDetailService.getByProductId(p.getId());
 		ModelMapper modelMapper = new ModelMapper();
 
 		switch (type.toLowerCase()) {
