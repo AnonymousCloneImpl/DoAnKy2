@@ -15,6 +15,10 @@ public class RequestDto implements Serializable {
 
 	private GLOBAL_OPERATOR globalOperator;
 
+	private Integer page;
+
+	private Integer limit;
+
 	public enum GLOBAL_OPERATOR {
 		AND, OR;
 	}
@@ -24,6 +28,8 @@ public class RequestDto implements Serializable {
 		return "RequestDto{" +
 				"searchRequestDtoList=" + searchRequestDtoList +
 				", globalOperator=" + globalOperator +
+				", page=" + page +
+				", limit=" + limit +
 				'}';
 	}
 }

@@ -29,12 +29,10 @@ public class SearchController {
 	}
 
 	@PostMapping("/searchByCondition")
-	@Cacheable(key = "#requestDto + '-' + #page", value = "data")
-	public Object getProductByType(@RequestBody RequestDto requestDto,
-	                               @Param(value = "page") Integer page,
-	                               @Param(value = "limit") Integer limit
+	@Cacheable(key = "#requestDto", value = "data")
+	public Object getProductByType(@RequestBody RequestDto requestDto
 	) {
 
-		return searchService.findProductsByTypeWithPaging(requestDto, page, limit);
+		return searchService.findProductsByTypeWithPaging(requestDto);
 	}
 }

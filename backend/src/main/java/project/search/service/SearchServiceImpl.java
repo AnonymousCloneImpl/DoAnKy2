@@ -2,7 +2,6 @@ package project.search.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +11,6 @@ import project.product.dto.ProductSummaryDto;
 import project.product.models.Pagination;
 import project.product.entity.Product;
 import project.common.ProductUtils;
-import project.product.service.ProductDetailService;
 import project.product.service.ProductService;
 import project.search.dto.RequestDto;
 import project.search.specification.ProductSpecification;
@@ -50,18 +48,18 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public Pagination findProductsByTypeWithPaging(RequestDto requestDto, Integer page, Integer limit) {
-		if (page == null) {
-			page = 1;
+	public Pagination findProductsByTypeWithPaging(RequestDto requestDto) {
+		if (requestDto.getPage() == null) {
+			requestDto.setPage(1);
 		}
 
-		if (limit == null) {
-			limit = 10;
+		if (requestDto.getLimit() == null) {
+			requestDto.setLimit(10);
 		}
 
 		Specification<Product> spec = productSpecification.specificationBuilder(requestDto);
 
-		Pageable pageable = PageRequest.of(page - 1, limit);
+		Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getLimit());
 
 		try {
 			Page<Product> productList = productService.getAllBySpecification(spec, pageable);

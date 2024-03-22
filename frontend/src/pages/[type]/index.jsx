@@ -42,7 +42,7 @@ const ProductsPageRoute = () => {
 
     let sale = router.query.sale || null;
 
-    let firstProductDataUrl = `${process.env.DOMAIN}/search/searchByCondition?page=${page}&limit=5`;
+    let firstProductDataUrl = `${process.env.DOMAIN}/search/searchByCondition`;
 
     let body = {
         "searchRequestDtoList" : [
@@ -52,7 +52,9 @@ const ProductsPageRoute = () => {
                 "operator" : "EQUAL"
             }
         ],
-        "globalOperator" : "AND"
+        "globalOperator" : "AND",
+        "page" : page,
+        "limit" : 5
     }
 
     if (producer !== null) {
@@ -107,7 +109,7 @@ const ProductsPageRoute = () => {
         });
     }
 
-    const { data, isLoading, error, revalidate } = useSWR(
+    const { data, isLoading, error } = useSWR(
         firstProductDataUrl,
         () => postMethodFetcher(firstProductDataUrl, body),{
             revalidateIfStale: false,
@@ -132,7 +134,7 @@ const ProductsPageRoute = () => {
 
     if (error || err) return <CustomErrorPage />
 
-    if (data) return <ProductsPageByType pageData={data} page={page} pageType={router.query.type} staticData={res} />
+    if (data) return <ProductsPageByType pageData={data} page={page} pageType={type} staticData={res} />
 
 };
 

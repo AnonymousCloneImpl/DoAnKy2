@@ -9,5 +9,5 @@ import java.util.List;
 public interface SearchService {
 	List<ProductSummaryDto> findByName(String name, Integer limit);
 
-	Pagination findProductsByTypeWithPaging(RequestDto requestDto, Integer page, Integer limit);
+	Pagination findProductsByTypeWithPaging(RequestDto requestDto);
 }
