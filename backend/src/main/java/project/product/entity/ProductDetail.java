@@ -1,6 +1,7 @@
 package project.product.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
@@ -15,7 +16,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString
 @Table(name = "product_detail")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class ProductDetail {
@@ -31,5 +31,6 @@ public class ProductDetail {
 	@JoinColumn(name = "product_id")
 	private Product product;
 	@OneToMany
+	@JsonIgnoreProperties
 	private List<Stock> stockList;
 }

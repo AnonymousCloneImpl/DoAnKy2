@@ -90,10 +90,6 @@ public class ProductServiceImpl implements ProductService {
 			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
 					.convertProductsToProductSummaryDtoList(productList, modelMapper);
 
-			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setConfiguration(productDetailService.getById(p.getId()));
-			}
-
 			ProductUtils.getConfigurationForDto(productSummaryDtoList, productDetailService);
 
 			List<ProductDetail> productDetailList = productDetailService.findAll(productSpecification.getByProductType(type));

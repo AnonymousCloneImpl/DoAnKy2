@@ -19,5 +19,5 @@ public class ProductDetailDto implements Serializable {
 	private String material;
 	private String dimensions;
 	private String releaseDate;
-	private Product product;
+	private Object detail;
 }
