@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public interface ProductDetailService {
-	ProductDetail getById(Long id);
+	ProductDetail getByProductId(Long id);
 
 	List<String> getCpuList();
 

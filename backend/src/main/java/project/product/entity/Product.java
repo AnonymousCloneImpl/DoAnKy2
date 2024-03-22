@@ -39,19 +39,4 @@ public class Product {
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
 	private List<ProductDetail> productDetails;
-
-	@Override
-	public String toString() {
-		return "Product{" +
-				"id=" + id +
-				", producer=" + producer +
-				", model='" + model + '\'' +
-				", name='" + name + '\'' +
-				", type='" + type + '\'' +
-				", price=" + price +
-				", image='" + image + '\'' +
-				", discountPercentage=" + discountPercentage +
-				", productDetails=" + productDetails +
-				'}';
-	}
 }

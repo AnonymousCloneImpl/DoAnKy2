@@ -7,21 +7,23 @@ import project.cart.service.CartService;
 import project.product.entity.Stock;
 import project.product.repository.ProductDetailRepository;
 import project.product.repository.StockRepository;
+import project.product.service.ProductDetailService;
+import project.product.service.StockService;
 
 import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService {
 	@Autowired
-	ProductDetailRepository productDetailRepo;
+	ProductDetailService productDetailService;
 	@Autowired
-	StockRepository stockRepo;
+	StockService stockService;
 
 	@Override
 	public void getListProductWithStock(CartDto cartDto) {
 		for (int i = 0; i < cartDto.getCartItemDtoList().size(); i++) {
-			long pDetailId = productDetailRepo.findByProductId(cartDto.getCartItemDtoList().get(i).getProductId()).getId();
-			Optional<Stock> stock = stockRepo.findByProductDetailId(pDetailId);
+			long pDetailId = productDetailService.getByProductId(cartDto.getCartItemDtoList().get(i).getProductId()).getId();
+			Optional<Stock> stock = stockService.findByProductDetailId(pDetailId);
 			cartDto.getCartItemDtoList().get(i).setQuantity(stock.get().getQuantity());
 		}
 	}
