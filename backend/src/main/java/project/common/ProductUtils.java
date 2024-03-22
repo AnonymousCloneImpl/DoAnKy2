@@ -103,15 +103,13 @@ public class ProductUtils {
 		}
 	}
 
-	public BlogDto createBlogDto(Blog blog) {
-		BlogDto blogDto = new BlogDto();
-		BeanUtils.copyProperties(blog, blogDto);
-		return blogDto;
-	}
-
-	public void setBlogImageAndContent(BlogDto blogDto, Blog blog) {
-		String blogImageStr = blog.getImage();
-		String blogContentStr = blog.getContent();
+	public void setBlogImageAndContent(BlogDto blogDto, Optional<Blog> blog) {
+		String blogImageStr = "";
+		String blogContentStr = "";
+		if (blog.isPresent()) {
+			blogImageStr = blog.get().getImage();
+			blogContentStr = blog.get().getContent();
+		}
 		blogDto.setImageList(Optional.ofNullable(blogImageStr)
 				.map(str -> List.of(str.split("\\|")))
 				.orElse(Collections.emptyList()));

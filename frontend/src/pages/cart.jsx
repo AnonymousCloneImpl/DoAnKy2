@@ -323,7 +323,6 @@ const CartPage = () => {
                     <input
                       type="number"
                       min="1"
-                      defaultValue={1}
                       max={item.stock}
                       value={item.quantity}
                       onChange={(e) => limitQuantity(index, parseInt(e.target.value, 10))}
@@ -392,18 +391,33 @@ const CartPage = () => {
               <span className="close-form-btn" onClick={closeForm}>
                 <FontAwesomeIcon icon={faCircleXmark} />
               </span>
+              <img className='order-logo' src='/favico.png'></img>
               <h1>Order Form</h1>
 
               <form className="order-form" onSubmit={handleFormSubmit}>
-                <label htmlFor="customerName">Name</label>
-                <input type="text"
-                  value={customerName}
-                  onChange={(e) => setCustomerName(e.target.value)}
-                  className="customerName"
-                  name="customerName"
-                  placeholder="example: Ngọc Trinh..."
-                  id="customerName" required>
-                </input>
+                <div className='flex justify-between'>
+                  <div className='phone-ship'>
+                    <label htmlFor="customerName">Name</label>
+                    <input type="text"
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                      className="customerName"
+                      name="customerName"
+                      placeholder="example: Ngọc Trinh..."
+                      id="customerName" required>
+                    </input>
+                  </div>
+                  <div className='phone-ship'>
+                    <label htmlFor="customerEmail">Email</label>
+                    <input type="email" className="customerEmail"
+                      value={customerEmail}
+                      onChange={(e) => setCustomerEmail(e.target.value)}
+                      name="customerEmail"
+                      placeholder="example@gmail.com"
+                      id="customerEmail" required>
+                    </input>
+                  </div>
+                </div>
 
                 <label htmlFor="shippingAddress">Address</label>
                 <div className="address-selects">
@@ -415,7 +429,7 @@ const CartPage = () => {
                     defaultValue=""
                     onChange={(e) => handleProvinceChange(e.target.value)}
                   >
-                    <option value="" disabled>--- Province ---</option>
+                    <option value="" disabled className='option-css'>--- Province ---</option>
                     {provinces.map((province) => (
                       <option key={province}
                         value={province[0]}>
@@ -432,7 +446,7 @@ const CartPage = () => {
                     defaultValue=""
                     onChange={(e) => handleDistrictChange(e.target.value)}
                   >
-                    <option value="" disabled>--- District ---</option>
+                    <option value="" disabled className='option-css'>--- District ---</option>
                     {districts.map((district) => (
                       <option key={district}
                         value={district[0]}>
@@ -449,7 +463,7 @@ const CartPage = () => {
                     defaultValue=""
                     onChange={(e) => setSelectedWardId(e.target.value)}
                   >
-                    <option value="" disabled>--- Ward ---</option>
+                    <option value="" disabled className='option-css'>--- Ward ---</option>
                     {wards.map((ward) => (
                       <option key={ward}
                         value={ward[0]}>
@@ -469,23 +483,37 @@ const CartPage = () => {
                   id="houseAddress" required>
                 </input>
 
-                <label htmlFor="customerPhone">Phone Number</label>
-                <div className="phone-wrapper">
-                  <input type="tel" className="customerPhone"
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
-                    name="customerPhone"
-                    id="customerPhone" required>
-                  </input>
-                </div>
+                <div className='flex justify-between'>
+                  <div className='phone-ship'>
+                    <label htmlFor="customerPhone">Phone Number</label>
+                    <div className="phone-wrapper">
+                      <input type="tel" className="customerPhone"
+                        value={customerPhone}
+                        onChange={(e) => setCustomerPhone(e.target.value)}
+                        name="customerPhone"
+                        id="customerPhone" required>
+                      </input>
+                    </div>
+                  </div>
 
-                <label htmlFor="customerEmail">Email</label>
-                <input type="email" className="customerEmail"
-                  value={customerEmail}
-                  onChange={(e) => setCustomerEmail(e.target.value)}
-                  name="customerEmail"
-                  placeholder="example@gmail.com"
-                  id="customerEmail" required></input>
+                  <div className='phone-ship'>
+                    <label htmlFor="customerPhone">Shipping</label>
+                    <div className="ship">
+                      <select
+                        className="shipping"
+                        name="shipping"
+                        id="shipping"
+                        required
+                        defaultValue=""
+                        onChange={(e) => setSelectedWardId(e.target.value)}
+                      >
+                        <option value="" disabled className='option-css'>--- Select Method ---</option>
+                        <option value="50000">Standard Shipping - 50.000 đ</option>
+                        <option value="100000">Fast Shipping - 100.000 đ</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
 
                 <button type="submit">Confirm Order</button>
               </form>
@@ -493,6 +521,7 @@ const CartPage = () => {
           </div>
         </>
       )}
+
     </div>
   )
 };

@@ -2,6 +2,7 @@ package project.product.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,11 +12,8 @@ import project.product.models.Pagination;
 import project.product.dto.*;
 import project.product.entity.*;
 import project.product.repository.ProductRepository;
-import project.product.service.ProducerService;
-import project.product.service.ProductDetailService;
-import project.product.service.ProductService;
+import project.product.service.*;
 import project.common.ProductUtils;
-import project.product.service.StockService;
 import project.search.specification.ProductSpecification;
 
 import java.util.List;
@@ -37,6 +35,8 @@ public class ProductServiceImpl implements ProductService {
 	private ModelMapper modelMapper;
 	@Autowired
 	private ProductUtils productUtils;
+	@Autowired
+	private BlogService blogService;
 
 	@Override
 	public Optional<Product> getById(long id) {
@@ -133,14 +133,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+//	@Cacheable(key = "#name", value = "productByTypeAndName")
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String namePath = name.replace("-", " ");
 		Product p = productRepo.getByProductTypeAndByName(type, namePath);
 		ProductDto productDto = productUtils.createProductDto(p);
 		productUtils.setPurchaseComboItem(productDto);
-
-		Blog blog = p.getBlog();
-		BlogDto blogDto = productUtils.createBlogDto(blog);
+		BlogDto blogDto = new BlogDto();
+		Optional<Blog> blog = blogService.getBlogByProductId(p.getId());
 		productUtils.setBlogImageAndContent(blogDto, blog);
 
 		Optional<Stock> stock = stockService.findByProductDetailId(p.getId());
