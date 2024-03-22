@@ -87,4 +87,4 @@ next-env.d.ts
 package-lock.json
 /frontend/package-lock.json
 
-application.yml
+resource

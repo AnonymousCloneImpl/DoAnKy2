@@ -66,11 +66,11 @@ public class ProductServiceImpl implements ProductService {
 		try {
 			Page<Product> productPage = productRepo.findAll(pageable);
 
-			Pagination pagination = ProductUtils
+			Pagination pagination = productUtils
 					.convertPageProductToPaginationObject(productPage, modelMapper);
 
 			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
-				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
 			}
 
 			pagination.setElementPerPage(limit);
@@ -87,10 +87,10 @@ public class ProductServiceImpl implements ProductService {
 		try {
 			List<Product> productList = productRepo.getTopSellerByType(type, limit);
 
-			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
+			List<ProductSummaryDto> productSummaryDtoList = productUtils
 					.convertProductsToProductSummaryDtoList(productList, modelMapper);
 
-			ProductUtils.getConfigurationForDto(productSummaryDtoList, productDetailService);
+			productUtils.getConfigurationForDto(productSummaryDtoList, productDetailService);
 
 			List<ProductDetail> productDetailList = productDetailService.findAll(productSpecification.getByProductType(type));
 
@@ -114,10 +114,10 @@ public class ProductServiceImpl implements ProductService {
 
 		try {
 			Page<Product> productList = productRepo.findAll(spec, pageable);
-			Pagination pagination = ProductUtils
+			Pagination pagination = productUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
-			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailService);
+			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailService);
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 

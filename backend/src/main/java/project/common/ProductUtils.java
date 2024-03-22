@@ -30,11 +30,11 @@ public class ProductUtils {
 	@Autowired
 	private ProductDetailService productDetailService;
 
-	public static String getFirstImageUrl(String imageList) {
+	public String getFirstImageUrl(String imageList) {
 		return imageList.split("\\|")[0];
 	}
 
-	public static Pagination convertPageProductToPaginationObject(Page<Product> products, ModelMapper modelMapper) {
+	public Pagination convertPageProductToPaginationObject(Page<Product> products, ModelMapper modelMapper) {
 		return Pagination.builder()
 				.totalPageNumber(products.getTotalPages())
 				.totalElement(products.getTotalElements())
@@ -47,7 +47,7 @@ public class ProductUtils {
 				.build();
 	}
 
-	public static List<ProductSummaryDto> convertProductsToProductSummaryDtoList(
+	public List<ProductSummaryDto> convertProductsToProductSummaryDtoList(
 			List<Product> productList,
 			ModelMapper modelMapper
 	) {
@@ -57,40 +57,45 @@ public class ProductUtils {
 		)).toList();
 
 		for (ProductSummaryDto summaryDto : productSummaryDtoList) {
-			summaryDto.setImage(ProductUtils.getFirstImageUrl(summaryDto.getImage()));
+			summaryDto.setImage(getFirstImageUrl(summaryDto.getImage()));
 		}
 
 		return productSummaryDtoList;
 	}
 
-	public static void getConfigurationForDto(
+	public void getConfigurationForDto(
 			List<ProductSummaryDto> productSummaryDtoList,
 			ProductDetailService productDetailService
 	) {
 		for (ProductSummaryDto p : productSummaryDtoList) {
 			ProductDetail detail = productDetailService.getById(p.getId());
-			
-			ProductDetailDto detailDto = new ProductDetailDto();
-
-			switch (p.getType().toLowerCase()) {
-				case "laptop" -> {
-					LaptopDetail detail1 = new LaptopDetail();
-					BeanUtils.copyProperties(detail, detail1);
-					detailDto.setDetail(detail1);
-				}
-				case "keyboard" -> {
-					KeyboardDetail detail1 = new KeyboardDetail();
-					BeanUtils.copyProperties(detail, detail1);
-					detailDto.setDetail(detail1);
-				}
-				case "mouse" -> {
-					MouseDetail detail1 = new MouseDetail();
-					BeanUtils.copyProperties(detail, detail1);
-					detailDto.setDetail(detail1);
-				}
-			}
-			p.setConfiguration(detailDto);
+			p.setConfiguration(getDetailDto(p.getType().toLowerCase(), detail));
 		}
+	}
+
+	public ProductDetailDto getDetailDto(String type, ProductDetail productDetail) {
+		ProductDetailDto detailDto = new ProductDetailDto();
+		Object detail = null;
+		switch (type) {
+			case "laptop" -> {
+				detail = new LaptopDetail();
+				BeanUtils.copyProperties(productDetail, detail);
+			}
+			case "keyboard" -> {
+				detail = new KeyboardDetail();
+				BeanUtils.copyProperties(productDetail, detail);
+			}
+			case "mouse" -> {
+				detail = new MouseDetail();
+				BeanUtils.copyProperties(productDetail, detail);
+			}
+			case "headphone" -> {
+				detail = new HeadphoneDetailDto();
+				BeanUtils.copyProperties(productDetail, detail);
+			}
+		}
+		detailDto.setDetail(detail);
+		return detailDto;
 	}
 
 

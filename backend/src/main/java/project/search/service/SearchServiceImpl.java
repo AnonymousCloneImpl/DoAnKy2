@@ -31,7 +31,7 @@ public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private ProductSpecification productSpecification;
 	@Autowired
-	private ProductRepository productRepository;
+	private ProductUtils productUtils;
 
 	@Override
 	public List<ProductSummaryDto> findByName(String name, Integer limit) {
@@ -40,10 +40,10 @@ public class SearchServiceImpl implements SearchService {
 		}
 		List<Product> productList = productService.findAllByNameAndSortBySold(name, PageRequest.of(0, limit));
 		if (!productList.isEmpty()) {
-			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
+			List<ProductSummaryDto> productSummaryDtoList = productUtils
 					.convertProductsToProductSummaryDtoList(productList, modelMapper);
 			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
 			}
 			return productSummaryDtoList;
 		} else {
@@ -69,10 +69,10 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			Page<Product> productList = productService.getAllBySpecification(spec, pageable);
 
-			Pagination pagination = ProductUtils
+			Pagination pagination = productUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
-			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailService);
+			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailService);
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 
