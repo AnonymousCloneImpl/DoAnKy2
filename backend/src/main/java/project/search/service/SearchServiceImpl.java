@@ -12,6 +12,7 @@ import project.product.dto.ProductSummaryDto;
 import project.product.models.Pagination;
 import project.product.entity.Product;
 import project.common.ProductUtils;
+import project.product.repository.ProductRepository;
 import project.product.service.ProductDetailService;
 import project.product.service.ProductService;
 import project.search.dto.RequestDto;
@@ -29,6 +30,8 @@ public class SearchServiceImpl implements SearchService {
 	private ModelMapper modelMapper;
 	@Autowired
 	private ProductSpecification productSpecification;
+	@Autowired
+	private ProductRepository productRepository;
 
 	@Override
 	public List<ProductSummaryDto> findByName(String name, Integer limit) {

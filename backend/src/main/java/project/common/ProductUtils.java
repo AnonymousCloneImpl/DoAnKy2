@@ -1,5 +1,6 @@
 package project.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j(topic = "PRODUCT-UTILS")
 public class ProductUtils {
 	@Autowired
 	private ProductRepository productRepo;
@@ -66,7 +68,28 @@ public class ProductUtils {
 			ProductDetailService productDetailService
 	) {
 		for (ProductSummaryDto p : productSummaryDtoList) {
-			p.setConfiguration(productDetailService.getById(p.getId()));
+			ProductDetail detail = productDetailService.getById(p.getId());
+			
+			ProductDetailDto detailDto = new ProductDetailDto();
+
+			switch (p.getType().toLowerCase()) {
+				case "laptop" -> {
+					LaptopDetail detail1 = new LaptopDetail();
+					BeanUtils.copyProperties(detail, detail1);
+					detailDto.setDetail(detail1);
+				}
+				case "keyboard" -> {
+					KeyboardDetail detail1 = new KeyboardDetail();
+					BeanUtils.copyProperties(detail, detail1);
+					detailDto.setDetail(detail1);
+				}
+				case "mouse" -> {
+					MouseDetail detail1 = new MouseDetail();
+					BeanUtils.copyProperties(detail, detail1);
+					detailDto.setDetail(detail1);
+				}
+			}
+			p.setConfiguration(detailDto);
 		}
 	}
 

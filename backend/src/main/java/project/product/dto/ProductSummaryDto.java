@@ -3,6 +3,7 @@ package project.product.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
+import project.product.entity.ProductDetail;
 
 import java.io.Serializable;
 
@@ -19,6 +20,6 @@ public class ProductSummaryDto implements Serializable {
 	private byte discountPercentage;
 	private String image;
 	private String type;
-	@JsonIgnoreProperties({"material", "dimensions", "releaseDate", "product", "cpu", "screenResolution", "ports", "os"})
-	private Object configuration;
+	@JsonIgnoreProperties({"material", "stockList", "dimensions", "releaseDate", "cpu", "screenResolution", "ports", "os"})
+	private ProductDetailDto configuration;
 }
