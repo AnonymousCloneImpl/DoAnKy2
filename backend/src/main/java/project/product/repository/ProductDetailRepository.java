@@ -11,7 +11,10 @@ import java.util.List;
 
 @Repository
 public interface ProductDetailRepository extends JpaRepository<ProductDetail, Long>, JpaSpecificationExecutor<ProductDetail> {
-	ProductDetail findByProductId(Long id);
+	@Query("select pd from ProductDetail pd " +
+		"join Product p on pd.product.id = p.id " +
+		"where p.id = :productId")
+	ProductDetail findByProductId(@Param("productId")Long id);
 
 	@Query(nativeQuery = true, value = "select distinct ld.cpu_type FROM product_detail pd join laptop_detail ld on pd.id = ld.id ")
 	List<String> getCpuList();
