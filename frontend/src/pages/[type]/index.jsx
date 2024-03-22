@@ -112,20 +112,20 @@ const ProductsPageRoute = () => {
         () => postMethodFetcher(firstProductDataUrl, body),{
             revalidateIfStale: false,
             revalidateOnFocus: false,
-            revalidateOnReconnect: true
+            revalidateOnReconnect: false
         }
     );
 
     useEffect(() => {
         mutate(firstProductDataUrl);
-    }, [page, type, producer, minPrice, maxPrice, cpu, limit, ram]);
+    }, [page, type, producer, minPrice, maxPrice, cpu, limit, ram, firstProductDataUrl]);
 
     const staticData = `${process.env.DOMAIN}/products/staticData?type=${type}`;
 
     const {data : res, error : err} = useSWR(staticData, fetcher,{
         revalidateIfStale: false,
         revalidateOnFocus: false,
-        revalidateOnReconnect: true
+        revalidateOnReconnect: false
     });
 
     if (isLoading || res === undefined) return <div>Loading...</div>
