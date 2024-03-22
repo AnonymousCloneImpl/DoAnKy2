@@ -90,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
 			List<ProductSummaryDto> productSummaryDtoList = productUtils
 					.convertProductsToProductSummaryDtoList(productList, modelMapper);
 
-			productUtils.getConfigurationForDto(productSummaryDtoList, productDetailService);
+			productUtils.getConfigurationForDto(productSummaryDtoList);
 
 			List<ProductDetail> productDetailList = productDetailService.findAll(productSpecification.getByProductType(type));
 
@@ -117,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
 			Pagination pagination = productUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
-			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailService);
+			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 

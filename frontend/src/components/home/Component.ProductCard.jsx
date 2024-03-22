@@ -104,15 +104,15 @@ export default function ProductCardComponent({productData, type}) {
                                 className="flex flex-wrap justify-around items-center text-sm text-gray-600">
                                 <div className="flex justify-center items-center">
                                     <FontAwesomeIcon icon={faMicrochip}/>
-                                    <p className="pl-1">{p?.configuration?.cpuType}</p>
+                                    <p className="pl-1">{p?.configuration?.detail?.cpuType}</p>
                                 </div>
                                 <div className="flex justify-center items-center">
                                     <FontAwesomeIcon icon={faMemory}/>
-                                    <p className="pl-1">{p?.configuration?.ram?.split(" ")[0]}</p>
+                                    <p className="pl-1">{p?.configuration?.detail?.ram?.split(" ")[0]}</p>
                                 </div>
                                 <div className="flex justify-center items-center">
                                     <FontAwesomeIcon icon={faDisplay}/>
-                                    <p className="pl-1">{p?.configuration?.screenSize?.split(" ")[0] + "\""}</p>
+                                    <p className="pl-1">{p?.configuration?.detail?.screenSize?.split(" ")[0] + "\""}</p>
                                 </div>
                                 <div className="flex justify-center items-center mt-2">
                                     <Image src="/gpu.png"
@@ -121,7 +121,7 @@ export default function ProductCardComponent({productData, type}) {
                                            style={{width: "auto", height: "auto"}}
                                            priority="high"
                                     />
-                                    <p>{p.configuration?.graphicsCard?.split(",")[0]}</p>
+                                    <p>{p.configuration?.detail?.graphicsCard?.split(",")[0]}</p>
                                 </div>
                             </div>
                             <div className="w-full h-16 flex justify-center items-center ">

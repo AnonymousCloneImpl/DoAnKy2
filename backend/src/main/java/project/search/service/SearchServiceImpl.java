@@ -72,7 +72,7 @@ public class SearchServiceImpl implements SearchService {
 			Pagination pagination = productUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
-			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailService);
+			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 

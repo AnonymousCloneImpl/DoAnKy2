@@ -64,8 +64,7 @@ public class ProductUtils {
 	}
 
 	public void getConfigurationForDto(
-			List<ProductSummaryDto> productSummaryDtoList,
-			ProductDetailService productDetailService
+			List<ProductSummaryDto> productSummaryDtoList
 	) {
 		for (ProductSummaryDto p : productSummaryDtoList) {
 			ProductDetail detail = productDetailService.getById(p.getId());

@@ -6,8 +6,6 @@ import fetcher from "@/utils/fetchAPI";
 import ProductListComponent from "@/components/home/ProductList";
 import Head from "next/head";
 import CustomErrorPage from "@/pages/error";
-import Image from "next/image";
-import {useRouter} from "next/router";
 
 dotenv.config();
 
