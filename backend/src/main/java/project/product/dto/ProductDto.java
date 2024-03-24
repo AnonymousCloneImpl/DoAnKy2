@@ -12,20 +12,19 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash("Product")
 public class ProductDto implements Serializable {
 	private long id;
 	private String producer;
 	private String model;
 	private String name;
 	private String type;
-	@JsonIgnoreProperties({"id", "product"})
+	@JsonIgnoreProperties({"id"})
 	private ProductDetailDto productDetail;
 	private Long price;
 	private List<String> imageList;
 	private byte discountPercentage;
 	private BlogDto blog;
-	private StaticDataProductPage.PurchaseComboItem purchaseComboItem;
+	private PurchaseComboItem purchaseComboItem;
 	private List<SimilarProductDto> similarProductList;
 	private StockDto stock;
 	private List<String> configurationList;

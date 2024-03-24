@@ -11,11 +11,8 @@ import project.product.models.Pagination;
 import project.product.dto.*;
 import project.product.entity.*;
 import project.product.repository.ProductRepository;
-import project.product.service.ProducerService;
-import project.product.service.ProductDetailService;
-import project.product.service.ProductService;
+import project.product.service.*;
 import project.common.ProductUtils;
-import project.product.service.StockService;
 import project.search.specification.ProductSpecification;
 
 import java.util.List;
@@ -37,6 +34,8 @@ public class ProductServiceImpl implements ProductService {
 	private ModelMapper modelMapper;
 	@Autowired
 	private ProductUtils productUtils;
+	@Autowired
+	private BlogService blogService;
 
 	@Override
 	public Optional<Product> getById(long id) {
@@ -66,11 +65,11 @@ public class ProductServiceImpl implements ProductService {
 		try {
 			Page<Product> productPage = productRepo.findAll(pageable);
 
-			Pagination pagination = ProductUtils
+			Pagination pagination = productUtils
 					.convertPageProductToPaginationObject(productPage, modelMapper);
 
 			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
-				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
 			}
 
 			pagination.setElementPerPage(limit);
@@ -87,20 +86,16 @@ public class ProductServiceImpl implements ProductService {
 		try {
 			List<Product> productList = productRepo.getTopSellerByType(type, limit);
 
-			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
+			List<ProductSummaryDto> productSummaryDtoList = productUtils
 					.convertProductsToProductSummaryDtoList(productList, modelMapper);
 
-			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setConfiguration(productDetailService.getById(p.getId()));
-			}
+			List<Producer> producerDtos = producerService.findProducersByProductType(type);
 
-			ProductUtils.getConfigurationForDto(productSummaryDtoList, productDetailService);
-
-			List<ProductDetail> productDetailList = productDetailService.findAll(productSpecification.getByProductType(type));
+			productUtils.getConfigurationForDto(productSummaryDtoList);
 
 			return StaticDataProductPage.builder()
 					.productSummaryDtoList(productSummaryDtoList)
-					.producerList(producerService.findProducersByProductType(type))
+					.producerList(productUtils.convertProducerListToProducerDtoList(producerDtos, modelMapper))
 					.cpuList(productDetailService.getCpuList())
 					.ramList(productDetailService.getRamList())
 					.build();
@@ -111,17 +106,17 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Pagination getProductsByTypeWithPaging(SearchDto searchDto) {
-		Specification<Product> spec = productSpecification.filterOfProduct(searchDto);
+	public Pagination getProductsByTypeWithPaging(HomePageData homePageData) {
+		Specification<Product> spec = productSpecification.findByType(homePageData);
 
-		Pageable pageable = PageRequest.of((searchDto.getPage() - 1), searchDto.getLimit() == null ? Pagination.PAGE_SIZE : searchDto.getLimit());
+		Pageable pageable = PageRequest.of((homePageData.getPage() - 1), homePageData.getLimit() == null ? Pagination.PAGE_SIZE : homePageData.getLimit());
 
 		try {
 			Page<Product> productList = productRepo.findAll(spec, pageable);
-			Pagination pagination = ProductUtils
+			Pagination pagination = productUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
-			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailService);
+			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 
@@ -133,14 +128,14 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+//	@Cacheable(key = "#name", value = "productByTypeAndName")
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String namePath = name.replace("-", " ");
 		Product p = productRepo.getByProductTypeAndByName(type, namePath);
 		ProductDto productDto = productUtils.createProductDto(p);
 		productUtils.setPurchaseComboItem(productDto);
-
-		Blog blog = p.getBlog();
-		BlogDto blogDto = productUtils.createBlogDto(blog);
+		BlogDto blogDto = new BlogDto();
+		Optional<Blog> blog = blogService.getBlogByProductId(p.getId());
 		productUtils.setBlogImageAndContent(blogDto, blog);
 
 		Optional<Stock> stock = stockService.findByProductDetailId(p.getId());

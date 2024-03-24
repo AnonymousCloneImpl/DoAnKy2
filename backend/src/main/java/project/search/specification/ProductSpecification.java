@@ -6,11 +6,10 @@ import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-import project.product.dto.SearchDto;
+import project.product.dto.HomePageData;
 import project.product.entity.Producer;
 import project.product.entity.Product;
 import project.product.entity.ProductDetail;
-import project.product.entity.Stock;
 import project.search.dto.RequestDto;
 import project.search.dto.SearchRequestDto;
 
@@ -20,44 +19,13 @@ import java.util.Objects;
 
 @Component
 public class ProductSpecification {
-	public Specification<Product> filterOfProduct(SearchDto searchDto) {
+	public Specification<Product> findByType(HomePageData searchDto) {
 		return (root, query, criteriaBuilder) -> {
 			Specification<Product> specification = Specification.where(null);
 
 			if (searchDto.getType() != null) {
 				specification = specification.and((root1, query1, criteriaBuilder1) ->
 						criteriaBuilder1.equal(root1.get("type"), searchDto.getType()));
-			}
-
-			if (searchDto.getProducer() != null) {
-				specification = specification.and((root1, query1, criteriaBuilder1) -> {
-					Join<Product, Producer> producerJoin = root1.join("producer");
-					return criteriaBuilder1.equal(producerJoin.get("name"), searchDto.getProducer());
-				});
-			}
-
-			if (searchDto.getMinPrice() != null && searchDto.getMaxPrice() != null) {
-				specification = specification.and((root1, query1, criteriaBuilder1) ->
-						criteriaBuilder1.between(root1.get("price"), searchDto.getMinPrice(), searchDto.getMaxPrice()));
-			}
-
-			if (searchDto.getMinPrice() != null && searchDto.getMaxPrice() == null) {
-				specification = specification.and((root1, query1, criteriaBuilder1) ->
-						criteriaBuilder1.greaterThanOrEqualTo(root1.get("price"), searchDto.getMinPrice()));
-			}
-
-			if (searchDto.getMinPrice() == null && searchDto.getMaxPrice() != null) {
-				specification = specification.and((root1, query1, criteriaBuilder1) ->
-						criteriaBuilder1.lessThanOrEqualTo(root1.get("price"), searchDto.getMaxPrice()));
-			}
-
-			if (searchDto.getCpu() != null) {
-				specification = specification.and((root2, query2, criteriaBuilder2) -> {
-					query2.distinct(true);
-					return criteriaBuilder2.and(
-							criteriaBuilder2.equal(root2.join("productDetails").get("cpuType"), searchDto.getCpu().replace("-", " "))
-					);
-				});
 			}
 
 			return specification.toPredicate(root, query, criteriaBuilder);
@@ -149,12 +117,6 @@ public class ProductSpecification {
 		};
 	}
 
-	public Specification<ProductDetail> findAllProductDetailByType(String type) {
-		return (root, query, criteriaBuilder) -> {
-			return criteriaBuilder.equal(root.join("product").get("type"), type);
-		};
-	}
-
 	public Specification<ProductDetail> getByProductType(String productType) {
 		return (root, query, criteriaBuilder) -> {
 			query.distinct(true);
@@ -166,15 +128,6 @@ public class ProductSpecification {
 			query.where(predicate);
 
 			return predicate;
-		};
-	}
-
-	public Specification<Product> joinProductDetailAndStockOrderBySold(String name) {
-		return (root, query, criteriaBuilder) -> {
-			Join<Product, ProductDetail> productDetailJoin = root.join("productDetails");
-			Join<ProductDetail, Stock> stockJoin = productDetailJoin.join("stockList");
-			Path<String> productNamePath = root.get("name");
-			return criteriaBuilder.like(productNamePath, "%a%");
 		};
 	}
 }

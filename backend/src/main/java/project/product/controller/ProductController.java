@@ -1,13 +1,13 @@
 package project.product.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.product.models.Pagination;
-import project.product.dto.ProductSummaryDto;
-import project.product.dto.SearchDto;
+import project.product.dto.HomePageData;
 import project.product.dto.StaticDataProductPage;
 import project.product.entity.Producer;
 import project.product.service.ProducerService;
@@ -51,7 +51,7 @@ public class ProductController {
 		if (page == null) {
 			page = 1;
 		}
-		SearchDto searchDto = SearchDto.builder()
+		HomePageData searchDto = HomePageData.builder()
 				.type(type)
 				.page(page)
 				.limit(limit)
@@ -74,15 +74,12 @@ public class ProductController {
 	}
 
 	@GetMapping("/staticData")
-	public ResponseEntity<StaticDataProductPage> getStaticDataByType(@RequestParam String type, @Param(value = "limit") Integer limit) {
+	@Cacheable(key = "#type", value = "staticData")
+	public StaticDataProductPage getStaticDataByType(@RequestParam String type, @Param(value = "limit") Integer limit) {
 		if (limit == null) {
 			limit = 5;
 		}
-		StaticDataProductPage data = productService.getStaticDataByType(type, limit);
-		if (data != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(data);
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		return productService.getStaticDataByType(type, limit);
 	}
 
 	@GetMapping("/producer")

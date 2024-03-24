@@ -25,4 +25,7 @@ public class Blog {
 	private String header;
 	@Column(columnDefinition = "TEXT", nullable = false)
 	private String content;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_id")
+	private Product product;
 }

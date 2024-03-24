@@ -1,5 +1,6 @@
 package project.common;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Slf4j(topic = "PRODUCT-UTILS")
 public class ProductUtils {
 	@Autowired
 	private ProductRepository productRepo;
@@ -27,12 +29,14 @@ public class ProductUtils {
 	private StockRepository stockRepo;
 	@Autowired
 	private ProductDetailService productDetailService;
+	@Autowired
+	private ModelMapper modelMapper;
 
-	public static String getFirstImageUrl(String imageList) {
+	public String getFirstImageUrl(String imageList) {
 		return imageList.split("\\|")[0];
 	}
 
-	public static Pagination convertPageProductToPaginationObject(Page<Product> products, ModelMapper modelMapper) {
+	public Pagination convertPageProductToPaginationObject(Page<Product> products, ModelMapper modelMapper) {
 		return Pagination.builder()
 				.totalPageNumber(products.getTotalPages())
 				.totalElement(products.getTotalElements())
@@ -45,40 +49,66 @@ public class ProductUtils {
 				.build();
 	}
 
-	public static List<ProductSummaryDto> convertProductsToProductSummaryDtoList(
+	public List<ProductSummaryDto> convertProductsToProductSummaryDtoList(
 			List<Product> productList,
 			ModelMapper modelMapper
 	) {
-
 		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((
 				product -> modelMapper.map(product, ProductSummaryDto.class)
 		)).toList();
 
 		for (ProductSummaryDto summaryDto : productSummaryDtoList) {
-			summaryDto.setImage(ProductUtils.getFirstImageUrl(summaryDto.getImage()));
+			summaryDto.setImage(getFirstImageUrl(summaryDto.getImage()));
 		}
 
 		return productSummaryDtoList;
 	}
 
-	public static void getConfigurationForDto(
-			List<ProductSummaryDto> productSummaryDtoList,
-			ProductDetailService productDetailService
+	public List<ProducerDto> convertProducerListToProducerDtoList(
+			List<Producer> producerList,
+			ModelMapper modelMapper
+	) {
+
+		List<ProducerDto> producerDtoList = producerList.stream().map((
+				product -> modelMapper.map(product, ProducerDto.class)
+		)).toList();
+
+		for (ProducerDto producerDto : producerDtoList) {
+			producerDto.setImage(getFirstImageUrl(producerDto.getImage()));
+		}
+
+		return producerDtoList;
+	}
+
+	public void getConfigurationForDto(
+			List<ProductSummaryDto> productSummaryDtoList
 	) {
 		for (ProductSummaryDto p : productSummaryDtoList) {
-			p.setConfiguration(productDetailService.getById(p.getId()));
+			ProductDetail detail = productDetailService.getByProductId(p.getId());
+			p.setConfiguration(getDetailDto(p.getType().toLowerCase(), detail));
 		}
 	}
 
+	public ProductDetailDto getDetailDto(String type, ProductDetail productDetail) {
+		ProductDetailDto detailDto = new ProductDetailDto();
+		switch (type) {
+			case "laptop" -> detailDto = modelMapper.map(productDetail, LaptopDetailDto.class);
+			case "keyboard" -> detailDto = modelMapper.map(productDetail, KeyboardDetailDto.class);
+			case "mouse" -> detailDto = modelMapper.map(productDetail, MouseDetailDto.class);
+			case "headphone" -> detailDto = modelMapper.map(productDetail, HeadphoneDetailDto.class);
+		}
+		return detailDto;
+	}
 
-	public ProductDto createProductDto(Product product) {
+
+	public ProductDto createProductDto(Product p) {
 		ProductDto productDto = new ProductDto();
-		BeanUtils.copyProperties(product, productDto);
+		BeanUtils.copyProperties(p, productDto);
 		return productDto;
 	}
 
 	public void setPurchaseComboItem(ProductDto productDto) {
-		StaticDataProductPage.PurchaseComboItem purchaseComboItem = new StaticDataProductPage.PurchaseComboItem();
+		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
 		Pageable pageable = PageRequest.of(0, 1);
 		try {
 			String type = "";
@@ -103,15 +133,13 @@ public class ProductUtils {
 		}
 	}
 
-	public BlogDto createBlogDto(Blog blog) {
-		BlogDto blogDto = new BlogDto();
-		BeanUtils.copyProperties(blog, blogDto);
-		return blogDto;
-	}
-
-	public void setBlogImageAndContent(BlogDto blogDto, Blog blog) {
-		String blogImageStr = blog.getImage();
-		String blogContentStr = blog.getContent();
+	public void setBlogImageAndContent(BlogDto blogDto, Optional<Blog> blog) {
+		String blogImageStr = "";
+		String blogContentStr = "";
+		if (blog.isPresent()) {
+			blogImageStr = blog.get().getImage();
+			blogContentStr = blog.get().getContent();
+		}
 		blogDto.setImageList(Optional.ofNullable(blogImageStr)
 				.map(str -> List.of(str.split("\\|")))
 				.orElse(Collections.emptyList()));
@@ -147,7 +175,7 @@ public class ProductUtils {
 
 
 	public void switchCase(String type, Product p, ProductDto productDto) {
-		ProductDetail pDetail = productDetailService.getById(p.getId());
+		ProductDetail pDetail = productDetailService.getByProductId(p.getId());
 		ModelMapper modelMapper = new ModelMapper();
 
 		switch (type.toLowerCase()) {

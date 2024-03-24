@@ -1,16 +1,17 @@
 package project.product.dto;
 
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LaptopDetailDto extends ProductDetailDto {
+public class LaptopDetailDto extends ProductDetailDto implements Serializable {
 	private String cpuType;
 	private String cpu;
 	private String ram;

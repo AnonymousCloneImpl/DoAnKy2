@@ -42,7 +42,7 @@ const ProductsPageRoute = () => {
 
     let sale = router.query.sale || null;
 
-    let firstProductDataUrl = `${process.env.DOMAIN}/search/searchByCondition?page=${page}&limit=5`;
+    let firstProductDataUrl = `${process.env.DOMAIN}/search/searchByCondition`;
 
     let body = {
         "searchRequestDtoList" : [
@@ -52,7 +52,9 @@ const ProductsPageRoute = () => {
                 "operator" : "EQUAL"
             }
         ],
-        "globalOperator" : "AND"
+        "globalOperator" : "AND",
+        "page" : page,
+        "limit" : 5
     }
 
     if (producer !== null) {
@@ -107,32 +109,32 @@ const ProductsPageRoute = () => {
         });
     }
 
-    const { data, isLoading, error, revalidate } = useSWR(
+    const { data, isLoading, error } = useSWR(
         firstProductDataUrl,
         () => postMethodFetcher(firstProductDataUrl, body),{
             revalidateIfStale: false,
             revalidateOnFocus: false,
-            revalidateOnReconnect: true
+            revalidateOnReconnect: false
         }
     );
 
     useEffect(() => {
         mutate(firstProductDataUrl);
-    }, [page, type, producer, minPrice, maxPrice, cpu, limit, ram]);
+    }, [page, type, producer, minPrice, maxPrice, cpu, limit, ram, firstProductDataUrl]);
 
     const staticData = `${process.env.DOMAIN}/products/staticData?type=${type}`;
 
     const {data : res, error : err} = useSWR(staticData, fetcher,{
         revalidateIfStale: false,
         revalidateOnFocus: false,
-        revalidateOnReconnect: true
+        revalidateOnReconnect: false
     });
 
     if (isLoading || res === undefined) return <div>Loading...</div>
 
     if (error || err) return <CustomErrorPage />
 
-    if (data) return <ProductsPageByType pageData={data} page={page} pageType={router.query.type} staticData={res} />
+    if (data) return <ProductsPageByType pageData={data} page={page} pageType={type} staticData={res} />
 
 };
 

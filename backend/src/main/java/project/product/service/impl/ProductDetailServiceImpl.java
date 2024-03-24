@@ -18,7 +18,7 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 
 
 	@Override
-	public ProductDetail getById(Long id) {
+	public ProductDetail getByProductId(Long id) {
 		return productDetailRepository.findByProductId(id);
 	}
 

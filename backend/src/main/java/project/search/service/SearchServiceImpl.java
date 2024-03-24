@@ -11,7 +11,6 @@ import project.product.dto.ProductSummaryDto;
 import project.product.models.Pagination;
 import project.product.entity.Product;
 import project.common.ProductUtils;
-import project.product.service.ProductDetailService;
 import project.product.service.ProductService;
 import project.search.dto.RequestDto;
 import project.search.specification.ProductSpecification;
@@ -23,11 +22,11 @@ public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private ProductService productService;
 	@Autowired
-	private ProductDetailService productDetailService;
-	@Autowired
 	private ModelMapper modelMapper;
 	@Autowired
 	private ProductSpecification productSpecification;
+	@Autowired
+	private ProductUtils productUtils;
 
 	@Override
 	public List<ProductSummaryDto> findByName(String name, Integer limit) {
@@ -36,10 +35,10 @@ public class SearchServiceImpl implements SearchService {
 		}
 		List<Product> productList = productService.findAllByNameAndSortBySold(name, PageRequest.of(0, limit));
 		if (!productList.isEmpty()) {
-			List<ProductSummaryDto> productSummaryDtoList = ProductUtils
+			List<ProductSummaryDto> productSummaryDtoList = productUtils
 					.convertProductsToProductSummaryDtoList(productList, modelMapper);
 			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setImage(ProductUtils.getFirstImageUrl(p.getImage()));
+				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
 			}
 			return productSummaryDtoList;
 		} else {
@@ -49,26 +48,26 @@ public class SearchServiceImpl implements SearchService {
 	}
 
 	@Override
-	public Pagination findProductsByTypeWithPaging(RequestDto requestDto, Integer page, Integer limit) {
-		if (page == null) {
-			page = 1;
+	public Pagination findProductsByTypeWithPaging(RequestDto requestDto) {
+		if (requestDto.getPage() == null) {
+			requestDto.setPage(1);
 		}
 
-		if (limit == null) {
-			limit = 10;
+		if (requestDto.getLimit() == null) {
+			requestDto.setLimit(10);
 		}
 
 		Specification<Product> spec = productSpecification.specificationBuilder(requestDto);
 
-		Pageable pageable = PageRequest.of(page - 1, limit);
+		Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getLimit());
 
 		try {
 			Page<Product> productList = productService.getAllBySpecification(spec, pageable);
 
-			Pagination pagination = ProductUtils
+			Pagination pagination = productUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
 
-			ProductUtils.getConfigurationForDto(pagination.getProductSummaryDtoList(), productDetailService);
+			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 

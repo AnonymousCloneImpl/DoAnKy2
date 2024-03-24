@@ -1,8 +1,8 @@
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleUp, faCommentDots } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faCircleUp, faCommentDots } from "@fortawesome/free-solid-svg-icons";
 export default function Layout({ children }) {
 
   // scrollToTop
@@ -30,6 +30,20 @@ export default function Layout({ children }) {
     });
   };
 
+
+  // Open/Close chat----------------------------------------------------------------------------------------------
+  const [isChatVisible, setChatVisible] = useState(false);
+  const chatRef = useRef(null);
+
+  const openChat = () => {
+    setChatVisible(true);
+  };
+
+  const closeChat = () => {
+    setChatVisible(false);
+  };
+
+
   return (
     <div>
       <Header />
@@ -39,11 +53,39 @@ export default function Layout({ children }) {
         </div>
       </div>
       {/* Scroll and Call button */}
-      <button className="call-button">
-        <a href="tel:+84123456789" className="info-menu2-li-a">
-          <FontAwesomeIcon icon={faCommentDots} />
-        </a>
+      <button
+        className="call-button"
+        onClick={openChat}>
+        <FontAwesomeIcon icon={faCommentDots} />
       </button>
+
+
+      {/* FORM ORDER */}
+      {isChatVisible && (
+        <>
+          <div className="chat-popup" ref={chatRef}>
+            <div className="chat-header">
+              <img className='chat-logo' src='/favico.png'></img>
+              <h1>Chatbox</h1>
+            </div>
+
+            <div className="chat-content">
+              <button className="close-chat-btn" onClick={closeChat}>
+                <FontAwesomeIcon icon={faCircleXmark} />
+              </button>
+
+              <form className="chat-form">
+                <input type="text"
+                  placeholder="Chat here..."
+                  className="chat"
+                  name="chat"
+                  id="chat" required>
+                </input>
+              </form>
+            </div>
+          </div>
+        </>
+      )}
 
       <div>
         {isScrollVisible && (
