@@ -15,6 +15,15 @@ export default function FormatPrice({price, type}) {
         );
     }
 
+    else if (type === 'normal') {
+        return (
+            <div className="flex normal_price justify-center">
+                {cleanedPrice}
+                <p className="underline">đ</p>
+            </div>
+        );
+    }
+
     return (
 
         <div className="flex price justify-center">

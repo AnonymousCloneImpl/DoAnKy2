@@ -338,6 +338,11 @@ ul#sub-menu li:hover ul#sub-drop {
   line-height: 1.1;
 }
 
+.normal_price {
+  font-size: 18px;
+  font-weight: 700;
+}
+
 .price {
   color: #707070;
   font-size: 18px;
