@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
 @Table(name = "product")
 public class Product {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@JsonBackReference
 	@ManyToOne
@@ -32,6 +33,8 @@ public class Product {
 	private String type;
 	@Column(nullable = false)
 	private Long price;
+	@ColumnDefault(value = "0")
+	private Integer status;
 	@Column(nullable = false, columnDefinition = "TEXT")
 	private String image;
 	@Column(nullable = false)

@@ -3,12 +3,11 @@ package project.product.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.data.redis.core.RedisHash;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.io.Serializable;
-
-import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -20,7 +19,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class ProductDetail {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String material;
 	private String dimensions;

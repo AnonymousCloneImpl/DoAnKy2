@@ -5,9 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.redis.core.RedisHash;
-
-import java.io.Serializable;
 
 @Entity
 @Getter
@@ -17,7 +14,7 @@ import java.io.Serializable;
 @Table(name = "blog")
 public class Blog {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(columnDefinition = "TEXT", nullable = false)
 	private String image;
