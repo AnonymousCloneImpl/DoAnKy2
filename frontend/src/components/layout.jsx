@@ -2,11 +2,14 @@ import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import { useEffect, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faCircleUp, faCommentDots } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faCircleUp, faCommentDots, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+
 export default function Layout({ children }) {
 
-  // scrollToTop
   const [isScrollVisible, setIsVisible] = useState(false);
+  const [isChatVisible, setChatVisible] = useState(false);
+  const [chatMessages, setChatMessages] = useState([]);
+  const chatRef = useRef(null);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -30,11 +33,7 @@ export default function Layout({ children }) {
     });
   };
 
-
-  // Open/Close chat----------------------------------------------------------------------------------------------
-  const [isChatVisible, setChatVisible] = useState(false);
-  const chatRef = useRef(null);
-
+  // open/close chat pop up
   const openChat = () => {
     setChatVisible(true);
   };
@@ -43,50 +42,61 @@ export default function Layout({ children }) {
     setChatVisible(false);
   };
 
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    const message = e.target.elements.chat.value.trim();
+    if (message !== "") {
+      setChatMessages([...chatMessages, message]);
+      e.target.reset();
+    }
+  };
 
   return (
     <div>
+      {/* Header */}
       <Header />
+
+      {/* Content */}
       <div className="w-full flex justify-center">
         <div className="w-full">
           {children}
         </div>
       </div>
-      {/* Scroll and Call button */}
-      <button
-        className="call-button"
-        onClick={openChat}>
+
+      {/* Open Chat Button */}
+      <button className="call-button" onClick={openChat}>
         <FontAwesomeIcon icon={faCommentDots} />
       </button>
 
-
-      {/* FORM ORDER */}
+      {/* Chat Popup */}
       {isChatVisible && (
-        <>
-          <div className="chat-popup" ref={chatRef}>
-            <div className="chat-header">
-              <img className='chat-logo' src='/favico.png'></img>
-              <h1>Chatbox</h1>
-            </div>
-
-            <div className="chat-content">
-              <button className="close-chat-btn" onClick={closeChat}>
-                <FontAwesomeIcon icon={faCircleXmark} />
-              </button>
-
-              <form className="chat-form">
-                <input type="text"
-                  placeholder="Chat here..."
-                  className="chat"
-                  name="chat"
-                  id="chat" required>
-                </input>
-              </form>
-            </div>
+        <div className="chat-popup" ref={chatRef}>
+          <div className="chat-header">
+            <img className='chat-logo' src='/favico.png' alt="Chat Logo" />
+            <h1>Chatbox</h1>
           </div>
-        </>
+
+          <div className="chat-content">
+            <button className="close-chat-btn" onClick={closeChat}>
+              <FontAwesomeIcon icon={faCircleXmark} />
+            </button>
+
+            {chatMessages.map((message, index) => (
+              <div key={index} className="chat-message"
+                style={{ top: `${10 + index * 40}px`, display: 'block' }}>
+                {message}
+              </div>
+            ))}
+
+            <form className="chat-form" onSubmit={handleSendMessage}>
+              <input type="text" placeholder="Chat here..." className="chat" name="chat" id="chat" required />
+              <button type="submit"><FontAwesomeIcon icon={faPaperPlane} /></button>
+            </form>
+          </div>
+        </div>
       )}
 
+      {/* Scroll to Top Button */}
       <div>
         {isScrollVisible && (
           <button onClick={scrollToTop} className="scroll-to-top-button">
@@ -94,6 +104,8 @@ export default function Layout({ children }) {
           </button>
         )}
       </div>
+
+      {/* Footer */}
       <Footer />
     </div>
   )

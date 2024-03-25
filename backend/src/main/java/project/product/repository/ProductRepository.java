@@ -36,8 +36,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 					"JOIN product_detail pd ON p.id = pd.product_id " +
 					"JOIN stock s ON pd.id = s.product_detail_id " +
 					"WHERE p.type = :type " +
-					"ORDER BY s.updated_time DESC, s.quantity DESC")
-	List<Product> findMostPurchaseByType(@Param("type") String type, Pageable pageable);
+					"ORDER BY s.updated_time DESC, s.quantity DESC " +
+					"LIMIT 1")
+	Product findMostPurchaseByType(@Param("type") String type);
 
 	@Query(nativeQuery = true,
 			value = "SELECT p.* FROM product p " +

@@ -692,10 +692,12 @@
 .order-form input {
   width: 100%;
   height: 40px;
-  padding: 5px 0;
+  padding: 5px 20px;
   margin-bottom: 15px;
   box-sizing: border-box;
-  border-bottom: 2px solid #00bfff;
+  border: 1px solid rgb(217, 217, 217);
+  background: rgb(244, 244, 244);
+  border-radius: 20px;
   outline: none;
 }
 
@@ -737,15 +739,18 @@
   width: 32%;
   text-align: center;
   height: 40px;
-  border-bottom: 2px solid #00bfff;
+  border: 1px solid rgb(217, 217, 217);
+  background: rgb(244, 244, 244);
+  border-radius: 20px;
 }
 
 .shipping {
   text-align: center;
   height: 40px;
   width: 100%;
-  outline: none;
-  border-bottom: 2px solid #00bfff;
+  border: 1px solid rgb(217, 217, 217);
+  background: rgb(244, 244, 244);
+  border-radius: 20px;
 }
 
 .scroll-to-top-button {
@@ -1030,8 +1035,8 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   background: rgb(244, 244, 244);
   z-index: 2;
-  animation: chats 0.1s infinite;
-  transition: box-shadow 0.1s ease-in-out;
+  /* animation: chats 0.1s infinite;
+  transition: box-shadow 0.1s ease-in-out; */
 }
 
 .chat-form {
@@ -1055,6 +1060,14 @@
   outline: none;
   letter-spacing: 1px;
   font-weight: 600;
+  position: relative;
+}
+
+.chat-form button {
+  position: absolute;
+  bottom: 5.3%;
+  right: 7%;
+  font-size: 18px;
 }
 
 .chat-logo {
@@ -1084,4 +1097,20 @@
 
 .phone-ship {
   width: 49%;
+}
+
+.chat-message {
+  border: 1px solid #1c6ef3;
+  background-color: #1c6ef3;
+  color: white;
+  font-size: 18px;
+  letter-spacing: 1px;
+  padding: 2px 10px;
+  font-weight: 400;
+  border-radius: 5px;
+  margin: 60px 10px;
+  position: absolute;
+  max-width: 300px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }

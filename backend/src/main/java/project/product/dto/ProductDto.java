@@ -18,7 +18,7 @@ public class ProductDto implements Serializable {
 	private String model;
 	private String name;
 	private String type;
-	@JsonIgnoreProperties({"id"})
+	@JsonIgnoreProperties({"id", "detail"})
 	private ProductDetailDto productDetail;
 	private Long price;
 	private List<String> imageList;
