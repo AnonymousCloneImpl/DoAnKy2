@@ -6,16 +6,10 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\User;
 
-class AdminPermissionValidate
+class AdminMiddleware
 {
 
-    /**
-     * Check if the user is an admin.
-     *
-     * @return bool
-     */
     public function isAdmin($authUser): bool
     {
         return $authUser->role === 'admin';
@@ -24,14 +18,14 @@ class AdminPermissionValidate
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(Request): (Response)  $next
+     * @param Closure(Request): (Response) $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = Auth::user();
+        $authUser = Auth::user();
 
-        if ($user != null) {
-            if ($this->isAdmin($user)) {
+        if ($authUser != null) {
+            if ($this->isAdmin($authUser)) {
                 return $next($request);
             }
             return redirect('/error')->with('error', 'You do not have permission to access the dashboard.');
