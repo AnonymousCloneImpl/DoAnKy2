@@ -10,11 +10,12 @@ const CheckOrder = () => {
     fetch(`${process.env.DOMAIN}/check-order?q=${searchPhone}`)
       .then(response => response.json())
       .then(data => {
-        if (data != null) {
+        if (data.data != null && data.data != undefined && data.data != "") {
           setData(data);
           console.log(data);
         } else {
           setErrorMessage(`Can't find order with phone number = ${searchPhone}`);
+          alert(errorMessage)
         }
       })
       .catch(error => {
@@ -22,6 +23,13 @@ const CheckOrder = () => {
         setErrorMessage('An error occurred while fetching data.');
       });
   };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
 
   return (
     <div>
@@ -34,13 +42,13 @@ const CheckOrder = () => {
             placeholder="Search..."
             value={searchPhone}
             onChange={(e) => setSearchPhone(e.target.value)}
+            onKeyDown={handleKeyPress}
           />
           <button type="submit" className="px-4 text-white bg-red-600 rounded-md uppercase" onClick={handleSearch}>
             Search
           </button>
         </div>
       </div>
-
 
       <section className="container mx-auto p-10 font-mono">
         <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">

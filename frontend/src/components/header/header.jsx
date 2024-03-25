@@ -198,12 +198,52 @@ export default function Header() {
             </ul>
           </li>
           <li>
-            <Link href="/laptop" className="flex justify-center items-center m-1">
+            <Link href="/pc-component" className="flex justify-center items-center m-1">
               <FontAwesomeIcon icon={faGears} className="sub-menu-i" />
               <p className="text-xl pl-2">
                 PC Components
               </p>
             </Link>
+            <ul id="sub-drop">
+              <li><img id='fix' src="/header_img/drop-menu-cpu.jfif" alt="" />
+                <Link href="/cpu">CPU</Link>
+              </li>
+              <li><img id="fix" src="/header_img/drop-menu-cpu-cooler.jfif" alt="" />
+                <Link href="/cpu-cooler">CPU COOLER</Link>
+              </li>
+              <li>
+                <img id="fix" src="/header_img/drop-menu-motherboard.jfif" alt="" />
+                <Link href="/motherboard">MOTHERBOARD</Link>
+              </li>
+              <li>
+                <img id="fix" src="/header_img/drop-menu-memory.jfif" alt="" />
+                <Link href="/memory">MEMORY</Link>
+              </li>
+              <li>
+                <img id="fix" src="/header_img/drop-menu-storage.jfif" alt="" />
+                <Link href="/storage">STORAGE</Link>
+              </li>
+              <li>
+                <img id="fix" src="/header_img/drop-menu-gpu.jfif" alt="" />
+                <Link href="/gpu">GPU</Link>
+              </li>
+              <li>
+                <img id="fix" src="/header_img/drop-menu-case.jpg" alt="" />
+                <Link href="/case">CASE</Link>
+              </li>
+              <li>
+                <img id="fix" src="/header_img/drop-menu-case-fan.jpg" alt="" />
+                <Link href="/case-fan">CASE FAN</Link>
+              </li>
+              <li>
+                <img id="fix" src="/header_img/drop-menu-power.jfif" alt="" />
+                <Link href="/power-supply-unit">POWER SUPPLY UNIT</Link>
+              </li>
+              <li>
+                <img id="fix" src="/header_img/drop-menu-monitor.webp" alt="" />
+                <Link href="/monitor">MONITOR</Link>
+              </li>
+            </ul>
           </li>
           <li>
             <div className="">
