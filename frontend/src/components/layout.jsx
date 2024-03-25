@@ -8,7 +8,6 @@ export default function Layout({ children }) {
 
   const [isScrollVisible, setIsVisible] = useState(false);
   const [isChatVisible, setChatVisible] = useState(false);
-  const [chatMessages, setChatMessages] = useState([]);
   const chatRef = useRef(null);
 
   useEffect(() => {
@@ -35,12 +34,18 @@ export default function Layout({ children }) {
 
   // open/close chat pop up
   const openChat = () => {
-    setChatVisible(true);
+    if (isChatVisible) {
+      closeChat();
+    } else {
+      setChatVisible(true);
+    }
   };
 
   const closeChat = () => {
     setChatVisible(false);
   };
+
+  const [chatMessages, setChatMessages] = useState([]);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -50,6 +55,17 @@ export default function Layout({ children }) {
       e.target.reset();
     }
   };
+
+  useEffect(() => {
+    scrollChatBox();
+  }, [chatMessages]);
+
+  function scrollChatBox() {
+    const chatBox = document.getElementById('chat-box');
+    if (chatBox) {
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  }
 
   return (
     <div>
@@ -64,7 +80,7 @@ export default function Layout({ children }) {
       </div>
 
       {/* Open Chat Button */}
-      <button className="call-button" onClick={openChat}>
+      <button className="chat-button" onClick={openChat}>
         <FontAwesomeIcon icon={faCommentDots} />
       </button>
 
@@ -73,27 +89,25 @@ export default function Layout({ children }) {
         <div className="chat-popup" ref={chatRef}>
           <div className="relative">
             <div className="chat-header">
-              <img className='chat-logo' src='/favico.png' alt="Chat Logo"/>
+              <img className='chat-logo' src='/favico.png' alt="Chat Logo" />
               <h1>Chatbox</h1>
               <button className="close-chat-btn" onClick={closeChat}>
-                <FontAwesomeIcon icon={faCircleXmark}/>
+                <FontAwesomeIcon icon={faCircleXmark} />
               </button>
             </div>
 
-            <div className="chat-content chat-box">
-
+            <div className="chat-content chat-box" id="chat-box">
               {chatMessages.map((message, index) => (
-                  <div key={index} className="chat-message"
-                       style={{top: `${10 + index * 40}px`, display: 'block'}}>
-                    {message}
-                  </div>
+                <div key={index} className="chat-message">
+                  <p>{message}</p>
+                </div>
               ))}
             </div>
 
             <div className="w-full h-20">
-              <form className="w-full h-full" onSubmit={handleSendMessage}>
-                <input type="text" placeholder="Chat here..." className="w-10/12" name="chat" id="chat" required/>
-                <button type="submit"><FontAwesomeIcon icon={faPaperPlane}/></button>
+              <form className="flex chat-form w-full h-full" onSubmit={handleSendMessage}>
+                <input type="text" placeholder="Chat here..." className="w-10/12" name="chat" id="chat" required />
+                <button type="submit"><FontAwesomeIcon icon={faPaperPlane} /></button>
               </form>
             </div>
           </div>
@@ -103,14 +117,14 @@ export default function Layout({ children }) {
       {/* Scroll to Top Button */}
       <div>
         {isScrollVisible && (
-            <button onClick={scrollToTop} className="scroll-to-top-button">
-              <FontAwesomeIcon icon={faCircleUp} className="scroll-icon"/>
-            </button>
+          <button onClick={scrollToTop} className="scroll-to-top-button">
+            <FontAwesomeIcon icon={faCircleUp} className="scroll-icon" />
+          </button>
         )}
       </div>
 
       {/* Footer */}
-      <Footer/>
+      <Footer />
     </div>
   )
 }
