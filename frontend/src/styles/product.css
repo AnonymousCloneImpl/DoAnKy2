@@ -1030,18 +1030,13 @@
   bottom: -23%;
   right: -7.7%;
   transform: translate(-50%, -50%);
-  background: #fff;
   padding: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   background: rgb(244, 244, 244);
   z-index: 2;
+  width: 350px;
   /* animation: chats 0.1s infinite;
   transition: box-shadow 0.1s ease-in-out; */
-}
-
-.chat-form {
-  width: 350px;
-  height: 350px;
 }
 
 .chat-content {
@@ -1109,7 +1104,6 @@
   font-weight: 400;
   border-radius: 5px;
   margin: 60px 10px;
-  position: absolute;
   max-width: 300px;
   white-space: pre-wrap;
   word-wrap: break-word;

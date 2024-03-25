@@ -71,27 +71,31 @@ export default function Layout({ children }) {
       {/* Chat Popup */}
       {isChatVisible && (
         <div className="chat-popup" ref={chatRef}>
-          <div className="chat-header">
-            <img className='chat-logo' src='/favico.png' alt="Chat Logo" />
-            <h1>Chatbox</h1>
-          </div>
+          <div className="relative">
+            <div className="chat-header">
+              <img className='chat-logo' src='/favico.png' alt="Chat Logo"/>
+              <h1>Chatbox</h1>
+              <button className="close-chat-btn" onClick={closeChat}>
+                <FontAwesomeIcon icon={faCircleXmark}/>
+              </button>
+            </div>
 
-          <div className="chat-content">
-            <button className="close-chat-btn" onClick={closeChat}>
-              <FontAwesomeIcon icon={faCircleXmark} />
-            </button>
+            <div className="chat-content chat-box">
 
-            {chatMessages.map((message, index) => (
-              <div key={index} className="chat-message"
-                style={{ top: `${10 + index * 40}px`, display: 'block' }}>
-                {message}
-              </div>
-            ))}
+              {chatMessages.map((message, index) => (
+                  <div key={index} className="chat-message"
+                       style={{top: `${10 + index * 40}px`, display: 'block'}}>
+                    {message}
+                  </div>
+              ))}
+            </div>
 
-            <form className="chat-form" onSubmit={handleSendMessage}>
-              <input type="text" placeholder="Chat here..." className="chat" name="chat" id="chat" required />
-              <button type="submit"><FontAwesomeIcon icon={faPaperPlane} /></button>
-            </form>
+            <div className="w-full h-20">
+              <form className="w-full h-full" onSubmit={handleSendMessage}>
+                <input type="text" placeholder="Chat here..." className="w-10/12" name="chat" id="chat" required/>
+                <button type="submit"><FontAwesomeIcon icon={faPaperPlane}/></button>
+              </form>
+            </div>
           </div>
         </div>
       )}
@@ -99,14 +103,14 @@ export default function Layout({ children }) {
       {/* Scroll to Top Button */}
       <div>
         {isScrollVisible && (
-          <button onClick={scrollToTop} className="scroll-to-top-button">
-            <FontAwesomeIcon icon={faCircleUp} className="scroll-icon" />
-          </button>
+            <button onClick={scrollToTop} className="scroll-to-top-button">
+              <FontAwesomeIcon icon={faCircleUp} className="scroll-icon"/>
+            </button>
         )}
       </div>
 
       {/* Footer */}
-      <Footer />
+      <Footer/>
     </div>
   )
 }
