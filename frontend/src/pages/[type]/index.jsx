@@ -54,7 +54,7 @@ const ProductsPageRoute = () => {
         ],
         "globalOperator" : "AND",
         "page" : page,
-        "limit" : 5
+        "limit" : 6
     }
 
     if (producer !== null) {

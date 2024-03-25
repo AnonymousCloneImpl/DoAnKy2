@@ -1,8 +1,15 @@
 @font-face {
-    font-family: 'Roboto Thin';
+    font-family: 'Roboto Thin' !important;
 }
 
 * {
     padding: 0;
     margin: 0;
+}
+
+
+@media screen and (min-width: 200px) and (max-width: 768px) {
+    * {
+        font-size: 13px;
+    }
 }

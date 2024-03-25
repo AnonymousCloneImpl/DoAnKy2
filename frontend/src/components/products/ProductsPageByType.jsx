@@ -367,9 +367,16 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     );
 }
 
-const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
-    const [values, setValues] = useState([0, 200000000]);
+const PriceRangeSlider = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
+    // Xác định giá trị ban đầu cho thanh trượt dựa trên minPrice và maxPrice
+    const [values, setValues] = useState([minPrice, maxPrice]);
 
+    // Cập nhật giá trị ban đầu khi minPrice và maxPrice thay đổi
+    useEffect(() => {
+        setValues([minPrice, maxPrice]);
+    }, [minPrice, maxPrice]);
+
+    // Xử lý sự thay đổi của thanh trượt
     const handleChange = (newValues) => {
         setValues(newValues);
         setMinPrice(newValues[0]);
@@ -384,13 +391,13 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
                 max={200000000}
                 values={values}
                 onChange={handleChange}
-                renderThumb={({props, isDragged}) => (
+                renderThumb={({ props, isDragged }) => (
                     <div
                         {...props}
                         className="h-6 w-6 bg-white border-2 border-gray-300 rounded-full z-10"
                     />
                 )}
-                renderTrack={({props, children}) => (
+                renderTrack={({ props, children }) => (
                     <div
                         {...props}
                         className="h-3 w-full rounded-md relative"
@@ -421,7 +428,7 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
                     </div>
                 )}
             >
-                {({handles, tracks}) => (
+                {({ handles, tracks }) => (
                     <div>
                         {handles.map(handle => (
                             <div
@@ -432,7 +439,7 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
                                 <div className="h-4 w-4 m-2 bg-blue-500 rounded-full"/>
                             </div>
                         ))}
-                        {tracks.map(({id, source, target}) => (
+                        {tracks.map(({ id, source, target }) => (
                             <div
                                 key={id}
                                 className="h-4"

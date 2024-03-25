@@ -48,3 +48,14 @@ td {
 th {
   background-color: #f2f2f2;
 }
+
+@media screen and (min-width: 200px) and (max-width: 768px){
+  .div-price {
+    display: block !important;
+  }
+}
+
+.div-price {
+  display: flex;
+  align-items: center;
+}

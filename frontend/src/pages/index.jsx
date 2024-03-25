@@ -6,6 +6,7 @@ import fetcher from "@/utils/fetchAPI";
 import ProductListComponent from "@/components/home/ProductList";
 import Head from "next/head";
 import CustomErrorPage from "@/pages/error";
+import Component1 from "@/components/home/component1";
 
 dotenv.config();
 
@@ -38,106 +39,40 @@ export default function Home() {
 
             <div className="w-full flex items-center justify-center mt-16">
                 <div className="w-11/12 flex">
-                    <div
-                        style={{
-                            height: '550px',
-                            backgroundImage: 'url("https://images.acer.com/is/image/acer/predator-helios-16-ph16-72-perkey-backlit-on-wp-black-01-1?$Series-Component-XL$")',
-                            backgroundSize: 'contain',
-                            backgroundRepeat: 'no-repeat',
-                            backgroundColor:'#F3F2F2',
-                            borderRadius:'16px'
-                        }}
-                        className="w-1/3 bg-gray-100 relative ml-1 mr-1">
-                        <div className="absolute bottom-12 left-10">
-                            <p className="text-2xl h-16 flex items-center">
-                                20% Off On Laptop
-                            </p>
-                            <p className="text-base flex flex-wrap w-5/6 h-16">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.
-                            </p>
-                            <Link
-                                href="/laptop?sale=20"
-                                className="w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600"
-                            >
-                                <p className="w-full h-full flex items-center justify-center text-white">
-                                    CHECK OUT
-                                </p>
-                            </Link>
-                        </div>
-                    </div>
-
-                    <div
-                        style={{
-                            height: '550px',
-                            backgroundImage: 'url("https://images.acer.com/is/image/acer/predator-helios-16-ph16-72-perkey-backlit-on-wp-black-01-1?$Series-Component-XL$")',
-                            backgroundSize: 'contain',
-                            backgroundRepeat: 'no-repeat',
-                            backgroundColor:'#F3F2F2',
-                            borderRadius:'16px'
-                        }}
-                        className="w-1/3 bg-gray-100 relative ml-1 mr-1">
-                        <div className="absolute bottom-12 left-10">
-                            <p className="text-2xl h-16 flex items-center">
-                                20% Off On Laptop
-                            </p>
-                            <p className="text-base flex flex-wrap w-5/6 h-16">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.
-                            </p>
-                            <Link
-                                href=""
-                                className="w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600"
-                            >
-                                <p className="w-full h-full flex items-center justify-center text-white">
-                                    CHECK OUT
-                                </p>
-                            </Link>
-                        </div>
-                    </div>
-
-                    <div
-                        style={{
-                            height: '550px',
-                            backgroundImage: 'url("https://images.acer.com/is/image/acer/predator-helios-16-ph16-72-perkey-backlit-on-wp-black-01-1?$Series-Component-XL$")',
-                            backgroundSize: 'contain',
-                            backgroundRepeat: 'no-repeat',
-                            backgroundColor:'#F3F2F2',
-                            borderRadius:'16px'
-                        }}
-                        className="w-1/3 bg-gray-100 relative ml-1 mr-1">
-                        <div className="absolute bottom-12 left-10">
-                            <p className="text-2xl h-16 flex items-center">
-                                20% Off On Laptop
-                            </p>
-                            <p className="text-base flex flex-wrap w-5/6 h-16">
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac dictum.
-                            </p>
-                            <Link
-                                href=""
-                                className="w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600"
-                            >
-                                <p className="w-full h-full flex items-center justify-center text-white">
-                                    CHECK OUT
-                                </p>
-                            </Link>
-                        </div>
-                    </div>
+                    <Component1/>
+                    <Component1/>
+                    <Component1/>
                 </div>
             </div>
 
-            <div className="w-11/12 mb-10">
-                <div className="h-20 flex flex-wrap items-center justify-center mb-10">
-                    <p className="text-3xl w-full flex justify-center items-end mt-6">
+            <div
+                className="mb-10 mt-20 pb-6 flex flex-wrap justify-center"
+                style={{
+                    backgroundColor: 'rgba(252,109,122,0.68)',
+                    borderRadius: '16px',
+                    width: '95%'
+                }}
+            >
+                <div className="h-20 flex flex-wrap items-center justify-center mb-3">
+                    <p className="text-5xl w-full flex justify-center items-end">
                         NEW ARRIVAL
                     </p>
-                    <span className="w-20 border border-b-black"></span>
+                    <span className="w-32 border border-b-black fa-flip"></span>
                 </div>
-                <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"}
-                                      renderFromHomePage={false}/>
+                <ProductListComponent productData={laptopData.productSummaryDtoList}
+                                      type={"laptop"}
+                                      renderFromHomePage={false}
+                />
             </div>
 
 
             {/* Khuyến Mãi */}
-            <div className="w-11/12 h-96 flex flex-wrap justify-center items-center">
+            <div
+                className="h-96 flex flex-wrap justify-center items-center"
+                style={{
+                    width: '95%'
+                }}
+            >
                 <div className="w-full h-3/5 flex">
                     <Link href="" className="h-full w-2/6 ml-1 mr-1">
                         <img
@@ -161,51 +96,66 @@ export default function Home() {
             </div>
 
             {/* Product theo danh muc*/}
-            <div className="h-1/4 w-full flex flex-wrap justify-center">
-                <div className="h-20 w-full">
-                    <p className="text-5xl w-full h-full flex items-center justify-center">
+            <div
+                className="h-1/4 flex flex-wrap justify-center"
+                style={{
+                    width: '95%'
+                }}
+            >
+                <div className="h-20 w-11/12 flex flex-wrap justify-center mb-10">
+                    <p className="text-5xl w-full text-center">
                         LAPTOP VĂN PHÒNG
                     </p>
+                    <span className="w-48 h-0 border border-t-black fa-flip"></span>
                 </div>
                 <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"}
                                       renderFromHomePage={true}/>
             </div>
 
-            <div className="h-1/4 w-11/12 flex flex-wrap justify-center mt-10">
-                <div className="h-20 w-full">
-                    <p className="text-5xl w-full h-full flex items-center justify-center">
+            <div
+                className="h-1/4 flex flex-wrap justify-center mt-10 rounded-2xl"
+                style={{
+                    background: 'linear-gradient(rgb(0, 0, 0), rgb(138, 5, 5)) 0% 0% / cover',
+                    width: '95%'
+                }}
+            >
+                <div className="h-20 w-full mb-3 flex flex-wrap justify-center">
+                    <p className="text-5xl w-full text-center text-white mt-3">
+                        LAPTOP GAMING
+                    </p>
+                    <span className="w-36 h-0 border border-t-black fa-flip"></span>
+                </div>
+                <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"}
+                                      renderFromHomePage={true}/>
+            </div>
+
+            <div
+                className="h-1/4 flex flex-wrap justify-center mt-10"
+                style={{
+                    width: '95%'
+                }}
+            >
+                <div className="h-20 w-full mb-10 flex flex-wrap justify-center">
+                    <p className="text-5xl w-full text-center">
                         HEADPHONE
                     </p>
+                    <span className="w-36 h-0 border border-t-black fa-flip"></span>
                 </div>
                 <ProductListComponent productData={headphoneData.productSummaryDtoList} renderFromHomePage={true}/>
             </div>
 
-            <div
-                style={{
-                    background: 'url("https://img.freepik.com/free-photo/illustration-geometric-shapes-with-neon-laser-lights-great-backgrounds-wallpapers_181624-32746.jpg?w=1380&t=st=1709695559~exp=1709696159~hmac=24682b09b7fad503170afeef1337f350ae462da4570ac7c0821cf36fd58f2db8")',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center'
-                }}
-                className="h-1/4 w-full flex flex-wrap justify-center mt-10">
-                <div className="h-20 w-full">
-                    <p className="text-white text-5xl w-full h-full flex items-center justify-center">
-                        LAPTOP GAMING
-                    </p>
-                </div>
-                <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"}
-                                      renderFromHomePage={true}/>
-            </div>
-
-            <div className="h-1/4 w-11/12 flex flex-wrap justify-center mt-10">
-                <div className="h-20 w-full">
-                    <p className="text-5xl w-full h-full flex items-center justify-center">
+            <div className="h-1/4 w-full flex flex-wrap justify-center mt-10">
+                <div className="h-20 w-full mb-10 flex flex-wrap justify-center">
+                    <p className="text-5xl w-full text-center">
                         MOUSE
                     </p>
+                    <span className="w-20 h-0 border border-t-black fa-flip"></span>
                 </div>
                 <ProductListComponent productData={mouseData.productSummaryDtoList} renderFromHomePage={true}/>
             </div>
 
-            <div className="category-hompage w-full flex justify-center flex-wrap h-80 pb-4" style={{background:'#FBC303'}}>
+            <div className="category-hompage w-full flex justify-center flex-wrap h-80 pb-4"
+                 style={{background: '#FBC303'}}>
                 <div className="w-full h-2/5 flex flex-wrap">
                     <div className="w-full h-full flex items-center justify-center">
                         <p className="text-center w-full text-5xl">
