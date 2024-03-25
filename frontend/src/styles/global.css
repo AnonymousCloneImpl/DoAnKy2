@@ -16,6 +16,6 @@
 
 
 .chat-box {
-    max-height: 300px; /* Giới hạn chiều cao của chat box */
-    overflow-y: auto; /* Cho phép cuộn dọc khi nội dung vượt quá kích thước */
+    max-height: 300px;
+    overflow-y: auto;
 }

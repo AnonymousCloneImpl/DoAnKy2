@@ -21,7 +21,7 @@ export default function Component1() {
                 </p>
                 <Link
                     href="/laptop?sale=20"
-                    className="w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600 rounded-lg"
+                    className="w-1/3 h-10 flex flex-wrap bg-black hover:bg-gray-600 rounded-lg fa-spin-pulse"
                 >
                     <p className="w-full h-full flex items-center justify-center text-white">
                         CHECK OUT

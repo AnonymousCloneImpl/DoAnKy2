@@ -74,19 +74,19 @@ export default function Home() {
                 }}
             >
                 <div className="w-full h-3/5 flex">
-                    <Link href="" className="h-full w-2/6 ml-1 mr-1">
+                    <Link href="" className="h-full w-2/6 ml-1 mr-1 fa-spin-pulse">
                         <img
                             src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/SIS%20asus.png"
                             className="w-full h-full"
                         />
                     </Link>
-                    <Link href="" className="h-full w-2/6 ml-1 mr-1">
+                    <Link href="" className="h-full w-2/6 ml-1 mr-1 fa-spin-pulse">
                         <img
                             src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/laptop-hssv-sliding-2024.jpg"
                             className="w-full h-full"
                         />
                     </Link>
-                    <Link href="" className="h-full w-2/6 ml-1 mr-1">
+                    <Link href="" className="h-full w-2/6 ml-1 mr-1 fa-spin-pulse">
                         <img
                             src="https://www.asus.com/media/Odin/Websites/vn/SiteSetting/20240102111438.jpg?webp"
                             className="w-full h-full"

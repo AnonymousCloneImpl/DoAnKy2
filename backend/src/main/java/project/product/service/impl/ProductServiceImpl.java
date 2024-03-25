@@ -8,12 +8,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import project.product.models.Pagination;
+import project.common.ProductUtils;
 import project.product.dto.*;
-import project.product.entity.*;
+import project.product.entity.Blog;
+import project.product.entity.Producer;
+import project.product.entity.Product;
+import project.product.entity.Stock;
+import project.product.models.Pagination;
 import project.product.repository.ProductRepository;
 import project.product.service.*;
-import project.common.ProductUtils;
 import project.search.specification.ProductSpecification;
 
 import java.util.List;
@@ -83,6 +86,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	@Cacheable(key = "#type", value = "staticData", cacheNames = "staticData")
 	public StaticDataProductPage getStaticDataByType(String type, Integer limit) {
 		try {
 			List<Product> productList = productRepo.getTopSellerByType(type, limit);

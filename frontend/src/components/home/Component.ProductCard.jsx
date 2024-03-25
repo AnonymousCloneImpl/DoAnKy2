@@ -101,18 +101,20 @@ export default function ProductCardComponent({productData, type}) {
                                 <p className="price w-full text-center"><FormatPrice price={p.price}/>đ</p>
                             </div>
                             <div
-                                className="flex flex-wrap justify-around items-center text-sm text-gray-600">
-                                <div className="flex justify-center items-center">
-                                    <FontAwesomeIcon icon={faMicrochip}/>
-                                    <p className="pl-1">{p?.configuration?.cpuType}</p>
-                                </div>
-                                <div className="flex justify-center items-center">
-                                    <FontAwesomeIcon icon={faMemory}/>
-                                    <p className="pl-1">{p?.configuration?.ram?.split(" ")[0]}</p>
-                                </div>
-                                <div className="flex justify-center items-center">
-                                    <FontAwesomeIcon icon={faDisplay}/>
-                                    <p className="pl-1">{p?.configuration?.screenSize?.split(" ")[0] + "\""}</p>
+                                className="text-sm text-gray-600">
+                                <div className="grid grid-cols-3">
+                                    <div className="flex justify-center items-center">
+                                        <FontAwesomeIcon icon={faMicrochip}/>
+                                        <p className="pl-1">{p?.configuration?.cpuType}</p>
+                                    </div>
+                                    <div className="flex justify-center items-center">
+                                        <FontAwesomeIcon icon={faMemory}/>
+                                        <p className="pl-1">{p?.configuration?.ram?.split(" ")[0]}</p>
+                                    </div>
+                                    <div className="flex justify-center items-center">
+                                        <FontAwesomeIcon icon={faDisplay}/>
+                                        <p className="pl-1">{p?.configuration?.screenSize?.split(" ")[0] + "\""}</p>
+                                    </div>
                                 </div>
                                 <div className="flex justify-center items-center mt-2 h-10">
                                     <Image src="/gpu.png"
@@ -124,7 +126,7 @@ export default function ProductCardComponent({productData, type}) {
                                     <p>{p.configuration?.graphicsCard?.split(",")[0]}</p>
                                 </div>
                             </div>
-                            <div className="w-full h-16 flex justify-center items-center mb-2">
+                            <div className="w-full h-16 flex justify-center items-center mb-2 fa-spin-pulse">
                                 <button onClick={() => HandleCartClick({product: p})}
                                         className="h-3/4 rounded-md w-4/12 button-style">
                                     <FontAwesomeIcon

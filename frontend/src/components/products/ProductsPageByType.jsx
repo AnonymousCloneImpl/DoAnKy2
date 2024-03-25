@@ -14,7 +14,6 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     const [showPriceInput, setShowPriceInput] = useState(false);
     const [showCpuOption, setShowCpuOption] = useState(false);
     const [showRamOption, setShowRamOption] = useState(false);
-
     // Data for render
     const [products, setProducts] = useState([]);
     const [producers, setProducers] = useState([]);
@@ -64,7 +63,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
         }
 
         setCurrentPage(page);
-    }, [pageData]);
+    }, [page, pageData, pageType, staticData]);
 
     const handleCpuClick = async () => {
         if (showRamOption) {
@@ -101,6 +100,18 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
             router.push({ pathname: router.pathname, query: { ...query, producer: name } }, undefined, { shallow: true, scroll: false, });
             resolve();
         });
+        if (query.producer === name) {
+            const { producer, ...newQuery } = query;
+            await new Promise((resolve) => {
+                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                resolve();
+            });
+        } else {
+            await new Promise((resolve) => {
+                router.push({ pathname: router.pathname, query: { ...query, producer: name } }, undefined, { shallow: true, scroll: false, });
+                resolve();
+            });
+        }
     };
 
     const handleCpuTypeClick = async ({value}) => {
@@ -204,16 +215,16 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 </div>
             </div>
 
-            <div className="mt-8 h-20">
+            <div className="mt-8">
                 <div className="text-2xl">
                     <p className="h-10">CHUYÊN TRANG THƯƠNG HIỆU</p>
                 </div>
                 <div className="w-full mt-3">
-                    <ul className="flex flex-wrap justify-start">
+                    <ul className="grid grid-cols-12 max-md:grid-cols-6">
                         {producers.map((producer) => (
-                            <li key={producer.id} className="h-8 w-36 flex ">
+                            <li key={producer.id} className="h-8 w-36 mb-3 fa-spin-pulse">
                                 <div className="h-full">
-                                    <button className="h-full w-full border border-black rounded-md overflow-hidden flex justify-center items-center"
+                                    <button className="h-full w-1/2 border border-black rounded-md overflow-hidden flex justify-center items-center"
                                             onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}
                                     >
                                         <img
@@ -331,35 +342,31 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
 
             <div className="mb-96 flex justify-center mt-9">
                 <div className="flex">
-                    {Array.from({length: totalPage}, (_, i) => (
-                        <button key={i}
-                                onClick={
-                                    (e) => handlePageButtonClick(i + 1)
-                                }
-                                className="m-5 w-8 h-8 rounded-lg font-bold"
-                        >
-                            {i + 1}
-                        </button>
-                        // i + 1 === currentPage ? (
-                        //         <button key={i}
-                        //                 onClick={
-                        //                     (e) => handlePageButtonClick(i + 1)
-                        //                 }
-                        //                 className="m-5 w-8 h-8 rounded-lg font-bold bg-black text-white"
-                        //         >
-                        //             {i + 1}
-                        //         </button>
-                        //     ) : (
-                        //         <button key={i}
-                        //                 onClick={
-                        //                     (e) => handlePageButtonClick(i + 1)
-                        //                 }
-                        //                 className="m-5 w-8 h-8 rounded-lg font-bold"
-                        //         >
-                        //             {i + 1}
-                        //         </button>
-                        //     )
-                    ))}
+                    {Array.from({length: totalPage}, (_, i) => {
+                        if (i === currentPage - 1) {
+                            return (
+                                <button key={i}
+                                        onClick={
+                                            (e) => handlePageButtonClick(i + 1)
+                                        }
+                                        className="m-5 w-8 h-8 rounded-3xl font-bold text-white bg-gradient-to-br from-indigo-500 to-pink-500"
+                                >
+                                    {i + 1}
+                                </button>
+                            )
+                        } else {
+                            return (
+                                <button key={i}
+                                        onClick={
+                                            (e) => handlePageButtonClick(i + 1)
+                                        }
+                                        className="m-5 w-8 h-8 rounded-lg font-bold"
+                                >
+                                    {i + 1}
+                                </button>
+                            )
+                        }
+                    })}
                 </div>
             </div>
 
@@ -367,7 +374,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     );
 }
 
-const PriceRangeSlider = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
+const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
     // Xác định giá trị ban đầu cho thanh trượt dựa trên minPrice và maxPrice
     const [values, setValues] = useState([minPrice, maxPrice]);
 
