@@ -567,6 +567,8 @@ const ProductPage = ({ productBE }) => {
 
                 <div className="recommended-accessories-line"></div>
 
+                {console.log(product)}
+
                 <ul className="recommended-accessories-list">
                   {product.purchaseComboItem.productList.map((item, index) => (
                     <li className="recommended-accessories-item" key={index}>
@@ -577,7 +579,7 @@ const ProductPage = ({ productBE }) => {
                       </div>
 
                       <div className="recommended-accessories-img">
-                        <img src={item.image.split('|')[0]} alt="First Image" />
+                        <img src={item.image} alt="First Image" />
                       </div>
                       <div className="recommended-accessories-content">
                         <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
@@ -678,7 +680,7 @@ const ProductPage = ({ productBE }) => {
                         onChange={(e) => setCustomerName(e.target.value)}
                         className="customerName"
                         name="customerName"
-                        placeholder="example: Ngọc Trinh..."
+                        placeholder="Example: Ngọc Trinh..."
                         id="customerName" required>
                       </input>
                     </div>
@@ -688,7 +690,7 @@ const ProductPage = ({ productBE }) => {
                         value={customerEmail}
                         onChange={(e) => setCustomerEmail(e.target.value)}
                         name="customerEmail"
-                        placeholder="example@gmail.com"
+                        placeholder="Example@gmail.com"
                         id="customerEmail" required>
                       </input>
                     </div>

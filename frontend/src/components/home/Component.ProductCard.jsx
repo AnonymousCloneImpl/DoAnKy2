@@ -9,11 +9,11 @@ export default function ProductCardComponent({productData, type}) {
     if (productData !== null && productData !== [] && productData !== undefined) {
         if (type !== "laptop") {
             return (
-                <div className="w-full flex flex-wrap justify-center items-center">
+                <div className="w-full grid grid-cols-5 max-md:grid-cols-2">
                     {productData.map((p) => (
-                        <div key={p.id} className="w-1/5 mt-3">
+                        <div key={p.id} className="w-full mt-3">
                             <div
-                                className="rounded-lg bg-white homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500"
+                                className="rounded-lg bg-white mr-2 ml-2 homepage-card-item overflow-hidden"
                             >
                                 <div className="h-6 relative ">
                                     <p className="bg-red-600 w-16 text-white text-center rounded-br-lg">-{p.discountPercentage}%</p>
@@ -40,12 +40,12 @@ export default function ProductCardComponent({productData, type}) {
                                         <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
                                     </Link>
                                 </div>
-                                <div className="flex items-center justify-around h-10">
-                                    <p className="price_discount"><FormatPrice
+                                <div className="div-price">
+                                    <p className="price_discount w-full text-center"><FormatPrice
                                         price={p.price - (p.price * p.discountPercentage / 100)}/>đ</p>
-                                    <p className="price"><FormatPrice price={p.price}/>đ</p>
+                                    <p className="price w-full text-center"><FormatPrice price={p.price}/>đ</p>
                                 </div>
-                                <div className="w-full h-16 flex justify-center items-center ">
+                                <div className="w-full h-16 flex justify-center items-center mb-2">
                                     <button onClick={() => HandleCartClick({product: p})}
                                             className="h-3/4 rounded-md w-5/12 button-style">
                                         <FontAwesomeIcon
@@ -64,11 +64,11 @@ export default function ProductCardComponent({productData, type}) {
             )
         }
         return (
-            <div className="w-full flex flex-wrap justify-center items-center">
+            <div className="w-full grid grid-cols-5 max-md:grid-cols-2">
                 {productData.map((p) => (
-                    <div key={p.id} className="w-1/5 mt-3">
+                    <div key={p.id} className="w-full mt-3">
                         <div
-                            className="rounded-lg bg-white homepage-card-item ml-2 mr-2 overflow-hidden transition-transform transform hover:scale-105 hover:transition-transform hover:duration-500"
+                            className="rounded-lg bg-white  mr-2 ml-2 homepage-card-item overflow-hidden"
                         >
                             <div className="h-6 relative">
                                 <p className="bg-red-600 w-16 text-white text-center rounded-br-lg">-{p.discountPercentage}%</p>
@@ -95,26 +95,28 @@ export default function ProductCardComponent({productData, type}) {
                                     <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
                                 </Link>
                             </div>
-                            <div className="flex items-center justify-around h-10">
-                                <p className="price_discount"><FormatPrice
+                            <div className="div-price">
+                                <p className="price_discount w-full text-center"><FormatPrice
                                     price={p.price - (p.price * p.discountPercentage / 100)}/>đ</p>
-                                <p className="price"><FormatPrice price={p.price}/>đ</p>
+                                <p className="price w-full text-center"><FormatPrice price={p.price}/>đ</p>
                             </div>
                             <div
-                                className="flex flex-wrap justify-around items-center text-sm text-gray-600">
-                                <div className="flex justify-center items-center">
-                                    <FontAwesomeIcon icon={faMicrochip}/>
-                                    <p className="pl-1">{p?.configuration?.cpuType}</p>
+                                className="text-sm text-gray-600">
+                                <div className="grid grid-cols-3">
+                                    <div className="flex justify-center items-center">
+                                        <FontAwesomeIcon icon={faMicrochip}/>
+                                        <p className="pl-1">{p?.configuration?.cpuType}</p>
+                                    </div>
+                                    <div className="flex justify-center items-center">
+                                        <FontAwesomeIcon icon={faMemory}/>
+                                        <p className="pl-1">{p?.configuration?.ram?.split(" ")[0]}</p>
+                                    </div>
+                                    <div className="flex justify-center items-center">
+                                        <FontAwesomeIcon icon={faDisplay}/>
+                                        <p className="pl-1">{p?.configuration?.screenSize?.split(" ")[0] + "\""}</p>
+                                    </div>
                                 </div>
-                                <div className="flex justify-center items-center">
-                                    <FontAwesomeIcon icon={faMemory}/>
-                                    <p className="pl-1">{p?.configuration?.ram?.split(" ")[0]}</p>
-                                </div>
-                                <div className="flex justify-center items-center">
-                                    <FontAwesomeIcon icon={faDisplay}/>
-                                    <p className="pl-1">{p?.configuration?.screenSize?.split(" ")[0] + "\""}</p>
-                                </div>
-                                <div className="flex justify-center items-center mt-2">
+                                <div className="flex justify-center items-center mt-2 h-10">
                                     <Image src="/gpu.png"
                                            width="13" height="1" alt="gpu"
                                            className="pr-2"
@@ -124,7 +126,7 @@ export default function ProductCardComponent({productData, type}) {
                                     <p>{p.configuration?.graphicsCard?.split(",")[0]}</p>
                                 </div>
                             </div>
-                            <div className="w-full h-16 flex justify-center items-center ">
+                            <div className="w-full h-16 flex justify-center items-center mb-2 fa-spin-pulse">
                                 <button onClick={() => HandleCartClick({product: p})}
                                         className="h-3/4 rounded-md w-4/12 button-style">
                                     <FontAwesomeIcon

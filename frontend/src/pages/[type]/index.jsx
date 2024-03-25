@@ -4,6 +4,7 @@ import useSWR, {mutate} from "swr";
 import CustomErrorPage from "@/pages/error";
 import ProductsPageByType from "@/components/products/ProductsPageByType";
 import {useEffect} from "react";
+import axios from "axios";
 
 const postMethodFetcher = async (url, body) => {
     const response = await fetch(url, {
@@ -124,15 +125,22 @@ const ProductsPageRoute = () => {
 
     const staticData = `${process.env.DOMAIN}/products/staticData?type=${type}`;
 
-    const {data : res, error : err} = useSWR(staticData, fetcher,{
+    const {data : res, isLoading : loading, error : err} = useSWR(staticData, fetcher,{
         revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false
     });
 
-    if (isLoading || res === undefined) return <div>Loading...</div>
+    if (isLoading || loading) return <div>Loading...</div>
 
-    if (error || err) return <CustomErrorPage />
+    if (error ||
+        err ||
+        data === undefined ||
+        data === null ||
+        res === undefined ||
+        res === null) {
+        return <CustomErrorPage />
+    }
 
     if (data) return <ProductsPageByType pageData={data} page={page} pageType={type} staticData={res} />
 

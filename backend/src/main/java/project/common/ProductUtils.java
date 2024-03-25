@@ -15,10 +15,7 @@ import project.product.repository.ProductRepository;
 import project.product.repository.StockRepository;
 import project.product.service.ProductDetailService;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 @Slf4j(topic = "PRODUCT-UTILS")
@@ -109,7 +106,6 @@ public class ProductUtils {
 
 	public void setPurchaseComboItem(ProductDto productDto) {
 		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
-		Pageable pageable = PageRequest.of(0, 1);
 		try {
 			String type = "";
 			List<Product> productList = new ArrayList<>();
@@ -123,9 +119,19 @@ public class ProductUtils {
 				if (i == 2) {
 					type = "headphone";
 				}
-				productList.addAll(productRepo.findMostPurchaseByType(type, pageable));
+				productList.add(productRepo.findMostPurchaseByType(type));
 			}
-			purchaseComboItem.setProductList(productList);
+
+			List<ProductCompact> pcList = new ArrayList<>();
+			ProductCompact pc;
+			for (Product p : productList) {
+				pc = new ProductCompact();
+				modelMapper.map(p, pc);
+				pc.setImage(Arrays.stream(p.getImage().split("\\|")).toList().getFirst());
+				pcList.add(pc);
+			}
+
+			purchaseComboItem.setProductList(pcList);
 			productDto.setPurchaseComboItem(purchaseComboItem);
 		} catch (IllegalAccessError e) {
 			System.err.println("Purchase Combo Item Is Null!");

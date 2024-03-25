@@ -2,15 +2,6 @@
 
 @section('content')
 <div class="container">
-
-    @if(session('error'))
-        <div class="text-center">
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        </div>
-    @endif
-
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">

@@ -1,9 +1,7 @@
 package project.product.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import project.product.entity.Producer;
-import project.product.entity.Product;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +11,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@RedisHash(value = "ConsentOTP", timeToLive = 3)
 public class StaticDataProductPage implements Serializable {
 	private List<ProductSummaryDto> productSummaryDtoList;
 	private List<ProducerDto> producerList;

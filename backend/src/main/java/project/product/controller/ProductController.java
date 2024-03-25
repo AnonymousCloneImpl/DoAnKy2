@@ -1,15 +1,14 @@
 package project.product.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.product.models.Pagination;
 import project.product.dto.HomePageData;
 import project.product.dto.StaticDataProductPage;
 import project.product.entity.Producer;
+import project.product.models.Pagination;
 import project.product.service.ProducerService;
 import project.product.service.ProductDetailService;
 import project.product.service.ProductService;
@@ -74,12 +73,12 @@ public class ProductController {
 	}
 
 	@GetMapping("/staticData")
-	@Cacheable(key = "#type", value = "staticData")
 	public StaticDataProductPage getStaticDataByType(@RequestParam String type, @Param(value = "limit") Integer limit) {
 		if (limit == null) {
 			limit = 5;
 		}
-		return productService.getStaticDataByType(type, limit);
+		StaticDataProductPage staticDataProductPage = productService.getStaticDataByType(type, limit);
+		return staticDataProductPage;
 	}
 
 	@GetMapping("/producer")
