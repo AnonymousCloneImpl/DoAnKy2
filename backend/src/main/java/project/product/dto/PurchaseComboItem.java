@@ -16,6 +16,5 @@ import java.util.List;
 @AllArgsConstructor
 public class PurchaseComboItem implements Serializable {
     private long id;
-    @JsonIgnoreProperties({"producer", "model", "productDetail", "colorList", "blog", "purchaseComboItemList"})
-    private List<Product> productList;
+    private List<ProductCompact> productList;
 }

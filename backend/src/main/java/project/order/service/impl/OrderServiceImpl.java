@@ -2,6 +2,7 @@ package project.order.service.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,11 +56,17 @@ public class OrderServiceImpl implements OrderService {
 			if (orderItem != null) {
 				orderItems.add(orderItem);
 				updateStock(item);
+//				clearCache(orderItem.getProduct().getName());
 			}
 		}
 		orderItemRepo.saveAll(orderItems);
 		return order;
 	}
+
+//	@CacheEvict(value = "productByTypeAndName", key = "#name")
+//	public void clearCache(String name) {
+//
+//	}
 
 	private Order createOrderObj(OrderDto orderDto) {
 		return Order.builder()
