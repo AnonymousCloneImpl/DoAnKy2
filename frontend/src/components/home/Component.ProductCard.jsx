@@ -126,7 +126,7 @@ export default function ProductCardComponent({productData, type}) {
                                     <p>{p.configuration?.graphicsCard?.split(",")[0]}</p>
                                 </div>
                             </div>
-                            <div className="w-full h-16 flex justify-center items-center mb-2 fa-spin-pulse">
+                            <div className="w-full h-16 flex justify-center items-center mb-2">
                                 <button onClick={() => HandleCartClick({product: p})}
                                         className="h-3/4 rounded-md w-4/12 button-style">
                                     <FontAwesomeIcon

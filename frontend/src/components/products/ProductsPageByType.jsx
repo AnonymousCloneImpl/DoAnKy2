@@ -222,7 +222,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 <div className="w-full mt-3">
                     <ul className="grid grid-cols-12 max-md:grid-cols-6">
                         {producers.map((producer) => (
-                            <li key={producer.id} className="h-8 w-36 mb-3 fa-spin-pulse">
+                            <li key={producer.id} className="h-8 w-36 mb-3">
                                 <div className="h-full">
                                     <button className="h-full w-1/2 border border-black rounded-md overflow-hidden flex justify-center items-center"
                                             onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}

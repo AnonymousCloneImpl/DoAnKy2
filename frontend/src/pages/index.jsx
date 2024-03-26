@@ -57,7 +57,7 @@ export default function Home() {
                     <p className="text-5xl w-full flex justify-center items-end">
                         NEW ARRIVAL
                     </p>
-                    <span className="w-32 border border-b-black fa-flip"></span>
+                    <span className="w-32 border border-b-black"></span>
                 </div>
                 <ProductListComponent productData={laptopData.productSummaryDtoList}
                                       type={"laptop"}
@@ -74,19 +74,19 @@ export default function Home() {
                 }}
             >
                 <div className="w-full h-3/5 flex">
-                    <Link href="" className="h-full w-2/6 ml-1 mr-1 fa-spin-pulse">
+                    <Link href="" className="h-full w-2/6 ml-1 mr-1">
                         <img
                             src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/SIS%20asus.png"
                             className="w-full h-full"
                         />
                     </Link>
-                    <Link href="" className="h-full w-2/6 ml-1 mr-1 fa-spin-pulse">
+                    <Link href="" className="h-full w-2/6 ml-1 mr-1">
                         <img
                             src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/laptop-hssv-sliding-2024.jpg"
                             className="w-full h-full"
                         />
                     </Link>
-                    <Link href="" className="h-full w-2/6 ml-1 mr-1 fa-spin-pulse">
+                    <Link href="" className="h-full w-2/6 ml-1 mr-1">
                         <img
                             src="https://www.asus.com/media/Odin/Websites/vn/SiteSetting/20240102111438.jpg?webp"
                             className="w-full h-full"
@@ -106,7 +106,7 @@ export default function Home() {
                     <p className="text-5xl w-full text-center">
                         LAPTOP VĂN PHÒNG
                     </p>
-                    <span className="w-48 h-0 border border-t-black fa-flip"></span>
+                    <span className="w-48 h-0 border border-t-black"></span>
                 </div>
                 <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"}
                                       renderFromHomePage={true}/>
@@ -123,7 +123,7 @@ export default function Home() {
                     <p className="text-5xl w-full text-center text-white mt-3">
                         LAPTOP GAMING
                     </p>
-                    <span className="w-36 h-0 border border-t-black fa-flip"></span>
+                    <span className="w-36 h-0 border border-t-black"></span>
                 </div>
                 <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"}
                                       renderFromHomePage={true}/>
@@ -139,7 +139,7 @@ export default function Home() {
                     <p className="text-5xl w-full text-center">
                         HEADPHONE
                     </p>
-                    <span className="w-36 h-0 border border-t-black fa-flip"></span>
+                    <span className="w-36 h-0 border border-t-black"></span>
                 </div>
                 <ProductListComponent productData={headphoneData.productSummaryDtoList} renderFromHomePage={true}/>
             </div>
@@ -149,7 +149,7 @@ export default function Home() {
                     <p className="text-5xl w-full text-center">
                         MOUSE
                     </p>
-                    <span className="w-20 h-0 border border-t-black fa-flip"></span>
+                    <span className="w-20 h-0 border border-t-black"></span>
                 </div>
                 <ProductListComponent productData={mouseData.productSummaryDtoList} renderFromHomePage={true}/>
             </div>
