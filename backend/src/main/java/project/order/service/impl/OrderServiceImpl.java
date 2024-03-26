@@ -26,6 +26,7 @@ import project.product.service.StockService;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,17 +57,11 @@ public class OrderServiceImpl implements OrderService {
 			if (orderItem != null) {
 				orderItems.add(orderItem);
 				updateStock(item);
-//				clearCache(orderItem.getProduct().getName());
 			}
 		}
 		orderItemRepo.saveAll(orderItems);
 		return order;
 	}
-
-//	@CacheEvict(value = "productByTypeAndName", key = "#name")
-//	public void clearCache(String name) {
-//
-//	}
 
 	private Order createOrderObj(OrderDto orderDto) {
 		return Order.builder()

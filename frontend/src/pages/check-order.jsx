@@ -40,6 +40,8 @@ const CheckOrder = () => {
             type="text"
             className="block w-1/5 px-4 py-2 bg-white border rounded-md focus:outline-none"
             placeholder="Search..."
+            name='search-order'
+            id='search-order'
             value={searchPhone}
             onChange={(e) => setSearchPhone(e.target.value)}
             onKeyDown={handleKeyPress}

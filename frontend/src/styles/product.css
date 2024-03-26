@@ -1150,3 +1150,37 @@
   max-height: 350px;
   overflow-y: auto;
 }
+
+.service-popup {
+  position: fixed;
+  width: 40%;
+  padding: 10px 30px;
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.active-tab {
+  background: rgb(225, 225, 225);
+}
+
+.schedule-header {
+  background: linear-gradient(to right, orangered, orange);
+  padding: 10px 15px;
+  color: white;
+}
+
+#myTabContent {
+  height: 420px;
+  background: rgb(245, 245, 245);
+}
+
+
+#myTableContent {
+  height: 570px;
+  background: rgb(245, 245, 245);
+}
