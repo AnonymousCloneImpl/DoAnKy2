@@ -219,70 +219,70 @@ function BuildPcComponents(data) {
                 setCpuLink(productLink);
                 setCpuPrice(product.price);
                 setCpuImage(product.image);
-                setCpuStock(product.stock);
+                setCpuStock(product.stock.quantity);
                 setCpuDiscount(product.discountPercentage);
                 break;
             case 'cpuCooler':
                 setCpuCoolerLink(productLink);
                 setCpuCoolerPrice(product.price);
                 setCpuCoolerImage(product.image);
-                setCpuCoolerStock(product.stock);
+                setCpuCoolerStock(product.stock.quantity);
                 setCpuCoolerDiscount(product.discountPercentage);
                 break;
             case 'mobo':
                 setMoboLink(productLink);
                 setMoboPrice(product.price);
                 setMoboImage(product.image);
-                setMoboStock(product.stock);
+                setMoboStock(product.stock.quantity);
                 setMoboDiscount(product.discountPercentage);
                 break;
             case 'memory':
                 setMemoryLink(productLink);
                 setMemoryPrice(product.price);
                 setMemoryImage(product.image);
-                setMemoryStock(product.stock);
+                setMemoryStock(product.stock.quantity);
                 setMemoryDiscount(product.discountPercentage);
                 break;
             case 'storage':
                 setStorageLink(productLink);
                 setStoragePrice(product.price);
                 setStorageImage(product.image);
-                setStorageStock(product.stock);
+                setStorageStock(product.stock.quantity);
                 setStorageDiscount(product.discountPercentage);
                 break;
             case 'gpu':
                 setGpuLink(productLink);
                 setGpuPrice(product.price);
                 setGpuImage(product.image);
-                setGpuStock(product.stock);
+                setGpuStock(product.stock.quantity);
                 setGpuDiscount(product.discountPercentage);
                 break;
             case 'pcCase':
                 setPcCaseLink(productLink);
                 setPcCasePrice(product.price);
                 setPcCaseImage(product.image);
-                setPcCaseStock(product.stock);
+                setPcCaseStock(product.stock.quantity);
                 setPcCaseDiscount(product.discountPercentage);
                 break;
             case 'caseFan':
                 setCaseFanLink(productLink);
                 setCaseFanPrice(product.price);
                 setCaseFanImage(product.image);
-                setCaseFanStock(product.stock);
+                setCaseFanStock(product.stock.quantity);
                 setCaseFanDiscount(product.discountPercentage);
                 break;
             case 'psu':
                 setPsuLink(productLink);
                 setPsuPrice(product.price);
                 setPsuImage(product.image);
-                setPsuStock(product.stock);
+                setPsuStock(product.stock.quantity);
                 setPsuDiscount(product.discountPercentage);
                 break;
             case 'monitor':
                 setMonitorLink(productLink);
                 setMonitorPrice(product.price);
                 setMonitorImage(product.image);
-                setMonitorStock(product.stock);
+                setMonitorStock(product.stock.quantity);
                 setMonitorDiscount(product.discountPercentage);
                 break;
             case 'keyboard':
@@ -296,7 +296,7 @@ function BuildPcComponents(data) {
                 setMouseLink(productLink);
                 setMousePrice(product.price);
                 setMouseImage(product.image);
-                setMouseStock(product.stock);
+                setMouseStock(product.stock.quantity);
                 setMouseDiscount(product.discountPercentage);
                 break;
             default:
