@@ -16,10 +16,10 @@ export default function ComponentList({data, currentComponent, handleSelectProdu
                     <div className="flex-grow">
                         <h3 className="text-lg font-semibold">{item.name}</h3>
                         <p className="text-gray-600">${item.price}</p>
-                        <p>lorem ipsum</p>
+                        <p>lorem ipsum and ${item.detail}</p>
                     </div>
                     <button
-                        onClick={() => handleSelectProduct(currentComponent, item.name, item.price, item.image, item.stock.quantity)}
+                        onClick={() => handleSelectProduct(currentComponent, item , `/${item.type.toLowerCase()}/${item.name.toLowerCase().replaceAll(' ','-')}`)}
                         className="ml-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add
                     </button>
                 </div>
