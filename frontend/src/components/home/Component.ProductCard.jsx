@@ -40,10 +40,10 @@ export default function ProductCardComponent({productData, type}) {
                                         <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
                                     </Link>
                                 </div>
-                                <div className="div-price">
-                                    <p className="price_discount w-full text-center"><FormatPrice
-                                        price={p.price - (p.price * p.discountPercentage / 100)}/>đ</p>
-                                    <p className="price w-full text-center"><FormatPrice price={p.price}/>đ</p>
+                                <div className="div-price flex justify-around">
+                                    <FormatPrice price={p.price - (p.price * p.discountPercentage / 100)}
+                                                 type="discount"/>
+                                    <FormatPrice price={p.price}/>
                                 </div>
                                 <div className="w-full h-16 flex justify-center items-center mb-2">
                                     <button onClick={() => HandleCartClick({product: p})}
@@ -95,10 +95,9 @@ export default function ProductCardComponent({productData, type}) {
                                     <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
                                 </Link>
                             </div>
-                            <div className="div-price">
-                                <p className="price_discount w-full text-center"><FormatPrice
-                                    price={p.price - (p.price * p.discountPercentage / 100)}/>đ</p>
-                                <p className="price w-full text-center"><FormatPrice price={p.price}/>đ</p>
+                            <div className="div-price flex justify-around">
+                                <FormatPrice price={p.price - (p.price * p.discountPercentage / 100)} type="discount" />
+                                <FormatPrice price={p.price}/>
                             </div>
                             <div
                                 className="text-sm text-gray-600">

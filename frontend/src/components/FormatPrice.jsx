@@ -8,7 +8,7 @@ export default function FormatPrice({price, type}) {
 
     if (type === 'discount') {
         return (
-            <div className="flex price_discount justify-center">
+            <div className="flex price_discount justify-center text-xl">
                 {cleanedPrice}
                 <p className="underline">đ</p>
             </div>

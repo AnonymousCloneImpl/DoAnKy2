@@ -11,7 +11,7 @@ export default function Component1() {
                 backgroundColor: '#F3F2F2',
                 borderRadius: '16px'
             }}
-            className="w-1/3 bg-gray-100 relative ml-1 mr-1">
+            className="bg-gray-100 relative ml-1 mr-1">
             <div className="absolute bottom-12 left-10">
                 <p className="text-2xl h-16 flex items-center">
                     20% Off On Laptop

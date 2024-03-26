@@ -15,4 +15,13 @@ public class SearchRequestDto implements Serializable {
 	public enum OPERATOR {
 		EQUAL, LIKE, IN, GREATER_THAN, LESS_THAN, BETWEEN;
 	}
+
+	@Override
+	public String toString() {
+		return "SearchRequestDto{" +
+				"column='" + column + '\'' +
+				", value='" + value + '\'' +
+				", operator=" + operator +
+				'}';
+	}
 }

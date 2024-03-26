@@ -463,13 +463,10 @@ const ProductPage = ({ productBE }) => {
                   <p>100 Evaluate</p>
                 </div>
 
-                <div className="product-price">
-                  <b><FormatPrice price={discountedPrice * quantity} /></b>
-                  <b className="main-money-unit">đ</b>
-                  <p><FormatPrice price={product.price * quantity} /></p>
-                  <p className="main-money-unit">đ</p>
+                <div className="flex my-3 w-56 items-center justify-between">
+                  <FormatPrice price={discountedPrice * quantity} type={"discount"} />
+                  <FormatPrice price={product.price * quantity} />
                 </div>
-
                 <div className="product-price-ratio">
                   <p>{`Down ${product.discountPercentage}%`}</p>
                 </div>
@@ -553,11 +550,9 @@ const ProductPage = ({ productBE }) => {
                   </div>
                   <div className="recommended-main-content">
                     <h1>{product.name}</h1>
-                    <div className="accessories-price">
-                      <b><FormatPrice price={discountedPrice} /></b>
-                      <b className="money-unit">đ</b>
-                      <p><FormatPrice price={product.price} /></p>
-                      <p className="money-unit">đ</p>
+                    <div className="flex pl-5 w-full">
+                      <FormatPrice price={discountedPrice} type={"discount"} />
+                      <p className="ml-3"><FormatPrice price={product.price} /></p>
                     </div>
                     <div className="accessories-price-ratio">
                       <p>{`Down ${product.discountPercentage}%`}</p>
@@ -585,12 +580,9 @@ const ProductPage = ({ productBE }) => {
                         <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
                           {item.name}
                         </Link>
-                        <div className="accessories-price">
-                          <b><FormatPrice
-                            price={item.price - (item.price * item.discountPercentage / 100)} /></b>
-                          <b className="money-unit">đ</b>
-                          <p><FormatPrice price={item.price} /></p>
-                          <p className="money-unit">đ</p>
+                        <div className="flex pl-5 w-full">
+                          <FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} />
+                          <p className="ml-3"><FormatPrice price={item.price} /></p>
                         </div>
                         <div className="accessories-price-ratio">
                           <p>{`Down ${item.discountPercentage}%`}</p>
@@ -604,11 +596,12 @@ const ProductPage = ({ productBE }) => {
                   Save an additional 10% on all bundled products
                 </div>
 
-                <div className="total-price">
-                  <h1>Total Price:</h1>
-                  <b><FormatPrice price={totalPrice} /></b>
-                  <b className="money-unit">đ</b>
-                  <p><FormatPrice price={totalPrice * 100 / 90} /></p>
+                <div className="flex justify-center">
+                  <div className="w-3/4 flex justify-center items-center">
+                    <h1 className="mr-3">Total Price:</h1>
+                    <p className="mr-3"><FormatPrice price={totalPrice * 100 / 90} type={"discount"}/></p>
+                    <FormatPrice price={totalPrice}/>
+                  </div>
                 </div>
                 <div className="buy-recommend">
                   <button className="buy-recommend-btn" onClick={openForm}>
@@ -637,11 +630,9 @@ const ProductPage = ({ productBE }) => {
                     <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
                       {item.name}
                     </Link>
-                    <div className="similar-product-price">
-                      <b><FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} /></b>
-                      <b className="money-unit">đ</b>
-                      <p><FormatPrice price={item.price} /></p>
-                      <p className="money-unit">đ</p>
+                    <div className="flex pl-5 items-center">
+                      <b><FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} /></b>
+                      <p className="pl-2"><FormatPrice price={item.price} /></p>
                     </div>
                     <div className="similar-product-price-ratio">
                       <p>{`Down ${item.discountPercentage}%`}</p>

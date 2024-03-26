@@ -157,9 +157,6 @@
 
 .product-price {
   display: flex;
-  font-size: 25px;
-  font-weight: 500;
-  margin: 15px 0 5px 0;
 }
 
 .product-price b {

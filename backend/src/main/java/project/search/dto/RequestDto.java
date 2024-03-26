@@ -19,4 +19,14 @@ public class RequestDto implements Serializable {
 	public enum GLOBAL_OPERATOR {
 		AND, OR;
 	}
+
+	@Override
+	public String toString() {
+		return "RequestDto{" +
+				"searchRequestDtoList=" + searchRequestDtoList +
+				", globalOperator=" + globalOperator +
+				", page=" + page +
+				", limit=" + limit +
+				'}';
+	}
 }

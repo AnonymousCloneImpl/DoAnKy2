@@ -38,7 +38,7 @@ export default function Home() {
             </div>
 
             <div className="w-full flex items-center justify-center mt-16">
-                <div className="w-11/12 flex">
+                <div className="w-11/12 grid grid-cols-3 max-md:grid-cols-1">
                     <Component1/>
                     <Component1/>
                     <Component1/>
@@ -68,25 +68,25 @@ export default function Home() {
 
             {/* Khuyến Mãi */}
             <div
-                className="h-96 flex flex-wrap justify-center items-center"
+                className="h-96"
                 style={{
                     width: '95%'
                 }}
             >
-                <div className="w-full h-3/5 flex">
-                    <Link href="" className="h-full w-2/6 ml-1 mr-1">
+                <div className="w-full h-3/5 grid grid-cols-3 max-md:grid-cols-1">
+                    <Link href="" className="h-full ml-1 mr-1">
                         <img
                             src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/SIS%20asus.png"
                             className="w-full h-full"
                         />
                     </Link>
-                    <Link href="" className="h-full w-2/6 ml-1 mr-1">
+                    <Link href="" className="h-full ml-1 mr-1">
                         <img
                             src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/laptop-hssv-sliding-2024.jpg"
                             className="w-full h-full"
                         />
                     </Link>
-                    <Link href="" className="h-full w-2/6 ml-1 mr-1">
+                    <Link href="" className="h-full ml-1 mr-1">
                         <img
                             src="https://www.asus.com/media/Odin/Websites/vn/SiteSetting/20240102111438.jpg?webp"
                             className="w-full h-full"
