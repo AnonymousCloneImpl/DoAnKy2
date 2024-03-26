@@ -1,30 +1,78 @@
-import React from "react";
+import React, { useState, useRef } from 'react';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 const service = () => {
+  const [activeTab, setActiveTab] = useState("tab1");
+  const [activeTable, setActiveTable] = useState("tabble1");
+  const [isFormVisible, setFormVisible] = useState(false);
+  const formRef = useRef(null);
+
+  const openForm = () => {
+    setFormVisible(true);
+  };
+
+  const closeForm = () => {
+    setFormVisible(false);
+  };
+
   return (
     <div>
-      <div class="w-11/12 mx-auto">
-        <div class="border-b border-gray-200 dark:border-gray-700 mb-4">
-          <ul class="flex flex-wrap -mb-px" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
-            <li class="mr-2" role="presentation">
-              <button class="inline-block text-gray-900 uppercase rounded-t-lg py-4 px-4 text-xl font-medium text-center border-transparent border-b-2 dark:text-gray-400 dark:hover:text-gray-300" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+      <div className="w-11/12 mx-auto">
+        <h1 className="schedule-header text-3xl font-bold my-10 uppercase">Schedule A Repair Appointment</h1>
+
+        <div className="border-b border-gray-200 dark:border-gray-700">
+          <ul className="flex flex-wrap -mb-px" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+            <li role="presentation">
+              <button
+                className={`inline-block py-4 px-4 text-center border-transparent border-b-2 text-center text-xl font-bold pb-5 uppercase
+                  ${activeTab === "tab1" ? "active-tab" : ""}`}
+                onClick={() => setActiveTab("tab1")}
+                id="tab1-tab"
+                data-tabs-target="#tab1"
+                type="button"
+                role="tab"
+                aria-controls="tab1"
+                aria-selected={activeTab === "tab1" ? "true" : "false"}
+              >
                 1 To 1 Replacement Warranty
               </button>
             </li>
-            <li class="mr-2" role="presentation">
-              <button class="inline-block text-gray-900 uppercase rounded-t-lg py-4 px-4 text-xl font-medium text-center border-transparent border-b-2 dark:text-gray-400 dark:hover:text-gray-300 active" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="true">
+            <li role="presentation">
+              <button
+                className={`inline-block py-4 px-4 text-center border-transparent border-b-2 text-center text-xl font-bold pb-5 uppercase
+                  ${activeTab === "tab2" ? "active-tab" : ""}`}
+                onClick={() => setActiveTab("tab2")}
+                id="tab2-tab"
+                data-tabs-target="#tab2"
+                type="button"
+                role="tab"
+                aria-controls="tab2"
+                aria-selected={activeTab === "tab2" ? "true" : "false"}
+              >
                 Drop and Water Damage Warranty
               </button>
             </li>
-            <li class="mr-2" role="presentation">
-              <button class="inline-block text-gray-900 uppercase rounded-t-lg py-4 px-4 text-xl font-medium text-center border-transparent border-b-2 dark:text-gray-400 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">
+            <li role="presentation">
+              <button
+                className={`inline-block py-4 px-4 text-center border-transparent border-b-2 text-center text-xl font-bold pb-5 uppercase
+                  ${activeTab === "tab3" ? "active-tab" : ""}`}
+                onClick={() => setActiveTab("tab3")}
+                id="tab3-tab"
+                data-tabs-target="#tab3"
+                type="button"
+                role="tab"
+                aria-controls="tab3"
+                aria-selected={activeTab === "tab3" ? "true" : "false"}
+              >
                 Extended Warranty
               </button>
             </li>
           </ul>
         </div>
         <div id="myTabContent">
-          <div class="bg-gray-50 p-4 rounded-lg dark:bg-gray-800 hidden" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+          <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTab === "tab1" ? '' : 'hidden'}`} id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
             <p className="text-lg font-semibold pb-1 pt-2">I. VIP 1-to-1 Replacement Warranty:</p>
             <p className="ml-10 font-semibold">Applicable products: New/used phones, tablets, new high-end headphones, Apple/Samsung smartwatches.</p>
             <p className="ml-10 font-semibold">Coverage period: 6 months / 12 months.</p>
@@ -40,7 +88,7 @@ const service = () => {
             <p className="ml-10">Processing time: Within 24 hours and a maximum of 14 working days depending on the product&apos;s condition.</p>
           </div>
 
-          <div class="bg-gray-50 p-4 rounded-lg dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+          <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTab === "tab2" ? '' : 'hidden'}`} id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
             <p className="text-lg font-semibold pb-1 pt-2">II. Drop and Water Damage Warranty (BHRV-NN):</p>
             <p className="ml-10 font-semibold">Applicable products: New/used phones, tablets.</p>
             <p className="ml-10 font-semibold">Coverage period: 12 months.</p>
@@ -58,7 +106,7 @@ const service = () => {
             <p className="ml-10">Processing time: Repair time from 7 to 14 working days depending on the product&apos;s condition.</p>
           </div>
 
-          <div class="bg-gray-50 p-4 rounded-lg dark:bg-gray-800 hidden" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+          <div className={`p-4 rounded-lg dark:bg-gray-800 ${activeTab === "tab3" ? '' : 'hidden'}`} id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
             <p className="text-lg font-semibold pb-1 pt-2">III. Extended Warranty S24+:</p>
             <p className="ml-10 font-semibold">Applicable products: High-end accessories, Macbook, new phones.</p>
             <p className="ml-10 font-semibold">Coverage period: 24 to 36 months, including 12 months manufacturer warranty.</p>
@@ -77,297 +125,374 @@ const service = () => {
             <p className="ml-10">Not in original condition, unclear tampered date.</p>
           </div>
         </div>
-      </div>
 
-      <div className="ml-20">
-        <button className="uppercase text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-          Schedule now
-        </button>
-      </div>
-
-      <div className="abc">
-        <h1 className="text-center text-2xl font-bold pb-5 uppercase">Warranty service price list</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Khoảng Giá</th>
-              <th>1 Đổi 1 Vip</th>
-              <th>S24 + 12 Tháng</th>
-              <th>S24 + 24 Tháng</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>10.000.000</td>
-              <td>700.000</td>
-              <td>700.000</td>
-              <td>1.400.000</td>
-            </tr>
-
-            <tr>
-              <td>10.000.001 - 15.000.000</td>
-              <td>1.500.000</td>
-              <td>1.400.000</td>
-              <td>2.300.000</td>
-            </tr>
-
-            <tr>
-              <td>15.000.001 - 20.000.000</td>
-              <td>1.500.000</td>
-              <td>1.400.000</td>
-              <td>2.300.000</td>
-            </tr>
-
-            <tr>
-              <td>25.000.001 - 30.000.000</td>
-              <td>2.200.000</td>
-              <td>2.200.000</td>
-              <td>3.400.000</td>
-            </tr>
-
-            <tr>
-              <td>30.000.001 - 35.000.000</td>
-              <td>2.600.000</td>
-              <td>2.600.000</td>
-              <td>3.800.000</td>
-            </tr>
-
-            <tr>
-              <td>35.000.001 - 40.000.000</td>
-              <td>3.000.000</td>
-              <td>3.000.000</td>
-              <td>4.000.000</td>
-            </tr>
-
-            <tr>
-              <td>45.000.001 - 100.000.000</td>
-              <td>4.000.000</td>
-              <td>4.000.000</td>
-              <td>5.000.000</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div className="abc">
-        <h1 className="text-center text-2xl font-bold pb-5">Bảo Hành Mở Rộng Dành Cho Phụ Kiện Cao Cấp</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Khoảng Giá</th>
-              <th>1 Đổi 1 Vip</th>
-              <th>S24 + 12 Tháng</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>1.000.000</td>
-              <td>100.000</td>
-              <td>100.000</td>
-            </tr>
-
-            <tr>
-              <td>1.000.001 - 2.000.000</td>
-              <td>200.000</td>
-              <td>100.000</td>
-            </tr>
-
-            <tr>
-              <td>2.000.001 - 3.000.000</td>
-              <td>300.000</td>
-              <td>150.000</td>
-            </tr>
-
-            <tr>
-              <td>3.000.001 - 4.000.000</td>
-              <td>400.000</td>
-              <td>200.000</td>
-            </tr>
-
-            <tr>
-              <td>4.000.001 - 5.000.000</td>
-              <td>400.000</td>
-              <td>300.000</td>
-            </tr>
-
-            <tr>
-              <td>5.000.001 - 8.000.000</td>
-              <td>600.000</td>
-              <td>400.000</td>
-            </tr>
-
-            <tr>
-              <td>8.000.001 - 10.000.000</td>
-              <td>800.000</td>
-              <td>500.000</td>
-            </tr>
-
-            <tr>
-              <td>10.000.001 - 15.000.000</td>
-              <td>1.000.000</td>
-              <td>650.000</td>
-            </tr>
-
-            <tr>
-              <td>15.000.001 - 20.000.000</td>
-              <td>1.400.000</td>
-              <td>800.000</td>
-            </tr>
-
-            <tr>
-              <td>20.000.001 - 30.000.000</td>
-              <td>2.000.000</td>
-              <td>1.000.000</td>
-            </tr>
-
-            <tr>
-              <td>30.000.001 - 40.000.000</td>
-              <td>2.000.000</td>
-              <td>1.200.000</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div className="abc">
-        <h1 className="text-center text-2xl font-bold pb-5">Phân Loại Bảo Hành Mở Rộng Tương Ứng Với Các Sản Phẩm</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>Nhóm Hàng</th>
-              <th>BHMR 1 Đổi 1 Vip</th>
-              <th>BHMR RV-RN</th>
-              <th>BHMR 24+</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td>Apple</td>
-              <td>Có</td>
-              <td>Có</td>
-              <td>Có</td>
-            </tr>
-
-            <tr>
-              <td>ASUS</td>
-              <td>Có</td>
-              <td>Có</td>
-              <td>Có</td>
-            </tr>
-
-            <tr>
-              <td>Huawei</td>
-              <td>Có</td>
-              <td>Có</td>
-              <td>Có</td>
-            </tr>
-
-            <tr>
-              <td>Khác</td>
-              <td>Có</td>
-              <td>Có</td>
-              <td>Có</td>
-            </tr>
-
-            <tr>
-              <td>Nokia</td>
-              <td>Có</td>
-              <td>Có</td>
-              <td>Có</td>
-            </tr>
-
-            <tr>
-              <td>SamSung</td>
-              <td>Có</td>
-              <td>Có</td>
-              <td>Có</td>
-            </tr>
-
-            <tr>
-              <td>Laptop</td>
-              <td>Không</td>
-              <td>Có</td>
-              <td>Có</td>
-            </tr>
-
-            <tr>
-              <td>Đồng Hồ Thông Minh</td>
-              <td>Không</td>
-              <td>Có</td>
-              <td>Không</td>
-            </tr>
-
-            <tr>
-              <td>Điện Thoại Cũ</td>
-              <td>Có</td>
-              <td>Có</td>
-              <td>Không</td>
-            </tr>
-
-            <tr>
-              <td>Phụ Kiện Cao Cấp</td>
-              <td>Không</td>
-              <td>Có</td>
-              <td>Không</td>
-            </tr>
-          </tbody>
-        </table>
-
-
-        <div className="max-w-2xl mx-auto mt-8 p-4 bg-white shadow-md rounded-md">
-          <h1 className="text-3xl font-bold mb-4">Schedule A Repair Appointment</h1>
-
-          {/* form */}
-          <form action="#" method="post">
-            <div className="mb-4">
-              <h2 className="text-xl font-bold mb-2">Customer Information</h2>
-              <label htmlFor="fullname" className="block text-sm font-medium text-gray-600">Full Name:</label>
-              <input type="text" id="fullname" name="fullname" className="mt-1 p-2 w-full border rounded-md" required />
-              <label htmlFor="email" className="block text-sm font-medium text-gray-600 mt-4">Email:</label>
-              <input type="text" id="email" name="email" className="mt-1 p-2 w-full border rounded-md" required />
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-600 mt-4">Phone Number:</label>
-              <input type="text" id="phone" name="phone" className="mt-1 p-2 w-full border rounded-md" required />
-            </div>
-
-            <div className="mb-4">
-              <h3 className="text-lg font-bold mb-2">Equipment Information</h3>
-              <label htmlFor="make" className="block text-sm font-medium text-gray-600">Device Name:</label>
-              <input type="text" id="make" name="make" className="mt-1 p-2 w-full border rounded-md" required />
-            </div>
-
-            <div className="mb-4">
-              <h2 className="text-xl font-bold mb-2">Maintenance Service</h2>
-              <label htmlFor="service" className="block text-sm font-medium text-gray-600">Select Service:</label>
-              <select id="service" name="service" className="mt-1 p-2 w-full border rounded-md">
-                <option value="Regular Maintenance">Regular Maintenance</option>
-                <option value="Component Upgrade">Component Upgrade</option>
-                <option value="Repair">Repair</option>
-              </select>
-            </div>
-
-            <div className="mb-4">
-              <h3 className="text-lg font-bold mb-2">Location & Time</h3>
-              <label htmlFor="location" className="block text-sm font-medium text-gray-600">Location:</label>
-              <input type="text" id="location" name="location" className="mt-1 p-2 w-full border rounded-md" required />
-              <label htmlFor="time" className="block text-sm font-medium text-gray-600 mt-4">Time:</label>
-              <input type="text" id="time" name="time" className="mt-1 p-2 w-full border rounded-md" required />
-            </div>
-
-            <div className="mb-4">
-              <h2 className="text-xl font-bold mb-2">Notes</h2>
-              <textarea id="note" name="note" rows="4" cols="50" placeholder="Notes about maintenance request" className="mt-1 p-2 w-full border rounded-md"></textarea>
-            </div>
-
-            <div className="submit-container text-center">
-              <input type="submit" value="Submit" className="bg-blue-600 text-white p-2 rounded-md cursor-pointer hover:bg-blue-700" />
-            </div>
-          </form>
+        <div className="my-2">
+          <button onClick={openForm} className="uppercase text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-3 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            Schedule now
+          </button>
         </div>
       </div>
-      <script src="https://unpkg.com/@themesberg/flowbite@1.2.0/dist/flowbite.bundle.js"></script>
+
+
+      <div className="w-11/12 mx-auto">
+        <h1 className="schedule-header text-3xl font-bold my-10 uppercase">Schedule A Repair Appointment</h1>
+
+        <div className="border-b border-gray-200 dark:border-gray-700">
+          <ul className="flex flex-wrap -mb-px" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+            <li role="presentation">
+              <button
+                className={`inline-block py-4 px-4 text-center border-transparent border-b-2 text-center text-xl font-bold pb-5 uppercase
+                  ${activeTab === "tabble1" ? "active-tab" : ""}`}
+                onClick={() => setActiveTable("tabble1")}
+                id="tabble1-tab"
+                data-tabs-target="#tabble1"
+                type="button"
+                role="tab"
+                aria-controls="tabble1"
+                aria-selected={activeTab === "tabble1" ? "true" : "false"}
+              >
+                1 To 1 Replacement Warranty
+              </button>
+            </li>
+            <li role="presentation">
+              <button
+                className={`inline-block py-4 px-4 text-center border-transparent border-b-2 text-center text-xl font-bold pb-5 uppercase
+                  ${activeTab === "table2" ? "active-tab" : ""}`}
+                onClick={() => setActiveTable("table2")}
+                id="table2-tab"
+                data-tabs-target="#table2"
+                type="button"
+                role="tab"
+                aria-controls="table2"
+                aria-selected={activeTab === "table2" ? "true" : "false"}
+              >
+                Drop and Water Damage Warranty
+              </button>
+            </li>
+            <li role="presentation">
+              <button
+                className={`inline-block py-4 px-4 text-center border-transparent border-b-2 text-center text-xl font-bold pb-5 uppercase
+                  ${activeTab === "tabble3" ? "active-tab" : ""}`}
+                onClick={() => setActiveTable("tabble3")}
+                id="tabble3-tab"
+                data-tabs-target="#tabble3"
+                type="button"
+                role="tab"
+                aria-controls="tabble3"
+                aria-selected={activeTab === "tabble3" ? "true" : "false"}
+              >
+                Extended Warranty
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div id="myTableContent">
+          <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "tabble1" ? '' : 'hidden'}`} id="tabble1" role="tabpanel" aria-labelledby="tab1-tab">
+            <h1 className="text-center text-xl font-bold pb-5 uppercase">Warranty service price list</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>Price Range</th>
+                  <th>1-to-1 VIP Exchange</th>
+                  <th>S24 + 12 Months</th>
+                  <th>S24 + 24 Months</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>10.000.000</td>
+                  <td>700.000</td>
+                  <td>700.000</td>
+                  <td>1.400.000</td>
+                </tr>
+
+                <tr>
+                  <td>10.000.001 - 15.000.000</td>
+                  <td>1.500.000</td>
+                  <td>1.400.000</td>
+                  <td>2.300.000</td>
+                </tr>
+
+                <tr>
+                  <td>15.000.001 - 20.000.000</td>
+                  <td>1.500.000</td>
+                  <td>1.400.000</td>
+                  <td>2.300.000</td>
+                </tr>
+
+                <tr>
+                  <td>25.000.001 - 30.000.000</td>
+                  <td>2.200.000</td>
+                  <td>2.200.000</td>
+                  <td>3.400.000</td>
+                </tr>
+
+                <tr>
+                  <td>30.000.001 - 35.000.000</td>
+                  <td>2.600.000</td>
+                  <td>2.600.000</td>
+                  <td>3.800.000</td>
+                </tr>
+
+                <tr>
+                  <td>35.000.001 - 40.000.000</td>
+                  <td>3.000.000</td>
+                  <td>3.000.000</td>
+                  <td>4.000.000</td>
+                </tr>
+
+                <tr>
+                  <td>45.000.001 - 100.000.000</td>
+                  <td>4.000.000</td>
+                  <td>4.000.000</td>
+                  <td>5.000.000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "table2" ? '' : 'hidden'}`} id="table2" role="tabpanel" aria-labelledby="tab2-tab">
+            <h1 class="text-center text-xl font-bold pb-5 uppercase">Extended Warranty for Premium Accessories</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>Price Range</th>
+                  <th>1-to-1 VIP Exchange</th>
+                  <th>S24 + 12 Months</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>1.000.000</td>
+                  <td>100.000</td>
+                  <td>100.000</td>
+                </tr>
+
+                <tr>
+                  <td>1.000.001 - 2.000.000</td>
+                  <td>200.000</td>
+                  <td>100.000</td>
+                </tr>
+
+                <tr>
+                  <td>2.000.001 - 3.000.000</td>
+                  <td>300.000</td>
+                  <td>150.000</td>
+                </tr>
+
+                <tr>
+                  <td>3.000.001 - 4.000.000</td>
+                  <td>400.000</td>
+                  <td>200.000</td>
+                </tr>
+
+                <tr>
+                  <td>4.000.001 - 5.000.000</td>
+                  <td>400.000</td>
+                  <td>300.000</td>
+                </tr>
+
+                <tr>
+                  <td>5.000.001 - 8.000.000</td>
+                  <td>600.000</td>
+                  <td>400.000</td>
+                </tr>
+
+                <tr>
+                  <td>8.000.001 - 10.000.000</td>
+                  <td>800.000</td>
+                  <td>500.000</td>
+                </tr>
+
+                <tr>
+                  <td>10.000.001 - 15.000.000</td>
+                  <td>1.000.000</td>
+                  <td>650.000</td>
+                </tr>
+
+                <tr>
+                  <td>15.000.001 - 20.000.000</td>
+                  <td>1.400.000</td>
+                  <td>800.000</td>
+                </tr>
+
+                <tr>
+                  <td>20.000.001 - 30.000.000</td>
+                  <td>2.000.000</td>
+                  <td>1.000.000</td>
+                </tr>
+
+                <tr>
+                  <td>30.000.001 - 40.000.000</td>
+                  <td>2.000.000</td>
+                  <td>1.200.000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className={`p-4 rounded-lg dark:bg-gray-800 ${activeTable === "tabble3" ? '' : 'hidden'}`} id="tabble3" role="tabpanel" aria-labelledby="tab3-tab">
+            <h1 class="text-center text-xl font-bold pb-5 uppercase">Classification of Extended Warranties Corresponding to Products</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>Product Group</th>
+                  <th>BHMR 1-to-1 VIP Exchange</th>
+                  <th>BHMR RV-RN</th>
+                  <th>BHMR 24+</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Apple</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>ASUS</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Huawei</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Others</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Nokia</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Samsung</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Laptop</td>
+                  <td>No</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                </tr>
+                <tr>
+                  <td>Smart Watches</td>
+                  <td>No</td>
+                  <td>Yes</td>
+                  <td>No</td>
+                </tr>
+                <tr>
+                  <td>Used Phones</td>
+                  <td>Yes</td>
+                  <td>Yes</td>
+                  <td>No</td>
+                </tr>
+                <tr>
+                  <td>Premium Accessories</td>
+                  <td>No</td>
+                  <td>Yes</td>
+                  <td>No</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="my-2">
+          <button onClick={openForm} className="uppercase text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-3 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+            Schedule now
+          </button>
+        </div>
+      </div>
+
+      <div className="abc">
+
+
+
+      </div>
+
+      {/* form */}
+      {isFormVisible && (
+        <div>
+          <div className="overlay" onClick={closeForm}></div>
+          <div className="service-popup" ref={formRef}>
+            <form action="#" method="post">
+              <div className="mb-4">
+                <span className="close-form-btn" onClick={closeForm}>
+                  <FontAwesomeIcon icon={faCircleXmark} />
+                </span>
+                <img className='order-logo' src='/favico.png'></img>
+
+                <h2 className="text-lg font-bold mb-2">Customer Information</h2>
+                <label htmlFor="fullname" className="block text-sm font-semibold text-black-900">Full Name:</label>
+                <input type="text" id="fullname" name="fullname" placeholder='Example: Ngọc Trinh...' className="bg-gray-100 mt-1 p-2 w-full border rounded-md" required />
+                <div className="flex justify-between mt-4">
+                  <div className="w-1/2 mr-2">
+                    <label htmlFor="email" className="block text-sm font-semibold text-black-900">Email:</label>
+                    <input type="text" id="email" name="email" placeholder='Example@gmail.com' className="bg-gray-100 mt-1 p-2 w-full border rounded-md" required />
+                  </div>
+                  <div className="w-1/2 ml-2">
+                    <label htmlFor="phone" className="block text-sm font-semibold text-black-900">Phone Number:</label>
+                    <input type="text" id="phone" name="phone" className="bg-gray-100 mt-1 p-2 w-full border rounded-md" required />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <h2 className="text-lg font-bold mb-2">Maintenance Service</h2>
+                <div className="flex justify-between">
+                  <div className="w-1/2 mr-2">
+                    <label htmlFor="make" className="block text-sm font-semibold text-black-900">Device Name:</label>
+                    <input type="text" id="make" name="make" className="bg-gray-100 mt-1 p-2 w-full border rounded-md" required />
+                  </div>
+                  <div className="w-1/2 ml-2">
+                    <label htmlFor="service" className="block text-sm font-semibold text-black-900">Select Service:</label>
+                    <select id="service" name="service" className="bg-gray-100 mt-1 p-2 w-full border rounded-md">
+                      <option value="Regular Maintenance">Regular Maintenance</option>
+                      <option value="Component Upgrade">Component Upgrade</option>
+                      <option value="Repair">Repair</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mb-4">
+                <div className="flex justify-between">
+                  <div className="w-1/2 mr-2">
+                    <label htmlFor="time" className="block text-sm font-semibold text-black-900">Time:</label>
+                    <input type="text" id="time" name="time" className="bg-gray-100 mt-1 p-2 w-full border rounded-md" placeholder='8:00 AM - 7:00 PM' required />
+                  </div>
+                  <div className="w-1/2 ml-2">
+                    <label htmlFor="location" className="block text-sm font-semibold text-black-900">Location:</label>
+                    <select id="location" name="location" className="bg-gray-100 mt-1 p-2 w-full border rounded-md">
+                      <option value="Regular Maintenance">Zhōngnánhǎi Shop</option>
+                      <option value="Component Upgrade">Kremlyovskiy Shop</option>
+                      <option value="Repair">White House Shop</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div className="submit-container text-center">
+                <input type="submit" value="Submit" className="mb-1 bg-blue-600 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-blue-700" />
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div >
   )
 }
