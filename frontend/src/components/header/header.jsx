@@ -172,7 +172,7 @@ export default function Header() {
           <li>
             <Link href="/laptop" className="flex justify-center items-center m-1">
               <FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />
-              <p className="text-xl pl-2">
+              <p className="sub-menu-item text-xl pl-2">
                 Laptop
               </p>
             </Link>
@@ -181,7 +181,7 @@ export default function Header() {
             <div className="">
               <Link href="/" className="flex justify-center items-center m-1">
                 <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i" />
-                <p className="text-xl pl-2">Gear</p>
+                <p className="sub-menu-item text-xl pl-2">Gear</p>
               </Link>
             </div>
             <ul id="sub-drop">
@@ -200,8 +200,8 @@ export default function Header() {
           <li>
             <Link href="/pc-component" className="flex justify-center items-center m-1">
               <FontAwesomeIcon icon={faGears} className="sub-menu-i" />
-              <p className="text-xl pl-2">
-                PC Components
+              <p className="sub-menu-item text-xl pl-2">
+                PC Parts
               </p>
             </Link>
             <ul id="sub-drop">
@@ -249,7 +249,7 @@ export default function Header() {
             <div className="">
               <Link href="/build-pc" className="flex justify-center items-center m-1">
                 <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
-                <p className="text-xl pl-2">Build PC</p>
+                <p className="sub-menu-item text-xl pl-2">Build PC</p>
               </Link>
             </div>
           </li>
