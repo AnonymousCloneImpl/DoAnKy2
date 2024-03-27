@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 
 const CartIcon = () => {
-    const [value, setValue] = useState();
+    const [value, setValue] = useState(0);
 
     useEffect(() => {
         // Hàm để lấy giá trị từ localStorage

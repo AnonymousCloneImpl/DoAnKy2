@@ -56,7 +56,6 @@ export default function Home() {
                 />
             </div>
 
-
             {/* Khuyến Mãi */}
             <div
                 className="flex items-center"
@@ -118,9 +117,9 @@ export default function Home() {
                 width: '95%'
             }}>
                 <div>
-                    <dp>
+                    <p>
                         XU HUONG
-                    </dp>
+                    </p>
                 </div>
                 <div>
                     <ProductListComponent productData={laptopData.productSummaryDtoList} renderFromHomePage={false} />
@@ -145,7 +144,7 @@ export default function Home() {
             </div>
 
             <div
-                className="mt-10 flex max-md:flex max-md:flex-wrap"
+                className="mt-10 flex justify-center max-md:flex max-md:flex-wrap"
                 style={{
                     width: '95%'
                 }}

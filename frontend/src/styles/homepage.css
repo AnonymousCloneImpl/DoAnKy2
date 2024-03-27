@@ -33,6 +33,7 @@
 
 .div-price {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 }
 
@@ -62,11 +63,8 @@
 
 @media screen and (min-width: 900px) and (max-width: 1049px){
   .productList {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     font-size: 18px;
-  }
-  .div-price {
-    flex-wrap: wrap;
   }
   .top-home-page {
     height: 350px !important;
@@ -81,9 +79,6 @@
   .productList {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     font-size: 18px;
-  }
-  .div-price {
-    flex-wrap: wrap;
   }
   .productNameSize {
     height: 56px;
@@ -101,9 +96,6 @@
   .productList {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     font-size: 18px;
-  }
-  .div-price {
-    flex-wrap: wrap;
   }
   .productNameSize {
     height: 72px;
