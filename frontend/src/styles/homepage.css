@@ -116,4 +116,11 @@
   .slider {
     height: 150px;
   }
+  .cpuOption {
+    width: 330px;
+    left: -65% !important;
+  }
+  .ramOption {
+    left: -65% !important;
+  }
 }
