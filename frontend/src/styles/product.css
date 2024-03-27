@@ -482,13 +482,13 @@
 }
 
 .recommended-main-img {
-  height: 150px;
+  height: 100px;
   width: 40%;
 }
 
 .recommended-main-img img {
   height: auto;
-  width: 100%;
+  width: 90%;
   padding-left: 10%;
 }
 
@@ -1315,4 +1315,21 @@
   .recommended-accessories-slogan {
     font-size: 15px;
   }
+
+  .order-form {
+    width: 300px;
+    margin: 5px auto;
+    padding: 5px;
+  }
+
+  .order-logo {
+    display: none;
+  }
+
+
+  .chat-popup {
+    right: -40%;
+    bottom: -20%;
+  }
+
 }
