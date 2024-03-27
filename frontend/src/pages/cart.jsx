@@ -60,7 +60,6 @@ const CartPage = () => {
       for (let j = 0; j < result.cartItemDtoList.length; j++) {
         if (items[i].id === result.cartItemDtoList[j].productId) {
           items[i].stock = result.cartItemDtoList[j].quantity;
-          console.log(items[i])
           break;
         }
       }
@@ -159,7 +158,6 @@ const CartPage = () => {
       const updatedCheckedItems = prevCheckedItems.includes(itemId)
         ? prevCheckedItems.filter((id) => id !== itemId)
         : [...prevCheckedItems, itemId];
-      console.log("Updated Checked Items:", updatedCheckedItems);
       return updatedCheckedItems;
     });
   };
