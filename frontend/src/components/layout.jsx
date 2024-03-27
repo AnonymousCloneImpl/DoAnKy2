@@ -81,7 +81,7 @@ export default function Layout({ children }) {
 
       {/* Open Chat Button */}
       <button className="chat-button" onClick={openChat}>
-        <FontAwesomeIcon icon={faCommentDots} />
+        <FontAwesomeIcon icon={faCommentDots} className="chat-icon" />
       </button>
 
       {/* Chat Popup */}
@@ -106,7 +106,7 @@ export default function Layout({ children }) {
 
             <div className="w-full h-20">
               <form className="flex chat-form w-full h-full" onSubmit={handleSendMessage}>
-                <input type="text" placeholder="Chat here..." className="w-10/12" name="chat" id="chat" required />
+                <input type="text" placeholder="Chat here..." className="w-10/12" name="chat" id="chat" required autoComplete="off" />
                 <button type="submit"><FontAwesomeIcon icon={faPaperPlane} /></button>
               </form>
             </div>

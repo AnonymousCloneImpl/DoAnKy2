@@ -340,13 +340,12 @@ ul#sub-menu li:hover ul#sub-drop {
 
 .normal_price {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 500;
+  color: #999999;
 }
 
 .price {
   color: #707070;
-  font-size: 18px;
-  font-weight: 700;
   -webkit-text-decoration: line-through;
   text-decoration: line-through;
 }
@@ -362,4 +361,60 @@ ul#sub-menu li:hover ul#sub-drop {
   position: relative;
   top: -3px;
   right: 43px;
+}
+
+@media only screen and (max-width: 600px) {
+
+  .logo-wrapper {
+    width: 20%;
+  }
+
+  .logo-wrapper b,
+  .logo-wrapper p {
+    display: none;
+  }
+
+  .info-menu2-li a {
+    display: none;
+  }
+
+  .sub-menu-i {
+    display: none !important;
+  }
+
+  .sub-menu-item {
+    font-size: 15px !important;
+  }
+
+  .main-menu-container {
+    display: flex;
+  }
+
+
+  .inner-header {
+    padding: 5px 0;
+  }
+
+  .main-menu-left {
+    padding-right: 5px;
+  }
+
+  .main-menu-left a,
+  .main-menu-right a {
+    font-size: 15px;
+  }
+
+
+  .main-menu-right {
+    padding-left: 5px;
+  }
+
+  .main-menu-container {
+    width: 50%;
+  }
+
+  .search_result {
+    width: 90%;
+    left: 20px;
+  }
 }

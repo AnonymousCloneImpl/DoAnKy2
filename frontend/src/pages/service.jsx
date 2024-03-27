@@ -5,7 +5,7 @@ import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
 const service = () => {
   const [activeTab, setActiveTab] = useState("tab1");
-  const [activeTable, setActiveTable] = useState("tabble1");
+  const [activeTable, setActiveTable] = useState("table1");
   const [isFormVisible, setFormVisible] = useState(false);
   const formRef = useRef(null);
 
@@ -138,56 +138,56 @@ const service = () => {
         <h1 className="schedule-header text-3xl font-bold my-10 uppercase">Schedule A Repair Appointment</h1>
 
         <div className="border-b border-gray-200 dark:border-gray-700">
-          <ul className="flex flex-wrap -mb-px" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+          <ul className="flex flex-wrap -mb-px" id="myTab" data-tabs-toggle="#myTableContent" role="tablist">
             <li role="presentation">
               <button
                 className={`inline-block py-4 px-4 text-center border-transparent border-b-2 text-center text-xl font-bold pb-5 uppercase
-                  ${activeTab === "tabble1" ? "active-tab" : ""}`}
-                onClick={() => setActiveTable("tabble1")}
-                id="tabble1-tab"
-                data-tabs-target="#tabble1"
+                  ${activeTable === "table1" ? "active-table" : ""}`}
+                onClick={() => setActiveTable("table1")}
+                id="table1-tab"
+                data-tabs-target="#table1"
                 type="button"
                 role="tab"
-                aria-controls="tabble1"
-                aria-selected={activeTab === "tabble1" ? "true" : "false"}
+                aria-controls="table1"
+                aria-selected={activeTable === "table1" ? "true" : "false"}
               >
-                1 To 1 Replacement Warranty
+                Warranty service price list
               </button>
             </li>
             <li role="presentation">
               <button
                 className={`inline-block py-4 px-4 text-center border-transparent border-b-2 text-center text-xl font-bold pb-5 uppercase
-                  ${activeTab === "table2" ? "active-tab" : ""}`}
+                  ${activeTable === "table2" ? "active-table" : ""}`}
                 onClick={() => setActiveTable("table2")}
                 id="table2-tab"
                 data-tabs-target="#table2"
                 type="button"
                 role="tab"
                 aria-controls="table2"
-                aria-selected={activeTab === "table2" ? "true" : "false"}
+                aria-selected={activeTable === "table2" ? "true" : "false"}
               >
-                Drop and Water Damage Warranty
+                Extended Warranty for Premium Accessories
               </button>
             </li>
             <li role="presentation">
               <button
                 className={`inline-block py-4 px-4 text-center border-transparent border-b-2 text-center text-xl font-bold pb-5 uppercase
-                  ${activeTab === "tabble3" ? "active-tab" : ""}`}
-                onClick={() => setActiveTable("tabble3")}
-                id="tabble3-tab"
-                data-tabs-target="#tabble3"
+                  ${activeTable === "table3" ? "active-table" : ""}`}
+                onClick={() => setActiveTable("table3")}
+                id="table3-tab"
+                data-tabs-target="#table3"
                 type="button"
                 role="tab"
-                aria-controls="tabble3"
-                aria-selected={activeTab === "tabble3" ? "true" : "false"}
+                aria-controls="table3"
+                aria-selected={activeTable === "table3" ? "true" : "false"}
               >
-                Extended Warranty
+                Classification of Extended Warranties
               </button>
             </li>
           </ul>
         </div>
         <div id="myTableContent">
-          <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "tabble1" ? '' : 'hidden'}`} id="tabble1" role="tabpanel" aria-labelledby="tab1-tab">
+          <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "table1" ? '' : 'hidden'}`} id="table1" role="tabpanel" aria-labelledby="table1-tab">
             <h1 className="text-center text-xl font-bold pb-5 uppercase">Warranty service price list</h1>
             <table>
               <thead>
@@ -252,7 +252,7 @@ const service = () => {
             </table>
           </div>
 
-          <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "table2" ? '' : 'hidden'}`} id="table2" role="tabpanel" aria-labelledby="tab2-tab">
+          <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "table2" ? '' : 'hidden'}`} id="table2" role="tabpanel" aria-labelledby="table2-tab">
             <h1 class="text-center text-xl font-bold pb-5 uppercase">Extended Warranty for Premium Accessories</h1>
             <table>
               <thead>
@@ -333,7 +333,7 @@ const service = () => {
             </table>
           </div>
 
-          <div className={`p-4 rounded-lg dark:bg-gray-800 ${activeTable === "tabble3" ? '' : 'hidden'}`} id="tabble3" role="tabpanel" aria-labelledby="tab3-tab">
+          <div className={`p-4 rounded-lg dark:bg-gray-800 ${activeTable === "table3" ? '' : 'hidden'}`} id="table3" role="tabpanel" aria-labelledby="table3-tab">
             <h1 class="text-center text-xl font-bold pb-5 uppercase">Classification of Extended Warranties Corresponding to Products</h1>
             <table>
               <thead>
@@ -411,17 +411,11 @@ const service = () => {
           </div>
         </div>
 
-        <div className="my-2">
+        <div className="my-2 mb-20">
           <button onClick={openForm} className="uppercase text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-3 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
             Schedule now
           </button>
         </div>
-      </div>
-
-      <div className="abc">
-
-
-
       </div>
 
       {/* form */}

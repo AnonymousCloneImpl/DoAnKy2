@@ -403,14 +403,14 @@ const ProductPage = ({ productBE }) => {
                 <div className="service-item-child">
                   <FontAwesomeIcon className="service-icon" icon={faRotate} />
                   <div>
-                    <p>Commitment to 1 for 1 exchange within <b>30 Days</b> for product defects.</p>
+                    <p>Commitment to 1 for 1 exchange within <b className='service-b'>30 Days</b> for product defects.</p>
                     <Link href="#">View details &#187;</Link>
                   </div>
                 </div>
                 <div className="service-item-child">
                   <FontAwesomeIcon className="service-icon" icon={faShieldCat} />
                   <div>
-                    <p><b>12 Month</b> warranty at manufacturer&apos;s warranty centers</p>
+                    <p><b className='service-b'>12 Month</b> warranty at manufacturer&apos;s warranty centers</p>
                     <Link href="#">See warranty address &#187;</Link>
                   </div>
                 </div>
@@ -418,7 +418,7 @@ const ProductPage = ({ productBE }) => {
 
               <div className="service-line"></div>
 
-              <div className="service-item">
+              <div className="service-item service-bottom">
                 <FontAwesomeIcon className="service-icon" icon={faBoxArchive} />
                 <div className="item-combo">
                   <b>Product set includes:</b>
@@ -599,8 +599,8 @@ const ProductPage = ({ productBE }) => {
                 <div className="flex justify-center">
                   <div className="w-3/4 flex justify-center items-center">
                     <h1 className="mr-3">Total Price:</h1>
-                    <p className="mr-3"><FormatPrice price={totalPrice * 100 / 90} type={"discount"}/></p>
-                    <FormatPrice price={totalPrice}/>
+                    <p className="mr-3"><FormatPrice price={totalPrice * 100 / 90} type={"discount"} /></p>
+                    <FormatPrice price={totalPrice} type={"normal"} />
                   </div>
                 </div>
                 <div className="buy-recommend">
@@ -630,7 +630,7 @@ const ProductPage = ({ productBE }) => {
                     <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
                       {item.name}
                     </Link>
-                    <div className="flex pl-5 items-center">
+                    <div className="similar-price flex pl-5 items-center">
                       <b><FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} /></b>
                       <p className="pl-2"><FormatPrice price={item.price} /></p>
                     </div>
