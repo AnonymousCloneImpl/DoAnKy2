@@ -396,7 +396,7 @@
 }
 
 .product-content img {
-  height: 500px;
+  height: auto;
   width: 100%;
 }
 
@@ -487,7 +487,8 @@
 }
 
 .recommended-main-img img {
-  height: 100%;
+  height: auto;
+  width: 100%;
   padding-left: 10%;
 }
 
@@ -1209,6 +1210,7 @@
   }
 
   .right-box {
+    margin-top: 30px;
     width: 100%;
   }
 
@@ -1283,4 +1285,34 @@
     font-size: 28px !important;
   }
 
+
+  .btn-box button {
+    font-size: 22px;
+    padding: 5px 10px;
+  }
+
+  .ratings .star-icon {
+    margin-top: 5px;
+    color: orange;
+  }
+
+  .product-price p {
+    padding-top: 0;
+  }
+
+  .product-price-ratio {
+    margin-bottom: 10px;
+  }
+
+  .VAT div {
+    padding: 1px 10px;
+  }
+
+  .quantity p {
+    margin-top: 10px;
+  }
+
+  .recommended-accessories-slogan {
+    font-size: 15px;
+  }
 }

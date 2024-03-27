@@ -342,7 +342,7 @@ const CartPage = () => {
                   <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100} type={"discount"} />
                 </div>
                 <div className="text-center text-red-600 w-1/6 font-semibold text-base">
-                  <p><FormatPrice price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity} type={"discount"} /></p>
+                  <FormatPrice price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity} type={"discount"} />
                 </div>
               </div>
             ))}

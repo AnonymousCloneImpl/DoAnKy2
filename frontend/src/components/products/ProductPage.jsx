@@ -463,8 +463,10 @@ const ProductPage = ({ productBE }) => {
                   <p>100 Evaluate</p>
                 </div>
 
-                <div className="flex my-3 w-56 items-center justify-between">
-                  <FormatPrice price={discountedPrice * quantity} type={"discount"} />
+                <div className="flex my-3 w-2/5">
+                  <div className='mr-2'>
+                    <FormatPrice price={discountedPrice * quantity} type={"discount"} />
+                  </div>
                   <FormatPrice price={product.price * quantity} />
                 </div>
                 <div className="product-price-ratio">
@@ -551,8 +553,8 @@ const ProductPage = ({ productBE }) => {
                   <div className="recommended-main-content">
                     <h1>{product.name}</h1>
                     <div className="flex pl-5 w-full">
-                      <FormatPrice price={discountedPrice} type={"discount"} />
-                      <p className="ml-3"><FormatPrice price={product.price} /></p>
+                      <div className='mr-2'><FormatPrice price={discountedPrice} type={"discount"} /></div>
+                      <FormatPrice price={product.price} />
                     </div>
                     <div className="accessories-price-ratio">
                       <p>{`Down ${product.discountPercentage}%`}</p>
@@ -581,8 +583,10 @@ const ProductPage = ({ productBE }) => {
                           {item.name}
                         </Link>
                         <div className="flex pl-5 w-full">
-                          <FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} />
-                          <p className="ml-3"><FormatPrice price={item.price} /></p>
+                          <div className='mr-2'>
+                            <FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} />
+                          </div>
+                          <FormatPrice price={item.price} />
                         </div>
                         <div className="accessories-price-ratio">
                           <p>{`Down ${item.discountPercentage}%`}</p>
@@ -599,8 +603,8 @@ const ProductPage = ({ productBE }) => {
                 <div className="flex justify-center">
                   <div className="w-3/4 flex justify-center items-center">
                     <h1 className="mr-3">Total Price:</h1>
-                    <p className="mr-3"><FormatPrice price={totalPrice * 100 / 90} type={"discount"} /></p>
-                    <FormatPrice price={totalPrice} type={"normal"} />
+                    <FormatPrice price={totalPrice * 100 / 90} type={"discount"} />
+                    <FormatPrice price={totalPrice} />
                   </div>
                 </div>
                 <div className="buy-recommend">
@@ -630,9 +634,11 @@ const ProductPage = ({ productBE }) => {
                     <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
                       {item.name}
                     </Link>
-                    <div className="similar-price flex pl-5 items-center">
-                      <b><FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} /></b>
-                      <p className="pl-2"><FormatPrice price={item.price} /></p>
+                    <div className="similar-price flex w-full pl-5 items-center">
+                      <div className='mr-2'>
+                        <FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} />
+                      </div>
+                      <FormatPrice price={item.price} />
                     </div>
                     <div className="similar-product-price-ratio">
                       <p>{`Down ${item.discountPercentage}%`}</p>
@@ -789,7 +795,6 @@ const ProductPage = ({ productBE }) => {
             </div>
           </>
         )}
-
 
         {/* Cart notifications */}
         {cartNotifications.map((notification, index) => (
