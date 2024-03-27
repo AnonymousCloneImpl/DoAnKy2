@@ -268,7 +268,7 @@ const ProductPage = ({ productBE }) => {
       if (response.ok) {
         closeForm();
         alert("Order placed successfully");
-        window.location.reload();
+        window.location.href = "http://localhost:3000/payment.jsx";
       } else {
         console.error('Failed to place order');
       }
@@ -563,8 +563,6 @@ const ProductPage = ({ productBE }) => {
                 </div>
 
                 <div className="recommended-accessories-line"></div>
-
-                {console.log(product)}
 
                 <ul className="recommended-accessories-list">
                   {product.purchaseComboItem.productList.map((item, index) => (

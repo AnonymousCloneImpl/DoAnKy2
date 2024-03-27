@@ -8,7 +8,6 @@ export default function Layout({ children }) {
 
   const [isScrollVisible, setIsVisible] = useState(false);
   const [isChatVisible, setChatVisible] = useState(false);
-  const chatRef = useRef(null);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -46,11 +45,35 @@ export default function Layout({ children }) {
   };
 
   const [chatMessages, setChatMessages] = useState([]);
+  const [ws, setWs] = useState(null);
+  const chatRef = useRef(null);
+
+  useEffect(() => {
+    const newWs = new WebSocket('wss://127.0.0.1:8000/dashboard/chat');
+
+    newWs.onopen = () => {
+      console.log('WebSocket connected');
+      setWs(newWs);
+    };
+
+    newWs.onmessage = (event) => {
+      const message = event.data;
+      setChatMessages(prevMessages => [...prevMessages, message]);
+      scrollChatBox();
+    };
+
+    return () => {
+      newWs.close();
+    };
+  }, []);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     const message = e.target.elements.chat.value.trim();
     if (message !== "") {
+      if (ws) {
+        ws.send(message);
+      }
       setChatMessages([...chatMessages, message]);
       e.target.reset();
     }
