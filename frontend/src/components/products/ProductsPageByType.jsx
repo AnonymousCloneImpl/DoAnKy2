@@ -116,6 +116,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
 
     const handleCpuTypeClick = async ({value}) => {
         value = value.replace(" ", "-");
+        setShowCpuOption(false);
         if (query.cpu === value) {
             const { cpu, ...newQuery } = query;
             await new Promise((resolve) => {
@@ -138,6 +139,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     };
 
     const handleRamTypeClick = async ({value}) => {
+        setShowRamOption(false);
         if (query.ram === value) {
             const { ram, ...newQuery } = query;
             await new Promise((resolve) => {
@@ -195,8 +197,12 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     };
 
     return (
-        <div style={{margin: "auto"}}
-            className="h-full w-11/12">
+        <div style={{
+            margin: "auto",
+            width: '95%'
+        }}
+            className="h-full"
+        >
             <div>
                 <p>This should be small slider</p>
             </div>
@@ -207,7 +213,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                         TOP SELLER
                     </p>
                 </div>
-                <div className="w-full mb-8">
+                <div className="mb-8">
                     <ProductCardComponent productData={topSeller} type={"laptop"}/>
                 </div>
                 <div className="h-3">
@@ -220,7 +226,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                     <p className="h-10">CHUYÊN TRANG THƯƠNG HIỆU</p>
                 </div>
                 <div className="w-full mt-3">
-                    <ul className="grid grid-cols-12 max-md:grid-cols-6">
+                    <ul className="grid grid-cols-12 max-md:grid-cols-6 max-sm:grid-cols-4">
                         {producers.map((producer) => (
                             <li key={producer.id} className="h-8 w-36 mb-3">
                                 <div className="h-full">
@@ -258,7 +264,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                         </div>
                         {pageType?.toLowerCase() === 'laptop' ? (
                             <>
-                                <div className="h-10 w-20 mr-5">
+                                <div className="h-10 w-20 mr-5 relative left-0">
                                     <button onClick={handleCpuClick}
                                             className="h-full w-full rounded-md overflow-hidden bg-gray-200 hover:bg-gray-400  flex justify-center items-center">
                                         <FontAwesomeIcon className="w-2/6" icon={faMicrochip}/>
@@ -266,8 +272,24 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                                             CPU
                                         </p>
                                     </button>
+                                    {/* Ô input cho cpu */}
+                                    {showCpuOption && (
+                                        <div className="flex justify-center items-center bg-black rounded-xl absolute h-16">
+                                            {cpuFilter.map((p, index) => (
+                                                <div key={index} className="mr-8 bg-gray-300 h-8 w-20 rounded-sm">
+                                                    <button
+                                                        className="w-full h-full"
+                                                        onClick={() => {
+                                                            handleCpuTypeClick({value: p})
+                                                        }}>
+                                                        {p}
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
-                                <div className="h-10 w-20 mr-5">
+                                <div className="h-10 w-20 mr-5 relative">
                                     <button onClick={handleRamClick}
                                             className="h-full w-full rounded-md overflow-hidden bg-gray-200 hover:bg-gray-400 flex justify-center items-center">
                                         <FontAwesomeIcon className="w-2/6" icon={faMemory}/>
@@ -275,6 +297,22 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                                             RAM
                                         </p>
                                     </button>
+                                    {/* Ô input cho ram */}
+                                    {showRamOption && (
+                                        <div className="mt-4 w-1/2 flex justify-start left-64">
+                                            {ramFilter.map((p, index) => (
+                                                <div key={index} className="mr-8 bg-gray-300 h-8 w-20 rounded-sm">
+                                                    <button
+                                                        className="w-full h-full"
+                                                        onClick={() => {
+                                                            handleRamTypeClick({value: p})
+                                                        }}>
+                                                        {p}
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </>
                         ) : (
@@ -300,39 +338,6 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                         </div>
                     )}
 
-                    {/* Ô input cho cpu */}
-                    {showCpuOption && (
-                        <div className="absolute mt-4 w-1/2 flex justify-start left-40">
-                        {cpuFilter.map((p, index) => (
-                                <div key={index} className="mr-8 bg-gray-300 h-8 w-20 rounded-sm">
-                                    <button
-                                        className="w-full h-full"
-                                        onClick={() => {
-                                            handleCpuTypeClick({value: p})
-                                    }}>
-                                        {p}
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-
-                    {/* Ô input cho cpu */}
-                    {showRamOption && (
-                        <div className="absolute mt-4 w-1/2 flex justify-start left-64">
-                            {ramFilter.map((p, index) => (
-                                <div key={index} className="mr-8 bg-gray-300 h-8 w-20 rounded-sm">
-                                    <button
-                                        className="w-full h-full"
-                                        onClick={() => {
-                                            handleRamTypeClick({value: p})
-                                        }}>
-                                        {p}
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
                 </div>
             </div>
 

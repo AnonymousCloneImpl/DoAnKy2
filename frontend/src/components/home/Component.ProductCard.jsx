@@ -7,68 +7,66 @@ import HandleCartClick from "@/components/HandleCardClick";
 
 export default function ProductCardComponent({productData, type}) {
     if (productData !== null && productData !== [] && productData !== undefined) {
-        if (type !== "laptop") {
-            return (
-                <div className="w-full grid grid-cols-5 max-md:grid-cols-2">
-                    {productData.map((p) => (
-                        <div key={p.id} className="w-full mt-3">
-                            <div
-                                className="rounded-lg bg-white mr-2 ml-2 homepage-card-item overflow-hidden"
-                            >
-                                <div className="h-6 relative ">
-                                    <p className="bg-red-600 w-16 text-white text-center rounded-br-lg">-{p.discountPercentage}%</p>
-                                </div>
-                                <div className="h-52 w-full">
-                                    <Link
-                                        href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}
-                                        className="w-full h-full flex justify-center items-center bg-white"
-                                    >
-                                        <Image
-                                            src={p.image}
-                                            width="200"
-                                            height="100"
-                                            style={{height: 'auto', width: 'auto'}}
-                                            priority="high"
-                                            alt="iamge"
-                                        />
-                                    </Link>
-                                </div>
-                                <div className="flex items-start pt-3 h-20 w-full">
-                                    <Link
-                                        className="h-full"
-                                        href={`/${p?.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}>
-                                        <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
-                                    </Link>
-                                </div>
-                                <div className="div-price flex justify-around">
-                                    <FormatPrice price={p.price - (p.price * p.discountPercentage / 100)}
-                                                 type="discount"/>
-                                    <FormatPrice price={p.price}/>
-                                </div>
-                                <div className="w-full h-16 flex justify-center items-center mb-2">
-                                    <button onClick={() => HandleCartClick({product: p})}
-                                            className="h-3/4 rounded-md w-5/12 button-style">
-                                        <FontAwesomeIcon
-                                            icon={faCartPlus}
-                                            className="icon-style"
-                                            style={{
-                                                transition: 'color 0.3s ease',
-                                            }}
-                                        />
-                                    </button>
+        return (
+            <div className="w-full grid grid-cols-5 productList">
+                {productData.map((p) => {
+                    if (p.type.toLowerCase() !== "laptop") {
+                        return (
+                            <div key={p.id} className="w-full mt-3">
+                                <div
+                                    className="rounded-lg bg-white mr-2 ml-2 homepage-card-item overflow-hidden"
+                                >
+                                    <div className="h-6 relative ">
+                                        <p className="bg-red-600 w-16 text-white text-center rounded-br-lg">-{p.discountPercentage}%</p>
+                                    </div>
+                                    <div className="h-52 w-full">
+                                        <Link
+                                            href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}
+                                            className="flex items-center justify-center w-full h-full"
+                                        >
+                                            <div
+                                                style={{
+                                                    height: '80%',
+                                                    width: '80%',
+                                                    backgroundImage: `url(${p.image})`,
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: 'center',
+                                                }}
+                                            ></div>
+                                        </Link>
+                                    </div>
+                                    <div className="flex items-start pt-3 h-20 w-full">
+                                        <Link
+                                            className="h-full"
+                                            href={`/${p?.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}>
+                                            <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
+                                        </Link>
+                                    </div>
+                                    <div className="div-price flex justify-around">
+                                        <FormatPrice price={p.price - (p.price * p.discountPercentage / 100)}
+                                                     type="discount"/>
+                                        <FormatPrice price={p.price}/>
+                                    </div>
+                                    <div className="w-full h-16 flex justify-center items-center mb-2">
+                                        <button onClick={() => HandleCartClick({product: p})}
+                                                className="h-3/4 rounded-md w-4/12 button-style">
+                                            <FontAwesomeIcon
+                                                icon={faCartPlus}
+                                                className="icon-style"
+                                                style={{
+                                                    transition: 'color 0.3s ease',
+                                                }}
+                                            />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-            )
-        }
-        return (
-            <div className="w-full grid grid-cols-5 max-md:grid-cols-2">
-                {productData.map((p) => (
+                        )
+                    }
+                    return (
                     <div key={p.id} className="w-full mt-3">
                         <div
-                            className="rounded-lg bg-white  mr-2 ml-2 homepage-card-item overflow-hidden"
+                            className="rounded-lg bg-white mr-2 ml-2 homepage-card-item overflow-hidden"
                         >
                             <div className="h-6 relative">
                                 <p className="bg-red-600 w-16 text-white text-center rounded-br-lg">-{p.discountPercentage}%</p>
@@ -76,46 +74,54 @@ export default function ProductCardComponent({productData, type}) {
                             <div className="h-52 w-full">
                                 <Link
                                     href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}
-                                    className="w-full h-full flex justify-center items-center bg-white"
+                                    className="flex items-center justify-center w-full h-full"
                                 >
-                                    <Image
-                                        src={p.image}
-                                        width="180"
-                                        height="100"
-                                        style={{height: 'auto', width: 'auto'}}
-                                        priority="high"
-                                        alt="iamge"
-                                    />
+                                    <div
+                                        style={{
+                                            height: '80%',
+                                            width: '80%',
+                                            backgroundImage: `url(${p.image})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                        }}
+                                    ></div>
                                 </Link>
                             </div>
-                            <div className="flex items-start pt-3 h-20 w-full">
+                            <div className="flex items-start pt-3 w-full productNameSize">
                                 <Link
-                                    className="h-full"
                                     href={`/${p?.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}>
                                     <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
                                 </Link>
                             </div>
                             <div className="div-price flex justify-around">
-                                <FormatPrice price={p.price - (p.price * p.discountPercentage / 100)} type="discount" />
+                                <FormatPrice price={p.price - (p.price * p.discountPercentage / 100)}
+                                             type="discount"/>
                                 <FormatPrice price={p.price}/>
                             </div>
-                            <div
-                                className="text-sm text-gray-600">
-                                <div className="grid grid-cols-3">
-                                    <div className="flex justify-center items-center">
+                            <div className="text-sm text-gray-600 mt-3 flex justify-center flex-wrap">
+                                <div className="grid grid-cols-3"
+                                     style={{
+                                         width: '90%'
+                                     }}
+                                >
+                                    <div className="inline-grid justify-items-center">
                                         <FontAwesomeIcon icon={faMicrochip}/>
-                                        <p className="pl-1">{p?.configuration?.cpuType}</p>
+                                        <p>{p?.configuration?.cpuType}</p>
                                     </div>
-                                    <div className="flex justify-center items-center">
+                                    <div className="inline-grid justify-items-center">
                                         <FontAwesomeIcon icon={faMemory}/>
-                                        <p className="pl-1">{p?.configuration?.ram?.split(" ")[0]}</p>
+                                        <p>{p?.configuration?.ram?.split(" ")[0]}</p>
                                     </div>
-                                    <div className="flex justify-center items-center">
+                                    <div className="inline-grid justify-items-center">
                                         <FontAwesomeIcon icon={faDisplay}/>
-                                        <p className="pl-1">{p?.configuration?.screenSize?.split(" ")[0] + "\""}</p>
+                                        <pz>{p?.configuration?.screenSize?.split(" ")[0] + "\""}</pz>
                                     </div>
                                 </div>
-                                <div className="flex justify-center items-center mt-2 h-10">
+                                <div className="flex justify-center items-center gpu mt-3"
+                                     style={{
+                                         width: '95%'
+                                     }}
+                                >
                                     <Image src="/gpu.png"
                                            width="13" height="1" alt="gpu"
                                            className="pr-2"
@@ -125,7 +131,7 @@ export default function ProductCardComponent({productData, type}) {
                                     <p>{p.configuration?.graphicsCard?.split(",")[0]}</p>
                                 </div>
                             </div>
-                            <div className="w-full h-16 flex justify-center items-center mb-2">
+                            <div className="w-full h-16 flex justify-center items-center mb-2 mt-3">
                                 <button onClick={() => HandleCartClick({product: p})}
                                         className="h-3/4 rounded-md w-4/12 button-style">
                                     <FontAwesomeIcon
@@ -139,10 +145,10 @@ export default function ProductCardComponent({productData, type}) {
                             </div>
                         </div>
                     </div>
-                ))}
+                    )
+                })}
             </div>
         )
-
     }
     return (
         <div></div>

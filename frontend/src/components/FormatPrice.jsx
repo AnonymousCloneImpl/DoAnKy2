@@ -25,7 +25,6 @@ export default function FormatPrice({price, type}) {
     }
 
     return (
-
         <div className="flex price justify-center">
             {cleanedPrice}
             <p className="underline">đ</p>

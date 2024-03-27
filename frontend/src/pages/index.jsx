@@ -37,24 +37,15 @@ export default function Home() {
                 <AnimationCarousel/>
             </div>
 
-            <div className="w-full flex items-center justify-center mt-16">
-                <div className="w-11/12 grid grid-cols-3 max-md:grid-cols-1">
-                    <Component1/>
-                    <Component1/>
-                    <Component1/>
-                </div>
-            </div>
-
             <div
-                className="mb-10 mt-20 pb-6 flex flex-wrap justify-center"
+                className="mb-10 mt-10 pb-6 flex flex-wrap justify-center rounded-2xl"
                 style={{
-                    backgroundColor: 'rgba(252,109,122,0.68)',
-                    borderRadius: '16px',
+                    background: 'linear-gradient(rgb(0, 0, 0), rgb(138, 5, 5)) 0% 0% / cover',
                     width: '95%'
                 }}
             >
                 <div className="h-20 flex flex-wrap items-center justify-center mb-3">
-                    <p className="text-5xl w-full flex justify-center items-end">
+                    <p className="text-5xl w-full flex justify-center items-end text-white">
                         NEW ARRIVAL
                     </p>
                     <span className="w-32 border border-b-black"></span>
@@ -68,7 +59,7 @@ export default function Home() {
 
             {/* Khuyến Mãi */}
             <div
-                className="h-96"
+                className="flex items-center"
                 style={{
                     width: '95%'
                 }}
@@ -77,19 +68,28 @@ export default function Home() {
                     <Link href="" className="h-full ml-1 mr-1">
                         <img
                             src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/SIS%20asus.png"
-                            className="w-full h-full"
+                            className="w-full rounded-2xl"
+                            style={{
+                                height: '80%'
+                            }}
                         />
                     </Link>
                     <Link href="" className="h-full ml-1 mr-1">
                         <img
                             src="https://cdn2.cellphones.com.vn/insecure/rs:fill:690:300/q:90/plain/https://dashboard.cellphones.com.vn/storage/laptop-hssv-sliding-2024.jpg"
-                            className="w-full h-full"
+                            className="w-full rounded-2xl"
+                            style={{
+                                height: '80%'
+                            }}
                         />
                     </Link>
                     <Link href="" className="h-full ml-1 mr-1">
                         <img
                             src="https://www.asus.com/media/Odin/Websites/vn/SiteSetting/20240102111438.jpg?webp"
-                            className="w-full h-full"
+                            className="w-full rounded-2xl"
+                            style={{
+                                height: '80%'
+                            }}
                         />
                     </Link>
                 </div>
@@ -97,19 +97,34 @@ export default function Home() {
 
             {/* Product theo danh muc*/}
             <div
-                className="h-1/4 flex flex-wrap justify-center"
+                className="h-1/4 flex flex-wrap justify-center rounded-2xl"
                 style={{
+                    background: 'linear-gradient(rgb(0, 0, 0), rgb(138, 5, 5)) 0% 0% / cover',
                     width: '95%'
                 }}
             >
-                <div className="h-20 w-11/12 flex flex-wrap justify-center mb-10">
-                    <p className="text-5xl w-full text-center">
-                        LAPTOP VĂN PHÒNG
+                <div className="h-20 w-full mt-5 flex flex-wrap justify-center">
+                    <p className="text-5xl w-full text-center text-white">
+                        OFFICE LAPTOP
                     </p>
                     <span className="w-48 h-0 border border-t-black"></span>
                 </div>
                 <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"}
                                       renderFromHomePage={true}/>
+            </div>
+
+            {/* TOP SELLER */}
+            <div style={{
+                width: '95%'
+            }}>
+                <div>
+                    <dp>
+                        XU HUONG
+                    </dp>
+                </div>
+                <div>
+                    <ProductListComponent productData={laptopData.productSummaryDtoList} renderFromHomePage={false} />
+                </div>
             </div>
 
             <div
@@ -119,8 +134,8 @@ export default function Home() {
                     width: '95%'
                 }}
             >
-                <div className="h-20 w-full mb-3 flex flex-wrap justify-center">
-                    <p className="text-5xl w-full text-center text-white mt-3">
+                <div className="h-20 w-full mt-5 flex flex-wrap justify-center">
+                    <p className="text-5xl w-full text-center text-white">
                         LAPTOP GAMING
                     </p>
                     <span className="w-36 h-0 border border-t-black"></span>
@@ -130,13 +145,42 @@ export default function Home() {
             </div>
 
             <div
-                className="h-1/4 flex flex-wrap justify-center mt-10"
+                className="mt-10 flex max-md:flex max-md:flex-wrap"
                 style={{
                     width: '95%'
                 }}
             >
-                <div className="h-20 w-full mb-10 flex flex-wrap justify-center">
-                    <p className="text-5xl w-full text-center">
+                <Link href={'/'}>
+                    <img
+                        className="rounded-2xl h-80 max-md:h-40"
+                        src={'https://file.hstatic.net/200000722513/file/1580x510_man_hinh_thang_03_435810e7223043ec866bd0ed8dc1cf09.png'}
+                    />
+                </Link>
+                <div className="ml-8 max-md:ml-0 max-md:mt-3">
+                    <Link href={'/'}>
+                        <img
+                            className="rounded-2xl max-md:h-40"
+                            src={'https://file.hstatic.net/200000722513/file/banner_790x250_tai_nghe_6f6dcb17d3a54fcc88b3de96762d2d41.jpg'}
+                        />
+                    </Link>
+                    <Link href={'/'}>
+                        <img
+                            className="rounded-2xl mt-3 max-md:h-40"
+                            src={'https://file.hstatic.net/200000722513/file/bot_promotion_banner_small_2_2ad55c2345c64fbfb87dab4957b33914.png'}
+                        />
+                    </Link>
+                </div>
+            </div>
+
+            {/*HEADPHONE*/}
+            <div
+                className="h-1/4 flex flex-wrap justify-center mt-10 rounded-2xl bg-custom"
+                style={{
+                    width: '95%'
+                }}
+            >
+                <div className="h-20 w-full flex flex-wrap justify-center mt-5">
+                    <p className="text-5xl w-full text-center text-white">
                         HEADPHONE
                     </p>
                     <span className="w-36 h-0 border border-t-black"></span>
@@ -144,9 +188,15 @@ export default function Home() {
                 <ProductListComponent productData={headphoneData.productSummaryDtoList} renderFromHomePage={true}/>
             </div>
 
-            <div className="h-1/4 w-full flex flex-wrap justify-center mt-10">
-                <div className="h-20 w-full mb-10 flex flex-wrap justify-center">
-                    <p className="text-5xl w-full text-center">
+            <div
+                className="h-1/4 flex flex-wrap justify-center mt-10 rounded-2xl bg-transparent"
+                style={{
+                    width: '95%',
+                    background: '#920101'
+                }}
+            >
+                <div className="h-20 w-full flex flex-wrap justify-center mt-5">
+                    <p className="text-5xl w-full text-center text-white">
                         MOUSE
                     </p>
                     <span className="w-20 h-0 border border-t-black"></span>
@@ -154,7 +204,7 @@ export default function Home() {
                 <ProductListComponent productData={mouseData.productSummaryDtoList} renderFromHomePage={true}/>
             </div>
 
-            <div className="category-hompage w-full flex justify-center flex-wrap h-80 pb-4"
+            <div className="category-hompage w-full flex justify-center flex-wrap h-80 pb-4 mt-10"
                  style={{background: '#FBC303'}}>
                 <div className="w-full h-2/5 flex flex-wrap">
                     <div className="w-full h-full flex items-center justify-center">
