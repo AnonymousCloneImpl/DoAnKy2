@@ -7,22 +7,22 @@ const CheckOrder = () => {
   const [showTable, setShowTable] = useState(false);
   const [otp, setOTP] = useState('');
   const [otpSent, setOTPSent] = useState(false);
+  const [waiting, setWaiting] = useState(false);
+  const [resetTime, setResetTime] = useState(10);
 
   const handleSearch = () => {
-    // if (!otpSent) {
-    //   sendOTP();
-    // } else {
-    //   if (otp === '123456') {
-    fetchOrders();
-    //   } else {
-    //     alert('OTP code is not valid !');
-    //   }
-    // }
-  };
+    if (!validPhoneNumber(searchPhone)) {
+      alert('invalid phone number !');
+      return;
+    }
 
-  // const sendOTP = () => {
-  //   setOTPSent(true);
-  // };
+    if (!searchPhone) {
+      alert('Please enter your phone number !');
+      return;
+    }
+    setOTPSent(true);
+    setWaiting(true);
+  };
 
   const fetchOrders = () => {
     fetch(`${process.env.DOMAIN}/check-order?q=${searchPhone}`)
@@ -41,32 +41,111 @@ const CheckOrder = () => {
       });
   };
 
-  const handleKeyPress = (e) => {
+  const handleOTPChange = (e) => {
+    setOTP(e.target.value);
+  };
+
+  const handleOTPSubmit = () => {
+    if (otp === '123456') {
+      fetchOrders();
+    } else {
+      alert('Invalid OTP !');
+    }
+  };
+
+  useEffect(() => {
+    let interval;
+    if (waiting) {
+      interval = setInterval(() => {
+        setResetTime(prevTime => prevTime - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [waiting]);
+
+  useEffect(() => {
+    if (resetTime === 0) {
+      setWaiting(false);
+      setResetTime(10);
+    }
+  }, [resetTime]);
+
+  const handleReset = () => {
+    setSearchPhone('');
+    setData([]);
+    setShowTable(false);
+    setOTP('');
+    setOTPSent(false);
+    setWaiting(false);
+    setResetTime(10);
+  };
+
+  const validPhoneNumber = (phoneNumber) => {
+    const phoneNumberRegex = /^(\+?84|0)(3[2-9]|5[689]|7[06-9]|8[1-9]|9\d)\d{7}$/;
+    return phoneNumberRegex.test(phoneNumber) && phoneNumber.length <= 10 && phoneNumber.length >= 9;
+  };
+
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      handleSearch();
+      if (!otpSent) {
+        handleSearch();
+      } else {
+        handleOTPSubmit();
+      }
     }
   };
 
   return (
     <div className='check-order-wrapper'>
-      <div className="main-search">
-        <h1 className='flex text-xl font-bold justify-center my-10 uppercase'>Search by your phone number</h1>
-        <div className="flex justify-center">
-          <input
-            type="text"
-            className="block w-1/5 px-4 py-2 bg-white border rounded-md focus:outline-none"
-            placeholder="Search..."
-            name='search-order'
-            id='search-order'
-            value={searchPhone}
-            onChange={(e) => setSearchPhone(e.target.value)}
-            onKeyDown={handleKeyPress}
-          />
-          <button type="submit" className="px-4 text-white bg-red-600 rounded-md uppercase" onClick={handleSearch}>
-            Search
+      {!otpSent ? (
+        <div className="main-search">
+          <h1 className='flex text-xl font-bold justify-center my-10 uppercase'>Search by your phone number</h1>
+          <div className="flex justify-center">
+            <input
+              type="text"
+              className="block w-1/5 px-4 py-2 bg-white border rounded-md focus:outline-none"
+              placeholder="Enter your phone number..."
+              value={searchPhone}
+              onChange={(e) => setSearchPhone(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <button type="submit" className="px-4 text-white bg-red-600 rounded-md uppercase" onClick={handleSearch}>
+              Submit
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="main-search">
+          <h1 className='flex text-xl font-bold justify-center my-10 uppercase'>Enter OTP to Check Order</h1>
+          <div className="flex justify-center">
+            <input
+              type="text"
+              className="block w-1/5 px-4 py-2 bg-white border rounded-md focus:outline-none"
+              placeholder="Enter OTP..."
+              value={otp}
+              onChange={handleOTPChange}
+              onKeyDown={handleKeyDown}
+            />
+            <button type="submit" className="px-4 text-white bg-red-600 rounded-md uppercase" onClick={handleOTPSubmit}>
+              Submit OTP
+            </button>
+          </div>
+        </div>
+      )}
+
+      {waiting && (
+        <div className="text-center mt-4">
+          <p>Please wait {resetTime} seconds before resetting</p>
+        </div>
+      )}
+
+      {!waiting && (
+        <div className="text-center mt-4">
+          <button className="px-4 py-2 bg-blue-500 text-white rounded-md" onClick={handleReset}>
+            Reset
           </button>
         </div>
-      </div>
+      )}
 
       {showTable && (
         <section className="container mx-auto p-10 font-mono">
