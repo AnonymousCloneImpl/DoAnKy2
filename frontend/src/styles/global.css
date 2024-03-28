@@ -1,0 +1,31 @@
+@font-face {
+  font-family: 'Roboto Thin' !important;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+
+@media screen and (min-width: 200px) and (max-width: 768px) {
+  * {
+    font-size: 13px;
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
