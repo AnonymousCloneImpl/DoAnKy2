@@ -1,14 +1,11 @@
 package project.product.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -29,7 +26,6 @@ public class ProductDetail {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id")
 	private Product product;
-	@OneToMany
-	@JsonIgnoreProperties
-	private List<Stock> stockList;
+	@OneToOne(mappedBy = "productDetail")
+	private Stock stock;
 }

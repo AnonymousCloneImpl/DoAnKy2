@@ -13,8 +13,14 @@ import java.util.List;
 public class RequestDto implements Serializable {
 	private List<SearchRequestDto> searchRequestDtoList;
 	private GLOBAL_OPERATOR globalOperator;
+	private String sortColumn;
+	private SORT_DIRECTION sortDirection;
 	private Integer page;
 	private Integer limit;
+
+	public enum SORT_DIRECTION {
+		ASC, DESC
+	}
 
 	public enum GLOBAL_OPERATOR {
 		AND, OR;

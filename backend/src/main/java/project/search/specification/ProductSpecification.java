@@ -10,6 +10,7 @@ import project.product.dto.HomePageData;
 import project.product.entity.Producer;
 import project.product.entity.Product;
 import project.product.entity.ProductDetail;
+import project.product.entity.Stock;
 import project.search.dto.RequestDto;
 import project.search.dto.SearchRequestDto;
 
@@ -36,6 +37,7 @@ public class ProductSpecification {
 		return (root, query, criteriaBuilder) -> {
 			Join<Product, ProductDetail> productDetailsJoin = root.join("productDetails", JoinType.INNER);
 			Join<Product, Producer> producerJoin = root.join("producer", JoinType.INNER);
+			Join<ProductDetail, Stock> stockJoin = productDetailsJoin.join("stock", JoinType.INNER);
 
 			List<Predicate> predicateList = new ArrayList<>();
 			for (SearchRequestDto searchRequestDto : requestDto.getSearchRequestDtoList()) {
@@ -104,9 +106,25 @@ public class ProductSpecification {
 				}
 			}
 
+			//  SORT
+			if (requestDto.getSortColumn() == null || requestDto.getSortColumn().isEmpty()) {
+				requestDto.setSortColumn("sold");
+			}
+			if (requestDto.getSortDirection() == null || requestDto.getSortDirection().describeConstable().isEmpty()) {
+				requestDto.setSortDirection(RequestDto.SORT_DIRECTION.ASC);
+			}
+			if (requestDto.getSortDirection() == RequestDto.SORT_DIRECTION.ASC) {
+				if (requestDto.getSortColumn().equals("sold")) {
+					query.orderBy(criteriaBuilder.asc(stockJoin.get(requestDto.getSortColumn())));
+				}
+			} else {
+				query.orderBy(criteriaBuilder.desc(stockJoin.get(requestDto.getSortColumn())));
+			}
+
 			if (Objects.requireNonNull(requestDto.getGlobalOperator()) == RequestDto.GLOBAL_OPERATOR.OR) {
 				return criteriaBuilder.or(predicateList.toArray(new Predicate[0]));
 			}
+
 			return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
 		};
 	}

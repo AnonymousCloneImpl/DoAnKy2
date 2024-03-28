@@ -30,9 +30,7 @@ public class SearchController {
 
 	@PostMapping("/searchByCondition")
 	@Cacheable(key = "#requestDto", value = "data")
-	public Object getProductByType(@RequestBody RequestDto requestDto
-	) {
-
+	public Object getProductByType(@RequestBody RequestDto requestDto) {
 		return searchService.findProductsByTypeWithPaging(requestDto);
 	}
 }
