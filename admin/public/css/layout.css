@@ -1,0 +1,19 @@
+/* Keyframes for the ringing and popping animation */
+@keyframes ring-and-pop {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(30deg) scale(1.2);
+    }
+    100% {
+        transform: rotate(-30deg) scale(1);
+    }
+}
+
+/* Apply the combined animation */
+.animate-bell-and-pop {
+    animation: ring-and-pop 0.5s ease-in-out infinite;
+}
+
+
