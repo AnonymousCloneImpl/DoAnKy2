@@ -32,8 +32,8 @@ public class OrderController {
 	}
 
 	@GetMapping("/check-order")
-	ResponseEntity<ResponseObject> getOrderByPhoneNumber(@RequestParam("q") String number) {
-		List<Order> orderList = orderService.getOrderByPhoneNumber(number);
+	ResponseEntity<ResponseObject> checkOrder(@RequestParam("q") String number) {
+		List<OrderDto> orderList = orderService.getOrderByPhoneNumber(number);
 		if (!orderList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(new ResponseObject("OK", "Get product successfully", orderList));
