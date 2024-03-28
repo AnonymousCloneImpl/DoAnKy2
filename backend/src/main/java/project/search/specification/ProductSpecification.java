@@ -107,15 +107,12 @@ public class ProductSpecification {
 			}
 
 			//  SORT
-			if (requestDto.getSortColumn() == null || requestDto.getSortColumn().isEmpty()) {
-				requestDto.setSortColumn("sold");
-			}
-			if (requestDto.getSortDirection() == null || requestDto.getSortDirection().describeConstable().isEmpty()) {
-				requestDto.setSortDirection(RequestDto.SORT_DIRECTION.ASC);
-			}
 			if (requestDto.getSortDirection() == RequestDto.SORT_DIRECTION.ASC) {
-				if (requestDto.getSortColumn().equals("sold")) {
-					query.orderBy(criteriaBuilder.asc(stockJoin.get(requestDto.getSortColumn())));
+				switch (requestDto.getSortColumn()) {
+					case "sold", "inserted_time" ->
+							query.orderBy(criteriaBuilder.asc(stockJoin.get(requestDto.getSortColumn())));
+
+					case "price" -> query.orderBy(criteriaBuilder.asc(root.get(requestDto.getSortColumn())));
 				}
 			} else {
 				query.orderBy(criteriaBuilder.desc(stockJoin.get(requestDto.getSortColumn())));

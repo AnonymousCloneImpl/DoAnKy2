@@ -7,10 +7,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import project.product.dto.ProductSummaryDto;
-import project.product.models.Pagination;
-import project.product.entity.Product;
 import project.common.ProductUtils;
+import project.product.dto.ProductSummaryDto;
+import project.product.entity.Product;
+import project.product.models.Pagination;
 import project.product.service.ProductService;
 import project.search.dto.RequestDto;
 import project.search.specification.ProductSpecification;
@@ -49,12 +49,20 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public Pagination findProductsByTypeWithPaging(RequestDto requestDto) {
+
 		if (requestDto.getPage() == null) {
 			requestDto.setPage(1);
 		}
 
 		if (requestDto.getLimit() == null) {
 			requestDto.setLimit(10);
+		}
+
+		if (requestDto.getSortColumn() == null || requestDto.getSortColumn().isEmpty()) {
+			requestDto.setSortColumn("sold");
+		}
+		if (requestDto.getSortDirection() == null || requestDto.getSortDirection().describeConstable().isEmpty()) {
+			requestDto.setSortDirection(RequestDto.SORT_DIRECTION.ASC);
 		}
 
 		Specification<Product> spec = productSpecification.specificationBuilder(requestDto);
