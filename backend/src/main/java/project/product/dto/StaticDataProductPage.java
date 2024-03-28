@@ -1,7 +1,9 @@
 package project.product.dto;
 
+
 import lombok.*;
-import org.springframework.data.redis.core.RedisHash;
+import project.dto.product.ProducerDto;
+import project.dto.product.ProductSummaryDto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,7 +13,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@RedisHash(value = "ConsentOTP", timeToLive = 3)
 public class StaticDataProductPage implements Serializable {
 	private List<ProductSummaryDto> productSummaryDtoList;
 	private List<ProducerDto> producerList;

@@ -5,15 +5,33 @@ import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import ProductList from "@/components/home/ProductList";
 import FormatPrice from "@/components/FormatPrice";
-import {faFilter, faMemory, faMicrochip, faMoneyBill} from "@fortawesome/free-solid-svg-icons";
+import {
+    faChevronDown,
+    faMemory,
+    faMicrochip,
+    faMoneyBill, faSort
+} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Filter from "@/components/Filter";
+import Sort from "@/components/sort";
 
 const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     const router = useRouter();
     const {query} =  useRouter();
+    const [filter, setFilter] = useState({
+        minPrice : query.minPrice || '',
+        maxPrice : query.maxPrice || '',
+        producer : query.producer || '',
+        cpu : query.cpu || '',
+        ram : query.ram || ''
+    });
+    const [sort, setSort] = useState("Popular");
     const [showPriceInput, setShowPriceInput] = useState(false);
     const [showCpuOption, setShowCpuOption] = useState(false);
     const [showRamOption, setShowRamOption] = useState(false);
+    const [priceSelect, setPriceSelect] = useState(false);
+    const [cpuSelect, setCpuSelect] = useState(filter.cpu !== '');
+    const [ramSelect, setRamSelect] = useState(filter.ram !== '');
     // Data for render
     const [products, setProducts] = useState([]);
     const [producers, setProducers] = useState([]);
@@ -61,8 +79,10 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 setRamFilter(staticData.ramList);
             }
         }
-
         setCurrentPage(page);
+        setShowPriceInput(false);
+        setShowRamOption(false);
+        setShowCpuOption(false);
     }, [page, pageData, pageType, staticData]);
 
     const handleCpuClick = async () => {
@@ -96,17 +116,21 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
     };
 
     const handleProducerClick = async ({name}) => {
-        await new Promise((resolve) => {
-            router.push({ pathname: router.pathname, query: { ...query, producer: name } }, undefined, { shallow: true, scroll: false, });
-            resolve();
-        });
         if (query.producer === name) {
             const { producer, ...newQuery } = query;
             await new Promise((resolve) => {
                 router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
                 resolve();
             });
+            setFilter(prevState => ({
+                ...prevState,
+                producer : ''
+            }))
         } else {
+            setFilter(prevState => ({
+                ...prevState,
+                producer : name
+            }))
             await new Promise((resolve) => {
                 router.push({ pathname: router.pathname, query: { ...query, producer: name } }, undefined, { shallow: true, scroll: false, });
                 resolve();
@@ -123,6 +147,11 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
                 resolve();
             });
+            setCpuSelect(false);
+            setFilter(prevState => ({
+                ...prevState,
+                cpu : ''
+            }))
         } else {
             if (query.cpu) {
                 const { cpu, ...newQuery } = query;
@@ -135,6 +164,11 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 router.push({ pathname: router.pathname, query: { ...query, cpu: value } }, undefined, { shallow: true, scroll: false, });
                 resolve();
             });
+            setCpuSelect(true);
+            setFilter(prevState => ({
+                ...prevState,
+                cpu : value
+            }))
         }
     };
 
@@ -146,6 +180,11 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
                 resolve();
             });
+            setRamSelect(false);
+            setFilter(prevState => ({
+                ...prevState,
+                ram : ''
+            }))
         } else {
             if (query.ram) {
                 const { ram, ...newQuery } = query;
@@ -158,10 +197,27 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 router.push({ pathname: router.pathname, query: { ...query, ram: value } }, undefined, { shallow: true, scroll: false, });
                 resolve();
             });
+            setRamSelect(true);
+            setFilter(prevState => ({
+                ...prevState,
+                ram : value
+            }))
         }
     };
 
     const handleApplyPriceFilter = async () => {
+        if (query.minPrice || query.maxPrice) {
+            const { minPrice, maxPrice, ...newQuery } = query;
+            await new Promise((resolve) => {
+                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                resolve();
+            });
+            setFilter(prevState => ({
+                ...prevState,
+                minPrice : '',
+                maxPrice : ''
+            }))
+        }
         await new Promise((resolve) => {
             router.push({
                 pathname: router.pathname,
@@ -174,8 +230,14 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                 { shallow: true, scroll: false, }
             );
             resolve();
+            setFilter(prevState => ({
+                ...prevState,
+                minPrice: minPrice || 0,
+                maxPrice: maxPrice || undefined
+            }))
         });
         setShowPriceInput(!showPriceInput);
+        setPriceSelect(true);
     };
 
     const handlePageButtonClick = async (value) => {
@@ -196,12 +258,30 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
         })
     };
 
+    const handleRemoveFilterClick = async () => {
+        setRamSelect(false);
+        setCpuSelect(false);
+        setPriceSelect(false);
+        setFilter({
+            minPrice : '',
+            maxPrice : '',
+            producer : '',
+            cpu : '',
+            ram : ''
+        })
+        const { ram, minPrice, maxPrice, cpu, producer, ...newQuery } = query;
+        await new Promise((resolve) => {
+            router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+            resolve();
+        });
+    };
+
     return (
         <div style={{
             margin: "auto",
             width: '95%'
         }}
-            className="h-full"
+             className="h-full"
         >
             <div>
                 <p>This should be small slider</p>
@@ -229,16 +309,30 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                     <ul className="grid grid-cols-12 max-md:grid-cols-6 max-sm:grid-cols-4">
                         {producers.map((producer) => (
                             <li key={producer.id} className="h-8 w-36 mb-3">
-                                <div className="h-full">
-                                    <button className="h-full w-1/2 border border-black rounded-md overflow-hidden flex justify-center items-center"
-                                            onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}
-                                    >
-                                        <img
-                                            src={`${producer.image}`}
-                                            className="h-4/6 w-11/12"
-                                        />
-                                    </button>
-                                </div>
+                                {filter.producer.toLowerCase() === producer.name.toLowerCase() ? (
+                                    <div className="h-full flex items-center">
+                                        <button className="h-full relative w-1/2 border-2 border-red-600 rounded-md overflow-hidden flex justify-center items-center"
+                                                onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}
+                                        >
+                                            <img
+                                                src={`${producer.image}`}
+                                                className="h-4/6 w-11/12"
+                                            />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="h-full">
+                                        <button
+                                            className="h-full w-1/2 border border-black rounded-md overflow-hidden flex justify-center items-center"
+                                            onClick={() => handleProducerClick({name: producer.name.toLowerCase()})}
+                                        >
+                                            <img
+                                                src={`${producer.image}`}
+                                                className="h-4/6 w-11/12"
+                                            />
+                                        </button>
+                                    </div>
+                                )}
                             </li>
                         ))}
                     </ul>
@@ -247,71 +341,182 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
 
             {/* FILTER */}
             <div className="mt-6">
-                <div className="text-xl flex items-center">
-                    <FontAwesomeIcon className="text-lg mr-1" icon={faFilter}/>
-                    FILTER
+                <div className="text-xl flex items-center justify-between">
+                    <div className="text-xl">
+                        <FontAwesomeIcon icon={faSort}/>
+                        SORT
+                    </div>
+                    <Filter filter={filter} handleRemoveFilterClick={handleRemoveFilterClick}/>
                 </div>
-                <div className="mt-3">
-                    <div className="flex justify-start items-center">
-                        <div className="h-10 w-20 mr-5">
-                            <button onClick={handlePriceClick}
-                                    className="h-full w-full rounded-md overflow-hidden bg-gray-200 hover:bg-gray-400 flex justify-center items-center">
-                                <FontAwesomeIcon className="w-2/6" icon={faMoneyBill}/>
-                                <p className="h-full w-4/6 flex items-center">
-                                    Price
-                                </p>
-                            </button>
+                <div className="mt-3 flex justify-between">
+                    {/*SORT*/}
+                    <Sort sort={sort} setSort={setSort} />
+
+                    <div className="flex justify-end items-center">
+                        <div className="h-10 w-24 mr-5 relative">
+                            {/* Ô input cho giá min và max */}
+                            {showPriceInput ? (
+                                <>
+                                    <button onClick={handlePriceClick}
+                                            className="h-full w-full border border-red-600 text-red-600 rounded-md overflow-hidden flex justify-center items-center">
+                                        <FontAwesomeIcon className="w-2/6 ml-2" icon={faMoneyBill}/>
+                                        <p className="h-full ml-1 w-4/6 flex items-center">
+                                            Price
+                                        </p>
+                                        <FontAwesomeIcon className="mr-3" icon={faChevronDown}/>
+                                    </button>
+
+                                    <div className="absolute mt-1 right-0"
+                                         style={{
+                                             width: '500px'
+                                         }}
+                                    >
+                                        <div
+                                            className="flex items-center justify-around rounded-lg overflow-hidden h-16 w-full bg-gray-200">
+                                            <div className="w-5/6 ml-6">
+                                                <PriceRangeSlider
+                                                    minPrice={minPrice}
+                                                    maxPrice={maxPrice}
+                                                    setMinPrice={setMinPrice}
+                                                    setMaxPrice={setMaxPrice}
+                                                />
+                                            </div>
+                                            <button onClick={handleApplyPriceFilter}
+                                                    className="ml-6 mr-6 text-white bg-red-500 w-1/6 h-8 rounded-sm">Apply
+                                            </button>
+                                        </div>
+                                    </div>
+                                </>
+                            ) : (
+                                <button onClick={handlePriceClick}
+                                        className="h-full w-full rounded-md overflow-hidden bg-gray-200 hover:bg-gray-400 flex justify-center items-center">
+                                    <FontAwesomeIcon className="w-2/6 ml-2" icon={faMoneyBill}/>
+                                    <p className="h-full ml-1 w-4/6 flex items-center">
+                                        Price
+                                    </p>
+                                    <FontAwesomeIcon className="mr-3" icon={faChevronDown}/>
+                                </button>
+                            )}
                         </div>
                         {pageType?.toLowerCase() === 'laptop' ? (
                             <>
-                                <div className="h-10 w-20 mr-5 relative left-0">
-                                    <button onClick={handleCpuClick}
-                                            className="h-full w-full rounded-md overflow-hidden bg-gray-200 hover:bg-gray-400  flex justify-center items-center">
-                                        <FontAwesomeIcon className="w-2/6" icon={faMicrochip}/>
-                                        <p className="h-full w-4/6 flex items-center">
-                                            CPU
-                                        </p>
-                                    </button>
+                                <div className="h-10 w-24 mr-5 relative left-0">
                                     {/* Ô input cho cpu */}
-                                    {showCpuOption && (
-                                        <div className="flex justify-center items-center bg-black rounded-xl absolute h-16">
-                                            {cpuFilter.map((p, index) => (
-                                                <div key={index} className="mr-8 bg-gray-300 h-8 w-20 rounded-sm">
-                                                    <button
-                                                        className="w-full h-full"
-                                                        onClick={() => {
-                                                            handleCpuTypeClick({value: p})
-                                                        }}>
-                                                        {p}
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
+                                    {showCpuOption ? (
+                                        <>
+                                            <button onClick={handleCpuClick}
+                                                    className="h-full w-full text-red-600 border border-red-600 rounded-md overflow-hidden flex justify-center items-center">
+                                                <FontAwesomeIcon className="w-2/6 ml-2" icon={faMicrochip}/>
+                                                <p className="h-full w-4/6 ml-1 flex items-center">
+                                                    CPU
+                                                </p>
+                                                <FontAwesomeIcon className="mr-3" icon={faChevronDown}/>
+                                            </button>
+                                            <div
+                                                className="flex mt-1 justify-center items-center bg-gray-200 rounded-md absolute right-0 h-16 cpuOption"
+                                            >
+                                                {cpuFilter.map((p, index) => {
+                                                    if (p.toLowerCase() === filter.cpu.replaceAll("-", " ").toLowerCase()) {
+                                                        return (
+                                                            <div key={index}
+                                                                 className="h-8 w-20 mr-2 ml-2 bg-red-100 border-2 border-red-600 rounded-lg">
+                                                                <button
+                                                                    className="w-full h-full text-red-600"
+                                                                    onClick={() => {
+                                                                        handleCpuTypeClick({value: p})
+                                                                    }}>
+                                                                    {p}
+                                                                </button>
+                                                            </div>
+                                                        )
+                                                    }
+                                                    return (
+                                                        <div key={index}
+                                                             className="bg-gray-300 h-8 w-20 rounded-sm mr-2 ml-2">
+                                                            <button
+                                                                className="w-full h-full"
+                                                                onClick={() => {
+                                                                    handleCpuTypeClick({value: p})
+                                                                }}>
+                                                                {p}
+                                                            </button>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <button onClick={handleCpuClick}
+                                                className={`h-full w-full rounded-md overflow-hidden ${
+                                                    cpuSelect ? 'text-red-600 border border-red-600 bg-red-100' : 'bg-gray-200 hover:bg-gray-400'
+                                                } flex justify-center items-center`}
+                                        >
+                                            <FontAwesomeIcon className="w-2/6 ml-2" icon={faMicrochip}/>
+                                            <p className="h-full w-4/6 ml-1 flex items-center">
+                                                CPU
+                                            </p>
+                                            <FontAwesomeIcon className="mr-3" icon={faChevronDown}/>
+                                        </button>
                                     )}
                                 </div>
-                                <div className="h-10 w-20 mr-5 relative">
-                                    <button onClick={handleRamClick}
-                                            className="h-full w-full rounded-md overflow-hidden bg-gray-200 hover:bg-gray-400 flex justify-center items-center">
-                                        <FontAwesomeIcon className="w-2/6" icon={faMemory}/>
-                                        <p className="h-full w-4/6 flex items-center">
-                                            RAM
-                                        </p>
-                                    </button>
-                                    {/* Ô input cho ram */}
-                                    {showRamOption && (
-                                        <div className="mt-4 w-1/2 flex justify-start left-64">
-                                            {ramFilter.map((p, index) => (
-                                                <div key={index} className="mr-8 bg-gray-300 h-8 w-20 rounded-sm">
-                                                    <button
-                                                        className="w-full h-full"
-                                                        onClick={() => {
-                                                            handleRamTypeClick({value: p})
-                                                        }}>
-                                                        {p}
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
+                                <div className="h-10 w-24 relative">
+                                    {/* Ô input cho RAM */}
+                                    {showRamOption ? (
+                                        <>
+                                            <button onClick={handleRamClick}
+                                                    className={`h-full buttonColor w-full rounded-md text-red-600 border border-red-600 overflow-hidden flex justify-center items-center`}
+                                            >
+                                                <FontAwesomeIcon className="w-2/6 ml-2" icon={faMemory}/>
+                                                <p className="h-full w-4/6 ml-1 flex items-center">
+                                                    RAM
+                                                </p>
+                                                <FontAwesomeIcon className="mr-3" icon={faChevronDown}/>
+                                            </button>
+                                            <div
+                                                className="flex mt-1 justify-center items-center bg-gray-200 rounded-lg absolute h-16 right-0 ramOption"
+                                            >
+                                                {ramFilter.map((p, index) => {
+                                                    if (p === filter.ram) {
+                                                        return (
+                                                            <div key={index}
+                                                                 className="bg-red-100 border-2 border-red-600 h-8 w-20 mr-2 ml-2 rounded-lg">
+                                                                <button
+                                                                    className="w-full h-full text-red-600"
+                                                                    onClick={() => {
+                                                                        handleRamTypeClick({value: p})
+                                                                    }}>
+                                                                    {p}
+                                                                </button>
+                                                            </div>
+                                                        )
+                                                    }
+                                                    return (
+                                                        <div key={index}
+                                                             className="bg-gray-300 h-8 w-20 mr-2 ml-2 rounded-lg">
+                                                            <button
+                                                                className="w-full h-full"
+                                                                onClick={() => {
+                                                                    handleRamTypeClick({value: p})
+                                                                }}>
+                                                                {p}
+                                                            </button>
+                                                        </div>
+                                                    )
+                                                })}
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <button onClick={handleRamClick}
+                                                className={`h-full buttonNonColor w-full rounded-md overflow-hidden ${
+                                                    ramSelect ? 'text-red-600 border border-red-600 bg-red-100' : 'bg-gray-200 hover:bg-gray-400'
+                                                } flex justify-center items-center`}
+                                        >
+                                            <FontAwesomeIcon className="w-2/6 ml-2" icon={faMemory}/>
+                                            <p className="h-full w-4/6 ml-1 flex items-center">
+                                                RAM
+                                            </p>
+                                            <FontAwesomeIcon className="mr-3" icon={faChevronDown}/>
+                                        </button>
                                     )}
                                 </div>
                             </>
@@ -321,24 +526,6 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
                         )}
                     </div>
                 </div>
-                <div>
-                    {/* Ô input cho giá min và max */}
-                    {showPriceInput && (
-                        <div className="absolute mt-1 left-10 w-1/2">
-                            <div
-                                className="flex items-center justify-center rounded-lg overflow-hidden h-12 w-full">
-                                <PriceRangeSlider
-                                    minPrice={minPrice}
-                                    maxPrice={maxPrice}
-                                    setMinPrice={setMinPrice}
-                                    setMaxPrice={setMaxPrice}
-                                />
-                                <button onClick={handleApplyPriceFilter} className="ml-6 text-white bg-red-500 w-20 h-8 rounded-sm">Apply</button>
-                            </div>
-                        </div>
-                    )}
-
-                </div>
             </div>
 
             <div className="flex flex-wrap h-auto mt-28">
@@ -346,7 +533,7 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
             </div>
 
             <div className="mb-96 flex justify-center mt-9">
-                <div className="flex">
+            <div className="flex">
                     {Array.from({length: totalPage}, (_, i) => {
                         if (i === currentPage - 1) {
                             return (
@@ -380,15 +567,12 @@ const ProductsPageByType = ({ pageData, page, pageType, staticData }) => {
 }
 
 const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
-    // Xác định giá trị ban đầu cho thanh trượt dựa trên minPrice và maxPrice
     const [values, setValues] = useState([minPrice, maxPrice]);
 
-    // Cập nhật giá trị ban đầu khi minPrice và maxPrice thay đổi
     useEffect(() => {
         setValues([minPrice, maxPrice]);
     }, [minPrice, maxPrice]);
 
-    // Xử lý sự thay đổi của thanh trượt
     const handleChange = (newValues) => {
         setValues(newValues);
         setMinPrice(newValues[0]);
@@ -396,7 +580,7 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
     };
 
     return (
-        <div className="flex justify-center flex-wrap w-4/5">
+        <div className="flex justify-center flex-wrap w-full">
             <Range
                 step={500000}
                 min={0}
@@ -434,8 +618,8 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
                                 marginTop: '10px'
                             }}
                         >
-                            <span><FormatPrice price={values[0]} />đ</span>
-                            <span><FormatPrice price={values[1]} />đ</span>
+                            <span><FormatPrice price={values[0]} type={'discount'} />đ</span>
+                            <span><FormatPrice price={values[1]} type={'discount'} />đ</span>
                         </div>
                     </div>
                 )}
