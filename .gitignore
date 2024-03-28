@@ -91,3 +91,6 @@ package-lock.json
 application.yml
 backend/src/main/resources/application.yml
 /backend/src/main/resources/application.yml
+
+frontend/.env
+/frontend/.env

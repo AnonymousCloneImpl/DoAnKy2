@@ -1,10 +1,7 @@
 package project.product.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import project.product.dto.ProductSummaryDto;
+import lombok.*;
+import project.dto.product.ProductSummaryDto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Pagination implements Serializable {
 	public static final int PAGE_SIZE = 15;
 	private int totalPageNumber;
