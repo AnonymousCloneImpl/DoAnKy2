@@ -9,10 +9,10 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.common.ProductSpecification;
 import project.common.ProductUtils;
+import project.dto.Pagination;
 import project.dto.product.ProductSummaryDto;
 import project.dto.search.RequestDto;
 import project.entity.product.Product;
-import project.product.models.Pagination;
 import project.service.product.ProductService;
 
 import java.util.List;
