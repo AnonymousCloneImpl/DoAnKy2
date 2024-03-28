@@ -1187,6 +1187,10 @@
   background: rgb(245, 245, 245);
 }
 
+.check-order-wrapper {
+  min-height: 600px;
+}
+
 @media only screen and (max-width: 600px) {
 
   .url a {

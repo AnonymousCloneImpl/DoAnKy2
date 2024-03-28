@@ -13,7 +13,7 @@ public interface OrderService {
 
 	public void updateStock(OrderItemDto item);
 
-	public List<Order> getOrderByPhoneNumber(String number);
+	public List<OrderDto> getOrderByPhoneNumber(String number);
 
 	public void sendEmail(Order order);
 }

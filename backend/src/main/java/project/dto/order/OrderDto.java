@@ -2,6 +2,8 @@ package project.dto.order;
 
 import lombok.*;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -9,7 +11,9 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto {
+public class OrderDto implements Serializable {
+	private String orderCode;
+	private LocalDateTime orderDate;
 	private String customerName;
 	private String customerPhone;
 	private String customerEmail;

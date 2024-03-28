@@ -96,8 +96,32 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<Order> getOrderByPhoneNumber(String phone) {
-		return orderRepo.findByCustomerPhone(phone);
+	public List<OrderDto> getOrderByPhoneNumber(String phone) {
+		List<Order> orders = orderRepo.findByCustomerPhone(phone);
+		List<OrderItem> orderItems;
+
+		List<OrderDto> orderDtos = new ArrayList<>();
+		List<OrderItemDto> orderItemDtos;
+		OrderDto orderDto;
+		OrderItemDto orderItemDto;
+
+		for (Order o: orders) {
+			orderItemDtos  = new ArrayList<>();
+			orderItems = o.getOrderItemList();
+			for (OrderItem item : orderItems) {
+				orderItemDto = new OrderItemDto();
+				BeanUtils.copyProperties(item, orderItemDto);
+				orderItemDto.setProductId(item.getProduct().getId());
+				orderItemDto.setProductType(item.getProduct().getType());
+				orderItemDto.setProductName(item.getProduct().getName());
+				orderItemDtos.add(orderItemDto);
+			}
+			orderDto = new OrderDto();
+			BeanUtils.copyProperties(o, orderDto);
+			orderDto.setOrderItemDtoList(orderItemDtos);
+			orderDtos.add(orderDto);
+		}
+		return orderDtos;
 	}
 
 	@Async

@@ -4,23 +4,40 @@ import Link from "next/link";
 const CheckOrder = () => {
   const [searchPhone, setSearchPhone] = useState('');
   const [data, setData] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [showTable, setShowTable] = useState(false);
+  const [otp, setOTP] = useState('');
+  const [otpSent, setOTPSent] = useState(false);
 
   const handleSearch = () => {
+    // if (!otpSent) {
+    //   sendOTP();
+    // } else {
+    //   if (otp === '123456') {
+    fetchOrders();
+    //   } else {
+    //     alert('OTP code is not valid !');
+    //   }
+    // }
+  };
+
+  // const sendOTP = () => {
+  //   setOTPSent(true);
+  // };
+
+  const fetchOrders = () => {
     fetch(`${process.env.DOMAIN}/check-order?q=${searchPhone}`)
       .then(response => response.json())
       .then(data => {
         if (data.data != null && data.data != undefined && data.data != "") {
+          setShowTable(true);
           setData(data);
-          console.log(data);
         } else {
-          setErrorMessage(`Can't find order with phone number = ${searchPhone}`);
-          alert(errorMessage)
+          alert(`Can't find order with phone number = ${searchPhone}`)
         }
       })
       .catch(error => {
         console.error('Error:', error);
-        setErrorMessage('An error occurred while fetching data.');
+        alert('An error occurred while fetching data.');
       });
   };
 
@@ -30,9 +47,8 @@ const CheckOrder = () => {
     }
   };
 
-
   return (
-    <div>
+    <div className='check-order-wrapper'>
       <div className="main-search">
         <h1 className='flex text-xl font-bold justify-center my-10 uppercase'>Search by your phone number</h1>
         <div className="flex justify-center">
@@ -52,55 +68,58 @@ const CheckOrder = () => {
         </div>
       </div>
 
-      <section className="container mx-auto p-10 font-mono">
-        <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
-          <div className="w-full overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="text-xl font-bold tracking-wide text-left text-gray-900 bg-gray-300 uppercase border-b border-gray-600">
-                  <th className="px-4 py-3">ORDER CODE</th>
-                  <th className="px-4 py-3">PRODUCT</th>
-                  <th className="px-4 py-3">QUANTITY</th>
-                  <th className="px-4 py-3">TOTAL PRICE</th>
-                  <th className="px-4 py-3">STATUS</th>
-                  <th className="px-4 py-3">DATE</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white">
-                {Array.isArray(data.data) && data.data.map((item, index) => (
-                  <tr key={index} className="text-gray-700">
-                    <td className="px-4 py-3 border text-ms">
-                      <div>
-                        <p className="font-semibold text-black">{item.orderCode}</p>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 text-ms font-semibold border">
-                      {item.orderItemList.map((p, index) => (
-                        <p className='text-sky-700' key={index}> -
-                          <Link href={`/${p.product.type.toLowerCase()}/${p.product.name.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
-                            {p.product.name}
-                          </Link>
-                        </p>
-                      ))}
-                    </td>
-                    <td className="px-4 py-3 text-ms font-semibold border">
-                      {item.orderItemList.map((p, index) => (
-                        <p key={index}>{p.quantity}</p>
-                      ))}
-                    </td>
-                    <td className="px-4 py-3 text-ms font-semibold border">{item.totalPrice}</td>
-                    <td className="px-4 py-3 text-ms border">
-                      <span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm"> {item.status} </span>
-                      <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> PREPARING </span>
-                    </td>
-                    <td className="px-4 py-3 font-semibold text-ms border">{item.orderDate}</td>
+      {showTable && (
+        <section className="container mx-auto p-10 font-mono">
+          <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+            <div className="w-full overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="text-xl font-bold tracking-wide text-left text-gray-900 bg-gray-300 uppercase border-b border-gray-600">
+                    <th className="px-4 py-3">ORDER CODE</th>
+                    <th className="px-4 py-3">PRODUCT</th>
+                    <th className="px-4 py-3">QUANTITY</th>
+                    <th className="px-4 py-3">TOTAL PRICE</th>
+                    <th className="px-4 py-3">STATUS</th>
+                    <th className="px-4 py-3">DATE</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white">
+                  {Array.isArray(data.data) && data.data.map((item, index) => (
+                    <tr key={index} className="text-gray-700">
+                      <td className="px-4 py-3 border text-ms">
+                        <div>
+                          <p className="font-semibold text-black">{item.orderCode}</p>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3 text-ms font-semibold border">
+                        {console.log(item)}
+                        {item.orderItemDtoList.map((p, index) => (
+                          <p className='text-sky-700' key={index}> -
+                            <Link href={`/${p.productType.toLowerCase()}/${p.productName.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
+                              {p.productName}
+                            </Link>
+                          </p>
+                        ))}
+                      </td>
+                      <td className="px-4 py-3 text-ms font-semibold border">
+                        {item.orderItemDtoList.map((p, index) => (
+                          <p key={index}>{p.quantity}</p>
+                        ))}
+                      </td>
+                      <td className="px-4 py-3 text-ms font-semibold border">{item.totalPrice}</td>
+                      <td className="px-4 py-3 text-ms border">
+                        <span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm"> {item.status} </span>
+                        <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> PREPARING </span>
+                      </td>
+                      <td className="px-4 py-3 font-semibold text-ms border">{item.orderDate}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
     </div>
   );
