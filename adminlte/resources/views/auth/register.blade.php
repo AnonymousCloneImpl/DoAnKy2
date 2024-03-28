@@ -69,6 +69,16 @@
                             class="btn btn-primary btn-block">{{ __('Register') }}</button>
                 </div>
             </div>
+
+            @if (Route::has('login'))
+                <nav class="mt-2">
+                        <a
+                            href="{{ route('login') }}"
+                            class="rounded-md px-1 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white"
+                        >
+                            Already had an account?
+                        </a>
+            @endif
         </form>
     </div>
 @endsection

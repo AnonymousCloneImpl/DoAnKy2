@@ -38,14 +38,13 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-bell"></i>
-                    <span class="badge badge-warning navbar-badge">15</span>
+                    <i class="far fa-bell animate-bell-and-pop"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <span class="dropdown-header">15 Notifications</span>
+                    <span class="dropdown-header">New Orders Arrived</span>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
-                        <i class="fas fa-envelope mr-2"></i> 4 new messages
+                        <i class="fas fa-envelope mr-2"></i> 4 new orders
                         <span class="float-right text-muted text-sm">3 mins</span>
                     </a>
 
@@ -91,7 +90,7 @@
             <img src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTE Logo"
                  class="brand-image img-circle elevation-3"
                  style="opacity: .8">
-            <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <span class="brand-text font-weight-light">Thế Giới Manh Động</span>
         </a>
 
         @include('layouts.navigation')
@@ -133,4 +132,14 @@
 
 @yield('scripts')
 </body>
+
+<script>
+    // Toggle the animation based on isNewNotification
+    // if (isNewNotification) {
+    //     document.getElementById('notificationLink').classList.add('animate-bell-and-pop');
+    // } else {
+    //     document.getElementById('notificationLink').classList.remove('animate-bell-and-pop');
+    // }
+
+</script>
 </html>
