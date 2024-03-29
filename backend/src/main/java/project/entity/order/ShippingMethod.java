@@ -1,4 +1,4 @@
-package project.entity.payment;
+package project.entity.order;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

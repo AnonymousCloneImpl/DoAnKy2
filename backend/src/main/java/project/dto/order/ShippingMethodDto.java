@@ -1,4 +1,4 @@
-package project.dto.payment;
+package project.dto.order;
 
 import lombok.*;
 

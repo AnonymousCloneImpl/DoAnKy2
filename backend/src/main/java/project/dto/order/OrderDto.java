@@ -1,10 +1,9 @@
 package project.dto.order;
 
 import lombok.*;
-import project.entity.payment.ShippingMethod;
+import project.entity.order.ShippingMethod;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter

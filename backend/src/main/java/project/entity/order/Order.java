@@ -5,10 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import project.const_.ORDER_STATUS;
 import project.entity.BaseEntity;
-import project.entity.payment.ShippingMethod;
-import project.entity.product.Product;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
