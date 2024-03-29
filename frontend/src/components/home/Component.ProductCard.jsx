@@ -114,7 +114,7 @@ export default function ProductCardComponent({productData, type}) {
                                         </div>
                                         <div className="inline-grid justify-items-center">
                                             <FontAwesomeIcon icon={faDisplay}/>
-                                            <p>{p?.configuration?.screenSize?.split(" ")[0] + "\""}</p>
+                                            <p>{p?.configuration?.screenSize}</p>
                                         </div>
                                     </div>
                                     <div className="flex justify-center items-center gpu mt-3"

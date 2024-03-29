@@ -16,6 +16,5 @@ import java.util.List;
 public class StaticDataProductPage implements Serializable {
 	private List<ProductSummaryDto> productSummaryDtoList;
 	private List<ProducerDto> producerList;
-	private List<String> cpuList;
-	private List<String> ramList;
+	private Object filter;
 }

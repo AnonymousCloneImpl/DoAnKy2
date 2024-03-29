@@ -27,11 +27,21 @@ public class ProductDetailServiceImpl implements ProductDetailService {
 	}
 
 	@Override
+	public List<String> getDisplayList() {
+		return productDetailRepository.getDisplayList();
+	}
+
+	@Override
 	public List<String> getRamList() {
 		return productDetailRepository.getRamList().stream()
 				.map(item -> item.split(" ")[0])
 				.distinct()
 				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<String> getConnectionList() {
+		return productDetailRepository.getConnectionListOfMouse();
 	}
 
 	@Override

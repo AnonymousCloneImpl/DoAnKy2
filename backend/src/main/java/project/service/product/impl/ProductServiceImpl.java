@@ -103,11 +103,12 @@ public class ProductServiceImpl implements ProductService {
 
 			productUtils.getConfigurationForDto(productSummaryDtoList);
 
+			Object filter = productUtils.getListConfiguration(type);
+
 			return StaticDataProductPage.builder()
 					.productSummaryDtoList(productSummaryDtoList)
 					.producerList(productUtils.convertProducerListToProducerDtoList(producerDtos, modelMapper))
-					.cpuList(productDetailService.getCpuList())
-					.ramList(productDetailService.getRamList())
+					.filter(filter)
 					.build();
 		} catch (Exception e) {
 			System.err.println("Error in getStaticDataByType function : " + e.getMessage());

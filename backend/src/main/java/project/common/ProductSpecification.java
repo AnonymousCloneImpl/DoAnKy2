@@ -45,7 +45,9 @@ public class ProductSpecification {
 			for (SearchRequestDto searchRequestDto : requestDto.getSearchRequestDtoList()) {
 				String column = searchRequestDto.getColumn();
 				Path<Object> attributePath;
-				if (column.equals("cpuType") || column.equals("ram") || column.equals("hardDisk")) {
+				if (column.equals("cpuType") || column.equals("ram")
+						|| column.equals("hardDisk") || column.equals("screenSize")
+						|| column.equals("mouseConnectType") || column.equals("keyboardConnectType")) {
 					attributePath = productDetailsJoin.get(column);
 				} else if (column.equals("producer")) {
 					attributePath = producerJoin.get("name");
@@ -76,7 +78,6 @@ public class ProductSpecification {
 						predicateList.add(like);
 					}
 
-//					Chua Hoat Dong
 					case BETWEEN -> {
 						String[] obj = searchRequestDto.getValue().split(",");
 						Expression<Double> discountedPrice = criteriaBuilder.diff(
@@ -122,14 +123,24 @@ public class ProductSpecification {
 					case "sold", "inserted_time" ->
 							query.orderBy(criteriaBuilder.asc(stockJoin.get(requestDto.getSortColumn())));
 
-					case "price" -> query.orderBy(criteriaBuilder.asc(root.get(requestDto.getSortColumn())));
+					case "price" -> query.orderBy(criteriaBuilder.asc(criteriaBuilder.diff(
+							root.get("price"),
+							criteriaBuilder.quot(
+									criteriaBuilder.prod(root.get("price"), root.get("discountPercentage")),
+									100.0
+							))));
 				}
 			} else {
 				switch (requestDto.getSortColumn()) {
 					case "sold", "inserted_time" ->
 							query.orderBy(criteriaBuilder.desc(stockJoin.get(requestDto.getSortColumn())));
 
-					case "price" -> query.orderBy(criteriaBuilder.desc(root.get(requestDto.getSortColumn())));
+					case "price" -> query.orderBy(criteriaBuilder.desc(criteriaBuilder.diff(
+							root.get("price"),
+							criteriaBuilder.quot(
+									criteriaBuilder.prod(root.get("price"), root.get("discountPercentage")),
+									100.0
+							))));
 				}
 			}
 
