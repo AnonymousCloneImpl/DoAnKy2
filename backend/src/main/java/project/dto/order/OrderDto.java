@@ -1,6 +1,7 @@
 package project.dto.order;
 
 import lombok.*;
+import project.entity.payment.ShippingMethod;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,4 +19,5 @@ public class OrderDto implements Serializable {
 	private String shippingAddress;
 	private List<OrderItemDto> orderItemDtoList;
 	private long totalPrice;
+	private ShippingMethod shippingMethod;
 }

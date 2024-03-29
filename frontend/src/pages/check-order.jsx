@@ -95,6 +95,18 @@ const CheckOrder = () => {
     }
   };
 
+  const formatDate = (inputDate) => {
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Thêm 0 phía trước nếu cần
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
+  };
+
   return (
     <div className='check-order-wrapper'>
       {!otpSent ? (
@@ -188,7 +200,7 @@ const CheckOrder = () => {
                       <td className="px-4 py-3 text-ms border">
                         <span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm"> {item.status} </span>
                       </td>
-                      <td className="px-4 py-3 font-semibold text-ms border">{item.orderDate}</td>
+                      <td className="px-4 py-3 font-semibold text-ms border">{formatDate(item.createdAt)}</td>
                     </tr>
                   ))}
                 </tbody>

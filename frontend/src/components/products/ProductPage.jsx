@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus, faCircleXmark, faCheck, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faPlus, faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
@@ -22,17 +22,12 @@ const ProductPage = ({ productBE }) => {
   const handleClick = (index) => {
     setActiveIndex(index);
     if (index === 0) {
-      openPopup();
+      openImgPopup();
     }
   };
 
-  const openPopup = () => {
-    setIsPopupOpen(true);
-  };
-
-  const closePopup = () => {
-    setIsPopupOpen(false);
-  };
+  const openImgPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);
 
   // set choose product ram----------------------------------------------------------------------------------------------
   const activeBtn = (button) => {
@@ -136,21 +131,14 @@ const ProductPage = ({ productBE }) => {
 
   // Expand/Collapse content----------------------------------------------------------------------------------------------
   const [expanded, setExpanded] = useState(false);
-  const toggleContent = () => {
-    setExpanded(!expanded);
-  };
+  const toggleContent = () => setExpanded(!expanded);
 
   // Open/Close order form----------------------------------------------------------------------------------------------
   const [isFormVisible, setFormVisible] = useState(false);
   const formRef = useRef(null);
 
-  const openForm = () => {
-    setFormVisible(true);
-  };
-
-  const closeForm = () => {
-    setFormVisible(false);
-  };
+  const openForm = () => setFormVisible(true);
+  const closeForm = () => setFormVisible(false);
 
   // Select option address----------------------------------------------------------------------------------------------
   const [provinces, setProvinces] = useState([]);
@@ -364,7 +352,7 @@ const ProductPage = ({ productBE }) => {
 
         <div className="product-box">
           <div className="left-box">
-            <div className="main-img" onClick={openPopup}>
+            <div className="main-img" onClick={openImgPopup}>
               <img src={mainImg} alt="Main Image" />
             </div>
 

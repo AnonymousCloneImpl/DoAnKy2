@@ -3,7 +3,7 @@ import React from 'react';
 const Payment = () => {
   return (
     <div>
-      <img src='frontend/public/panel/404.png'></img>
+      <h1 className='text-3xl'>Payment</h1>
     </div>
   );
 };

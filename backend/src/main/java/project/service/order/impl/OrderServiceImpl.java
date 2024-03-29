@@ -62,8 +62,7 @@ public class OrderServiceImpl implements OrderService {
 
 	private Order createOrderObj(OrderDto orderDto) {
 		return Order.builder()
-				.orderCode(GenerateCodeUtils.getRandomCode(orderDto.getCustomerName()))
-				.orderDate(LocalDateTime.now())
+				.orderCode(GenerateCodeUtils.getRandomCode())
 				.status(ORDER_STATUS.WAITING)
 				.build();
 	}
@@ -134,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
 			email.append("Thank you for shopping at THẾ GIỚI MANH ĐỘNG\n")
 					.append("Order ID: ").append(order.getId()).append("\n")
 					.append("Order Code: ").append(order.getOrderCode()).append("\n")
-					.append("Order Date: ").append(order.getOrderDate()).append("\n")
+					.append("Order Date: ").append(order.getCreatedAt()).append("\n")
 					.append("Order Status: ").append(order.getStatus()).append("\n")
 					.append("Total Price: ").append(order.getTotalPrice()).append("\n");
 			emailService.sendEmail(order.getCustomerEmail(), "Success Order", email.toString());
