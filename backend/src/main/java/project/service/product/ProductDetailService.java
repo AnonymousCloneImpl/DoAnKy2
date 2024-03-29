@@ -12,7 +12,11 @@ public interface ProductDetailService {
 
 	List<String> getCpuList();
 
+	List<String> getDisplayList();
+
 	List<String> getRamList();
+
+	List<String> getConnectionList();
 
 	List<ProductDetail> findAll(Specification<ProductDetail> byProductType);
 }

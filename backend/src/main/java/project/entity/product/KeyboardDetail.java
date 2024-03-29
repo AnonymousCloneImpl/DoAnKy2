@@ -20,8 +20,9 @@ public class KeyboardDetail extends ProductDetail {
 	private String switchType;
 	@Column(name = "cable_length")
 	private String cableLength;
-	@Column(name = "connection_type")
-	private String connectionType;
+	@Column(name = "keyboard_connect_type")
+	private String keyboardConnectType;
+	private String connection;
 	@Column(length = 10)
 	private String led;
 }

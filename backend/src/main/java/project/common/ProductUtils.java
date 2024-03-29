@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+import project.dto.LaptopFilter;
+import project.dto.MouseFilter;
+import project.dto.Pagination;
 import project.dto.product.*;
 import project.dto.product_detail.*;
 import project.entity.product.*;
-import project.product.models.Pagination;
 import project.repository.ProductRepository;
 import project.repository.StockRepository;
 import project.service.product.ProductDetailService;
@@ -68,6 +70,24 @@ public class ProductUtils {
 		}
 
 		return producerDtoList;
+	}
+
+	public Object getListConfiguration(String type) {
+		Object filter = null;
+		if (type.equalsIgnoreCase("laptop")) {
+			filter = LaptopFilter.builder()
+					.displayList(productDetailService.getDisplayList())
+					.cpuList(productDetailService.getCpuList())
+					.ramList(productDetailService.getRamList())
+					.build();
+		}
+
+		if (type.equalsIgnoreCase("mouse")) {
+			filter = MouseFilter.builder()
+					.connection(productDetailService.getConnectionList())
+					.build();
+		}
+		return filter;
 	}
 
 	public void getConfigurationForDto(List<ProductSummaryDto> productSummaryDtoList) {

@@ -15,6 +15,6 @@ public class KeyboardDetailDto extends ProductDetailDto implements Serializable 
 	private String type;
 	private String switchType;
 	private String cableLength;
-	private String connectionType;
+	private String connection;
 	private String led;
 }

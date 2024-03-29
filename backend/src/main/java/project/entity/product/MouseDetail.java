@@ -17,6 +17,8 @@ import lombok.Setter;
 public class MouseDetail extends ProductDetail {
 	private String sensor;
 	private String connection;
+	@Column(name = "mouse_connect_type")
+	private String mouseConnectType;
 	private String dpi;
 	@Column(length = 10)
 	private String led;

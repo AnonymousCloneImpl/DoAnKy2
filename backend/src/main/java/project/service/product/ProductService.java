@@ -4,10 +4,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import project.dto.Pagination;
+import project.dto.StaticDataProductPage;
 import project.dto.search.HomePageData;
 import project.entity.product.Product;
-import project.product.dto.StaticDataProductPage;
-import project.product.models.Pagination;
 
 import java.util.List;
 import java.util.Optional;

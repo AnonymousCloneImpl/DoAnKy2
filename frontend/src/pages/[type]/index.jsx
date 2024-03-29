@@ -43,6 +43,14 @@ const ProductsPageRoute = () => {
 
     let sale = router.query.sale || null;
 
+    let display = router.query.display || null;
+
+    let connect = router.query.connect || null;
+
+    let sort = router.query.sort || "sold";
+
+    let dir = router.query.dir || "ASC";
+
     let firstProductDataUrl = `${process.env.DOMAIN}/search/searchByCondition`;
 
     let body = {
@@ -53,6 +61,8 @@ const ProductsPageRoute = () => {
                 "operator" : "EQUAL"
             }
         ],
+        "sortColumn" : sort,
+        "sortDirection" : dir,
         "globalOperator" : "AND",
         "page" : page,
         "limit" : 5
@@ -102,6 +112,22 @@ const ProductsPageRoute = () => {
         });
     }
 
+    if (display !== null) {
+        body.searchRequestDtoList.push({
+            "column": "screenSize",
+            "value": display.replace("-", " "),
+            "operator": "EQUAL"
+        });
+    }
+
+    if (connect !== null) {
+        body.searchRequestDtoList.push({
+            "column": "mouseConnectType",
+            "value": connect,
+            "operator": "EQUAL"
+        });
+    }
+
     if (sale !== null) {
         body.searchRequestDtoList.push({
             "column": "discount",
@@ -121,7 +147,7 @@ const ProductsPageRoute = () => {
 
     useEffect(() => {
         mutate(firstProductDataUrl);
-    }, [page, type, producer, minPrice, maxPrice, cpu, limit, ram, firstProductDataUrl]);
+    }, [page, type, producer, connect, minPrice, display, maxPrice, cpu, limit, ram, sort, dir, firstProductDataUrl]);
 
     const staticData = `${process.env.DOMAIN}/products/staticData?type=${type}`;
 
@@ -138,7 +164,8 @@ const ProductsPageRoute = () => {
         data === undefined ||
         data === null ||
         res === undefined ||
-        res === null) {
+        res === null
+    ) {
         return <CustomErrorPage />
     }
 

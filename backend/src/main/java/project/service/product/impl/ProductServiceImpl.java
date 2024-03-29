@@ -10,6 +10,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.common.ProductSpecification;
 import project.common.ProductUtils;
+import project.dto.Pagination;
+import project.dto.StaticDataProductPage;
 import project.dto.product.BlogDto;
 import project.dto.product.ProductDto;
 import project.dto.product.ProductSummaryDto;
@@ -19,8 +21,6 @@ import project.entity.product.Blog;
 import project.entity.product.Producer;
 import project.entity.product.Product;
 import project.entity.product.Stock;
-import project.product.dto.StaticDataProductPage;
-import project.product.models.Pagination;
 import project.repository.ProductRepository;
 import project.service.product.*;
 
@@ -103,11 +103,12 @@ public class ProductServiceImpl implements ProductService {
 
 			productUtils.getConfigurationForDto(productSummaryDtoList);
 
+			Object filter = productUtils.getListConfiguration(type);
+
 			return StaticDataProductPage.builder()
 					.productSummaryDtoList(productSummaryDtoList)
 					.producerList(productUtils.convertProducerListToProducerDtoList(producerDtos, modelMapper))
-					.cpuList(productDetailService.getCpuList())
-					.ramList(productDetailService.getRamList())
+					.filter(filter)
 					.build();
 		} catch (Exception e) {
 			System.err.println("Error in getStaticDataByType function : " + e.getMessage());
