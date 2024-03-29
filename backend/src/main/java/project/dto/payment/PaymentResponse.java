@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ShippingMethodDto {
-    private String name;
-    private Long price;
+public class PaymentResponse {
+    private String orderCode;
+    private Long totalPrice;
 }

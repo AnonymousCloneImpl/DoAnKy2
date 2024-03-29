@@ -48,24 +48,24 @@ export default function Layout({ children }) {
   const [ws, setWs] = useState(null);
   const chatRef = useRef(null);
 
-  useEffect(() => {
-    const newWs = new WebSocket('wss://127.0.0.1:8000/dashboard/chat');
+  // useEffect(() => {
+  //   const newWs = new WebSocket('wss://127.0.0.1:8000/dashboard/chat');
 
-    newWs.onopen = () => {
-      console.log('WebSocket connected');
-      setWs(newWs);
-    };
+  //   newWs.onopen = () => {
+  //     console.log('WebSocket connected');
+  //     setWs(newWs);
+  //   };
 
-    newWs.onmessage = (event) => {
-      const message = event.data;
-      setChatMessages(prevMessages => [...prevMessages, message]);
-      scrollChatBox();
-    };
+  //   newWs.onmessage = (event) => {
+  //     const message = event.data;
+  //     setChatMessages(prevMessages => [...prevMessages, message]);
+  //     scrollChatBox();
+  //   };
 
-    return () => {
-      newWs.close();
-    };
-  }, []);
+  //   return () => {
+  //     newWs.close();
+  //   };
+  // }, []);
 
   const handleSendMessage = (e) => {
     e.preventDefault();

@@ -24,10 +24,9 @@ public class OrderController {
 		try {
 			Order createdOrder = orderService.createOrder(orderDto);
 			orderService.sendEmail(createdOrder);
-			return new ResponseEntity<>("Order created successfully. Order ID: "
-					+ createdOrder.getId(), HttpStatus.CREATED);
+			return new ResponseEntity<>("Success to create order", HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Failed to create order. "
+			return new ResponseEntity<>("Failed to create order"
 					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

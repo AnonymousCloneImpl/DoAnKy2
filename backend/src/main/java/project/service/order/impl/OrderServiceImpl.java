@@ -82,7 +82,6 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void updateStock(OrderItemDto item) {
-		System.err.println("updateStock");
 		Optional<Stock> stockOptional = stockService.getById(item.getProductId());
 
 		if (stockOptional.isPresent()) {
