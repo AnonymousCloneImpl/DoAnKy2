@@ -1,6 +1,7 @@
 package project.dto.order;
 
 import lombok.*;
+import project.const_.ORDER_STATUS;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -11,11 +12,10 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto implements Serializable {
-	private String customerName;
-	private String customerPhone;
-	private String customerEmail;
-	private String shippingAddress;
+public class OrderCheckDto implements Serializable {
+	private String orderCode;
+	private LocalDateTime orderDate;
+	private ORDER_STATUS status;
 	private List<OrderItemDto> orderItemDtoList;
 	private long totalPrice;
 }

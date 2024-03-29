@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.common.ResponseObject;
+import project.dto.order.OrderCheckDto;
 import project.dto.order.OrderDto;
 import project.entity.order.Order;
 import project.service.order.OrderService;
@@ -33,7 +34,7 @@ public class OrderController {
 
 	@GetMapping("/check-order")
 	ResponseEntity<ResponseObject> checkOrder(@RequestParam("q") String number) {
-		List<OrderDto> orderList = orderService.getOrderByPhoneNumber(number);
+		List<OrderCheckDto> orderList = orderService.getOrderByPhoneNumber(number);
 		if (!orderList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(new ResponseObject("OK", "Get product successfully", orderList));

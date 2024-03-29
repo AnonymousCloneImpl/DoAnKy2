@@ -37,7 +37,7 @@ const ProductPage = ({ productBE }) => {
   // set choose product ram----------------------------------------------------------------------------------------------
   const activeBtn = (button) => {
     let buttons = document.querySelectorAll('.pmodel');
-    buttons.forEach(function (btn) {
+    buttons.forEach((btn) => {
       btn.classList.remove('active');
     });
     button.classList.add('active');
@@ -78,14 +78,14 @@ const ProductPage = ({ productBE }) => {
   }, []);
 
 
-  function decreaseQuantity(e) {
+  const decreaseQuantity = (e) => {
     if (e) {
       e.preventDefault();
       setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
     }
   }
 
-  function increaseQuantity(e) {
+  const increaseQuantity = (e) => {
     if (e) {
       e.preventDefault();
       setQuantity((prevQuantity) => Math.min(prevQuantity + 1, product.stock.quantity));
@@ -109,7 +109,6 @@ const ProductPage = ({ productBE }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [checkedItems, setCheckedItems] = useState([]);
   const discountedPrice = product.price - (product.price * product.discountPercentage / 100);
-  const [totalOriginalPrice, setTotalOriginalPrice] = useState(0);
 
   const handleCheckboxChange = (itemId) => {
     setCheckedItems((prevCheckedItems) => {
@@ -133,17 +132,6 @@ const ProductPage = ({ productBE }) => {
       0
     );
     setTotalPrice(calculatedTotalPrice * 90 / 100 + discountedPrice);
-  }, [product.purchaseComboItem, checkedItems]);
-
-  useEffect(() => {
-    const calculatedTotalOriginalPrice = product.purchaseComboItem.productList.reduce(
-      (accumulator, item) => {
-        return accumulator + (checkedItems.includes(item.id) ? item.price : 0);
-      },
-      0
-    );
-
-    setTotalOriginalPrice(calculatedTotalOriginalPrice + product.price);
   }, [product.purchaseComboItem, checkedItems]);
 
   // Expand/Collapse content----------------------------------------------------------------------------------------------
@@ -189,7 +177,6 @@ const ProductPage = ({ productBE }) => {
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [houseAddress, setHouseAddress] = useState('');
-  const [orderItem, setOrderItem] = useState([]);
 
   // get address from json file
   useEffect(() => {
@@ -268,7 +255,7 @@ const ProductPage = ({ productBE }) => {
       if (response.ok) {
         closeForm();
         alert("Order placed successfully");
-        window.location.href = "http://localhost:3000/payment.jsx";
+        window.location.href = "http://localhost:3000/payment";
       } else {
         console.error('Failed to place order');
       }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
 import project.const_.ORDER_STATUS;
+import project.dto.order.OrderCheckDto;
 import project.dto.order.OrderDto;
 import project.dto.order.OrderItemDto;
 import project.dto.product.StockDto;
@@ -82,6 +83,7 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void updateStock(OrderItemDto item) {
+		System.err.println("updateStock");
 		Optional<Stock> stockOptional = stockService.getById(item.getProductId());
 
 		if (stockOptional.isPresent()) {
@@ -96,13 +98,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderDto> getOrderByPhoneNumber(String phone) {
+	public List<OrderCheckDto> getOrderByPhoneNumber(String phone) {
 		List<Order> orders = orderRepo.findByCustomerPhone(phone);
 		List<OrderItem> orderItems;
 
-		List<OrderDto> orderDtos = new ArrayList<>();
+		List<OrderCheckDto> orderDtos = new ArrayList<>();
 		List<OrderItemDto> orderItemDtos;
-		OrderDto orderDto;
+		OrderCheckDto orderDto;
 		OrderItemDto orderItemDto;
 
 		for (Order o: orders) {
@@ -116,7 +118,7 @@ public class OrderServiceImpl implements OrderService {
 				orderItemDto.setProductName(item.getProduct().getName());
 				orderItemDtos.add(orderItemDto);
 			}
-			orderDto = new OrderDto();
+			orderDto = new OrderCheckDto();
 			BeanUtils.copyProperties(o, orderDto);
 			orderDto.setOrderItemDtoList(orderItemDtos);
 			orderDtos.add(orderDto);
