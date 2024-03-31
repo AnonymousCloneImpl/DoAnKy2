@@ -10,6 +10,10 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('css/fontawesome.min.css') }}">
+    <!-- Datatable style -->
+    <link rel="stylesheet" href="{{asset('css/dataTables.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/responsive.bootstrap4.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/buttons.bootstrap4.min.css')}}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
     <!-- Custom style -->
@@ -126,13 +130,49 @@
 
 <!-- REQUIRED SCRIPTS -->
 
-@vite('resources/js/app.js')
+
+<!-- jQuery -->
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+
+<!-- DataTables & Plugins -->
+<script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('js/dataTables.responsive.min.js')}}"></script>
+<script src="{{asset('js/responsive.bootstrap4.min.js')}}"></script>
+<script src="{{asset('js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('js/buttons.bootstrap4.min.js')}}"></script>
+<script src="{{asset('js/jszip.min.js')}}"></script>
+<script src="{{asset('js/pdfmake.min.js')}}"></script>
+<script src="{{asset('js/vfs_fonts.js')}}"></script>
+<script src="{{asset('js/buttons.html5.min.js')}}"></script>
+<script src="{{asset('js/buttons.print.min.js')}}"></script>
+<script src="{{asset('js/buttons.colVis.min.js')}}"></script>
+
 <!-- AdminLTE App -->
-<script src="{{ asset('js/adminlte.min.js') }}" defer></script>
+<script src="{{ asset('js/adminlte.min.js') }}"></script>
 
-@yield('scripts')
-</body>
+<!-- Initialization -->
+<script>
+    jQuery(function($) {
+        $("#ProductTable").DataTable({
+            "paging": true,
+            "responsive": true,
+            "lengthChange": false,
+            "autoWidth": false,
+            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#ProductTable_wrapper .col-md-6:eq(0)');
 
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+</script>
 <script>
     // Toggle the animation based on isNewNotification
     // if (isNewNotification) {
@@ -142,4 +182,7 @@
     // }
 
 </script>
+@vite('resources/js/app.js')
+@yield('scripts')
+</body>
 </html>
