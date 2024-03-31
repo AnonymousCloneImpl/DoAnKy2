@@ -157,9 +157,6 @@
 
 .product-price {
   display: flex;
-  font-size: 25px;
-  font-weight: 500;
-  margin: 15px 0 5px 0;
 }
 
 .product-price b {
@@ -399,7 +396,7 @@
 }
 
 .product-content img {
-  height: 500px;
+  height: auto;
   width: 100%;
 }
 
@@ -485,12 +482,13 @@
 }
 
 .recommended-main-img {
-  height: 150px;
+  height: 100px;
   width: 40%;
 }
 
 .recommended-main-img img {
-  height: 100%;
+  height: auto;
+  width: 90%;
   padding-left: 10%;
 }
 
@@ -592,7 +590,7 @@
   background: #D0021C;
   color: #fff;
   width: 90%;
-  height: 35px;
+  height: 48px;
   border-radius: 5px;
   font-size: 20px;
   font-weight: 500;
@@ -839,7 +837,7 @@
   transition: box-shadow 1s ease-in-out;
 }
 
-.call-button:hover {
+.chat-button:hover {
   animation: pulse 0.1s infinite;
   transition: box-shadow 0.1s ease-in-out;
 }
@@ -1164,14 +1162,18 @@
   z-index: 2;
 }
 
-.active-tab {
-  background: rgb(225, 225, 225);
-}
-
 .schedule-header {
   background: linear-gradient(to right, orangered, orange);
   padding: 10px 15px;
   color: white;
+}
+
+.active-tab {
+  background: rgb(225, 225, 225);
+}
+
+.active-table {
+  background: rgb(225, 225, 225);
 }
 
 #myTabContent {
@@ -1183,4 +1185,155 @@
 #myTableContent {
   height: 570px;
   background: rgb(245, 245, 245);
+}
+
+.check-order-wrapper {
+  min-height: 600px;
+}
+
+@media only screen and (max-width: 600px) {
+
+  .url a {
+    font-size: 13px;
+  }
+
+  .url b {
+    font-size: 15px;
+  }
+
+  .url .name {
+    font-size: 13px;
+  }
+
+  .product-box {
+    display: block;
+  }
+
+  .left-box {
+    width: 100%;
+  }
+
+  .right-box {
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .product-content {
+    width: 100%;
+  }
+
+  .collapse-button {
+    width: 100%;
+  }
+
+  .main-img {
+    width: 100%;
+  }
+
+  .main-img img {
+    height: 300px;
+  }
+
+  .img-popup.open {
+    display: none;
+  }
+
+
+  .sub-img-list {
+    width: 100%;
+  }
+
+  .service {
+    width: 100%;
+  }
+
+  .service-item {
+    display: block;
+  }
+
+  .service-item-child {
+    padding-top: 7px;
+    width: 100%;
+  }
+
+  .service-item p,
+  .item-combo p {
+    font-size: 15px;
+  }
+
+  .item-combo b {
+    font-size: 15px;
+  }
+
+  .service-bottom {
+    display: flex !important;
+  }
+
+  .service-b {
+    font-size: 15px;
+  }
+
+  .service-line {
+    display: none;
+  }
+
+  .similar-product-item {
+    width: 90%;
+  }
+
+  .scroll-icon {
+    font-size: 35px !important;
+  }
+
+  .chat-icon {
+    font-size: 28px !important;
+  }
+
+
+  .btn-box button {
+    font-size: 22px;
+    padding: 5px 10px;
+  }
+
+  .ratings .star-icon {
+    margin-top: 5px;
+    color: orange;
+  }
+
+  .product-price p {
+    padding-top: 0;
+  }
+
+  .product-price-ratio {
+    margin-bottom: 10px;
+  }
+
+  .VAT div {
+    padding: 1px 10px;
+  }
+
+  .quantity p {
+    margin-top: 10px;
+  }
+
+  .recommended-accessories-slogan {
+    font-size: 15px;
+  }
+
+  .order-form {
+    width: 300px;
+    margin: 5px auto;
+    padding: 5px;
+  }
+
+  .order-logo {
+    display: none;
+  }
+
+
+  .chat-popup {
+    right: -40%;
+    bottom: -20%;
+  }
+
 }

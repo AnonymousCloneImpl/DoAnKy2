@@ -1,3 +1,7 @@
+.bg-custom {
+  background: #151C23;
+}
+
 .slider {
   height: 560px;
 }
@@ -27,35 +31,96 @@
   color: white;
 }
 
-.abc {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
+.div-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
+.gpu {
+  height: 20px;
 }
 
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: left;
+.productNameSize {
+  height: 68px;
 }
 
-th {
-  background-color: #f2f2f2;
+.top-home-page {
+  height: 450px;
 }
 
-@media screen and (min-width: 200px) and (max-width: 768px){
-  .div-price {
-    display: block !important;
+.top-home-page-text {
+}
+
+@media screen and (min-width: 1050px) and (max-width: 1250px){
+  .productList {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .top-home-page {
+    height: 400px;
   }
 }
 
-.div-price {
-  display: flex;
-  align-items: center;
+@media screen and (min-width: 900px) and (max-width: 1049px){
+  .productList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    font-size: 18px;
+  }
+  .top-home-page {
+    height: 350px !important;
+  }
+  .top-home-page-text {
+    margin-bottom: 20px;
+    width: 100% !important;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 899px){
+  .productList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    font-size: 18px;
+  }
+  .productNameSize {
+    height: 56px;
+  }
+  .top-home-page {
+    height: 300px !important;
+  }
+  .top-home-page-text {
+    margin-bottom: 20px;
+    width: 100% !important;
+  }
+}
+
+@media screen and (min-width: 300px) and (max-width: 599px){
+  .productList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    font-size: 18px;
+  }
+  .productNameSize {
+    height: 72px;
+  }
+  .top-home-page {
+    height: 350px !important;
+  }
+  .top-home-page-image{
+    height: 200px;
+  }
+  .top-home-page-text {
+    height: 150px;
+    width: 100% !important;
+  }
+  .watch-more {
+    width: 60% !important;
+  }
+  .slider {
+    height: 150px;
+  }
+  .cpuOption {
+    width: 330px;
+    left: -65% !important;
+  }
+  .ramOption {
+    left: -65% !important;
+  }
 }

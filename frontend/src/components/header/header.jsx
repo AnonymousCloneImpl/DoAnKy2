@@ -172,17 +172,17 @@ export default function Header() {
           <li>
             <Link href="/laptop" className="flex justify-center items-center m-1">
               <FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />
-              <p className="text-xl pl-2">
+              <p className="sub-menu-item text-xl pl-2">
                 Laptop
               </p>
             </Link>
           </li>
           <li>
             <div className="">
-              <Link href="/" className="flex justify-center items-center m-1">
+              <div className="flex justify-center items-center m-1">
                 <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i" />
-                <p className="text-xl pl-2">Gear</p>
-              </Link>
+                <p className="sub-menu-item text-xl pl-2">Gear</p>
+              </div>
             </div>
             <ul id="sub-drop">
               <li><img src="/header_img/drop-menu-mouse.webp" alt="" />
@@ -200,8 +200,8 @@ export default function Header() {
           <li>
             <Link href="/pc-component" className="flex justify-center items-center m-1">
               <FontAwesomeIcon icon={faGears} className="sub-menu-i" />
-              <p className="text-xl pl-2">
-                PC Components
+              <p className="sub-menu-item text-xl pl-2">
+                PC Parts
               </p>
             </Link>
             <ul id="sub-drop">
@@ -249,7 +249,7 @@ export default function Header() {
             <div className="">
               <Link href="/build-pc" className="flex justify-center items-center m-1">
                 <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
-                <p className="text-xl pl-2">Build PC</p>
+                <p className="sub-menu-item text-xl pl-2">Build PC</p>
               </Link>
             </div>
           </li>
@@ -271,14 +271,16 @@ export default function Header() {
                     </div>
                     <div className="result_info">
                       <div className="top_result">
-                        <p className="result_name font-semibold">{result.name}</p>
+                        <p className="result_name font-bold mt-1">{result.name}</p>
                         <div className="result_price_ratio">
-                          <p className="result_price_ratio_value p-1 text-center">{`-${result.discountPercentage}%`}</p>
+                          <p className="result_price_ratio_value text-center">{`-${result.discountPercentage}%`}</p>
                         </div>
                       </div>
                       <div className="bottom_result pt-npm8">
-                        <b className="price_discount"><FormatPrice price={result.price - (result.price * result.discountPercentage / 100)} />đ</b>
-                        <p className="price"><FormatPrice price={result.price} />đ</p>
+                        <div className='mr-2'>
+                          <FormatPrice price={result.price - (result.price * result.discountPercentage / 100)} type={"discount"} />
+                        </div>
+                        <FormatPrice price={result.price} />
                       </div>
                     </div>
                   </div>

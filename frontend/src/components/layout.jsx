@@ -8,7 +8,6 @@ export default function Layout({ children }) {
 
   const [isScrollVisible, setIsVisible] = useState(false);
   const [isChatVisible, setChatVisible] = useState(false);
-  const chatRef = useRef(null);
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -46,11 +45,35 @@ export default function Layout({ children }) {
   };
 
   const [chatMessages, setChatMessages] = useState([]);
+  const [ws, setWs] = useState(null);
+  const chatRef = useRef(null);
+
+  useEffect(() => {
+    const newWs = new WebSocket('wss://127.0.0.1:8000/dashboard/chat');
+
+    newWs.onopen = () => {
+      console.log('WebSocket connected');
+      setWs(newWs);
+    };
+
+    newWs.onmessage = (event) => {
+      const message = event.data;
+      setChatMessages(prevMessages => [...prevMessages, message]);
+      scrollChatBox();
+    };
+
+    return () => {
+      newWs.close();
+    };
+  }, []);
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     const message = e.target.elements.chat.value.trim();
     if (message !== "") {
+      if (ws) {
+        ws.send(message);
+      }
       setChatMessages([...chatMessages, message]);
       e.target.reset();
     }
@@ -81,7 +104,7 @@ export default function Layout({ children }) {
 
       {/* Open Chat Button */}
       <button className="chat-button" onClick={openChat}>
-        <FontAwesomeIcon icon={faCommentDots} />
+        <FontAwesomeIcon icon={faCommentDots} className="chat-icon" />
       </button>
 
       {/* Chat Popup */}
@@ -106,7 +129,7 @@ export default function Layout({ children }) {
 
             <div className="w-full h-20">
               <form className="flex chat-form w-full h-full" onSubmit={handleSendMessage}>
-                <input type="text" placeholder="Chat here..." className="w-10/12" name="chat" id="chat" required />
+                <input type="text" placeholder="Chat here..." className="w-10/12" name="chat" id="chat" required autoComplete="off" />
                 <button type="submit"><FontAwesomeIcon icon={faPaperPlane} /></button>
               </form>
             </div>

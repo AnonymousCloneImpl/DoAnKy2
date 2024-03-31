@@ -160,16 +160,16 @@ java.lang.NoSuchMethodException: java.lang.foreign.MemorySegment.getString(long)
 	Jar files URLs []
 	Managed classes names [
 		project.order.entity.LastGeneratedOrderCode
-		project.order.entity.Order
-		project.order.entity.OrderItem
+		project.entity.order.Order
+		project.entity.order.OrderItem
 		project.other_entity.Color
 		project.other_entity.District
 		project.other_entity.Province
-		project.product.entity.Stock
+		entity.project.dto.search.Stock
 		project.other_entity.Ward
-		project.product.entity.Blog
-		project.product.entity.Product
-		project.product.dto.StaticDataProductPage.PurchaseComboItem]
+		entity.project.dto.search.Blog
+		entity.project.dto.search.Product
+		project.dto.StaticDataProductPage.PurchaseComboItem]
 	Mapping files names []
 	Properties []
 2024-02-24T17:06:54.347+07:00 DEBUG 20256 --- [main] o.h.i.internal.IntegratorServiceImpl     : Adding Integrator [org.hibernate.boot.beanvalidation.BeanValidationIntegrator].
@@ -488,31 +488,31 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:54.854+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: last_generated_oder_code.code
 2024-02-24T17:06:54.854+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property code
 2024-02-24T17:06:54.855+07:00 DEBUG 20256 --- [main] o.h.b.r.c.i.ClassLoaderServiceImpl       : HHH000194: Package not found or wo package-info.java: project.order.entity
-2024-02-24T17:06:54.859+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: project.order.entity.Order
+2024-02-24T17:06:54.859+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: project.entity.order.Order
 2024-02-24T17:06:54.859+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Import with entity name Order
-2024-02-24T17:06:54.859+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity project.order.entity.Order on table orders
+2024-02-24T17:06:54.859+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity project.entity.order.Order on table orders
 2024-02-24T17:06:54.859+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
 2024-02-24T17:06:54.862+07:00 DEBUG 20256 --- [HikariPool-1 connection adder] jdk.event.security                       : X509Certificate: Alg:SHA256withRSA, Serial:2, Subject:CN=MySQL_Server_8.3.0_Auto_Generated_Server_Certificate, Issuer:CN=MySQL_Server_8.3.0_Auto_Generated_CA_Certificate, Key type:RSA, Length:2048, Cert Id:378453234, Valid from:08:39, 21/02/2024, Valid until:08:39, 18/02/2034
 2024-02-24T17:06:54.862+07:00 DEBUG 20256 --- [HikariPool-1 connection adder] jdk.event.security                       : X509Certificate: Alg:SHA256withRSA, Serial:1, Subject:CN=MySQL_Server_8.3.0_Auto_Generated_CA_Certificate, Issuer:CN=MySQL_Server_8.3.0_Auto_Generated_CA_Certificate, Key type:RSA, Length:2048, Cert Id:3985200509, Valid from:08:39, 21/02/2024, Valid until:08:39, 18/02/2034
 2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
-2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.order.entity.Order] is safe
-2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.order.entity.Order
+2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.entity.order.Order] is safe
+2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.entity.order.Order
 2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [HikariPool-1 connection adder] jdk.event.security                       :  TLSHandshake: localhost:3306, TLSv1.3, TLS_AES_256_GCM_SHA384, 378453234
 2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property id with lazy=false
-2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.order.entity.Order:id]
+2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.entity.order.Order:id]
 2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for id
 2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: orders.id
 2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property id
 2024-02-24T17:06:54.865+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.BinderHelper     : #makeIdGenerator(BasicValue([Column(id)]), id, org.hibernate.id.enhanced.SequenceStyleGenerator, , ...)
 2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn(column='order_code')
 2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property orderCode with lazy=false
-2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.order.entity.Order:orderCode]
+2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.entity.order.Order:orderCode]
 2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for orderCode
 2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: orders.order_code
 2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property orderCode
 2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn(column='order_date')
 2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property orderDate with lazy=false
-2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.order.entity.Order:orderDate]
+2024-02-24T17:06:54.866+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.entity.order.Order:orderDate]
 2024-02-24T17:06:54.867+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for orderDate
 2024-02-24T17:06:54.867+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: orders.order_date
 2024-02-24T17:06:54.867+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property orderDate
@@ -525,36 +525,36 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:54.875+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedJoinColumn(column='orderItemList_KEY')
 2024-02-24T17:06:54.876+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedJoinColumn()
 2024-02-24T17:06:54.876+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedJoinColumn()
-2024-02-24T17:06:54.877+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Collection role: project.order.entity.Order.orderItemList
+2024-02-24T17:06:54.877+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Collection role: project.entity.order.Order.orderItemList
 2024-02-24T17:06:54.878+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property orderItemList
 2024-02-24T17:06:54.879+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.879+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property quantity with lazy=false
-2024-02-24T17:06:54.879+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.order.entity.Order:quantity]
+2024-02-24T17:06:54.879+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.entity.order.Order:quantity]
 2024-02-24T17:06:54.879+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for quantity
 2024-02-24T17:06:54.879+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: orders.quantity
 2024-02-24T17:06:54.879+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property quantity
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn(column='shipping_address')
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property shippingAddress with lazy=false
-2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.order.entity.Order:shippingAddress]
+2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.entity.order.Order:shippingAddress]
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for shippingAddress
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: orders.shipping_address
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property shippingAddress
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property status with lazy=false
-2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.order.entity.Order:status]
+2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.entity.order.Order:status]
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for status
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: orders.status
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property status
 2024-02-24T17:06:54.880+07:00 DEBUG 20256 --- [main] o.h.b.r.c.i.ClassLoaderServiceImpl       : HHH000194: Package not found or wo package-info.java: project.order.entity
-2024-02-24T17:06:54.881+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: project.order.entity.OrderItem
+2024-02-24T17:06:54.881+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: project.entity.order.OrderItem
 2024-02-24T17:06:54.881+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Import with entity name OrderItem
-2024-02-24T17:06:54.881+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity project.order.entity.OrderItem on table order_item
+2024-02-24T17:06:54.881+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity project.entity.order.OrderItem on table order_item
 2024-02-24T17:06:54.881+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
 2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
-2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.order.entity.OrderItem] is safe
-2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.order.entity.OrderItem
+2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.entity.order.OrderItem] is safe
+2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.entity.order.OrderItem
 2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property id with lazy=false
-2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.order.entity.OrderItem:id]
+2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.entity.order.OrderItem:id]
 2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for id
 2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: order_item.id
 2024-02-24T17:06:54.882+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property id
@@ -567,7 +567,7 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:54.884+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property product
 2024-02-24T17:06:54.884+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.884+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property quantity with lazy=false
-2024-02-24T17:06:54.884+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.order.entity.OrderItem:quantity]
+2024-02-24T17:06:54.884+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.entity.order.OrderItem:quantity]
 2024-02-24T17:06:54.884+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for quantity
 2024-02-24T17:06:54.885+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: order_item.quantity
 2024-02-24T17:06:54.885+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property quantity
@@ -658,15 +658,15 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:54.897+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: province.name
 2024-02-24T17:06:54.897+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property name
 2024-02-24T17:06:54.897+07:00 DEBUG 20256 --- [main] o.h.b.r.c.i.ClassLoaderServiceImpl       : HHH000194: Package not found or wo package-info.java: project.other_entity
-2024-02-24T17:06:54.897+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: project.product.entity.Stock
+2024-02-24T17:06:54.897+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: entity.project.dto.search.Stock
 2024-02-24T17:06:54.897+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Import with entity name Stock
-2024-02-24T17:06:54.897+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity project.product.entity.Stock on table stock
+2024-02-24T17:06:54.897+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity entity.project.dto.search.Stock on table stock
 2024-02-24T17:06:54.897+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
 2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
-2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.product.entity.Stock] is safe
-2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.product.entity.Stock
+2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [entity.project.dto.search.Stock] is safe
+2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : entity.project.dto.search.Stock
 2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property id with lazy=false
-2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Stock:id]
+2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Stock:id]
 2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for id
 2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: stock.id
 2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property id
@@ -679,7 +679,7 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property product
 2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property quantity with lazy=false
-2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Stock:quantity]
+2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Stock:quantity]
 2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for quantity
 2024-02-24T17:06:54.898+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: stock.quantity
 2024-02-24T17:06:54.899+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property quantity
@@ -715,48 +715,48 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:54.901+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: ward.name
 2024-02-24T17:06:54.901+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property name
 2024-02-24T17:06:54.902+07:00 DEBUG 20256 --- [main] o.h.b.r.c.i.ClassLoaderServiceImpl       : HHH000194: Package not found or wo package-info.java: project.other_entity
-2024-02-24T17:06:54.902+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: project.product.entity.Blog
+2024-02-24T17:06:54.902+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: entity.project.dto.search.Blog
 2024-02-24T17:06:54.902+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Import with entity name Blog
-2024-02-24T17:06:54.902+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity project.product.entity.Blog on table blog
+2024-02-24T17:06:54.902+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity entity.project.dto.search.Blog on table blog
 2024-02-24T17:06:54.902+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
 2024-02-24T17:06:54.902+07:00 DEBUG 20256 --- [HikariPool-1 connection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6b9d5d8d
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
-2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.product.entity.Blog] is safe
-2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.product.entity.Blog
+2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [entity.project.dto.search.Blog] is safe
+2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : entity.project.dto.search.Blog
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property id with lazy=false
-2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Blog:id]
+2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Blog:id]
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for id
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: blog.id
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property id
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.BinderHelper     : #makeIdGenerator(BasicValue([Column(id)]), id, org.hibernate.id.enhanced.SequenceStyleGenerator, , ...)
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property content with lazy=false
-2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Blog:content]
+2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Blog:content]
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for content
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: blog.content
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property content
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property header with lazy=false
-2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Blog:header]
+2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Blog:header]
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for header
 2024-02-24T17:06:54.903+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: blog.header
 2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property header
 2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property image with lazy=false
-2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Blog:image]
+2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Blog:image]
 2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for image
 2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: blog.image
 2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property image
 2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.b.r.c.i.ClassLoaderServiceImpl       : HHH000194: Package not found or wo package-info.java: project.product.entity
-2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: project.product.entity.Product
+2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: entity.project.dto.search.Product
 2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Import with entity name Product
-2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity project.product.entity.Product on table product
+2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity entity.project.dto.search.Product on table product
 2024-02-24T17:06:54.904+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
 2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
-2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.product.entity.Product] is safe
-2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.product.entity.Product
+2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [entity.project.dto.search.Product] is safe
+2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : entity.project.dto.search.Product
 2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property id with lazy=false
-2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Product:id]
+2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Product:id]
 2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for id
 2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: product.id
 2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property id
@@ -770,47 +770,47 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedJoinColumn(column='colorList_KEY')
 2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedJoinColumn(column='product_id')
 2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedJoinColumn(column='color_id')
-2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Collection role: project.product.entity.Product.colorList
+2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Collection role: entity.project.dto.search.Product.colorList
 2024-02-24T17:06:54.906+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property colorList
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property discountPercentage with lazy=false
-2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Product:discountPercentage]
+2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Product:discountPercentage]
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for discountPercentage
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: product.discount_percentage
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property discountPercentage
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property image with lazy=false
-2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Product:image]
+2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Product:image]
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for image
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: product.image
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property image
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property model with lazy=false
-2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Product:model]
+2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Product:model]
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for model
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: product.model
 2024-02-24T17:06:54.907+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property model
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property name with lazy=false
-2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Product:name]
+2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Product:name]
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for name
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: product.name
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property name
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property price with lazy=false
-2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Product:price]
+2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Product:price]
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for price
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: product.price
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property price
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property producer with lazy=false
-2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Product:producer]
+2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Product:producer]
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for producer
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: product.producer
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property producer
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn(column='product_detail')
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property productDetail with lazy=false
-2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Product:productDetail]
+2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Product:productDetail]
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for productDetail
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: product.product_detail
 2024-02-24T17:06:54.908+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property productDetail
@@ -822,31 +822,31 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedJoinColumn(column='purchaseComboItemList_KEY')
 2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedJoinColumn()
 2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedJoinColumn()
-2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Collection role: project.product.entity.Product.purchaseComboItemList
+2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Collection role: entity.project.dto.search.Product.purchaseComboItemList
 2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property purchaseComboItemList
 2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
 2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property type with lazy=false
-2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.entity.Product:type]
+2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [entity.project.dto.search.Product:type]
 2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for type
 2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: product.type
 2024-02-24T17:06:54.909+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property type
 2024-02-24T17:06:54.910+07:00 DEBUG 20256 --- [main] o.h.b.r.c.i.ClassLoaderServiceImpl       : HHH000194: Package not found or wo package-info.java: project.product.entity
-2024-02-24T17:06:54.910+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: project.product.dto.StaticDataProductPage.PurchaseComboItem
+2024-02-24T17:06:54.910+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Binding entity from annotated class: project.dto.StaticDataProductPage.PurchaseComboItem
 2024-02-24T17:06:54.910+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Import with entity name PurchaseComboItem
-2024-02-24T17:06:54.910+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity project.product.dto.StaticDataProductPage.PurchaseComboItem on table purchase_combo_item
+2024-02-24T17:06:54.910+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.EntityBinder     : Bind entity project.dto.StaticDataProductPage.PurchaseComboItem on table purchase_combo_item
 2024-02-24T17:06:54.910+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedDiscriminatorColumn(column='DTYPE')
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn()
-2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.product.dto.StaticDataProductPage.PurchaseComboItem] is safe
-2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.product.dto.StaticDataProductPage.PurchaseComboItem
+2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.dto.StaticDataProductPage.PurchaseComboItem] is safe
+2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.dto.StaticDataProductPage.PurchaseComboItem
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property id with lazy=false
-2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.dto.StaticDataProductPage.PurchaseComboItem:id]
+2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.dto.StaticDataProductPage.PurchaseComboItem:id]
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for id
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: purchase_combo_item.id
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property id
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.BinderHelper     : #makeIdGenerator(BasicValue([Column(id)]), id, org.hibernate.id.enhanced.SequenceStyleGenerator, , ...)
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.AnnotatedColumn  : Binding column: AnnotatedColumn(column='discount_percentage')
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : MetadataSourceProcessor property discountPercentage with lazy=false
-2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.product.dto.StaticDataProductPage.PurchaseComboItem:discountPercentage]
+2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.AbstractPropertyHolder  : Attempting to locate auto-apply AttributeConverter for property [project.dto.StaticDataProductPage.PurchaseComboItem:discountPercentage]
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.BasicValueBinder    : building BasicValue for discountPercentage
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.BasicValue         : Skipping column re-registration: purchase_combo_item.discount_percentage
 2024-02-24T17:06:54.911+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.PropertyBinder   : Building property discountPercentage
@@ -900,14 +900,14 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:54.919+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.PrimaryKey         : Forcing column [id] to be non-null as it is part of the primary key for table [blog]
 2024-02-24T17:06:54.919+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.PrimaryKey         : Forcing column [id] to be non-null as it is part of the primary key for table [product]
 2024-02-24T17:06:54.919+07:00 DEBUG 20256 --- [main] org.hibernate.mapping.PrimaryKey         : Forcing column [id] to be non-null as it is part of the primary key for table [purchase_combo_item]
-2024-02-24T17:06:54.919+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Second pass for collection: project.product.entity.Product.purchaseComboItemList
-2024-02-24T17:06:54.919+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Binding a OneToMany: project.product.entity.Product.purchaseComboItemList through an association table
+2024-02-24T17:06:54.919+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Second pass for collection: entity.project.dto.search.Product.purchaseComboItemList
+2024-02-24T17:06:54.919+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Binding a OneToMany: entity.project.dto.search.Product.purchaseComboItemList through an association table
 2024-02-24T17:06:54.921+07:00 DEBUG 20256 --- [main] o.h.b.r.c.i.ClassLoaderServiceImpl       : HHH000194: Package not found or wo package-info.java: project.product.entity
 2024-02-24T17:06:54.924+07:00 DEBUG 20256 --- [HikariPool-1 connection adder] jdk.event.security                       : X509Certificate: Alg:SHA256withRSA, Serial:2, Subject:CN=MySQL_Server_8.3.0_Auto_Generated_Server_Certificate, Issuer:CN=MySQL_Server_8.3.0_Auto_Generated_CA_Certificate, Key type:RSA, Length:2048, Cert Id:378453234, Valid from:08:39, 21/02/2024, Valid until:08:39, 18/02/2034
 2024-02-24T17:06:54.925+07:00 DEBUG 20256 --- [HikariPool-1 connection adder] jdk.event.security                       : X509Certificate: Alg:SHA256withRSA, Serial:1, Subject:CN=MySQL_Server_8.3.0_Auto_Generated_CA_Certificate, Issuer:CN=MySQL_Server_8.3.0_Auto_Generated_CA_Certificate, Key type:RSA, Length:2048, Cert Id:3985200509, Valid from:08:39, 21/02/2024, Valid until:08:39, 18/02/2034
 2024-02-24T17:06:54.925+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Mapped collection key: product_id, element: purchase_combo_item_list_id
-2024-02-24T17:06:54.926+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Second pass for collection: project.product.entity.Product.colorList
-2024-02-24T17:06:54.926+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Binding a ManyToMany: project.product.entity.Product.colorList
+2024-02-24T17:06:54.926+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Second pass for collection: entity.project.dto.search.Product.colorList
+2024-02-24T17:06:54.926+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Binding a ManyToMany: entity.project.dto.search.Product.colorList
 2024-02-24T17:06:54.926+07:00 DEBUG 20256 --- [main] o.h.b.r.c.i.ClassLoaderServiceImpl       : HHH000194: Package not found or wo package-info.java: project.product.entity
 2024-02-24T17:06:54.926+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Mapped collection key: product_id, element: color_id
 2024-02-24T17:06:54.926+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Second pass for collection: project.other_entity.Ward.districtList
@@ -919,46 +919,46 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:54.927+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Binding a OneToMany: project.other_entity.District.provinceList through an association table
 2024-02-24T17:06:54.927+07:00 DEBUG 20256 --- [main] o.h.b.r.c.i.ClassLoaderServiceImpl       : HHH000194: Package not found or wo package-info.java: project.other_entity
 2024-02-24T17:06:54.928+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Mapped collection key: district_id, element: province_list_id
-2024-02-24T17:06:54.928+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Second pass for collection: project.order.entity.Order.orderItemList
-2024-02-24T17:06:54.928+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Binding a OneToMany: project.order.entity.Order.orderItemList through a foreign key
-2024-02-24T17:06:54.928+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Mapping collection: project.order.entity.Order.orderItemList -> order_item
+2024-02-24T17:06:54.928+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Second pass for collection: project.entity.order.Order.orderItemList
+2024-02-24T17:06:54.928+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Binding a OneToMany: project.entity.order.Order.orderItemList through a foreign key
+2024-02-24T17:06:54.928+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Mapping collection: project.entity.order.Order.orderItemList -> order_item
 2024-02-24T17:06:54.929+07:00 DEBUG 20256 --- [HikariPool-1 connection adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5a3c5449
-2024-02-24T17:06:54.929+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Mapped collection key: product_id, one-to-many: project.order.entity.OrderItem
+2024-02-24T17:06:54.929+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Mapped collection key: product_id, one-to-many: project.entity.order.OrderItem
 2024-02-24T17:06:54.930+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Second pass for collection: project.other_entity.Color.productList
 2024-02-24T17:06:54.930+07:00 DEBUG 20256 --- [main] o.h.b.model.internal.CollectionBinder    : Binding a ManyToMany: project.other_entity.Color.productList
 2024-02-24T17:06:54.930+07:00 DEBUG 20256 --- [main] o.h.b.r.c.i.ClassLoaderServiceImpl       : HHH000194: Package not found or wo package-info.java: project.other_entity
-2024-02-24T17:06:54.930+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.TableBinder      : Retrieving property project.product.entity.Product.colorList
+2024-02-24T17:06:54.930+07:00 DEBUG 20256 --- [main] o.h.boot.model.internal.TableBinder      : Retrieving property entity.project.dto.search.Product.colorList
 2024-02-24T17:06:54.930+07:00 DEBUG 20256 --- [main] o.h.b.m.internal.CollectionSecondPass    : Mapped collection key: color_id, element: product_id
 2024-02-24T17:06:54.931+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.Ward
 2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.Province
 2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.District
-2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.order.entity.Order
-2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Product
-2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Blog
+2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.entity.order.Order
+2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Product
+2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Blog
 2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.Color
-2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Product
-2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.dto.StaticDataProductPage.PurchaseComboItem
-2024-02-24T17:06:54.933+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Product
+2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Product
+2024-02-24T17:06:54.932+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.dto.StaticDataProductPage.PurchaseComboItem
+2024-02-24T17:06:54.933+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Product
 2024-02-24T17:06:54.933+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.District
-2024-02-24T17:06:54.933+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Product
+2024-02-24T17:06:54.933+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Product
 2024-02-24T17:06:54.933+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.Color
-2024-02-24T17:06:54.933+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Product
+2024-02-24T17:06:54.933+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Product
 2024-02-24T17:06:54.933+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.District
 2024-02-24T17:06:54.933+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.Ward
 2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.Ward
 2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.Province
 2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.District
-2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.order.entity.Order
-2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Product
-2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Blog
+2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.entity.order.Order
+2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Product
+2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Blog
 2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.Color
-2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Product
-2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.dto.StaticDataProductPage.PurchaseComboItem
-2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Product
+2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Product
+2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.dto.StaticDataProductPage.PurchaseComboItem
+2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Product
 2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.District
-2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Product
+2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Product
 2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.Color
-2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.product.entity.Product
+2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: entity.project.dto.search.Product
 2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.District
 2024-02-24T17:06:54.942+07:00 DEBUG 20256 --- [main] o.h.b.i.InFlightMetadataCollectorImpl    : Resolving reference to class: project.other_entity.Ward
 2024-02-24T17:06:54.957+07:00 DEBUG 20256 --- [main] o.h.b.i.BytecodeProviderInitiator        : HHH000021: Bytecode provider: bytebuddy
@@ -1350,97 +1350,97 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:55.037+07:00 DEBUG 20256 --- [RMI TCP Connection(3)-192.168.1.2] javax.management.remote.rmi              : [javax.management.remote.rmi.RMIConnectionImpl@4066e3d6: connectionId=rmi://192.168.1.2  3] closed.
 2024-02-24T17:06:55.073+07:00 DEBUG 20256 --- [main] .h.s.i.SessionFactoryServiceRegistryImpl : EventListenerRegistry access via ServiceRegistry is deprecated.  Use `sessionFactory.getEventEngine().getListenerRegistry()` instead
 2024-02-24T17:06:55.074+07:00 DEBUG 20256 --- [main] h.e.i.EntityCopyObserverFactoryInitiator : Configured EntityCopyObserver strategy: disallow
-2024-02-24T17:06:55.111+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.entity.Stock#color` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.113+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.entity.Stock#color` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.114+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.entity.Stock#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.114+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.entity.Stock#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.115+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.product.entity.Stock] is safe
-2024-02-24T17:06:55.115+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.product.entity.Stock
-2024-02-24T17:06:55.220+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.product.entity.Stock]: private accessor [color]
-2024-02-24T17:06:55.222+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.entity.Stock#color` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.222+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.entity.Stock#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.111+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `entity.project.dto.search.Stock#color` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.113+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `entity.project.dto.search.Stock#color` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.114+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `entity.project.dto.search.Stock#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.114+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `entity.project.dto.search.Stock#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.115+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [entity.project.dto.search.Stock] is safe
+2024-02-24T17:06:55.115+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : entity.project.dto.search.Stock
+2024-02-24T17:06:55.220+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [entity.project.dto.search.Stock]: private accessor [color]
+2024-02-24T17:06:55.222+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `entity.project.dto.search.Stock#color` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.222+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `entity.project.dto.search.Stock#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
 2024-02-24T17:06:55.234+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.other_entity.Province#district` was mapped with LAZY + NO_PROXY but the class was not enhanced
 2024-02-24T17:06:55.234+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.other_entity.Province#district` was mapped with LAZY + NO_PROXY but the class was not enhanced
 2024-02-24T17:06:55.234+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.other_entity.Province] is safe
 2024-02-24T17:06:55.234+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.other_entity.Province
 2024-02-24T17:06:55.242+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.other_entity.Province]: private accessor [district]
 2024-02-24T17:06:55.242+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.other_entity.Province#district` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.242+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.entity.Product#blog` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.242+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.entity.Product#blog` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.243+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.product.entity.Product] is safe
-2024-02-24T17:06:55.243+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.product.entity.Product
-2024-02-24T17:06:55.256+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.product.entity.Product]: private accessor [blog]
-2024-02-24T17:06:55.256+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.entity.Product#blog` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.242+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `entity.project.dto.search.Product#blog` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.242+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `entity.project.dto.search.Product#blog` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.243+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [entity.project.dto.search.Product] is safe
+2024-02-24T17:06:55.243+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : entity.project.dto.search.Product
+2024-02-24T17:06:55.256+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [entity.project.dto.search.Product]: private accessor [blog]
+2024-02-24T17:06:55.256+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `entity.project.dto.search.Product#blog` was mapped with LAZY + NO_PROXY but the class was not enhanced
 2024-02-24T17:06:55.257+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.other_entity.Color] is safe
 2024-02-24T17:06:55.257+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.other_entity.Color
 2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.other_entity.Color]: private accessor [name]
-2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.order.entity.OrderItem#order` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.order.entity.OrderItem#order` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.order.entity.OrderItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.order.entity.OrderItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.order.entity.OrderItem] is safe
-2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.order.entity.OrderItem
-2024-02-24T17:06:55.268+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.order.entity.OrderItem]: private accessor [order]
-2024-02-24T17:06:55.268+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.order.entity.OrderItem#order` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.268+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.order.entity.OrderItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.entity.order.OrderItem#order` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.entity.order.OrderItem#order` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.entity.order.OrderItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.entity.order.OrderItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.entity.order.OrderItem] is safe
+2024-02-24T17:06:55.262+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.entity.order.OrderItem
+2024-02-24T17:06:55.268+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.entity.order.OrderItem]: private accessor [order]
+2024-02-24T17:06:55.268+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.entity.order.OrderItem#order` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.268+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.entity.order.OrderItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
 2024-02-24T17:06:55.268+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.other_entity.Ward] is safe
 2024-02-24T17:06:55.268+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.other_entity.Ward
 2024-02-24T17:06:55.274+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.other_entity.Ward]: private accessor [name]
 2024-02-24T17:06:55.274+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.order.entity.LastGeneratedOrderCode] is safe
 2024-02-24T17:06:55.274+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.order.entity.LastGeneratedOrderCode
 2024-02-24T17:06:55.278+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.order.entity.LastGeneratedOrderCode]: private accessor [code]
-2024-02-24T17:06:55.278+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.dto.StaticDataProductPage.PurchaseComboItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.278+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.dto.StaticDataProductPage.PurchaseComboItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.278+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.product.dto.StaticDataProductPage.PurchaseComboItem] is safe
-2024-02-24T17:06:55.278+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.product.dto.StaticDataProductPage.PurchaseComboItem
-2024-02-24T17:06:55.283+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.product.dto.StaticDataProductPage.PurchaseComboItem]: private accessor [discountPercentage]
-2024-02-24T17:06:55.283+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.product.dto.StaticDataProductPage.PurchaseComboItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.278+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.dto.StaticDataProductPage.PurchaseComboItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.278+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.dto.StaticDataProductPage.PurchaseComboItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
+2024-02-24T17:06:55.278+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.dto.StaticDataProductPage.PurchaseComboItem] is safe
+2024-02-24T17:06:55.278+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.dto.StaticDataProductPage.PurchaseComboItem
+2024-02-24T17:06:55.283+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.dto.StaticDataProductPage.PurchaseComboItem]: private accessor [discountPercentage]
+2024-02-24T17:06:55.283+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.dto.StaticDataProductPage.PurchaseComboItem#product` was mapped with LAZY + NO_PROXY but the class was not enhanced
 2024-02-24T17:06:55.284+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.other_entity.District#ward` was mapped with LAZY + NO_PROXY but the class was not enhanced
 2024-02-24T17:06:55.284+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.other_entity.District#ward` was mapped with LAZY + NO_PROXY but the class was not enhanced
 2024-02-24T17:06:55.284+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.other_entity.District] is safe
 2024-02-24T17:06:55.284+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.other_entity.District
 2024-02-24T17:06:55.289+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.other_entity.District]: private accessor [name]
 2024-02-24T17:06:55.289+07:00 DEBUG 20256 --- [main] org.hibernate.ormbytecode.interceptor    : To-one property `project.other_entity.District#ward` was mapped with LAZY + NO_PROXY but the class was not enhanced
-2024-02-24T17:06:55.289+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.order.entity.Order] is safe
-2024-02-24T17:06:55.289+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.order.entity.Order
-2024-02-24T17:06:55.294+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.order.entity.Order]: private accessor [orderCode]
-2024-02-24T17:06:55.295+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.product.entity.Blog] is safe
-2024-02-24T17:06:55.295+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.product.entity.Blog
-2024-02-24T17:06:55.298+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.product.entity.Blog]: private accessor [content]
+2024-02-24T17:06:55.289+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [project.entity.order.Order] is safe
+2024-02-24T17:06:55.289+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : project.entity.order.Order
+2024-02-24T17:06:55.294+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [project.entity.order.Order]: private accessor [orderCode]
+2024-02-24T17:06:55.295+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : Not known whether passed class name [entity.project.dto.search.Blog] is safe
+2024-02-24T17:06:55.295+07:00 DEBUG 20256 --- [main] o.h.boot.internal.ClassLoaderAccessImpl  : No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : entity.project.dto.search.Blog
+2024-02-24T17:06:55.298+07:00 DEBUG 20256 --- [main] o.h.b.i.bytebuddy.BytecodeProviderImpl   : HHH000513: Unable to create the ReflectionOptimizer for [entity.project.dto.search.Blog]: private accessor [content]
 2024-02-24T17:06:55.306+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Skipping collection inserts - project.other_entity.Color.productList
 2024-02-24T17:06:55.306+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Skipping collection row updates - project.other_entity.Color.productList
 2024-02-24T17:06:55.306+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Skipping collection row deletions - project.other_entity.Color.productList
 2024-02-24T17:06:55.306+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Skipping collection removals - project.other_entity.Color.productList
 2024-02-24T17:06:55.307+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Skipping collection row updates - project.other_entity.Ward.districtList
-2024-02-24T17:06:55.308+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Skipping collection row updates - project.product.entity.Product.colorList
-2024-02-24T17:06:55.308+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Skipping collection row updates - project.product.entity.Product.purchaseComboItemList
+2024-02-24T17:06:55.308+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Skipping collection row updates - entity.project.dto.search.Product.colorList
+2024-02-24T17:06:55.308+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Skipping collection row updates - entity.project.dto.search.Product.purchaseComboItemList
 2024-02-24T17:06:55.308+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Skipping collection row updates - project.other_entity.District.provinceList
 2024-02-24T17:06:55.325+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting post-init callbacks
-2024-02-24T17:06:55.325+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.product.entity.Stock.color]
-2024-02-24T17:06:55.327+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.product.entity.Stock.product]
-2024-02-24T17:06:55.327+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.product.entity.Stock) `staticFetchableList` generator
-2024-02-24T17:06:55.327+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.product.entity.Stock) `sqmMultiTableInsertStrategy` interpretation
+2024-02-24T17:06:55.325+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[entity.project.dto.search.Stock.color]
+2024-02-24T17:06:55.327+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[entity.project.dto.search.Stock.product]
+2024-02-24T17:06:55.327+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(entity.project.dto.search.Stock) `staticFetchableList` generator
+2024-02-24T17:06:55.327+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(entity.project.dto.search.Stock) `sqmMultiTableInsertStrategy` interpretation
 2024-02-24T17:06:55.329+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.other_entity.Province.district]
 2024-02-24T17:06:55.329+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.other_entity.Province) `staticFetchableList` generator
 2024-02-24T17:06:55.329+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.other_entity.Province) `sqmMultiTableInsertStrategy` interpretation
-2024-02-24T17:06:55.329+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.product.entity.Product.blog]
-2024-02-24T17:06:55.329+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[project.product.entity.Product.colorList#{element}]) - element descriptor
-2024-02-24T17:06:55.329+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.product.entity.Product.colorList)#finishInitialization
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.product.entity.Product.colorList) - key descriptor
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[project.product.entity.Product.purchaseComboItemList#{element}]) - element descriptor
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.product.entity.Product.purchaseComboItemList)#finishInitialization
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.product.entity.Product.purchaseComboItemList) - key descriptor
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.product.entity.Product) `staticFetchableList` generator
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.product.entity.Product) `sqmMultiTableInsertStrategy` interpretation
+2024-02-24T17:06:55.329+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[entity.project.dto.search.Product.blog]
+2024-02-24T17:06:55.329+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[entity.project.dto.search.Product.colorList#{element}]) - element descriptor
+2024-02-24T17:06:55.329+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(entity.project.dto.search.Product.colorList)#finishInitialization
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(entity.project.dto.search.Product.colorList) - key descriptor
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[entity.project.dto.search.Product.purchaseComboItemList#{element}]) - element descriptor
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(entity.project.dto.search.Product.purchaseComboItemList)#finishInitialization
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(entity.project.dto.search.Product.purchaseComboItemList) - key descriptor
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(entity.project.dto.search.Product) `staticFetchableList` generator
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(entity.project.dto.search.Product) `sqmMultiTableInsertStrategy` interpretation
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[project.other_entity.Color.productList#{element}]) - element descriptor
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.other_entity.Color.productList)#finishInitialization
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.other_entity.Color.productList) - key descriptor
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.other_entity.Color) `staticFetchableList` generator
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.other_entity.Color) `sqmMultiTableInsertStrategy` interpretation
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.order.entity.OrderItem.order]
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.order.entity.OrderItem.product]
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.order.entity.OrderItem) `staticFetchableList` generator
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.order.entity.OrderItem) `sqmMultiTableInsertStrategy` interpretation
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.entity.order.OrderItem.order]
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.entity.order.OrderItem.product]
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.entity.order.OrderItem) `staticFetchableList` generator
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.entity.order.OrderItem) `sqmMultiTableInsertStrategy` interpretation
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[project.other_entity.Ward.districtList#{element}]) - element descriptor
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.other_entity.Ward.districtList)#finishInitialization
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.other_entity.Ward.districtList) - key descriptor
@@ -1448,64 +1448,64 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.other_entity.Ward) `sqmMultiTableInsertStrategy` interpretation
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.order.entity.LastGeneratedOrderCode) `staticFetchableList` generator
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.order.entity.LastGeneratedOrderCode) `sqmMultiTableInsertStrategy` interpretation
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.product.dto.StaticDataProductPage.PurchaseComboItem.product]
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.product.dto.StaticDataProductPage.PurchaseComboItem) `staticFetchableList` generator
-2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.product.dto.StaticDataProductPage.PurchaseComboItem) `sqmMultiTableInsertStrategy` interpretation
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.dto.StaticDataProductPage.PurchaseComboItem.product]
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.dto.StaticDataProductPage.PurchaseComboItem) `staticFetchableList` generator
+2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.dto.StaticDataProductPage.PurchaseComboItem) `sqmMultiTableInsertStrategy` interpretation
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[project.other_entity.District.provinceList#{element}]) - element descriptor
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.other_entity.District.provinceList)#finishInitialization
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.other_entity.District.provinceList) - key descriptor
 2024-02-24T17:06:55.330+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : To-one key - NavigableRole[project.other_entity.District.ward]
 2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.other_entity.District) `staticFetchableList` generator
 2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.other_entity.District) `sqmMultiTableInsertStrategy` interpretation
-2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[project.order.entity.Order.orderItemList#{element}]) - element descriptor
-2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.order.entity.Order.orderItemList)#finishInitialization
-2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.order.entity.Order.orderItemList) - key descriptor
-2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.order.entity.Order) `staticFetchableList` generator
-2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.order.entity.Order) `sqmMultiTableInsertStrategy` interpretation
-2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.product.entity.Blog) `staticFetchableList` generator
-2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.product.entity.Blog) `sqmMultiTableInsertStrategy` interpretation
-2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[project.order.entity.Order.orderItemList#{element}]) - element descriptor
+2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[project.entity.order.Order.orderItemList#{element}]) - element descriptor
+2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.entity.order.Order.orderItemList)#finishInitialization
+2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping(project.entity.order.Order.orderItemList) - key descriptor
+2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.entity.order.Order) `staticFetchableList` generator
+2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(project.entity.order.Order) `sqmMultiTableInsertStrategy` interpretation
+2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(entity.project.dto.search.Blog) `staticFetchableList` generator
+2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : Entity(entity.project.dto.search.Blog) `sqmMultiTableInsertStrategy` interpretation
+2024-02-24T17:06:55.331+07:00 DEBUG 20256 --- [main] o.hibernate.orm.model.mapping.creation   : Starting PostInitCallbackEntry : PluralAttributeMapping( NavigableRole[project.entity.order.Order.orderItemList#{element}]) - element descriptor
 2024-02-24T17:06:55.366+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : s1_0
-2024-02-24T17:06:55.368+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.product.entity.Stock)] with identifierForTableGroup [project.product.entity.Stock] for NavigablePath [project.product.entity.Stock]
-2024-02-24T17:06:55.372+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@443b6765] with identifierForTableGroup [project.product.entity.Stock.color] for NavigablePath [project.product.entity.Stock.color]
+2024-02-24T17:06:55.368+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(entity.project.dto.search.Stock)] with identifierForTableGroup [entity.project.dto.search.Stock] for NavigablePath [entity.project.dto.search.Stock]
+2024-02-24T17:06:55.372+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@443b6765] with identifierForTableGroup [entity.project.dto.search.Stock.color] for NavigablePath [entity.project.dto.search.Stock.color]
 2024-02-24T17:06:55.373+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : c1_0
-2024-02-24T17:06:55.375+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@e08d871] with identifierForTableGroup [project.product.entity.Stock.product] for NavigablePath [project.product.entity.Stock.product]
+2024-02-24T17:06:55.375+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@e08d871] with identifierForTableGroup [entity.project.dto.search.Stock.product] for NavigablePath [entity.project.dto.search.Stock.product]
 2024-02-24T17:06:55.375+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : p1_0
-2024-02-24T17:06:55.375+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@4ebb7bab] with identifierForTableGroup [project.product.entity.Stock.product.blog] for NavigablePath [project.product.entity.Stock.product.blog]
+2024-02-24T17:06:55.375+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@4ebb7bab] with identifierForTableGroup [entity.project.dto.search.Stock.product.blog] for NavigablePath [entity.project.dto.search.Stock.product.blog]
 2024-02-24T17:06:55.375+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : b1_0
 2024-02-24T17:06:55.376+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pcil1_0
-2024-02-24T17:06:55.377+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(project.product.entity.Stock.product.purchaseComboItemList)] with identifierForTableGroup [project.product.entity.Stock.product.purchaseComboItemList] for NavigablePath [project.product.entity.Stock.product.purchaseComboItemList]
-2024-02-24T17:06:55.377+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@38394e76] with identifierForTableGroup [project.product.entity.Stock.product.purchaseComboItemList.{element}] for NavigablePath [project.product.entity.Stock.product.purchaseComboItemList.{element}]
+2024-02-24T17:06:55.377+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(entity.project.dto.search.Stock.product.purchaseComboItemList)] with identifierForTableGroup [entity.project.dto.search.Stock.product.purchaseComboItemList] for NavigablePath [entity.project.dto.search.Stock.product.purchaseComboItemList]
+2024-02-24T17:06:55.377+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@38394e76] with identifierForTableGroup [entity.project.dto.search.Stock.product.purchaseComboItemList.{element}] for NavigablePath [entity.project.dto.search.Stock.product.purchaseComboItemList.{element}]
 2024-02-24T17:06:55.377+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pcil1_1
-2024-02-24T17:06:55.378+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@56351c02] with identifierForTableGroup [project.product.entity.Stock.product.purchaseComboItemList.{element}.product] for NavigablePath [project.product.entity.Stock.product.purchaseComboItemList.{element}.product]
+2024-02-24T17:06:55.378+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@56351c02] with identifierForTableGroup [entity.project.dto.search.Stock.product.purchaseComboItemList.{element}.product] for NavigablePath [entity.project.dto.search.Stock.product.purchaseComboItemList.{element}.product]
 2024-02-24T17:06:55.381+07:00 DEBUG 20256 --- [main] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
- \-EntityResultImpl [project.product.entity.Stock]
- |  +-EntityFetchJoinedImpl [project.product.entity.Stock.color]
- |  +-EntityFetchJoinedImpl [project.product.entity.Stock.product]
- |  \-BasicFetch [project.product.entity.Stock.quantity]
+ \-EntityResultImpl [entity.project.dto.search.Stock]
+ |  +-EntityFetchJoinedImpl [entity.project.dto.search.Stock.color]
+ |  +-EntityFetchJoinedImpl [entity.project.dto.search.Stock.product]
+ |  \-BasicFetch [entity.project.dto.search.Stock.quantity]
 
 2024-02-24T17:06:55.383+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
     SelectStatement {
       FromClause {
-        StandardTableGroup (s1 : project.product.entity.Stock) {
+        StandardTableGroup (s1 : entity.project.dto.search.Stock) {
           primaryTableReference : stock as s1_0
           TableGroupJoins {
-            left  join LazyTableGroup (c1 : project.product.entity.Stock.color) {
+            left  join LazyTableGroup (c1 : entity.project.dto.search.Stock.color) {
               primaryTableReference : color as c1_0
             }
-            left  join LazyTableGroup (p1 : project.product.entity.Stock.product) {
+            left  join LazyTableGroup (p1 : entity.project.dto.search.Stock.product) {
               primaryTableReference : product as p1_0
               TableGroupJoins {
-                left  join LazyTableGroup (b1 : project.product.entity.Stock.product.blog) {
+                left  join LazyTableGroup (b1 : entity.project.dto.search.Stock.product.blog) {
                   primaryTableReference : blog as b1_0
                 }
-                left  join CollectionTableGroup (pcil1 : project.product.entity.Stock.product.purchaseComboItemList) {
+                left  join CollectionTableGroup (pcil1 : entity.project.dto.search.Stock.product.purchaseComboItemList) {
                   primaryTableReference : product_purchase_combo_item_list as pcil1_0
                   TableGroupJoins {
-                    left  join LazyTableGroup (pcil1 : project.product.entity.Stock.product.purchaseComboItemList.{element}) {
+                    left  join LazyTableGroup (pcil1 : entity.project.dto.search.Stock.product.purchaseComboItemList.{element}) {
                       primaryTableReference : purchase_combo_item as pcil1_1
                       TableGroupJoins {
-                        left  join LazyTableGroup (p2 : project.product.entity.Stock.product.purchaseComboItemList.{element}.product) {
+                        left  join LazyTableGroup (p2 : entity.project.dto.search.Stock.product.purchaseComboItemList.{element}.product) {
                         }
                       }
                     }
@@ -1518,7 +1518,7 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
       }
     }
 
-2024-02-24T17:06:55.388+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: project.product.entity.Stock
+2024-02-24T17:06:55.388+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: entity.project.dto.search.Stock
 2024-02-24T17:06:55.388+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Version select: select id from stock where id=?
 2024-02-24T17:06:55.388+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Insert (0): insert into stock (color_id,product_id,quantity,id) values (?,?,?,?)
 2024-02-24T17:06:55.388+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Update (0): update stock set color_id=?,product_id=?,quantity=? where id=?
@@ -1571,50 +1571,50 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:55.392+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Update (0): update province set district_id=?,name=? where id=?
 2024-02-24T17:06:55.392+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Delete (0): delete from province where id=?
 2024-02-24T17:06:55.392+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : p1_0
-2024-02-24T17:06:55.392+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.product.entity.Product)] with identifierForTableGroup [project.product.entity.Product] for NavigablePath [project.product.entity.Product] 
-2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@1a0b4955] with identifierForTableGroup [project.product.entity.Product.blog] for NavigablePath [project.product.entity.Product.blog] 
+2024-02-24T17:06:55.392+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(entity.project.dto.search.Product)] with identifierForTableGroup [entity.project.dto.search.Product] for NavigablePath [entity.project.dto.search.Product]
+2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@1a0b4955] with identifierForTableGroup [entity.project.dto.search.Product.blog] for NavigablePath [entity.project.dto.search.Product.blog]
 2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : b1_0
 2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pcil1_0
-2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(project.product.entity.Product.purchaseComboItemList)] with identifierForTableGroup [project.product.entity.Product.purchaseComboItemList] for NavigablePath [project.product.entity.Product.purchaseComboItemList] 
-2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@3435a4e5] with identifierForTableGroup [project.product.entity.Product.purchaseComboItemList.{element}] for NavigablePath [project.product.entity.Product.purchaseComboItemList.{element}] 
+2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(entity.project.dto.search.Product.purchaseComboItemList)] with identifierForTableGroup [entity.project.dto.search.Product.purchaseComboItemList] for NavigablePath [entity.project.dto.search.Product.purchaseComboItemList]
+2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@3435a4e5] with identifierForTableGroup [entity.project.dto.search.Product.purchaseComboItemList.{element}] for NavigablePath [entity.project.dto.search.Product.purchaseComboItemList.{element}]
 2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pcil1_1
-2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@31434b63] with identifierForTableGroup [project.product.entity.Product.purchaseComboItemList.{element}.product] for NavigablePath [project.product.entity.Product.purchaseComboItemList.{element}.product] 
+2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@31434b63] with identifierForTableGroup [entity.project.dto.search.Product.purchaseComboItemList.{element}.product] for NavigablePath [entity.project.dto.search.Product.purchaseComboItemList.{element}.product]
 2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : p2_0
-2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@64d42d3d] with identifierForTableGroup [project.product.entity.Product.purchaseComboItemList.{element}.product.blog] for NavigablePath [project.product.entity.Product.purchaseComboItemList.{element}.product.blog] 
+2024-02-24T17:06:55.393+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@64d42d3d] with identifierForTableGroup [entity.project.dto.search.Product.purchaseComboItemList.{element}.product.blog] for NavigablePath [entity.project.dto.search.Product.purchaseComboItemList.{element}.product.blog]
 2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
- \-EntityResultImpl [project.product.entity.Product]
- |  +-EntityFetchJoinedImpl [project.product.entity.Product.blog]
- |  +-DelayedCollectionFetch [project.product.entity.Product.colorList]
- |  +-BasicFetch [project.product.entity.Product.discountPercentage]
- |  +-BasicFetch [project.product.entity.Product.image]
- |  +-BasicFetch [project.product.entity.Product.model]
- |  +-BasicFetch [project.product.entity.Product.name]
- |  +-BasicFetch [project.product.entity.Product.price]
- |  +-BasicFetch [project.product.entity.Product.producer]
- |  +-BasicFetch [project.product.entity.Product.productDetail]
- |  +-EagerCollectionFetch [project.product.entity.Product.purchaseComboItemList]
- |  |  \-EntityFetchJoinedImpl [project.product.entity.Product.purchaseComboItemList.{element}]
- |  \-BasicFetch [project.product.entity.Product.type]
+ \-EntityResultImpl [entity.project.dto.search.Product]
+ |  +-EntityFetchJoinedImpl [entity.project.dto.search.Product.blog]
+ |  +-DelayedCollectionFetch [entity.project.dto.search.Product.colorList]
+ |  +-BasicFetch [entity.project.dto.search.Product.discountPercentage]
+ |  +-BasicFetch [entity.project.dto.search.Product.image]
+ |  +-BasicFetch [entity.project.dto.search.Product.model]
+ |  +-BasicFetch [entity.project.dto.search.Product.name]
+ |  +-BasicFetch [entity.project.dto.search.Product.price]
+ |  +-BasicFetch [entity.project.dto.search.Product.producer]
+ |  +-BasicFetch [entity.project.dto.search.Product.productDetail]
+ |  +-EagerCollectionFetch [entity.project.dto.search.Product.purchaseComboItemList]
+ |  |  \-EntityFetchJoinedImpl [entity.project.dto.search.Product.purchaseComboItemList.{element}]
+ |  \-BasicFetch [entity.project.dto.search.Product.type]
 
 2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
     SelectStatement {
       FromClause {
-        StandardTableGroup (p1 : project.product.entity.Product) {
+        StandardTableGroup (p1 : entity.project.dto.search.Product) {
           primaryTableReference : product as p1_0
           TableGroupJoins {
-            left  join LazyTableGroup (b1 : project.product.entity.Product.blog) {
+            left  join LazyTableGroup (b1 : entity.project.dto.search.Product.blog) {
               primaryTableReference : blog as b1_0
             }
-            left  join CollectionTableGroup (pcil1 : project.product.entity.Product.purchaseComboItemList) {
+            left  join CollectionTableGroup (pcil1 : entity.project.dto.search.Product.purchaseComboItemList) {
               primaryTableReference : product_purchase_combo_item_list as pcil1_0
               TableGroupJoins {
-                left  join LazyTableGroup (pcil1 : project.product.entity.Product.purchaseComboItemList.{element}) {
+                left  join LazyTableGroup (pcil1 : entity.project.dto.search.Product.purchaseComboItemList.{element}) {
                   primaryTableReference : purchase_combo_item as pcil1_1
                   TableGroupJoins {
-                    left  join LazyTableGroup (p2 : project.product.entity.Product.purchaseComboItemList.{element}.product) {
+                    left  join LazyTableGroup (p2 : entity.project.dto.search.Product.purchaseComboItemList.{element}.product) {
                       primaryTableReference : product as p2_0
                       TableGroupJoins {
-                        left  join LazyTableGroup (b2 : project.product.entity.Product.purchaseComboItemList.{element}.product.blog) {
+                        left  join LazyTableGroup (b2 : entity.project.dto.search.Product.purchaseComboItemList.{element}.product.blog) {
                         }
                       }
                     }
@@ -1627,7 +1627,7 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
       }
     }
 
-2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: project.product.entity.Product
+2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: entity.project.dto.search.Product
 2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Version select: select id from product where id=?
 2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Insert (0): insert into product (blog_id,discount_percentage,image,model,name,price,producer,product_detail,type,id) values (?,?,?,?,?,?,?,?,?,?)
 2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Update (0): update product set blog_id=?,discount_percentage=?,image=?,model=?,name=?,price=?,producer=?,product_detail=?,type=? where id=?
@@ -1654,46 +1654,46 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Update (0): update color set name=? where id=?
 2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Delete (0): delete from color where id=?
 2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : oi1_0
-2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.order.entity.OrderItem)] with identifierForTableGroup [project.order.entity.OrderItem] for NavigablePath [project.order.entity.OrderItem] 
-2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@166d576b] with identifierForTableGroup [project.order.entity.OrderItem.order] for NavigablePath [project.order.entity.OrderItem.order] 
+2024-02-24T17:06:55.394+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.entity.order.OrderItem)] with identifierForTableGroup [project.entity.order.OrderItem] for NavigablePath [project.entity.order.OrderItem]
+2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@166d576b] with identifierForTableGroup [project.entity.order.OrderItem.order] for NavigablePath [project.entity.order.OrderItem.order]
 2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : o1_0
-2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@6a262980] with identifierForTableGroup [project.order.entity.OrderItem.product] for NavigablePath [project.order.entity.OrderItem.product] 
+2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@6a262980] with identifierForTableGroup [project.entity.order.OrderItem.product] for NavigablePath [project.entity.order.OrderItem.product]
 2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : p1_0
-2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@10230657] with identifierForTableGroup [project.order.entity.OrderItem.product.blog] for NavigablePath [project.order.entity.OrderItem.product.blog] 
+2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@10230657] with identifierForTableGroup [project.entity.order.OrderItem.product.blog] for NavigablePath [project.entity.order.OrderItem.product.blog]
 2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : b1_0
 2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pcil1_0
-2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(project.order.entity.OrderItem.product.purchaseComboItemList)] with identifierForTableGroup [project.order.entity.OrderItem.product.purchaseComboItemList] for NavigablePath [project.order.entity.OrderItem.product.purchaseComboItemList] 
-2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@48a21ea6] with identifierForTableGroup [project.order.entity.OrderItem.product.purchaseComboItemList.{element}] for NavigablePath [project.order.entity.OrderItem.product.purchaseComboItemList.{element}] 
+2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(project.entity.order.OrderItem.product.purchaseComboItemList)] with identifierForTableGroup [project.entity.order.OrderItem.product.purchaseComboItemList] for NavigablePath [project.entity.order.OrderItem.product.purchaseComboItemList]
+2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@48a21ea6] with identifierForTableGroup [project.entity.order.OrderItem.product.purchaseComboItemList.{element}] for NavigablePath [project.entity.order.OrderItem.product.purchaseComboItemList.{element}]
 2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pcil1_1
-2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@394e504d] with identifierForTableGroup [project.order.entity.OrderItem.product.purchaseComboItemList.{element}.product] for NavigablePath [project.order.entity.OrderItem.product.purchaseComboItemList.{element}.product] 
+2024-02-24T17:06:55.395+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@394e504d] with identifierForTableGroup [project.entity.order.OrderItem.product.purchaseComboItemList.{element}.product] for NavigablePath [project.entity.order.OrderItem.product.purchaseComboItemList.{element}.product]
 2024-02-24T17:06:55.396+07:00 DEBUG 20256 --- [main] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
- \-EntityResultImpl [project.order.entity.OrderItem]
- |  +-EntityFetchJoinedImpl [project.order.entity.OrderItem.order]
- |  +-EntityFetchJoinedImpl [project.order.entity.OrderItem.product]
- |  \-BasicFetch [project.order.entity.OrderItem.quantity]
+ \-EntityResultImpl [project.entity.order.OrderItem]
+ |  +-EntityFetchJoinedImpl [project.entity.order.OrderItem.order]
+ |  +-EntityFetchJoinedImpl [project.entity.order.OrderItem.product]
+ |  \-BasicFetch [project.entity.order.OrderItem.quantity]
 
 2024-02-24T17:06:55.396+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
     SelectStatement {
       FromClause {
-        StandardTableGroup (oi1 : project.order.entity.OrderItem) {
+        StandardTableGroup (oi1 : project.entity.order.OrderItem) {
           primaryTableReference : order_item as oi1_0
           TableGroupJoins {
-            left  join LazyTableGroup (o1 : project.order.entity.OrderItem.order) {
+            left  join LazyTableGroup (o1 : project.entity.order.OrderItem.order) {
               primaryTableReference : orders as o1_0
             }
-            left  join LazyTableGroup (p1 : project.order.entity.OrderItem.product) {
+            left  join LazyTableGroup (p1 : project.entity.order.OrderItem.product) {
               primaryTableReference : product as p1_0
               TableGroupJoins {
-                left  join LazyTableGroup (b1 : project.order.entity.OrderItem.product.blog) {
+                left  join LazyTableGroup (b1 : project.entity.order.OrderItem.product.blog) {
                   primaryTableReference : blog as b1_0
                 }
-                left  join CollectionTableGroup (pcil1 : project.order.entity.OrderItem.product.purchaseComboItemList) {
+                left  join CollectionTableGroup (pcil1 : project.entity.order.OrderItem.product.purchaseComboItemList) {
                   primaryTableReference : product_purchase_combo_item_list as pcil1_0
                   TableGroupJoins {
-                    left  join LazyTableGroup (pcil1 : project.order.entity.OrderItem.product.purchaseComboItemList.{element}) {
+                    left  join LazyTableGroup (pcil1 : project.entity.order.OrderItem.product.purchaseComboItemList.{element}) {
                       primaryTableReference : purchase_combo_item as pcil1_1
                       TableGroupJoins {
-                        left  join LazyTableGroup (p2 : project.order.entity.OrderItem.product.purchaseComboItemList.{element}.product) {
+                        left  join LazyTableGroup (p2 : project.entity.order.OrderItem.product.purchaseComboItemList.{element}.product) {
                         }
                       }
                     }
@@ -1706,7 +1706,7 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
       }
     }
 
-2024-02-24T17:06:55.396+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: project.order.entity.OrderItem
+2024-02-24T17:06:55.396+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: project.entity.order.OrderItem
 2024-02-24T17:06:55.396+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Version select: select id from order_item where id=?
 2024-02-24T17:06:55.396+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Insert (0): insert into order_item (order_id,product_id,quantity,id) values (?,?,?,?)
 2024-02-24T17:06:55.396+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Update (0): update order_item set order_id=?,product_id=?,quantity=? where id=?
@@ -1775,36 +1775,36 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:55.397+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Update (0): update last_generated_oder_code set code=? where id=?
 2024-02-24T17:06:55.397+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Delete (0): delete from last_generated_oder_code where id=?
 2024-02-24T17:06:55.397+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pci1_0
-2024-02-24T17:06:55.397+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.product.dto.StaticDataProductPage.PurchaseComboItem)] with identifierForTableGroup [project.product.dto.StaticDataProductPage.PurchaseComboItem] for NavigablePath [project.product.dto.StaticDataProductPage.PurchaseComboItem]
-2024-02-24T17:06:55.397+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@3c2fa57a] with identifierForTableGroup [project.product.dto.StaticDataProductPage.PurchaseComboItem.product] for NavigablePath [project.product.dto.StaticDataProductPage.PurchaseComboItem.product]
+2024-02-24T17:06:55.397+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.dto.StaticDataProductPage.PurchaseComboItem)] with identifierForTableGroup [project.dto.StaticDataProductPage.PurchaseComboItem] for NavigablePath [project.dto.StaticDataProductPage.PurchaseComboItem]
+2024-02-24T17:06:55.397+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@3c2fa57a] with identifierForTableGroup [project.dto.StaticDataProductPage.PurchaseComboItem.product] for NavigablePath [project.dto.StaticDataProductPage.PurchaseComboItem.product]
 2024-02-24T17:06:55.397+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : p1_0
-2024-02-24T17:06:55.397+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@4027edeb] with identifierForTableGroup [project.product.dto.StaticDataProductPage.PurchaseComboItem.product.blog] for NavigablePath [project.product.dto.StaticDataProductPage.PurchaseComboItem.product.blog]
+2024-02-24T17:06:55.397+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@4027edeb] with identifierForTableGroup [project.dto.StaticDataProductPage.PurchaseComboItem.product.blog] for NavigablePath [project.dto.StaticDataProductPage.PurchaseComboItem.product.blog]
 2024-02-24T17:06:55.398+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : b1_0
 2024-02-24T17:06:55.398+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pcil1_0
-2024-02-24T17:06:55.398+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(project.product.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList)] with identifierForTableGroup [project.product.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList] for NavigablePath [project.product.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList]
-2024-02-24T17:06:55.398+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@48cd8e71] with identifierForTableGroup [project.product.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList.{element}] for NavigablePath [project.product.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList.{element}]
+2024-02-24T17:06:55.398+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(project.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList)] with identifierForTableGroup [project.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList] for NavigablePath [project.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList]
+2024-02-24T17:06:55.398+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@48cd8e71] with identifierForTableGroup [project.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList.{element}] for NavigablePath [project.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList.{element}]
 2024-02-24T17:06:55.398+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pcil1_1
 2024-02-24T17:06:55.398+07:00 DEBUG 20256 --- [main] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
- \-EntityResultImpl [project.product.dto.StaticDataProductPage.PurchaseComboItem]
- |  +-BasicFetch [project.product.dto.StaticDataProductPage.PurchaseComboItem.discountPercentage]
- |  \-EntityFetchJoinedImpl [project.product.dto.StaticDataProductPage.PurchaseComboItem.product]
+ \-EntityResultImpl [project.dto.StaticDataProductPage.PurchaseComboItem]
+ |  +-BasicFetch [project.dto.StaticDataProductPage.PurchaseComboItem.discountPercentage]
+ |  \-EntityFetchJoinedImpl [project.dto.StaticDataProductPage.PurchaseComboItem.product]
 
 2024-02-24T17:06:55.398+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
     SelectStatement {
       FromClause {
-        StandardTableGroup (pci1 : project.product.dto.StaticDataProductPage.PurchaseComboItem) {
+        StandardTableGroup (pci1 : project.dto.StaticDataProductPage.PurchaseComboItem) {
           primaryTableReference : purchase_combo_item as pci1_0
           TableGroupJoins {
-            left  join LazyTableGroup (p1 : project.product.dto.StaticDataProductPage.PurchaseComboItem.product) {
+            left  join LazyTableGroup (p1 : project.dto.StaticDataProductPage.PurchaseComboItem.product) {
               primaryTableReference : product as p1_0
               TableGroupJoins {
-                left  join LazyTableGroup (b1 : project.product.dto.StaticDataProductPage.PurchaseComboItem.product.blog) {
+                left  join LazyTableGroup (b1 : project.dto.StaticDataProductPage.PurchaseComboItem.product.blog) {
                   primaryTableReference : blog as b1_0
                 }
-                left  join CollectionTableGroup (pcil1 : project.product.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList) {
+                left  join CollectionTableGroup (pcil1 : project.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList) {
                   primaryTableReference : product_purchase_combo_item_list as pcil1_0
                   TableGroupJoins {
-                    left  join LazyTableGroup (pcil1 : project.product.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList.{element}) {
+                    left  join LazyTableGroup (pcil1 : project.dto.StaticDataProductPage.PurchaseComboItem.product.purchaseComboItemList.{element}) {
                       primaryTableReference : purchase_combo_item as pcil1_1
                     }
                   }
@@ -1816,7 +1816,7 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
       }
     }
 
-2024-02-24T17:06:55.399+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: project.product.dto.StaticDataProductPage.PurchaseComboItem
+2024-02-24T17:06:55.399+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: project.dto.StaticDataProductPage.PurchaseComboItem
 2024-02-24T17:06:55.399+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Version select: select id from purchase_combo_item where id=?
 2024-02-24T17:06:55.399+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Insert (0): insert into purchase_combo_item (discount_percentage,product_id,id) values (?,?,?)
 2024-02-24T17:06:55.399+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Update (0): update purchase_combo_item set discount_percentage=?,product_id=? where id=?
@@ -1865,48 +1865,48 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:55.399+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Update (0): update district set name=?,ward_id=? where id=?
 2024-02-24T17:06:55.399+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Delete (0): delete from district where id=?
 2024-02-24T17:06:55.399+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : o1_0
-2024-02-24T17:06:55.399+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.order.entity.Order)] with identifierForTableGroup [project.order.entity.Order] for NavigablePath [project.order.entity.Order] 
+2024-02-24T17:06:55.399+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.entity.order.Order)] with identifierForTableGroup [project.entity.order.Order] for NavigablePath [project.entity.order.Order]
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
- \-EntityResultImpl [project.order.entity.Order]
- |  +-BasicFetch [project.order.entity.Order.orderCode]
- |  +-BasicFetch [project.order.entity.Order.orderDate]
- |  +-DelayedCollectionFetch [project.order.entity.Order.orderItemList]
- |  +-BasicFetch [project.order.entity.Order.quantity]
- |  +-BasicFetch [project.order.entity.Order.shippingAddress]
- |  \-BasicFetch [project.order.entity.Order.status]
+ \-EntityResultImpl [project.entity.order.Order]
+ |  +-BasicFetch [project.entity.order.Order.orderCode]
+ |  +-BasicFetch [project.entity.order.Order.orderDate]
+ |  +-DelayedCollectionFetch [project.entity.order.Order.orderItemList]
+ |  +-BasicFetch [project.entity.order.Order.quantity]
+ |  +-BasicFetch [project.entity.order.Order.shippingAddress]
+ |  \-BasicFetch [project.entity.order.Order.status]
 
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
     SelectStatement {
       FromClause {
-        StandardTableGroup (o1 : project.order.entity.Order) {
+        StandardTableGroup (o1 : project.entity.order.Order) {
           primaryTableReference : orders as o1_0
         }
       }
     }
 
-2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: project.order.entity.Order
+2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: project.entity.order.Order
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Version select: select id from orders where id=?
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Insert (0): insert into orders (order_code,order_date,quantity,shipping_address,status,id) values (?,?,?,?,?,?)
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Update (0): update orders set order_code=?,order_date=?,quantity=?,shipping_address=?,status=? where id=?
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Delete (0): delete from orders where id=?
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : b1_0
-2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.product.entity.Blog)] with identifierForTableGroup [project.product.entity.Blog] for NavigablePath [project.product.entity.Blog] 
+2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(entity.project.dto.search.Blog)] with identifierForTableGroup [entity.project.dto.search.Blog] for NavigablePath [entity.project.dto.search.Blog]
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
- \-EntityResultImpl [project.product.entity.Blog]
- |  +-BasicFetch [project.product.entity.Blog.content]
- |  +-BasicFetch [project.product.entity.Blog.header]
- |  \-BasicFetch [project.product.entity.Blog.image]
+ \-EntityResultImpl [entity.project.dto.search.Blog]
+ |  +-BasicFetch [entity.project.dto.search.Blog.content]
+ |  +-BasicFetch [entity.project.dto.search.Blog.header]
+ |  \-BasicFetch [entity.project.dto.search.Blog.image]
 
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
     SelectStatement {
       FromClause {
-        StandardTableGroup (b1 : project.product.entity.Blog) {
+        StandardTableGroup (b1 : entity.project.dto.search.Blog) {
           primaryTableReference : blog as b1_0
         }
       }
     }
 
-2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: project.product.entity.Blog
+2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     : Static SQL for entity: entity.project.dto.search.Blog
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Version select: select id from blog where id=?
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Insert (0): insert into blog (content,header,image,id) values (?,?,?,?)
 2024-02-24T17:06:55.400+07:00 DEBUG 20256 --- [main] o.h.p.entity.AbstractEntityPersister     :  Update (0): update blog set content=?,header=?,image=? where id=?
@@ -1973,19 +1973,19 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:55.404+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  Row delete: delete from ward_district_list where ward_id=? and district_list_id=?
 2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  One-shot delete: delete from ward_district_list where ward_id=?
 2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : cl1_0
-2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(project.product.entity.Product.colorList)] with identifierForTableGroup [project.product.entity.Product.colorList] for NavigablePath [project.product.entity.Product.colorList] 
-2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@5ec06e97] with identifierForTableGroup [project.product.entity.Product.colorList.{element}] for NavigablePath [project.product.entity.Product.colorList.{element}] 
+2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(entity.project.dto.search.Product.colorList)] with identifierForTableGroup [entity.project.dto.search.Product.colorList] for NavigablePath [entity.project.dto.search.Product.colorList]
+2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@5ec06e97] with identifierForTableGroup [entity.project.dto.search.Product.colorList.{element}] for NavigablePath [entity.project.dto.search.Product.colorList.{element}]
 2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : cl1_1
 2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
- \-CollectionDomainResult [project.product.entity.Product.colorList]
+ \-CollectionDomainResult [entity.project.dto.search.Product.colorList]
 
 2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
     SelectStatement {
       FromClause {
-        CollectionTableGroup (cl1 : project.product.entity.Product.colorList) {
+        CollectionTableGroup (cl1 : entity.project.dto.search.Product.colorList) {
           primaryTableReference : product_color as cl1_0
           TableGroupJoins {
-             join LazyTableGroup (cl1 : project.product.entity.Product.colorList.{element}) {
+             join LazyTableGroup (cl1 : entity.project.dto.search.Product.colorList.{element}) {
               primaryTableReference : color as cl1_1
             }
           }
@@ -1993,34 +1993,34 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
       }
     }
 
-2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Static SQL for collection: project.product.entity.Product.colorList
+2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Static SQL for collection: entity.project.dto.search.Product.colorList
 2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  Row insert: insert into product_color (product_id,color_id) values (?,?)
 2024-02-24T17:06:55.405+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  Row delete: delete from product_color where product_id=? and color_id=?
 2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  One-shot delete: delete from product_color where product_id=?
 2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pcil1_0
-2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(project.product.entity.Product.purchaseComboItemList)] with identifierForTableGroup [project.product.entity.Product.purchaseComboItemList] for NavigablePath [project.product.entity.Product.purchaseComboItemList] 
-2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@585672dd] with identifierForTableGroup [project.product.entity.Product.purchaseComboItemList.{element}] for NavigablePath [project.product.entity.Product.purchaseComboItemList.{element}] 
+2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [CollectionTableGroup(entity.project.dto.search.Product.purchaseComboItemList)] with identifierForTableGroup [entity.project.dto.search.Product.purchaseComboItemList] for NavigablePath [entity.project.dto.search.Product.purchaseComboItemList]
+2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@585672dd] with identifierForTableGroup [entity.project.dto.search.Product.purchaseComboItemList.{element}] for NavigablePath [entity.project.dto.search.Product.purchaseComboItemList.{element}]
 2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : pcil1_1
-2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@49c947f7] with identifierForTableGroup [project.product.entity.Product.purchaseComboItemList.{element}.product] for NavigablePath [project.product.entity.Product.purchaseComboItemList.{element}.product] 
+2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@49c947f7] with identifierForTableGroup [entity.project.dto.search.Product.purchaseComboItemList.{element}.product] for NavigablePath [entity.project.dto.search.Product.purchaseComboItemList.{element}.product]
 2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : p1_0
-2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@47b494ce] with identifierForTableGroup [project.product.entity.Product.purchaseComboItemList.{element}.product.blog] for NavigablePath [project.product.entity.Product.purchaseComboItemList.{element}.product.blog] 
+2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@47b494ce] with identifierForTableGroup [entity.project.dto.search.Product.purchaseComboItemList.{element}.product.blog] for NavigablePath [entity.project.dto.search.Product.purchaseComboItemList.{element}.product.blog]
 2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : b1_0
 2024-02-24T17:06:55.406+07:00 DEBUG 20256 --- [main] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
- \-CollectionDomainResult [project.product.entity.Product.purchaseComboItemList]
+ \-CollectionDomainResult [entity.project.dto.search.Product.purchaseComboItemList]
 
 2024-02-24T17:06:55.407+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
     SelectStatement {
       FromClause {
-        CollectionTableGroup (pcil1 : project.product.entity.Product.purchaseComboItemList) {
+        CollectionTableGroup (pcil1 : entity.project.dto.search.Product.purchaseComboItemList) {
           primaryTableReference : product_purchase_combo_item_list as pcil1_0
           TableGroupJoins {
-             join LazyTableGroup (pcil1 : project.product.entity.Product.purchaseComboItemList.{element}) {
+             join LazyTableGroup (pcil1 : entity.project.dto.search.Product.purchaseComboItemList.{element}) {
               primaryTableReference : purchase_combo_item as pcil1_1
               TableGroupJoins {
-                left  join LazyTableGroup (p1 : project.product.entity.Product.purchaseComboItemList.{element}.product) {
+                left  join LazyTableGroup (p1 : entity.project.dto.search.Product.purchaseComboItemList.{element}.product) {
                   primaryTableReference : product as p1_0
                   TableGroupJoins {
-                    left  join LazyTableGroup (b1 : project.product.entity.Product.purchaseComboItemList.{element}.product.blog) {
+                    left  join LazyTableGroup (b1 : entity.project.dto.search.Product.purchaseComboItemList.{element}.product.blog) {
                       primaryTableReference : blog as b1_0
                     }
                   }
@@ -2032,7 +2032,7 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
       }
     }
 
-2024-02-24T17:06:55.407+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Static SQL for collection: project.product.entity.Product.purchaseComboItemList
+2024-02-24T17:06:55.407+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Static SQL for collection: entity.project.dto.search.Product.purchaseComboItemList
 2024-02-24T17:06:55.407+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  Row insert: insert into product_purchase_combo_item_list (product_id,purchase_combo_item_list_id) values (?,?)
 2024-02-24T17:06:55.407+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  Row delete: delete from product_purchase_combo_item_list where product_id=? and purchase_combo_item_list_id=?
 2024-02-24T17:06:55.407+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  One-shot delete: delete from product_purchase_combo_item_list where product_id=?
@@ -2076,31 +2076,31 @@ javax.management.InstanceNotFoundException: org.springframework.boot:type=Admin,
 2024-02-24T17:06:55.408+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  Row delete: delete from district_province_list where district_id=? and province_list_id=?
 2024-02-24T17:06:55.408+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  One-shot delete: delete from district_province_list where district_id=?
 2024-02-24T17:06:55.408+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : oil1_0
-2024-02-24T17:06:55.409+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.OneToManyTableGroup@3d605657] with identifierForTableGroup [project.order.entity.Order.orderItemList] for NavigablePath [project.order.entity.Order.orderItemList] 
-2024-02-24T17:06:55.409+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.order.entity.Order.orderItemList.{element})] with identifierForTableGroup [project.order.entity.Order.orderItemList.{element}] for NavigablePath [project.order.entity.Order.orderItemList.{element}] 
-2024-02-24T17:06:55.409+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@73b10975] with identifierForTableGroup [project.order.entity.Order.orderItemList.{element}.order] for NavigablePath [project.order.entity.Order.orderItemList.{element}.order] 
+2024-02-24T17:06:55.409+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.OneToManyTableGroup@3d605657] with identifierForTableGroup [project.entity.order.Order.orderItemList] for NavigablePath [project.entity.order.Order.orderItemList]
+2024-02-24T17:06:55.409+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [StandardTableGroup(project.entity.order.Order.orderItemList.{element})] with identifierForTableGroup [project.entity.order.Order.orderItemList.{element}] for NavigablePath [project.entity.order.Order.orderItemList.{element}]
+2024-02-24T17:06:55.409+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@73b10975] with identifierForTableGroup [project.entity.order.Order.orderItemList.{element}.order] for NavigablePath [project.entity.order.Order.orderItemList.{element}.order]
 2024-02-24T17:06:55.409+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Created new SQL alias : o1_0
-2024-02-24T17:06:55.409+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@6318ff9] with identifierForTableGroup [project.order.entity.Order.orderItemList.{element}.product] for NavigablePath [project.order.entity.Order.orderItemList.{element}.product] 
+2024-02-24T17:06:55.409+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.create         : Registration of TableGroup [org.hibernate.sql.ast.tree.from.LazyTableGroup@6318ff9] with identifierForTableGroup [project.entity.order.Order.orderItemList.{element}.product] for NavigablePath [project.entity.order.Order.orderItemList.{element}.product]
 2024-02-24T17:06:55.410+07:00 DEBUG 20256 --- [main] org.hibernate.orm.results.graph.AST      : DomainResult Graph:
- \-CollectionDomainResult [project.order.entity.Order.orderItemList]
+ \-CollectionDomainResult [project.entity.order.Order.orderItemList]
 
 2024-02-24T17:06:55.410+07:00 DEBUG 20256 --- [main] org.hibernate.orm.sql.ast.tree           : SQL AST Tree:
     SelectStatement {
       FromClause {
-        OneToManyTableGroup (oil1 : project.order.entity.Order.orderItemList) {
+        OneToManyTableGroup (oil1 : project.entity.order.Order.orderItemList) {
           primaryTableReference : order_item as oil1_0
           TableGroupJoins {
-            left  join LazyTableGroup (o1 : project.order.entity.Order.orderItemList.{element}.order) {
+            left  join LazyTableGroup (o1 : project.entity.order.Order.orderItemList.{element}.order) {
               primaryTableReference : orders as o1_0
             }
-            left  join LazyTableGroup (p1 : project.order.entity.Order.orderItemList.{element}.product) {
+            left  join LazyTableGroup (p1 : project.entity.order.Order.orderItemList.{element}.product) {
             }
           }
         }
       }
     }
 
-2024-02-24T17:06:55.410+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Static SQL for collection: project.order.entity.Order.orderItemList
+2024-02-24T17:06:55.410+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          : Static SQL for collection: project.entity.order.Order.orderItemList
 2024-02-24T17:06:55.410+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  Row insert: update order_item set product_id=? where id=?
 2024-02-24T17:06:55.411+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  Row delete: update order_item set product_id=null where product_id=? and id=?
 2024-02-24T17:06:55.411+07:00 DEBUG 20256 --- [main] org.hibernate.orm.jdbc.mutation          :  One-shot delete: update order_item set product_id=null where product_id=?
@@ -2326,29 +2326,29 @@ java.lang.Exception: exception just for purpose of providing stack trace
 2024-02-24T17:06:55.980+07:00 DEBUG 20256 --- [main] o.h.o.q.hql.reservedWordAsIdentifier     : Encountered use of reserved word as identifier : =
 2024-02-24T17:06:55.981+07:00 DEBUG 20256 --- [main] o.h.o.q.hql.reservedWordAsIdentifier     : Encountered use of reserved word as identifier : AND
 2024-02-24T17:06:55.982+07:00 DEBUG 20256 --- [main] o.h.o.q.hql.reservedWordAsIdentifier     : Encountered use of reserved word as identifier : <>
-2024-02-24T17:06:55.997+07:00 DEBUG 20256 --- [main] org.hibernate.orm.query.sqm.creation     : Applying inferable type to SqmExpression [SqmNamedParameter(type)] : null -> SqmBasicValuedSimplePath(project.product.entity.Product(p).type)
-2024-02-24T17:06:55.997+07:00 DEBUG 20256 --- [main] org.hibernate.orm.query.sqm.creation     : Applying inferable type to SqmExpression [SqmNamedParameter(productId)] : null -> SqmBasicValuedSimplePath(project.product.entity.Product(p).id)
+2024-02-24T17:06:55.997+07:00 DEBUG 20256 --- [main] org.hibernate.orm.query.sqm.creation     : Applying inferable type to SqmExpression [SqmNamedParameter(type)] : null -> SqmBasicValuedSimplePath(entity.project.dto.search.Product(p).type)
+2024-02-24T17:06:55.997+07:00 DEBUG 20256 --- [main] org.hibernate.orm.query.sqm.creation     : Applying inferable type to SqmExpression [SqmNamedParameter(productId)] : null -> SqmBasicValuedSimplePath(entity.project.dto.search.Product(p).id)
 2024-02-24T17:06:56.002+07:00 DEBUG 20256 --- [main] org.hibernate.orm.query.sqm.ast          : SqmStatement Tree :
     -> [select]
       -> [query-spec]
         -> [select]
           -> [selection]
-            -> [root] - `project.product.entity.Product(p)`
-            <- [root] - `project.product.entity.Product(p)`
+            -> [root] - `entity.project.dto.search.Product(p)`
+            <- [root] - `entity.project.dto.search.Product(p)`
           <- [selection]
         <- [select]
         -> [from]
-          -> [root] - `project.product.entity.Product(p)`
-          <- [root] - `project.product.entity.Product(p)`
+          -> [root] - `entity.project.dto.search.Product(p)`
+          <- [root] - `entity.project.dto.search.Product(p)`
         <- [from]
         -> [where]
           -> [and]
             -> [EQUAL]
-                -> [basic-path] - `project.product.entity.Product(p).type`
+                -> [basic-path] - `entity.project.dto.search.Product(p).type`
                 :type
             <- [EQUAL]
             -> [NOT_EQUAL]
-                -> [basic-path] - `project.product.entity.Product(p).id`
+                -> [basic-path] - `entity.project.dto.search.Product(p).id`
                 :productId
             <- [NOT_EQUAL]
           <- [and]

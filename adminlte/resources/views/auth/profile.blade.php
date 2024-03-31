@@ -29,7 +29,8 @@
                                 <div class="input-group mb-3">
                                     <input type="text" name="name"
                                            class="form-control @error('name') is-invalid @enderror"
-                                           placeholder="{{ __('Name') }}" value="{{ old('name', auth()->user()->name) }}" required>
+                                           placeholder="{{ __('Name') }}"
+                                           value="{{ old('name', auth()->user()->name) }}" required>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <span class="fas fa-user"></span>
@@ -45,7 +46,8 @@
                                 <div class="input-group mb-3">
                                     <input type="email" name="email"
                                            class="form-control @error('email') is-invalid @enderror"
-                                           placeholder="{{ __('Email') }}" value="{{ old('email', auth()->user()->email) }}" required>
+                                           placeholder="{{ __('Email') }}"
+                                           value="{{ old('email', auth()->user()->email) }}" required>
                                     <div class="input-group-append">
                                         <div class="input-group-text">
                                             <span class="fas fa-envelope"></span>
@@ -58,30 +60,34 @@
                                     @enderror
                                 </div>
 
-                                <div class="input-group mb-3">
-                                    <input type="password" name="password"
-                                           class="form-control @error('password') is-invalid @enderror"
-                                           placeholder="{{ __('New password') }}">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-lock"></span>
-                                        </div>
-                                    </div>
-                                    @error('password')
-                                    <span class="error invalid-feedback">
-                                        {{ $message }}
-                                    </span>
-                                    @enderror
-                                </div>
+                                <p id="changePasswordLink" class="text-primary">{{ __('Change your password') }}</p>
 
-                                <div class="input-group mb-3">
-                                    <input type="password" name="password_confirmation"
-                                           class="form-control @error('password_confirmation') is-invalid @enderror"
-                                           placeholder="{{ __('New password confirmation') }}"
-                                           autocomplete="new-password">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">
-                                            <span class="fas fa-lock"></span>
+                                <div id="passwordFields" style="display: none;">
+                                    <div class="input-group mb-3">
+                                        <input type="password" name="password"
+                                               class="form-control @error('password') is-invalid @enderror"
+                                               placeholder="{{ __('New password') }}">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-lock"></span>
+                                            </div>
+                                        </div>
+                                        @error('password')
+                                        <span class="error invalid-feedback">
+                                            {{ $message }}
+                                        </span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="input-group mb-3">
+                                        <input type="password" name="password_confirmation"
+                                               class="form-control @error('password_confirmation') is-invalid @enderror"
+                                               placeholder="{{ __('New password confirmation') }}"
+                                               autocomplete="new-password">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">
+                                                <span class="fas fa-lock"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +95,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+                                <button type="submit" class="btn btn-primary">{{ __('Update') }}</button>
                             </div>
                         </form>
                     </div>
@@ -102,18 +108,30 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <style>
+        #changePasswordLink {
+            display: inline-block;
+        }
+
+        #changePasswordLink:hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
 @endsection
 
 @section('scripts')
-    @session('success')
-        <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-        <script>
-            Toastify({
-                text: "{{ $value }}",
-                duration: 3000,
-                close: true,
-            }).showToast();
-        </script>
-    @endsession
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const changePasswordLink = document.getElementById('changePasswordLink');
+            const passwordFields = document.getElementById('passwordFields');
+
+            changePasswordLink.addEventListener('click', function () {
+                changePasswordLink.style.display = 'none';
+                passwordFields.style.display = 'block';
+            });
+        });
+    </script>
 @endsection
+

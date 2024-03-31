@@ -268,7 +268,7 @@ const ProductPage = ({ productBE }) => {
       if (response.ok) {
         closeForm();
         alert("Order placed successfully");
-        window.location.reload();
+        window.location.href = "http://localhost:3000/payment.jsx";
       } else {
         console.error('Failed to place order');
       }
@@ -403,14 +403,14 @@ const ProductPage = ({ productBE }) => {
                 <div className="service-item-child">
                   <FontAwesomeIcon className="service-icon" icon={faRotate} />
                   <div>
-                    <p>Commitment to 1 for 1 exchange within <b>30 Days</b> for product defects.</p>
+                    <p>Commitment to 1 for 1 exchange within <b className='service-b'>30 Days</b> for product defects.</p>
                     <Link href="#">View details &#187;</Link>
                   </div>
                 </div>
                 <div className="service-item-child">
                   <FontAwesomeIcon className="service-icon" icon={faShieldCat} />
                   <div>
-                    <p><b>12 Month</b> warranty at manufacturer&apos;s warranty centers</p>
+                    <p><b className='service-b'>12 Month</b> warranty at manufacturer&apos;s warranty centers</p>
                     <Link href="#">See warranty address &#187;</Link>
                   </div>
                 </div>
@@ -418,7 +418,7 @@ const ProductPage = ({ productBE }) => {
 
               <div className="service-line"></div>
 
-              <div className="service-item">
+              <div className="service-item service-bottom">
                 <FontAwesomeIcon className="service-icon" icon={faBoxArchive} />
                 <div className="item-combo">
                   <b>Product set includes:</b>
@@ -463,13 +463,12 @@ const ProductPage = ({ productBE }) => {
                   <p>100 Evaluate</p>
                 </div>
 
-                <div className="product-price">
-                  <b><FormatPrice price={discountedPrice * quantity} /></b>
-                  <b className="main-money-unit">đ</b>
-                  <p><FormatPrice price={product.price * quantity} /></p>
-                  <p className="main-money-unit">đ</p>
+                <div className="flex my-3 w-2/5">
+                  <div className='mr-2'>
+                    <FormatPrice price={discountedPrice * quantity} type={"discount"} />
+                  </div>
+                  <FormatPrice price={product.price * quantity} />
                 </div>
-
                 <div className="product-price-ratio">
                   <p>{`Down ${product.discountPercentage}%`}</p>
                 </div>
@@ -553,11 +552,9 @@ const ProductPage = ({ productBE }) => {
                   </div>
                   <div className="recommended-main-content">
                     <h1>{product.name}</h1>
-                    <div className="accessories-price">
-                      <b><FormatPrice price={discountedPrice} /></b>
-                      <b className="money-unit">đ</b>
-                      <p><FormatPrice price={product.price} /></p>
-                      <p className="money-unit">đ</p>
+                    <div className="flex pl-5 w-full">
+                      <div className='mr-2'><FormatPrice price={discountedPrice} type={"discount"} /></div>
+                      <FormatPrice price={product.price} />
                     </div>
                     <div className="accessories-price-ratio">
                       <p>{`Down ${product.discountPercentage}%`}</p>
@@ -566,8 +563,6 @@ const ProductPage = ({ productBE }) => {
                 </div>
 
                 <div className="recommended-accessories-line"></div>
-
-                {console.log(product)}
 
                 <ul className="recommended-accessories-list">
                   {product.purchaseComboItem.productList.map((item, index) => (
@@ -585,12 +580,11 @@ const ProductPage = ({ productBE }) => {
                         <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
                           {item.name}
                         </Link>
-                        <div className="accessories-price">
-                          <b><FormatPrice
-                            price={item.price - (item.price * item.discountPercentage / 100)} /></b>
-                          <b className="money-unit">đ</b>
-                          <p><FormatPrice price={item.price} /></p>
-                          <p className="money-unit">đ</p>
+                        <div className="flex pl-5 w-full">
+                          <div className='mr-2'>
+                            <FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} />
+                          </div>
+                          <FormatPrice price={item.price} />
                         </div>
                         <div className="accessories-price-ratio">
                           <p>{`Down ${item.discountPercentage}%`}</p>
@@ -604,11 +598,12 @@ const ProductPage = ({ productBE }) => {
                   Save an additional 10% on all bundled products
                 </div>
 
-                <div className="total-price">
-                  <h1>Total Price:</h1>
-                  <b><FormatPrice price={totalPrice} /></b>
-                  <b className="money-unit">đ</b>
-                  <p><FormatPrice price={totalPrice * 100 / 90} /></p>
+                <div className="flex justify-center">
+                  <div className="w-3/4 flex justify-center items-center">
+                    <h1 className="mr-3">Total Price:</h1>
+                    <FormatPrice price={totalPrice * 100 / 90} type={"discount"} />
+                    <FormatPrice price={totalPrice} />
+                  </div>
                 </div>
                 <div className="buy-recommend">
                   <button className="buy-recommend-btn" onClick={openForm}>
@@ -637,11 +632,11 @@ const ProductPage = ({ productBE }) => {
                     <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
                       {item.name}
                     </Link>
-                    <div className="similar-product-price">
-                      <b><FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} /></b>
-                      <b className="money-unit">đ</b>
-                      <p><FormatPrice price={item.price} /></p>
-                      <p className="money-unit">đ</p>
+                    <div className="similar-price flex w-full pl-5 items-center">
+                      <div className='mr-2'>
+                        <FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} />
+                      </div>
+                      <FormatPrice price={item.price} />
                     </div>
                     <div className="similar-product-price-ratio">
                       <p>{`Down ${item.discountPercentage}%`}</p>
@@ -798,7 +793,6 @@ const ProductPage = ({ productBE }) => {
             </div>
           </>
         )}
-
 
         {/* Cart notifications */}
         {cartNotifications.map((notification, index) => (

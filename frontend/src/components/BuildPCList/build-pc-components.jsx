@@ -137,7 +137,7 @@ function BuildPcComponents(data) {
         setMonitor(data.data.moniterList)
         setKeyboard(data.data.keyboardList);
         setMouse(data.data.mouseList);
-    }, []);
+    }, [data]);
 
     const openForm = (component) => {
         setCurrentComponent(component);

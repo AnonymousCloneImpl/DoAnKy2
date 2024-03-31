@@ -6,14 +6,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import project.product.models.Pagination;
-import project.product.dto.*;
-import project.product.entity.*;
-import project.product.repository.ProductRepository;
-import project.product.repository.StockRepository;
-import project.product.service.ProductDetailService;
+import project.dto.LaptopFilter;
+import project.dto.MouseFilter;
+import project.dto.Pagination;
+import project.dto.product.*;
+import project.dto.product_detail.*;
+import project.entity.product.*;
+import project.repository.ProductRepository;
+import project.repository.StockRepository;
+import project.service.product.ProductDetailService;
 
 import java.util.*;
 
@@ -46,10 +48,7 @@ public class ProductUtils {
 				.build();
 	}
 
-	public List<ProductSummaryDto> convertProductsToProductSummaryDtoList(
-			List<Product> productList,
-			ModelMapper modelMapper
-	) {
+	public List<ProductSummaryDto> convertProductsToProductSummaryDtoList(List<Product> productList, ModelMapper modelMapper) {
 		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((
 				product -> modelMapper.map(product, ProductSummaryDto.class)
 		)).toList();
@@ -61,11 +60,7 @@ public class ProductUtils {
 		return productSummaryDtoList;
 	}
 
-	public List<ProducerDto> convertProducerListToProducerDtoList(
-			List<Producer> producerList,
-			ModelMapper modelMapper
-	) {
-
+	public List<ProducerDto> convertProducerListToProducerDtoList(List<Producer> producerList, ModelMapper modelMapper) {
 		List<ProducerDto> producerDtoList = producerList.stream().map((
 				product -> modelMapper.map(product, ProducerDto.class)
 		)).toList();
@@ -77,9 +72,25 @@ public class ProductUtils {
 		return producerDtoList;
 	}
 
-	public void getConfigurationForDto(
-			List<ProductSummaryDto> productSummaryDtoList
-	) {
+	public Object getListConfiguration(String type) {
+		Object filter = null;
+		if (type.equalsIgnoreCase("laptop")) {
+			filter = LaptopFilter.builder()
+					.displayList(productDetailService.getDisplayList())
+					.cpuList(productDetailService.getCpuList())
+					.ramList(productDetailService.getRamList())
+					.build();
+		}
+
+		if (type.equalsIgnoreCase("mouse")) {
+			filter = MouseFilter.builder()
+					.connection(productDetailService.getConnectionList())
+					.build();
+		}
+		return filter;
+	}
+
+	public void getConfigurationForDto(List<ProductSummaryDto> productSummaryDtoList) {
 		for (ProductSummaryDto p : productSummaryDtoList) {
 			ProductDetail detail = productDetailService.getByProductId(p.getId());
 			p.setConfiguration(getDetailDto(p.getType().toLowerCase(), detail));
