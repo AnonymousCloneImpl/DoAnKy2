@@ -32,9 +32,9 @@ public class PaypalController {
 	public RedirectView successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
 		Payment payment = paypalService.executePayment(paymentId, payerId);
 		if (!payment.getState().equals("approved")) {
-			return new RedirectView("http://localhost:3000/payment/failed");
+			return new RedirectView("http://localhost:3000/order/failed");
 		}
-		return new RedirectView("http://localhost:3000/payment/success");
+		return new RedirectView("http://localhost:3000/order/success");
 	}
 
 	@GetMapping("/cancel")

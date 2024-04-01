@@ -549,7 +549,7 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                                 ) : (
                                     <button onClick={handleConnectionClick}
                                             className={`h-full rounded-md overflow-hidden ${
-                                                displaySelect ? 'text-red-600 border-2 border-red-600 bg-red-100' : 'bg-gray-200 hover:bg-gray-400'
+                                                connectionSelect ? 'text-red-600 border-2 border-red-600 bg-red-100' : 'bg-gray-200 hover:bg-gray-400'
                                             } flex justify-center items-center`}
                                     >
                                         <FontAwesomeIcon className="ml-2" icon={faDisplay}/>

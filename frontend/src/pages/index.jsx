@@ -144,27 +144,27 @@ export default function Home() {
             </div>
 
             <div
-                className="mt-10 flex justify-center max-md:flex max-md:flex-wrap"
+                className="mt-10 flex items-center justify-center max-md:flex max-lg:flex-wrap"
                 style={{
                     width: '95%'
                 }}
             >
-                <Link href={'/'}>
+                <Link href={'/'} className="w-8/12">
                     <img
-                        className="rounded-2xl h-80 max-md:h-40"
+                        className="rounded-2xl h-3/4 max-md:h-40"
                         src={'https://file.hstatic.net/200000722513/file/1580x510_man_hinh_thang_03_435810e7223043ec866bd0ed8dc1cf09.png'}
                     />
                 </Link>
-                <div className="ml-8 max-md:ml-0 max-md:mt-3">
-                    <Link href={'/'}>
+                <div className="ml-8 h-3/4 w-4/12 max-md:ml-0 max-md:mt-3 max-lg:w-8/12 max-lg:ml-0">
+                    <Link href={'/'} className="h-full">
                         <img
-                            className="rounded-2xl max-md:h-40"
+                            className="rounded-2xl h-1/2 max-lg:w-full"
                             src={'https://file.hstatic.net/200000722513/file/banner_790x250_tai_nghe_6f6dcb17d3a54fcc88b3de96762d2d41.jpg'}
                         />
                     </Link>
                     <Link href={'/'}>
                         <img
-                            className="rounded-2xl mt-3 max-md:h-40"
+                            className="rounded-2xl mt-1 h-1/2"
                             src={'https://file.hstatic.net/200000722513/file/bot_promotion_banner_small_2_2ad55c2345c64fbfb87dab4957b33914.png'}
                         />
                     </Link>
@@ -188,10 +188,9 @@ export default function Home() {
             </div>
 
             <div
-                className="h-1/4 flex flex-wrap justify-center mt-10 rounded-2xl bg-transparent"
+                className="h-1/4 flex flex-wrap justify-center mt-10 rounded-2xl bg-transparent bg-custom"
                 style={{
-                    width: '95%',
-                    background: '#920101'
+                    width: '95%'
                 }}
             >
                 <div className="h-20 w-full flex flex-wrap justify-center mt-5">

@@ -1,5 +1,5 @@
 .bg-custom {
-  background: #151C23;
+  background: linear-gradient(rgb(0, 0, 0), rgb(138, 5, 5)) 0 0 / cover
 }
 
 .slider {
@@ -56,6 +56,9 @@
   .productList {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+  .watch-more {
+    width: 30% !important;
+  }
   .top-home-page {
     height: 400px;
   }
@@ -68,6 +71,9 @@
   }
   .top-home-page {
     height: 350px !important;
+  }
+  .watch-more {
+    width: 30% !important;
   }
   .top-home-page-text {
     margin-bottom: 20px;
@@ -85,6 +91,9 @@
   }
   .top-home-page {
     height: 300px !important;
+  }
+  .watch-more {
+    width: 30% !important;
   }
   .top-home-page-text {
     margin-bottom: 20px;

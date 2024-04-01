@@ -101,7 +101,7 @@ export default function ProductCardComponent({productData, type}) {
                                 <div className="text-sm text-gray-600 mt-3 flex justify-center flex-wrap">
                                     <div className="grid grid-cols-3"
                                          style={{
-                                             width: '90%'
+                                             width: '98%'
                                          }}
                                     >
                                         <div className="inline-grid justify-items-center">
@@ -113,7 +113,7 @@ export default function ProductCardComponent({productData, type}) {
                                             <p>{p?.configuration?.ram?.split(" ")[0]}</p>
                                         </div>
                                         <div className="inline-grid justify-items-center">
-                                            <FontAwesomeIcon icon={faDisplay}/>
+                                            <FontAwesomeIcon icon={faDisplay} />
                                             <p>{p?.configuration?.screenSize}</p>
                                         </div>
                                     </div>
