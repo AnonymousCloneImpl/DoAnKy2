@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus, faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
@@ -184,6 +184,17 @@ const ProductPage = ({ productBE }) => {
     fetchData();
   }, []);
 
+  // get payment method
+  const [paymentMethod, setPaymentMethod] = useState('PAYPAL');
+  const handlePaymentChange = (e) => {
+    const selectedPayment = e.target.value;
+    const paymentMapping = {
+      'COD': 'COD',
+      'PAYPAL': 'PAYPAL',
+    };
+    setPaymentMethod(paymentMapping[selectedPayment]);
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -229,10 +240,12 @@ const ProductPage = ({ productBE }) => {
       ],
       totalPrice
     };
-    const url = `${process.env.DOMAIN}/orders/place-order`;
+
+    const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
+    const paymentUrl = `http://localhost:3000/payment`;
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(orderUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -242,15 +255,22 @@ const ProductPage = ({ productBE }) => {
 
       if (response.ok) {
         closeForm();
-        alert("Order placed successfully");
-        window.location.href = "http://localhost:3000/payment";
-      } else {
-        console.error('Failed to place order');
-      }
+        paymentMethod == 'COD' ? alert('Success Order !') : window.location.href = paymentUrl;
+
+        for (let i = 0; i < checkedItems.length; i++) {
+          items.splice(i, 1);
+        }
+
+        localStorage.setItem('itemList', JSON.stringify(items));
+        if (paymentMethod === 'COD') window.location.reload();
+
+      } else alert('Failed to place order');
+
     } catch (error) {
       console.error('Error sending order request', error);
     }
   };
+
 
   // Validate Order----------------------------------------------------------------------------------------------
   const validName = (name) => {
@@ -422,8 +442,9 @@ const ProductPage = ({ productBE }) => {
             </button>
           </div>
 
-          {/* Right box top */}
+
           <div className="right-box">
+            {/* Right box top */}
             <div className="right-box-top">
               <div className="pname">{product.name}</div>
               <p className="sold">{product.stock.sold} Sold</p>
@@ -744,19 +765,19 @@ const ProductPage = ({ productBE }) => {
                     </div>
 
                     <div className='phone-ship'>
-                      <label htmlFor="customerPhone">Shipping</label>
+                      <label htmlFor="customerPhone">Payment</label>
                       <div className="ship">
                         <select
                           className="shipping"
-                          name="shipping"
-                          id="shipping"
+                          name="payment"
+                          id="payment"
                           required
                           defaultValue=""
-                          onChange={(e) => setSelectedWardId(e.target.value)}
+                          onChange={(e) => handlePaymentChange(e)}
                         >
                           <option value="" disabled className='option-css'>--- Select Method ---</option>
-                          <option value="50000">Standard Shipping - 50.000 đ</option>
-                          <option value="100000">Fast Shipping - 100.000 đ</option>
+                          <option value="COD">Ship COD</option>
+                          <option value="PAYPAL">PAYPAL</option>
                         </select>
                       </div>
                     </div>

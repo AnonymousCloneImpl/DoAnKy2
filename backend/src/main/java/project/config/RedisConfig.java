@@ -34,7 +34,6 @@ public class RedisConfig implements CachingConfigurer {
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
-
     @Bean
     public RedisCacheManager redisCacheManager(RedisTemplate<String, Object> redisTemplate) {
         RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(Objects.requireNonNull(redisTemplate.getConnectionFactory()));
