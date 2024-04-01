@@ -45,6 +45,7 @@ public class OrderServiceImpl implements OrderService {
 	public Order createOrder(OrderDto orderDto) {
 		Order order = createOrderObj(orderDto);
 		BeanUtils.copyProperties(orderDto, order);
+		order.setPaymentMethod(orderDto.getPaymentMethod());
 		orderRepo.save(order);
 
 		List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();

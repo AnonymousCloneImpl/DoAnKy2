@@ -120,14 +120,8 @@ const CartPage = () => {
   // Open/Close order form----------------------------------------------------------------------------------------------
   const [isFormVisible, setFormVisible] = useState(false);
   const formRef = useRef(null);
-
-  const openForm = () => {
-    setFormVisible(true);
-  };
-
-  const closeForm = () => {
-    setFormVisible(false);
-  };
+  const openForm = () => setFormVisible(true);
+  const closeForm = () => setFormVisible(false);
 
   // Select option address----------------------------------------------------------------------------------------------
   const [provinces, setProvinces] = useState([]);
@@ -191,6 +185,16 @@ const CartPage = () => {
   const [customerEmail, setCustomerEmail] = useState('');
   const [houseAddress, setHouseAddress] = useState('');
 
+  const [paymentMethod, setPaymentMethod] = useState('PAYPAL');
+  const handlePaymentChange = (e) => {
+    const selectedPayment = e.target.value;
+    const paymentMapping = {
+      'COD': 'COD',
+      'PAYPAL': 'PAYPAL',
+    };
+    setPaymentMethod(paymentMapping[selectedPayment]);
+  };
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -231,12 +235,15 @@ const CartPage = () => {
           quantity: item.quantity
         }))
       ],
-      totalPrice
+      totalPrice,
+      paymentMethod
     };
-    const url = `${process.env.DOMAIN}/orders/place-order`;
+
+    const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
+    const paymentUrl = `http://localhost:3000/payment`;
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(orderUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -246,17 +253,17 @@ const CartPage = () => {
 
       if (response.ok) {
         closeForm();
-        alert("Order placed successfully");
+        paymentMethod == 'COD' ? alert('Success Order !') : window.location.href = paymentUrl;
 
         for (let i = 0; i < checkedItems.length; i++) {
           items.splice(i, 1);
         }
-        localStorage.setItem('itemList', JSON.stringify(items));
 
-        window.location.reload();
-      } else {
-        console.error('Failed to place order');
-      }
+        localStorage.setItem('itemList', JSON.stringify(items));
+        if (paymentMethod === 'COD') window.location.reload();
+
+      } else alert('Failed to place order');
+
     } catch (error) {
       console.error('Error sending order request', error);
     }
@@ -380,7 +387,6 @@ const CartPage = () => {
         </div>
       </div>
 
-
       {/* FORM ORDER */}
       {
         isFormVisible && (
@@ -485,14 +491,36 @@ const CartPage = () => {
                   </input>
 
                   <div>
-                    <label htmlFor="customerPhone">Phone Number</label>
-                    <div className="phone-wrapper">
-                      <input type="tel" className="customerPhone"
-                        value={customerPhone}
-                        onChange={(e) => setCustomerPhone(e.target.value)}
-                        name="customerPhone"
-                        id="customerPhone" required>
-                      </input>
+                    <div className='flex justify-between'>
+                      <div className='phone-ship'>
+                        <label htmlFor="customerPhone">Phone Number</label>
+                        <div className="phone-wrapper">
+                          <input type="tel" className="customerPhone"
+                            value={customerPhone}
+                            onChange={(e) => setCustomerPhone(e.target.value)}
+                            name="customerPhone"
+                            id="customerPhone" required>
+                          </input>
+                        </div>
+                      </div>
+
+                      <div className='phone-ship'>
+                        <label htmlFor="customerPhone">Payment</label>
+                        <div className="ship">
+                          <select
+                            className="shipping"
+                            name="payment"
+                            id="payment"
+                            required
+                            defaultValue=""
+                            onChange={(e) => handlePaymentChange(e)}
+                          >
+                            <option value="" disabled className='option-css'>--- Select Method ---</option>
+                            <option value="COD">Ship COD</option>
+                            <option value="PAYPAL">PAYPAL</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
