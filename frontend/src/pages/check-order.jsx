@@ -95,6 +95,18 @@ const CheckOrder = () => {
     }
   };
 
+  const formatDate = (inputDate) => {
+    const date = new Date(inputDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Thêm 0 phía trước nếu cần
+    const day = date.getDate().toString().padStart(2, '0');
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
+  };
+
   return (
     <div className='check-order-wrapper'>
       {!otpSent ? (
@@ -134,7 +146,7 @@ const CheckOrder = () => {
       )}
 
       {waiting && (
-        <div className="text-center mt-4">
+        <div className="text-center font-semibold text-red-700 mt-4">
           <p>Please wait {resetTime} seconds before resetting</p>
         </div>
       )}
@@ -171,7 +183,6 @@ const CheckOrder = () => {
                         </div>
                       </td>
                       <td className="px-4 py-3 text-ms font-semibold border">
-                        {console.log(item)}
                         {item.orderItemDtoList.map((p, index) => (
                           <p className='text-sky-700' key={index}> -
                             <Link href={`/${p.productType.toLowerCase()}/${p.productName.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
@@ -188,9 +199,8 @@ const CheckOrder = () => {
                       <td className="px-4 py-3 text-ms font-semibold border">{item.totalPrice}</td>
                       <td className="px-4 py-3 text-ms border">
                         <span className="px-2 py-1 font-semibold leading-tight text-orange-700 bg-gray-100 rounded-sm"> {item.status} </span>
-                        <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm"> PREPARING </span>
                       </td>
-                      <td className="px-4 py-3 font-semibold text-ms border">{item.orderDate}</td>
+                      <td className="px-4 py-3 font-semibold text-ms border">{formatDate(item.createdAt)}</td>
                     </tr>
                   ))}
                 </tbody>

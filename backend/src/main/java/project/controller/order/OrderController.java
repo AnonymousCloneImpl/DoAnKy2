@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.common.ResponseObject;
+import project.dto.order.OrderCheckDto;
 import project.dto.order.OrderDto;
 import project.entity.order.Order;
 import project.service.order.OrderService;
@@ -23,17 +24,16 @@ public class OrderController {
 		try {
 			Order createdOrder = orderService.createOrder(orderDto);
 			orderService.sendEmail(createdOrder);
-			return new ResponseEntity<>("Order created successfully. Order ID: "
-					+ createdOrder.getId(), HttpStatus.CREATED);
+			return new ResponseEntity<>("Success to create order", HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Failed to create order. "
+			return new ResponseEntity<>("Failed to create order"
 					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
 	@GetMapping("/check-order")
 	ResponseEntity<ResponseObject> checkOrder(@RequestParam("q") String number) {
-		List<OrderDto> orderList = orderService.getOrderByPhoneNumber(number);
+		List<OrderCheckDto> orderList = orderService.getOrderByPhoneNumber(number);
 		if (!orderList.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(new ResponseObject("OK", "Get product successfully", orderList));

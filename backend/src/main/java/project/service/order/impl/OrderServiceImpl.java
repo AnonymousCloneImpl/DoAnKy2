@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
 import project.const_.ORDER_STATUS;
+import project.dto.order.OrderCheckDto;
 import project.dto.order.OrderDto;
 import project.dto.order.OrderItemDto;
 import project.dto.product.StockDto;
@@ -61,8 +62,7 @@ public class OrderServiceImpl implements OrderService {
 
 	private Order createOrderObj(OrderDto orderDto) {
 		return Order.builder()
-				.orderCode(GenerateCodeUtils.getRandomCode(orderDto.getCustomerName()))
-				.orderDate(LocalDateTime.now())
+				.orderCode(GenerateCodeUtils.getRandomCode())
 				.status(ORDER_STATUS.WAITING)
 				.build();
 	}
@@ -96,13 +96,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderDto> getOrderByPhoneNumber(String phone) {
+	public List<OrderCheckDto> getOrderByPhoneNumber(String phone) {
 		List<Order> orders = orderRepo.findByCustomerPhone(phone);
 		List<OrderItem> orderItems;
 
-		List<OrderDto> orderDtos = new ArrayList<>();
+		List<OrderCheckDto> orderDtos = new ArrayList<>();
 		List<OrderItemDto> orderItemDtos;
-		OrderDto orderDto;
+		OrderCheckDto orderDto;
 		OrderItemDto orderItemDto;
 
 		for (Order o: orders) {
@@ -116,7 +116,7 @@ public class OrderServiceImpl implements OrderService {
 				orderItemDto.setProductName(item.getProduct().getName());
 				orderItemDtos.add(orderItemDto);
 			}
-			orderDto = new OrderDto();
+			orderDto = new OrderCheckDto();
 			BeanUtils.copyProperties(o, orderDto);
 			orderDto.setOrderItemDtoList(orderItemDtos);
 			orderDtos.add(orderDto);
@@ -132,7 +132,7 @@ public class OrderServiceImpl implements OrderService {
 			email.append("Thank you for shopping at THẾ GIỚI MANH ĐỘNG\n")
 					.append("Order ID: ").append(order.getId()).append("\n")
 					.append("Order Code: ").append(order.getOrderCode()).append("\n")
-					.append("Order Date: ").append(order.getOrderDate()).append("\n")
+					.append("Order Date: ").append(order.getCreatedAt()).append("\n")
 					.append("Order Status: ").append(order.getStatus()).append("\n")
 					.append("Total Price: ").append(order.getTotalPrice()).append("\n");
 			emailService.sendEmail(order.getCustomerEmail(), "Success Order", email.toString());
