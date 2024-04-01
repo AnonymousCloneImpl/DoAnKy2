@@ -28,7 +28,6 @@ public class PaymentController {
 //		String vnp_IpAddr = PaymentConfig.getIpAddress(req);
 
 		String vnp_TxnRef = PaymentConfig.getRandomNumber(8);
-		String vnp_TmnCode = "DEMOV210";
 		Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		String vnp_CreateDate = formatter.format(cld.getTime());
@@ -38,15 +37,15 @@ public class PaymentController {
 
 		vnp_Params.put("vnp_Version", PaymentConfig.vnp_Version);
 		vnp_Params.put("vnp_Command", PaymentConfig.vnp_Command);
-		vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
+		vnp_Params.put("vnp_TmnCode", PaymentConfig.vnp_TmnCode);
 		vnp_Params.put("vnp_Amount", String.valueOf(amount));
 		vnp_Params.put("vnp_CurrCode", "VND");
 		vnp_Params.put("vnp_BankCode", "NCB");
 		vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-		vnp_Params.put("vnp_OrderInfo", "Thanh toan doan hang:" + vnp_TxnRef);
-		vnp_Params.put("vnp_OrderType", "other");
+		vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
+		vnp_Params.put("vnp_OrderType", "billpayment");
 		vnp_Params.put("vnp_Locale", "vn");
-		vnp_Params.put("vnp_IpAddr", "127.0.0.1");
+		vnp_Params.put("vnp_IpAddr", PaymentConfig.getIpAddress(httpServletRequest));
 		vnp_Params.put("vnp_ReturnUrl", PaymentConfig.vnp_ReturnUrl);
 		vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
 		vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);

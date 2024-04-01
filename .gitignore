@@ -92,5 +92,10 @@ application.yml
 backend/src/main/resources/application.yml
 /backend/src/main/resources/application.yml
 
+.env
+
 frontend/.env
 /frontend/.env
+
+adminlte/.env
+/adminlte/.env
