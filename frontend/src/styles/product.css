@@ -482,12 +482,10 @@
 }
 
 .recommended-main-img {
-  height: 100px;
   width: 40%;
 }
 
 .recommended-main-img img {
-  height: auto;
   width: 90%;
   padding-left: 10%;
 }

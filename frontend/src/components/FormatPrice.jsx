@@ -6,8 +6,7 @@ export default function FormatPrice({ price, type }) {
     maximumFractionDigits: 2
   });
 
-  const srcPrice = formattedPrice.replace(/[^\d.]/g, '');
-  const trimmedPrice = srcPrice.replace(/(\.0+|(\.\d+?)0+)$/, '$2');
+  const trimmedPrice = formattedPrice.replace(/(\.0+|(\.\d+?)0+)$/, '$2');
 
   if (type === 'discount') {
     return (

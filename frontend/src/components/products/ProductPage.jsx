@@ -422,8 +422,9 @@ const ProductPage = ({ productBE }) => {
             </button>
           </div>
 
-          {/* Right box top */}
+
           <div className="right-box">
+            {/* Right box top */}
             <div className="right-box-top">
               <div className="pname">{product.name}</div>
               <p className="sold">{product.stock.sold} Sold</p>

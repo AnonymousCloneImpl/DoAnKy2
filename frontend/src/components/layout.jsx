@@ -46,7 +46,7 @@ export default function Layout({ children }) {
 
   const [chatMessages, setChatMessages] = useState([]);
   const [ws, setWs] = useState(null);
-  // const chatRef = useRef(null);
+  const chatRef = useRef(null);
 
   // useEffect(() => {
   //   const newWs = new WebSocket('ws://127.0.0.1:8000/dashboard/chat');
@@ -109,7 +109,7 @@ export default function Layout({ children }) {
 
       {/* Chat Popup */}
       {isChatVisible && (
-        <div className="chat-popup" ref={chatRef}>
+        <div className="chat-popup">
           <div className="relative">
             <div className="chat-header">
               <img className='chat-logo' src='/favico.png' alt="Chat Logo" />
