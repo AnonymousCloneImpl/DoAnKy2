@@ -31,7 +31,7 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
         setConnectionSelect(filter.connection);
         setRamSelect(filter.ram);
         setDisplaySelect(filter.display);
-    }, [filter.cpu, filter.display, filter.ram]);
+    }, [filter.connection, filter.cpu, filter.display, filter.ram]);
 
     const handleCpuClick = async () => {
         if (showRamOption) {
@@ -622,8 +622,8 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
                                 marginTop: '10px'
                             }}
                         >
-                            <span><FormatPrice price={values[0]} type={'discount'}/>đ</span>
-                            <span><FormatPrice price={values[1]} type={'discount'}/>đ</span>
+                            <span><FormatPrice price={values[0]} type={'discount'}/></span>
+                            <span><FormatPrice price={values[1]} type={'discount'}/></span>
                         </div>
                     </div>
                 )}

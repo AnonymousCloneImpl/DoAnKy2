@@ -2,7 +2,6 @@ package project.service.product.impl;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -91,7 +90,6 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Cacheable(key = "'type:' + #type + '_limit:' + #limit", value = "static_data")
 	public StaticDataProductPage getStaticDataByType(String type, Integer limit) {
 		try {
 			List<Product> productList = productRepo.getTopSellerByType(type, limit);
