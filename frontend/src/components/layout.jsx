@@ -46,10 +46,10 @@ export default function Layout({ children }) {
 
   const [chatMessages, setChatMessages] = useState([]);
   const [ws, setWs] = useState(null);
-  const chatRef = useRef(null);
+  // const chatRef = useRef(null);
 
   // useEffect(() => {
-  //   const newWs = new WebSocket('wss://127.0.0.1:8000/dashboard/chat');
+  //   const newWs = new WebSocket('ws://127.0.0.1:8000/dashboard/chat');
 
   //   newWs.onopen = () => {
   //     console.log('WebSocket connected');
