@@ -33,5 +33,7 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 
     Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('orderList');
 
+    Route::get('/dashboard/products/edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
+    Route::put('/dashboard/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
 
 });

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -155,22 +155,16 @@
 <script>
     jQuery(function($) {
         $("#ProductTable").DataTable({
+            "info":true,
+            "processing": true,
             "paging": true,
             "responsive": true,
-            "lengthChange": false,
+            "lengthChange": true,
             "autoWidth": false,
             "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
         }).buttons().container().appendTo('#ProductTable_wrapper .col-md-6:eq(0)');
 
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
+
     });
 </script>
 <script>
