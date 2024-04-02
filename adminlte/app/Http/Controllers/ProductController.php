@@ -161,6 +161,22 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            DB::table('product')->where('id', $id)->update(['status' => 0]);
+
+            DB::commit();
+            toastr()->success('Product removed successfully', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e){
+            // Something went wrong, rollback the transaction
+            DB::rollBack();
+            toastr()->error('Product is not removed', 'Oops! Something went wrong!');
+            return redirect()->back();
+        }
+
+
+
+        return redirect()->back();
+
     }
 }
