@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import project.common.ResponseObject;
 import project.dto.order.OrderCheckDto;
 import project.dto.order.OrderDto;
+import project.dto.order.OrderResponse;
 import project.entity.order.Order;
 import project.service.order.OrderService;
 
@@ -20,14 +21,22 @@ public class OrderController {
 	private OrderService orderService;
 
 	@PostMapping("/orders/place-order")
-	public ResponseEntity<String> createOrder(@RequestBody OrderDto orderDto) {
+	public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderDto orderDto) {
 		try {
 			Order createdOrder = orderService.createOrder(orderDto);
 			orderService.sendEmail(createdOrder);
-			return new ResponseEntity<>("Success to create order", HttpStatus.CREATED);
+			System.out.println(createdOrder.getOrderCode());
+			System.out.println(createdOrder.getPayment().getId());
+			OrderResponse response = OrderResponse.builder()
+					.message("Success to create order")
+					.paymentId(createdOrder.getPayment().getId())
+					.orderCode(createdOrder.getOrderCode())
+					.build();
+			return new ResponseEntity<>(response, HttpStatus.CREATED);
 		} catch (Exception e) {
-			return new ResponseEntity<>("Failed to create order"
-					+ e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(
+					null,
+					HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

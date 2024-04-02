@@ -5,7 +5,6 @@ import com.paypal.api.payments.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
-import project.const_.PAYMENT_STATUS;
 import project.dto.payment.PaypalRequestDto;
 import project.service.payment.paypal.PaypalService;
 
@@ -20,6 +19,7 @@ public class PaypalController {
 	@PostMapping("/create")
 	public String createPayment(@RequestBody PaypalRequestDto paymentRequest) {
 		Payment payment = paypalService.createPayment(paymentRequest);
+		paypalService.updatePayment(paymentRequest.getPaymentId(), payment.getId());
 		for (Links link : payment.getLinks()) {
 			if (link.getRel().equals("approval_url")) {
 				return link.getHref();
@@ -29,17 +29,19 @@ public class PaypalController {
 	}
 
 	@GetMapping("/success")
-	public RedirectView successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId) {
-		Payment payment = paypalService.executePayment(paymentId, payerId);
+	public RedirectView successPay(@RequestParam("paymentId") String paymentCode, @RequestParam("PayerID") String payerId) {
+		Payment payment = paypalService.executePayment(paymentCode, payerId);
 		if (!payment.getState().equals("approved")) {
+			paypalService.updatePayment(paymentCode, payment.getState());
 			return new RedirectView("http://localhost:3000/order/failed");
 		}
+		paypalService.updatePayment(paymentCode, payment.getState(), payment.getFailureReason());
 		return new RedirectView("http://localhost:3000/order/success");
 	}
 
 	@GetMapping("/cancel")
-	public PAYMENT_STATUS cancelPay() {
-		return PAYMENT_STATUS.CANCEl;
+	public RedirectView cancelPay() {
+		return new RedirectView("http://localhost:3000/payment/cancel");
 	}
 
 }

@@ -23,4 +23,5 @@ public class PaymentTbl extends BaseEntity {
 	private String state;
 	@Column(name = "failure_reason")
 	private String failureReason;
+	private String orderCode;
 }

@@ -54,6 +54,18 @@ public class PaypalService {
 		}
 	}
 
+	public void updatePayment(Long id, String paymentCode) {
+		repository.updatePaymentCodeById(id, paymentCode);
+	}
+
+	public void updatePayment(String paymentCode, String status) {
+		repository.updatePaymentCodeById(paymentCode, status);
+	}
+
+	public void updatePayment(String paymentCode, String status, String failureReason) {
+		repository.updatePaymentCodeById(paymentCode, status, failureReason);
+	}
+
 	public Payment executePayment(String paymentId, String payerId) {
 		Payment payment = new Payment();
 		try {

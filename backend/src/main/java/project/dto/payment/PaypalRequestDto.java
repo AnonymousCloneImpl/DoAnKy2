@@ -11,6 +11,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaypalRequestDto implements Serializable {
+	private Long paymentId;
+	private String orderCode;
 	private long total;
 	private String currency;
 	private String method;

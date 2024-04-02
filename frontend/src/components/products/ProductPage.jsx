@@ -5,6 +5,9 @@ import { faMinus, faPlus, faCircleXmark, faCaretUp, faCaretDown, faStar, faStarH
 import Link from "next/link";
 import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
+import Success from "@/pages/order/success";
+import Payment from "@/pages/payment";
+import {useRouter} from "next/router";
 
 const ProductPage = ({ productBE }) => {
   const product = productBE;
@@ -184,6 +187,7 @@ const ProductPage = ({ productBE }) => {
     fetchData();
   }, []);
 
+  const route = useRouter();
   // get payment method
   const [paymentMethod, setPaymentMethod] = useState('PAYPAL');
   const handlePaymentChange = (e) => {
@@ -242,7 +246,6 @@ const ProductPage = ({ productBE }) => {
     };
 
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
-    const paymentUrl = `http://localhost:3000/payment`;
 
     try {
       const response = await fetch(orderUrl, {
@@ -254,16 +257,13 @@ const ProductPage = ({ productBE }) => {
       });
 
       if (response.ok) {
-        closeForm();
-        paymentMethod == 'COD' ? alert('Success Order !') : window.location.href = paymentUrl;
-
-        for (let i = 0; i < checkedItems.length; i++) {
-          items.splice(i, 1);
+        if (paymentMethod === "COD") {
+          route.push("/order/success");
         }
 
-        localStorage.setItem('itemList', JSON.stringify(items));
-        if (paymentMethod === 'COD') window.location.reload();
-
+        if (paymentMethod === "PAYPAL") {
+          route.push(`/payment?price=${orderData.totalPrice}&orderCode=${response.json().data.orderCode}&paymentId=${response.json().data.paymentId}`);
+        }
       } else alert('Failed to place order');
 
     } catch (error) {

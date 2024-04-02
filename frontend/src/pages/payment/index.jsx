@@ -3,11 +3,16 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 import CustomErrorPage from "@/pages/error";
 
-const Index = ({ totalPrice }) => {
+const Payment = () => {
     const router = useRouter();
+    const query = router.query;
+    console.log(query)
+    const price = query.price;
+    const orderCode = query.orderCode;
+    const paymentId = query.paymentId;
 
     useEffect(() => {
-        if (totalPrice !== null && totalPrice !== undefined) {
+        if (price !== null && price !== undefined) {
             return <CustomErrorPage />
         }
 
@@ -16,7 +21,9 @@ const Index = ({ totalPrice }) => {
             url: `${process.env.DOMAIN}/api/payment/paypal/create`,
             headers: {},
             data: {
-                "total": totalPrice === undefined ? 100000 : totalPrice,
+                "orderCode": orderCode,
+                "paymentId": paymentId,
+                "total": price,
                 "currency": "USD",
                 "method": "paypal",
                 "intent": "sale",
@@ -38,4 +45,4 @@ const Index = ({ totalPrice }) => {
     );
 };
 
-export default Index;
+export default Payment;
