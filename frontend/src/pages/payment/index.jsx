@@ -23,7 +23,7 @@ const Payment = () => {
             data: {
                 "orderCode": orderCode,
                 "paymentId": paymentId,
-                "total": price / 1000,
+                "total": price,
                 "currency": "USD",
                 "method": "paypal",
                 "intent": "sale",

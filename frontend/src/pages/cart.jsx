@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
@@ -66,7 +66,7 @@ const CartPage = () => {
     }
   }
 
-  if (items !== [] && items !== undefined) {
+  if (items !== undefined) {
     let arr = items.map(item => item.id);
     arr.map((item) => {
       body.cartItemDtoList.push(
@@ -156,12 +156,12 @@ const CartPage = () => {
     });
   };
 
-  const [shippingCost, setShippingCost] = useState(50000);
+  const [shippingCost, setShippingCost] = useState(50);
   const handleShippingChange = (event) => {
     const selectedShipping = event.target.value;
     const costMapping = {
-      'Standard shipping - 50.000 đ': 50000,
-      'Fast shipping - 100.000 đ': 100000,
+      'Standard shipping - $ 50 / 1 Products': 50,
+      'Fast shipping - $ 100 / 1 Products': 100,
     };
     setShippingCost(costMapping[selectedShipping]);
   };
@@ -373,8 +373,8 @@ const CartPage = () => {
             <div className="mt-20">
               <label htmlFor="shipping" className="font-medium inline-block mb-3 text-sm uppercase">SHIPPING</label>
               <select className="block p-2 text-gray-600 w-full text-sm" onChange={handleShippingChange}>
-                <option>Standard shipping - 50.000 đ</option>
-                <option>Fast shipping - 100.000 đ</option>
+                <option>Standard shipping - $ 50 / 1 Products</option>
+                <option>Fast shipping - $ 100 / 1 Products</option>
               </select>
             </div>
 

@@ -117,6 +117,7 @@ ul#sub-menu {
   display: flex;
   justify-content: space-around;
   background: #ffa507;
+  cursor: pointer;
 }
 
 ul#sub-menu li {
