@@ -147,7 +147,7 @@ const CheckOrder = () => {
 
       {waiting && (
         <div className="text-center font-semibold text-red-700 mt-4">
-          <p>Please wait {resetTime} seconds before resetting</p>
+          <p>Please wait {resetTime} seconds before re-enter phone number</p>
         </div>
       )}
 

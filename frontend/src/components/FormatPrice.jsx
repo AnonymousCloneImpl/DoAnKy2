@@ -12,7 +12,6 @@ export default function FormatPrice({ price, type }) {
     return (
       <div className="flex price_discount justify-center text-xl">
         {trimmedPrice}
-        <p className="ml-1">$</p>
       </div>
     );
   }
@@ -21,7 +20,6 @@ export default function FormatPrice({ price, type }) {
     return (
       <div className="flex normal_price justify-center">
         {trimmedPrice}
-        <p className="ml-1">$</p>
       </div>
     );
   }
@@ -29,7 +27,6 @@ export default function FormatPrice({ price, type }) {
   return (
     <div className="flex price justify-center">
       {trimmedPrice}
-      <p className="ml-1">$</p>
     </div>
   );
 }

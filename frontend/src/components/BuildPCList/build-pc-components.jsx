@@ -509,8 +509,6 @@ function BuildPcComponents(data) {
 
   return (
     <div className="w-full" style={{ backgroundColor: "#EDEEF2" }}>
-      {/*<div className="fixed left-0 top-40 bottom-0 flex-none custom-width-5 bg-red-200 h-96">AD HERE</div>*/}
-      {/*<div className="fixed top-40 bottom-0 flex-none custom-width-5 bg-blue-200 right-0 h-96">AD HERE</div>*/}
       <div className="build-pc-wrapper flex justify-center pt-8 custom-width-11-12 bg-white">
         <div className="w-full max-w-screen-xl">
           <div className="banner w-full h-96 bg-cover bg-center mb-2"
@@ -576,8 +574,9 @@ function BuildPcComponents(data) {
                 <th className="px-6 py-3"></th>
               </tr>
             </thead>
-            <tbody>
 
+            {/* // shitttt */}
+            <tbody>
               <tr>
                 <td className="border px-6 py-3 font-bold" style={{ width: '5%' }}>CPU</td>
                 <td className="border px-6 py-3" style={{ width: '65%' }}>
