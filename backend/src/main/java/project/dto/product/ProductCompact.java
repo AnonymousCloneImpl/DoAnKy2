@@ -13,7 +13,7 @@ public class ProductCompact implements Serializable {
 	private long id;
 	private String name;
 	private String type;
-	private Long price;
+	private Double price;
 	private String image;
 	private byte discountPercentage;
 }

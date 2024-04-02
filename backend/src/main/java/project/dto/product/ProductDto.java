@@ -20,7 +20,7 @@ public class ProductDto implements Serializable {
 	private String type;
 	@JsonIgnoreProperties({"id", "detail"})
 	private ProductDetailDto productDetail;
-	private Long price;
+	private Double price;
 	private List<String> imageList;
 	private byte discountPercentage;
 	private BlogDto blog;

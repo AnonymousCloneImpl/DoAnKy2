@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShippingMethodDto {
-    private String name;
-    private Long price;
+	private String name;
+	private Double price;
 }

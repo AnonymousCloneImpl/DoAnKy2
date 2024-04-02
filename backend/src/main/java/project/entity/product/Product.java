@@ -3,7 +3,10 @@ package project.entity.product;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.util.List;
@@ -29,7 +32,7 @@ public class Product {
 	@Column(nullable = false, length = 50)
 	private String type;
 	@Column(nullable = false)
-	private Long price;
+	private Double price;
 	@ColumnDefault(value = "0")
 	private Integer status;
 	@Column(nullable = false, columnDefinition = "TEXT")

@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class ProductSummaryDto implements Serializable {
 	private long id;
 	private String name;
-	private Long price;
+	private Double price;
 	private byte discountPercentage;
 	private String image;
 	private String type;
