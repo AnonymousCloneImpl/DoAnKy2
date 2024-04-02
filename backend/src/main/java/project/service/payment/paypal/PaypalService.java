@@ -12,6 +12,7 @@ import project.repository.PaymentTblRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class PaypalService {
 		Amount amount = new Amount();
 		amount.setCurrency(paypalRequestDto.getCurrency());
 		amount.setTotal(String.valueOf(total));
-		
+
 		Transaction transaction = new Transaction();
 		transaction.setDescription(paypalRequestDto.getDescription());
 		transaction.setAmount(amount);
@@ -61,15 +62,15 @@ public class PaypalService {
 
 	public void updatePayment(Long id, String paymentCode) {
 		System.out.println(id + " " + paymentCode);
-		repository.updatePaymentCodeById(id, paymentCode);
+		repository.updatePaymentCodeById(id, paymentCode, LocalDateTime.now());
 	}
 
 	public void updatePayment(String paymentCode, String status) {
-		repository.updatePaymentCodeById(paymentCode, status);
+		repository.updatePaymentCodeById(paymentCode, status, LocalDateTime.now());
 	}
 
 	public void updatePayment(String paymentCode, String status, String failureReason) {
-		repository.updatePaymentCodeById(paymentCode, status, failureReason);
+		repository.updatePaymentCodeById(paymentCode, status, failureReason, LocalDateTime.now());
 	}
 
 	public Payment executePayment(String paymentId, String payerId) {

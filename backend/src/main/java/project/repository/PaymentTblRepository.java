@@ -8,20 +8,22 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import project.entity.payment.PaymentTbl;
 
+import java.time.LocalDateTime;
+
 @Repository
 public interface PaymentTblRepository extends JpaRepository<PaymentTbl, Long> {
 	@Modifying
 	@Transactional
-	@Query(nativeQuery = true, value = "UPDATE payment_method  p SET p.payment_id  = :paymentCode WHERE p.id = :id")
-	void updatePaymentCodeById(@Param("id") Long id, @Param("paymentCode") String paymentCode);
+	@Query(nativeQuery = true, value = "UPDATE payment_method  p SET p.payment_id  = :paymentCode, p.updated_at = :updatedAt WHERE p.id = :id")
+	void updatePaymentCodeById(@Param("id") Long id, @Param("paymentCode") String paymentCode, @Param("updatedAt") LocalDateTime updatedAt);
 
 	@Modifying
 	@Transactional
-	@Query("UPDATE PaymentTbl p SET p.state = :state WHERE p.paymentId = :paymentCode")
-	void updatePaymentCodeById(@Param("paymentCode") String paymentCode, @Param("state") String state);
+	@Query("UPDATE PaymentTbl p SET p.state = :state, p.updatedAt = :updatedAt WHERE p.paymentId = :paymentCode")
+	void updatePaymentCodeById(@Param("paymentCode") String paymentCode, @Param("state") String state, @Param("updatedAt") LocalDateTime updatedAt);
 
 	@Modifying
 	@Transactional
-	@Query("UPDATE PaymentTbl p SET p.state = :state, p.failureReason = :failureReason WHERE p.paymentId = :paymentCode")
-	void updatePaymentCodeById(@Param("paymentCode") String paymentCode, @Param("state") String state, @Param("failureReason") String failureReason);
+	@Query("UPDATE PaymentTbl p SET p.state = :state, p.failureReason = :failureReason, p.updatedAt = :updatedAt WHERE p.paymentId = :paymentCode")
+	void updatePaymentCodeById(@Param("paymentCode") String paymentCode, @Param("state") String state, @Param("failureReason") String failureReason, @Param("updatedAt") LocalDateTime updatedAt);
 }
