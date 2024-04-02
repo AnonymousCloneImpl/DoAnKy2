@@ -8,6 +8,7 @@ import FormatPrice from "@/components/FormatPrice";
 import Success from "@/pages/order/success";
 import Payment from "@/pages/payment";
 import {useRouter} from "next/router";
+import postMethodFetcher from "@/utils/postMethod";
 
 const ProductPage = ({ productBE }) => {
   const product = productBE;
@@ -248,21 +249,16 @@ const ProductPage = ({ productBE }) => {
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
 
     try {
-      const response = await fetch(orderUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-      });
 
-      if (response.ok) {
+      const data = await postMethodFetcher(orderUrl, orderData)
+
+      if (data !== undefined) {
         if (paymentMethod === "COD") {
           route.push("/order/success");
         }
 
         if (paymentMethod === "PAYPAL") {
-          route.push(`/payment?price=${orderData.totalPrice}&orderCode=${response.json().data.orderCode}&paymentId=${response.json().data.paymentId}`);
+          route.push(`/payment?price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
         }
       } else alert('Failed to place order');
 

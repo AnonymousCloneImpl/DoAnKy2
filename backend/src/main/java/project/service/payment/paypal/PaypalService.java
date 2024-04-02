@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.payment.PaypalRequestDto;
+import project.entity.payment.PaymentTbl;
 import project.repository.PaymentTblRepository;
 
 import java.math.BigDecimal;
@@ -22,12 +23,16 @@ public class PaypalService {
 	@Autowired
 	private PaymentTblRepository repository;
 
+	public void save(PaymentTbl paymentTbl) {
+		repository.save(paymentTbl);
+	}
+
 	public Payment createPayment(PaypalRequestDto paypalRequestDto) {
 		Double total = new BigDecimal(paypalRequestDto.getTotal()).setScale(2, RoundingMode.HALF_UP).doubleValue();
 		Amount amount = new Amount();
 		amount.setCurrency(paypalRequestDto.getCurrency());
 		amount.setTotal(String.valueOf(total));
-
+		
 		Transaction transaction = new Transaction();
 		transaction.setDescription(paypalRequestDto.getDescription());
 		transaction.setAmount(amount);
@@ -55,6 +60,7 @@ public class PaypalService {
 	}
 
 	public void updatePayment(Long id, String paymentCode) {
+		System.out.println(id + " " + paymentCode);
 		repository.updatePaymentCodeById(id, paymentCode);
 	}
 

@@ -6,16 +6,16 @@ import CustomErrorPage from "@/pages/error";
 const Payment = () => {
     const router = useRouter();
     const query = router.query;
-    console.log(query)
+
     const price = query.price;
     const orderCode = query.orderCode;
     const paymentId = query.paymentId;
 
-    useEffect(() => {
-        if (price !== null && price !== undefined) {
-            return <CustomErrorPage />
-        }
+    if (price === null || price === 0) {
+        return <CustomErrorPage />
+    }
 
+    if (price > 0) {
         axios({
             method: 'post',
             url: `${process.env.DOMAIN}/api/payment/paypal/create`,
@@ -23,7 +23,7 @@ const Payment = () => {
             data: {
                 "orderCode": orderCode,
                 "paymentId": paymentId,
-                "total": price,
+                "total": price / 1000,
                 "currency": "USD",
                 "method": "paypal",
                 "intent": "sale",
@@ -36,7 +36,7 @@ const Payment = () => {
             .catch((error) => {
                 console.log(error);
             });
-    }, []);
+    }
 
     return (
         <div>

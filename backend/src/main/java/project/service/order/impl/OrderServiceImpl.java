@@ -14,11 +14,13 @@ import project.dto.product.StockDto;
 import project.email.EmailService;
 import project.entity.order.Order;
 import project.entity.order.OrderItem;
+import project.entity.payment.PaymentTbl;
 import project.entity.product.Product;
 import project.entity.product.Stock;
 import project.repository.OrderItemRepository;
 import project.repository.OrderRepository;
 import project.service.order.OrderService;
+import project.service.payment.paypal.PaypalService;
 import project.service.product.ProductService;
 import project.service.product.StockService;
 
@@ -38,12 +40,23 @@ public class OrderServiceImpl implements OrderService {
 	private StockService stockService;
 	@Autowired
 	private EmailService emailService;
+	@Autowired
+	private PaypalService paypalService;
 
 	@Transactional
 	@Override
 	public Order createOrder(OrderDto orderDto) {
 		Order order = createOrderObj(orderDto);
 		BeanUtils.copyProperties(orderDto, order);
+
+		PaymentTbl paymentTbl = PaymentTbl.builder()
+				.orderCode(order.getOrderCode())
+				.state("chuathanhtoan")
+				.paymentMethod(orderDto.getPaymentMethod())
+				.build();
+		paypalService.save(paymentTbl);
+		order.setPayment(paymentTbl);
+
 		orderRepo.save(order);
 
 		List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();
