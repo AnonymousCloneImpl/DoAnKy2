@@ -17,23 +17,20 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @MappedSuperclass
 public abstract class BaseEntity {
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-    @Column(name = "update_by")
-    private Long updatedBy;
-    @Column(name = "is_deleted")
-    private Boolean isDeleted = false;
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
+	@Column(name = "update_by")
+	private Long updatedBy;
 
-    @PrePersist
-    private void prePersist() {
-        setCreatedAt(LocalDateTime.now());
-        setIsDeleted(false);
-    }
+	@PrePersist
+	private void prePersist() {
+		setCreatedAt(LocalDateTime.now());
+	}
 
-    @PreUpdate
-    private void preUpdate() {
-        setUpdatedAt(LocalDateTime.now());
-    }
+	@PreUpdate
+	private void preUpdate() {
+		setUpdatedAt(LocalDateTime.now());
+	}
 }

@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.payment.PaypalRequestDto;
+import project.repository.PaymentTblRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -16,9 +17,10 @@ import java.util.List;
 @Service
 @Slf4j(topic = "PAYPAL-SERVICE")
 public class PaypalService {
-
 	@Autowired
 	private APIContext apiContext;
+	@Autowired
+	private PaymentTblRepository repository;
 
 	public Payment createPayment(PaypalRequestDto paypalRequestDto) {
 		Double total = new BigDecimal(paypalRequestDto.getTotal()).setScale(2, RoundingMode.HALF_UP).doubleValue();

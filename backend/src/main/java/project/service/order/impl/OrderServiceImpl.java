@@ -22,7 +22,6 @@ import project.service.order.OrderService;
 import project.service.product.ProductService;
 import project.service.product.StockService;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +44,6 @@ public class OrderServiceImpl implements OrderService {
 	public Order createOrder(OrderDto orderDto) {
 		Order order = createOrderObj(orderDto);
 		BeanUtils.copyProperties(orderDto, order);
-		order.setPaymentMethod(orderDto.getPaymentMethod());
 		orderRepo.save(order);
 
 		List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();
@@ -106,8 +104,8 @@ public class OrderServiceImpl implements OrderService {
 		OrderCheckDto orderDto;
 		OrderItemDto orderItemDto;
 
-		for (Order o: orders) {
-			orderItemDtos  = new ArrayList<>();
+		for (Order o : orders) {
+			orderItemDtos = new ArrayList<>();
 			orderItems = o.getOrderItemList();
 			for (OrderItem item : orderItems) {
 				orderItemDto = new OrderItemDto();

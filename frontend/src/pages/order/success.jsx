@@ -10,7 +10,7 @@ export default function Success() {
                 Payment Successfully!
             </p>
             <button className="h-20 w-60 bg-red-600 rounded-2xl">
-                <Link href="/public" className="text-2xl h-full w-full text-white text-center">
+                <Link href="/" className="text-2xl h-full w-full text-white text-center">
                     Continue shopping
                 </Link>
             </button>

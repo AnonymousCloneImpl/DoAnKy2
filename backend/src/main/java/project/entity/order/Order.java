@@ -4,8 +4,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import project.const_.ORDER_STATUS;
-import project.const_.PAYMENT_METHOD;
 import project.entity.BaseEntity;
+import project.entity.payment.PaymentTbl;
 
 import java.util.List;
 
@@ -41,6 +41,7 @@ public class Order extends BaseEntity {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "shipping_method_id")
 	private ShippingMethod shippingMethod;
-	@Column(name = "payment_method")
-	private PAYMENT_METHOD paymentMethod;
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "payment_id")
+	private PaymentTbl payment;
 }
