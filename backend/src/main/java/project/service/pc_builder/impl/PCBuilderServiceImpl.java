@@ -39,7 +39,7 @@ public class PCBuilderServiceImpl implements PCBuilderService {
 				.caseList(getPartListByType(PC_PART_TYPE.CASE))
 				.caseFanList(getPartListByType(PC_PART_TYPE.CASE_FAN))
 				.psuList(getPartListByType(PC_PART_TYPE.PSU))
-				.moniterList(getPartListByType(PC_PART_TYPE.MONITOR))
+				.monitorList(getPartListByType(PC_PART_TYPE.MONITOR))
 				.keyboardList(getPartListByType(PC_PART_TYPE.KEYBOARD))
 				.mouseList(getPartListByType(PC_PART_TYPE.MOUSE))
 				.build();

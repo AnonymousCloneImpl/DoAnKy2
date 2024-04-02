@@ -19,7 +19,7 @@ public class PCBuilderPartResponse {
 	public List<PCBuilderPartDto> caseList;
 	public List<PCBuilderPartDto> caseFanList;
 	public List<PCBuilderPartDto> psuList;
-	public List<PCBuilderPartDto> moniterList;
+	public List<PCBuilderPartDto> monitorList;
 	public List<PCBuilderPartDto> keyboardList;
 	public List<PCBuilderPartDto> mouseList;
 }
