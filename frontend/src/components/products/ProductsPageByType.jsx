@@ -12,6 +12,7 @@ import fetcher from "@/utils/fetchAPI";
 import CustomErrorPage from "@/pages/error";
 import fetchAPIPost from "@/utils/fetchAPI-post";
 import BodyBuilder from "@/utils/BodyBuilder";
+import Image from "next/image";
 
 const ProductsPageByType = ({type}) => {
     const router = useRouter();
@@ -170,8 +171,8 @@ const ProductsPageByType = ({type}) => {
         }}
              className="h-full"
         >
-            <div>
-                <p>This should be small slider</p>
+            <div className="">
+                <img src={"/panel/products-panel.jpg"} alt={"banner"} className="w-full h-96" />
             </div>
 
             <div className="h-auto mt-10 bg-gray-300 bg-custom">
