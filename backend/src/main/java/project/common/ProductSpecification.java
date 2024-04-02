@@ -45,6 +45,9 @@ public class ProductSpecification {
 			for (SearchRequestDto searchRequestDto : requestDto.getSearchRequestDtoList()) {
 				String column = searchRequestDto.getColumn();
 				Path<Object> attributePath;
+
+//				if (column)
+				
 				if (column.equals("cpuType") || column.equals("ram")
 						|| column.equals("hardDisk") || column.equals("screenSize")
 						|| column.equals("mouseConnectType") || column.equals("keyboardConnectType")) {
