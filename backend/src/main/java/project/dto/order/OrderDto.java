@@ -19,6 +19,6 @@ public class OrderDto implements Serializable {
 	private String shippingAddress;
 	private List<OrderItemDto> orderItemDtoList;
 	private double totalPrice;
-	private ShippingMethod shippingMethod;
+	private String shippingMethod;
 	private PAYMENT_METHOD paymentMethod;
 }

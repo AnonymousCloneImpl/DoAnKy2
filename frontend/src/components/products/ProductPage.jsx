@@ -186,7 +186,17 @@ const ProductPage = ({ productBE }) => {
     fetchData();
   }, []);
 
-  const route = useRouter();
+  // get shipping method
+  const [shippingMethod, setShippingMethod] = useState('STANDARD');
+  const handleShippingChange = (e) => {
+    const selectedShipping = e.target.value;
+    const shipMapping = {
+      'STANDARD': 'STANDARD_SHIPPING',
+      'FAST': 'FAST_SHIPPING',
+    };
+    setShippingMethod(shipMapping[selectedShipping]);
+  };
+
   // get payment method
   const [paymentMethod, setPaymentMethod] = useState('PAYPAL');
   const handlePaymentChange = (e) => {
@@ -194,10 +204,14 @@ const ProductPage = ({ productBE }) => {
     const paymentMapping = {
       'COD': 'COD',
       'PAYPAL': 'PAYPAL',
+      'VNPAY': 'VNPAY',
+      'MOMO': 'MOMO',
     };
     setPaymentMethod(paymentMapping[selectedPayment]);
   };
 
+
+  const route = useRouter();
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -241,8 +255,10 @@ const ProductPage = ({ productBE }) => {
           quantity: 1,
         })),
       ],
-      totalPrice
+      totalPrice,
+      shippingMethod
     };
+    console.log(orderData);
 
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
 
@@ -252,8 +268,7 @@ const ProductPage = ({ productBE }) => {
 
       if (data !== undefined) {
         if (paymentMethod === "COD") {
-          console.log(orderData);
-          // route.push("/order/success");
+          route.push("/order/success");
         }
 
         if (paymentMethod === "PAYPAL") {
@@ -762,22 +777,40 @@ const ProductPage = ({ productBE }) => {
                     </div>
 
                     <div className='phone-ship'>
-                      <label htmlFor="customerPhone">Payment</label>
+                      <label htmlFor="customerPhone">Shipping Method</label>
                       <div className="ship">
                         <select
                           className="shipping"
-                          name="payment"
-                          id="payment"
+                          name="shipping"
+                          id="shipping"
                           required
                           defaultValue=""
-                          onChange={(e) => handlePaymentChange(e)}
+                          onChange={(e) => handleShippingChange(e)}
                         >
                           <option value="" disabled className='option-css'>--- Select Method ---</option>
-                          <option value="COD">Ship COD</option>
-                          <option value="PAYPAL">PAYPAL</option>
+                          <option value="STANDARD">Standard Shipping - $50</option>
+                          <option value="FAST">Fast Shipping - $50</option>
                         </select>
                       </div>
                     </div>
+                  </div>
+
+                  <label htmlFor="customerPhone">Shipping Method</label>
+                  <div className="ship">
+                    <select
+                      className="shipping"
+                      name="payment"
+                      id="payment"
+                      required
+                      defaultValue=""
+                      onChange={(e) => handlePaymentChange(e)}
+                    >
+                      <option value="" disabled className='option-css'>--- Select Method ---</option>
+                      <option value="COD">Ship COD</option>
+                      <option value="PAYPAL">PayPal</option>
+                      <option value="VNPAY">VN Pay</option>
+                      <option value="MOMO">MoMo</option>
+                    </select>
                   </div>
 
                   <button type="submit">Confirm Order</button>
