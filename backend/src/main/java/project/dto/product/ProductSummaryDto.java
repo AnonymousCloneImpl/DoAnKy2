@@ -16,4 +16,5 @@ public class ProductSummaryDto implements Serializable {
 	private byte discountPercentage;
 	private String image;
 	private String type;
+	private Object productDetails;
 }

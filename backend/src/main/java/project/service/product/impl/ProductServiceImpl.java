@@ -1,5 +1,6 @@
 package project.service.product.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,6 @@ import project.dto.StaticDataProductPage;
 import project.dto.product.BlogDto;
 import project.dto.product.ProductSummaryDto;
 import project.dto.product.StockDto;
-import project.dto.search.HomePageData;
 import project.entity.product.Blog;
 import project.entity.product.Producer;
 import project.entity.product.Product;
@@ -44,6 +44,7 @@ public class ProductServiceImpl implements ProductService {
 	private ProductUtils productUtils;
 	@Autowired
 	private BlogService blogService;
+	private ObjectMapper objectMapper;
 
 	@Override
 	public Optional<Product> getById(long id) {
@@ -74,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
 			Page<Product> productPage = productRepo.findAll(pageable);
 
 			Pagination pagination = productUtils
-					.convertPageProductToPaginationObject(productPage, modelMapper);
+					.convertPageProductToPaginationObject(productPage);
 
 			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
 				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
@@ -92,15 +93,16 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public StaticDataProductPage getStaticDataByType(String type, Integer limit) {
 		try {
-			List<Product> productList = productRepo.getTopSellerByType(type, limit);
-
-			List<ProductSummaryDto> productSummaryDtoList = productUtils
-					.convertProductsToProductSummaryDtoList(productList, modelMapper);
+			List<Product> productList = productRepo.getTopSellerByType(type, PageRequest.of(0, limit));
 
 			List<Producer> producerDtos = producerService.findProducersByProductType(type);
 
+			List<ProductSummaryDto> productSummaryDtoList = productUtils
+					.convertProductsToProductSummaryDtoList(productList);
+
 			productUtils.getConfigurationForDto(productSummaryDtoList);
 
+			// TODO : filter
 			Object filter = productUtils.getListConfiguration(type);
 
 			return StaticDataProductPage.builder()
@@ -115,15 +117,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Pagination getProductsByTypeWithPaging(HomePageData homePageData) {
-		Specification<Product> spec = productSpecification.findByType(homePageData);
+	public Pagination getProductsByTypeWithPaging(String type, Integer page, Integer limit) {
+		Specification<Product> spec = productSpecification.findByType(type);
 
-		Pageable pageable = PageRequest.of((homePageData.getPage() - 1), homePageData.getLimit() == null ? Pagination.PAGE_SIZE : homePageData.getLimit());
+		Pageable pageable = PageRequest.of(page == null ? 0 : page - 1, limit == null ? Pagination.PAGE_SIZE : limit);
 
 		try {
 			Page<Product> productList = productRepo.findAll(spec, pageable);
 			Pagination pagination = productUtils
-					.convertPageProductToPaginationObject(productList, modelMapper);
+					.convertPageProductToPaginationObject(productList);
 
 			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
 

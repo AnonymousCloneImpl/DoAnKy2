@@ -12,7 +12,6 @@ import fetcher from "@/utils/fetchAPI";
 import CustomErrorPage from "@/pages/error";
 import fetchAPIPost from "@/utils/fetchAPI-post";
 import BodyBuilder from "@/utils/BodyBuilder";
-import Image from "next/image";
 
 const ProductsPageByType = ({type}) => {
     const router = useRouter();

@@ -112,20 +112,6 @@ export default function Home() {
                                       renderFromHomePage={true}/>
             </div>
 
-            {/* TOP SELLER */}
-            <div style={{
-                width: '95%'
-            }}>
-                <div>
-                    <p>
-                        XU HUONG
-                    </p>
-                </div>
-                <div>
-                    <ProductListComponent productData={laptopData.productSummaryDtoList} renderFromHomePage={false} />
-                </div>
-            </div>
-
             <div
                 className="h-1/4 flex flex-wrap justify-center mt-10 rounded-2xl"
                 style={{

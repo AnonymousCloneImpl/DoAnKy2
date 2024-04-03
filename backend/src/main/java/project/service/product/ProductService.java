@@ -6,7 +6,6 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.dto.Pagination;
 import project.dto.StaticDataProductPage;
-import project.dto.search.HomePageData;
 import project.entity.product.Product;
 
 import java.util.List;
@@ -24,7 +23,7 @@ public interface ProductService {
 
 	StaticDataProductPage getStaticDataByType(String type, Integer limit);
 
-	Pagination getProductsByTypeWithPaging(HomePageData searchDto);
+	Pagination getProductsByTypeWithPaging(String type, Integer page, Integer limit);
 
 	Optional<Object> getByProductTypeAndByName(String type, String name);
 
