@@ -1,7 +1,10 @@
 package project.common;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -10,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import project.dto.Pagination;
+import project.dto.detail.LaptopDetailSummaryDto;
 import project.dto.product.*;
 import project.entity.product.Blog;
 import project.entity.product.Producer;
@@ -29,33 +33,43 @@ public class ProductUtils {
 	private StockService stockService;
 	@Autowired
 	private ModelMapper modelMapper;
+	private ObjectMapper objectMapper;
+
+	@PostConstruct
+	public void init() {
+		objectMapper = new ObjectMapper();
+		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	}
 
 	public String getFirstImageUrl(String imageList) {
 		return imageList.split("\\|")[0];
 	}
 
-	public Pagination convertPageProductToPaginationObject(Page<Product> products, ModelMapper modelMapper) {
+	public Pagination convertPageProductToPaginationObject(Page<Product> products) {
 		return Pagination.builder()
 				.totalPageNumber(products.getTotalPages())
 				.totalElement(products.getTotalElements())
-				.elementPerPage(Pagination.PAGE_SIZE)
+				.elementPerPage(products.getNumberOfElements())
 				.productSummaryDtoList(
 						convertProductsToProductSummaryDtoList(
-								products.getContent(),
-								modelMapper
+								products.getContent()
 						))
 				.build();
 	}
 
-	public List<ProductSummaryDto> convertProductsToProductSummaryDtoList(List<Product> productList, ModelMapper modelMapper) {
+	public List<ProductSummaryDto> convertProductsToProductSummaryDtoList(List<Product> productList) {
 		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((
 				product -> modelMapper.map(product, ProductSummaryDto.class)
 		)).toList();
-
 		for (ProductSummaryDto summaryDto : productSummaryDtoList) {
 			summaryDto.setImage(getFirstImageUrl(summaryDto.getImage()));
+			try {
+				LaptopDetailSummaryDto dto = objectMapper.readValue(summaryDto.getProductDetails().toString(), LaptopDetailSummaryDto.class);
+				summaryDto.setProductDetails(dto);
+			} catch (JsonProcessingException e) {
+				throw new RuntimeException(e);
+			}
 		}
-
 		return productSummaryDtoList;
 	}
 
@@ -73,12 +87,13 @@ public class ProductUtils {
 
 	public Object getListConfiguration(String type) {
 		Object filter = null;
+		List<String> productDetails = new ArrayList<>();
 		if (type.equalsIgnoreCase("laptop")) {
-//			filter = LaptopFilter.builder()
-//					.displayList(productDetailService.getDisplayList())
-//					.cpuList(productDetailService.getCpuList())
-//					.ramList(productDetailService.getRamList())
-//					.build();
+			filter = LaptopFilter.builder()
+					.displayList(productRepo.findConfigurationType())
+					.cpuList(productRepo.findConfigurationType())
+					.ramList(productRepo.findConfigurationType())
+					.build();
 		}
 
 		if (type.equalsIgnoreCase("mouse")) {
