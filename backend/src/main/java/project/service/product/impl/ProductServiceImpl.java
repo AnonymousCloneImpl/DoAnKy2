@@ -1,5 +1,6 @@
 package project.service.product.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -100,8 +101,6 @@ public class ProductServiceImpl implements ProductService {
 
 			List<Producer> producerDtos = producerService.findProducersByProductType(type);
 
-			productUtils.getConfigurationForDto(productSummaryDtoList);
-
 			Object filter = productUtils.getListConfiguration(type);
 
 			return StaticDataProductPage.builder()
@@ -125,8 +124,6 @@ public class ProductServiceImpl implements ProductService {
 			Page<Product> productList = productRepo.findAll(spec, pageable);
 			Pagination pagination = productUtils
 					.convertPageProductToPaginationObject(productList, modelMapper);
-
-			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 

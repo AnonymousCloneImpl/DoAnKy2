@@ -1,7 +1,6 @@
 package project.repository;
 
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -14,17 +13,12 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product>, PagingAndSortingRepository<Product, Long> {
-	Specification<Product> findByName(String name);
-
 	@Query("SELECT p FROM Product p " +
 			"JOIN Stock s ON p.id = s.product.id " +
 			"WHERE p.type = :type " +
 			"AND p.id <> :productId " +
 			"ORDER BY s.quantity DESC")
 	List<Product> findTopSimilarByType(@Param("type") String type, @Param("productId") Long productId, Pageable pageable);
-
-	@Query("SELECT p FROM Product p WHERE p.type LIKE :type")
-	List<Product> getByProductType(@Param("type") String type, Pageable pageable);
 
 	@Query(nativeQuery = true, value = "SELECT * FROM product p WHERE p.type LIKE :type AND p.name = :name")
 	Product getByProductTypeAndByName(String type, String name);
@@ -39,14 +33,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
 	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = :type ORDER BY s.sold DESC")
 	List<Product> getTopSellerByType(@Param("type") String type, Pageable pageable);
-//
-//	@Query(nativeQuery = true,
-//			value = "SELECT ld.ram FROM laptop_detail ld " +
-//					"JOIN stock s ON ld.id = s.id " +
-//					"JOIN product_detail pd ON s.product_detail_id = pd.id " +
-//					"JOIN product p ON pd.product_id = p.id " +
-//					"WHERE p.name = :name")
-//	List<String> getListConfiguration(String name);
 
 	@Query("SELECT p FROM Product p WHERE p.type = :type ORDER BY p.name")
 	List<Product> getListPart(@Param("type") String type);
@@ -56,4 +42,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
 	@Query("select p.productDetails from Product p where p.name = :name")
 	List<String> getProductDetailsByName(@Param("name") String name);
+  
+	@Query("SELECT DISTINCT FUNCTION('JSON_EXTRACT', p.productDetails, CONCAT('$.', :configuration)) AS cpuType FROM Product p")
+	List<String> findConfigurationType(@Param("configuration") String configuration);
 }
