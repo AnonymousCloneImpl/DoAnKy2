@@ -42,7 +42,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 
 	@Query("select p.productDetails from Product p where p.name = :name")
 	List<String> getProductDetailsByName(@Param("name") String name);
-
+  
 	@Query("SELECT DISTINCT FUNCTION('JSON_EXTRACT', p.productDetails, CONCAT('$.', :configuration)) AS cpuType FROM Product p")
 	List<String> findConfigurationType(@Param("configuration") String configuration);
 }

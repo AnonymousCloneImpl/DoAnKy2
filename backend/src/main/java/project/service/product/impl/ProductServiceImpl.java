@@ -16,6 +16,7 @@ import project.dto.product.BlogDto;
 import project.dto.product.ProductDto;
 import project.dto.product.ProductSummaryDto;
 import project.dto.product.StockDto;
+import project.dto.search.HomePageData;
 import project.entity.product.Blog;
 import project.entity.product.Producer;
 import project.entity.product.Product;
@@ -45,7 +46,6 @@ public class ProductServiceImpl implements ProductService {
 	private ProductUtils productUtils;
 	@Autowired
 	private BlogService blogService;
-	private ObjectMapper objectMapper;
 
 	@Override
 	public Optional<Product> getById(long id) {
@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 			Page<Product> productPage = productRepo.findAll(pageable);
 
 			Pagination pagination = productUtils
-					.convertPageProductToPaginationObject(productPage);
+					.convertPageProductToPaginationObject(productPage, modelMapper);
 
 			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
 				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
@@ -96,10 +96,10 @@ public class ProductServiceImpl implements ProductService {
 		try {
 			List<Product> productList = productRepo.getTopSellerByType(type, PageRequest.of(0, limit));
 
-			List<Producer> producerDtos = producerService.findProducersByProductType(type);
-
 			List<ProductSummaryDto> productSummaryDtoList = productUtils
-					.convertProductsToProductSummaryDtoList(productList);
+					.convertProductsToProductSummaryDtoList(productList, modelMapper);
+
+			List<Producer> producerDtos = producerService.findProducersByProductType(type);
 
 			Object filter = productUtils.getListConfiguration(type);
 
@@ -115,15 +115,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Pagination getProductsByTypeWithPaging(String type, Integer page, Integer limit) {
-		Specification<Product> spec = productSpecification.findByType(type);
+	public Pagination getProductsByTypeWithPaging(HomePageData homePageData) {
+		Specification<Product> spec = productSpecification.findByType(homePageData);
 
-		Pageable pageable = PageRequest.of(page == null ? 0 : page - 1, limit == null ? Pagination.PAGE_SIZE : limit);
+		Pageable pageable = PageRequest.of((homePageData.getPage() - 1), homePageData.getLimit() == null ? Pagination.PAGE_SIZE : homePageData.getLimit());
 
 		try {
 			Page<Product> productList = productRepo.findAll(spec, pageable);
 			Pagination pagination = productUtils
-					.convertPageProductToPaginationObject(productList);
+					.convertPageProductToPaginationObject(productList, modelMapper);
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 
