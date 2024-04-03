@@ -173,6 +173,5 @@ class ProductController extends Controller
             toastr()->error('Product is not removed', 'Oops! Something went wrong!');
             return redirect()->back();
         }
-
     }
 }
