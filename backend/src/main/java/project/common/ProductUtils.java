@@ -9,12 +9,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import project.dto.Pagination;
 import project.dto.product.*;
-import project.dto.product_detail.*;
-import project.entity.product.*;
+import project.entity.product.Blog;
+import project.entity.product.Producer;
+import project.entity.product.Product;
+import project.entity.product.Stock;
 import project.repository.ProductRepository;
 import project.repository.StockRepository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @Slf4j(topic = "PRODUCT-UTILS")
@@ -23,8 +28,6 @@ public class ProductUtils {
 	private ProductRepository productRepo;
 	@Autowired
 	private StockRepository stockRepo;
-	@Autowired
-	private ProductDetailService productDetailService;
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -72,16 +75,16 @@ public class ProductUtils {
 	public Object getListConfiguration(String type) {
 		Object filter = null;
 		if (type.equalsIgnoreCase("laptop")) {
-			filter = LaptopFilter.builder()
-					.displayList(productDetailService.getDisplayList())
-					.cpuList(productDetailService.getCpuList())
-					.ramList(productDetailService.getRamList())
-					.build();
+//			filter = LaptopFilter.builder()
+//					.displayList(productDetailService.getDisplayList())
+//					.cpuList(productDetailService.getCpuList())
+//					.ramList(productDetailService.getRamList())
+//					.build();
 		}
 
 		if (type.equalsIgnoreCase("mouse")) {
 			filter = MouseFilter.builder()
-					.connection(productDetailService.getConnectionList())
+//					.connection(productDetailService.getConnectionList())
 					.build();
 		}
 		return filter;
@@ -89,63 +92,63 @@ public class ProductUtils {
 
 	public void getConfigurationForDto(List<ProductSummaryDto> productSummaryDtoList) {
 		for (ProductSummaryDto p : productSummaryDtoList) {
-			ProductDetail detail = productDetailService.getByProductId(p.getId());
-			p.setConfiguration(getDetailDto(p.getType().toLowerCase(), detail));
+//			ProductDetail detail = productDetailService.getByProductId(p.getId());
+//			p.setConfiguration(getDetailDto(p.getType().toLowerCase(), detail));
 		}
 	}
 
-	public ProductDetailDto getDetailDto(String type, ProductDetail productDetail) {
-		ProductDetailDto detailDto = new ProductDetailDto();
-		switch (type) {
-			case "laptop" -> detailDto = modelMapper.map(productDetail, LaptopDetailDto.class);
-			case "keyboard" -> detailDto = modelMapper.map(productDetail, KeyboardDetailDto.class);
-			case "mouse" -> detailDto = modelMapper.map(productDetail, MouseDetailDto.class);
-			case "headphone" -> detailDto = modelMapper.map(productDetail, HeadphoneDetailDto.class);
-		}
-		return detailDto;
-	}
-
-
-	public ProductDto createProductDto(Product p) {
-		ProductDto productDto = new ProductDto();
-		BeanUtils.copyProperties(p, productDto);
-		return productDto;
-	}
-
-	public void setPurchaseComboItem(ProductDto productDto) {
-		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
-		try {
-			String type = "";
-			List<Product> productList = new ArrayList<>();
-			for (int i = 0; i < 3; i++) {
-				if (i == 0) {
-					type = "mouse";
-				}
-				if (i == 1) {
-					type = "keyboard";
-				}
-				if (i == 2) {
-					type = "headphone";
-				}
-				productList.add(productRepo.findMostPurchaseByType(type));
-			}
-
-			List<ProductCompact> pcList = new ArrayList<>();
-			ProductCompact pc;
-			for (Product p : productList) {
-				pc = new ProductCompact();
-				modelMapper.map(p, pc);
-				pc.setImage(Arrays.stream(p.getImage().split("\\|")).toList().getFirst());
-				pcList.add(pc);
-			}
-
-			purchaseComboItem.setProductList(pcList);
-			productDto.setPurchaseComboItem(purchaseComboItem);
-		} catch (IllegalAccessError e) {
-			System.err.println("Purchase Combo Item Is Null!");
-			purchaseComboItem.setProductList(new ArrayList<>());
-		}
-	}
+//	public ProductDetailDto getDetailDto(String type, ProductDetail productDetail) {
+//		ProductDetailDto detailDto = new ProductDetailDto();
+//		switch (type) {
+//			case "laptop" -> detailDto = modelMapper.map(productDetail, LaptopDetailDto.class);
+//			case "keyboard" -> detailDto = modelMapper.map(productDetail, KeyboardDetailDto.class);
+//			case "mouse" -> detailDto = modelMapper.map(productDetail, MouseDetailDto.class);
+//			case "headphone" -> detailDto = modelMapper.map(productDetail, HeadphoneDetailDto.class);
+//		}
+//		return detailDto;
+//	}
+//
+//
+//	public ProductDto createProductDto(Product p) {
+//		ProductDto productDto = new ProductDto();
+//		BeanUtils.copyProperties(p, productDto);
+//		return productDto;
+//	}
+//
+//	public void setPurchaseComboItem(ProductDto productDto) {
+//		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
+//		try {
+//			String type = "";
+//			List<Product> productList = new ArrayList<>();
+//			for (int i = 0; i < 3; i++) {
+//				if (i == 0) {
+//					type = "mouse";
+//				}
+//				if (i == 1) {
+//					type = "keyboard";
+//				}
+//				if (i == 2) {
+//					type = "headphone";
+//				}
+//				productList.add(productRepo.findMostPurchaseByType(type));
+//			}
+//
+//			List<ProductCompact> pcList = new ArrayList<>();
+//			ProductCompact pc;
+//			for (Product p : productList) {
+//				pc = new ProductCompact();
+//				modelMapper.map(p, pc);
+//				pc.setImage(Arrays.stream(p.getImage().split("\\|")).toList().getFirst());
+//				pcList.add(pc);
+//			}
+//
+//			purchaseComboItem.setProductList(pcList);
+//			productDto.setPurchaseComboItem(purchaseComboItem);
+//		} catch (IllegalAccessError e) {
+//			System.err.println("Purchase Combo Item Is Null!");
+//			purchaseComboItem.setProductList(new ArrayList<>());
+//		}
+//	}
 
 	public void setBlogImageAndContent(BlogDto blogDto, Optional<Blog> blog) {
 		String blogImageStr = "";
@@ -178,10 +181,10 @@ public class ProductUtils {
 		for (Product p : productList) {
 			sp = new SimilarProductDto();
 			BeanUtils.copyProperties(p, sp);
-			Optional<Stock> stock = stockRepo.findByProductDetailId(p.getId());
-			StockDto stockDto = createStockDto(stock, p.getId());
+//			Optional<Stock> stock = stockRepo.findByProductDetailId(p.getId());
+//			StockDto stockDto = createStockDto(stock, p.getId());
 			sp.setImage(List.of(p.getImage().split("\\|")).getFirst());
-			sp.setStock(stockDto);
+//			sp.setStock(stockDto);
 			list.add(sp);
 		}
 		return list;

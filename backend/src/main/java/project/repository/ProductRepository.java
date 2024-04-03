@@ -17,8 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 	Specification<Product> findByName(String name);
 
 	@Query("SELECT p FROM Product p " +
-			"JOIN ProductDetail pd ON p.id = pd.product.id " +
-			"JOIN Stock s ON pd.id = s.productDetail.id " +
+			"JOIN Stock s ON p.id = s.product.id " +
 			"WHERE p.type = :type " +
 			"AND p.id <> :productId " +
 			"ORDER BY s.quantity DESC")
@@ -62,6 +61,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 	@Query("SELECT p FROM Product p WHERE p.type LIKE :type ORDER BY p.name")
 	List<Product> getListPart(@Param("type") String type);
 
-	@Query("select p from Product p join ProductDetail pd on p.id = pd.product.id join Stock s on s.productDetail.id = pd.id WHERE p.name LIKE CONCAT('%', :name, '%') order by s.sold desc")
+	@Query("select p from Product p join Stock s on p.id = s.product.id WHERE p.name LIKE CONCAT('%', :name, '%') order by s.sold desc")
 	List<Product> findAllByNameSortBySold(@Param("name") String name, Pageable pageable);
 }

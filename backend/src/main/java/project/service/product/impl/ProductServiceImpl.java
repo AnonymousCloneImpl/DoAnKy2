@@ -12,7 +12,6 @@ import project.common.ProductUtils;
 import project.dto.Pagination;
 import project.dto.StaticDataProductPage;
 import project.dto.product.BlogDto;
-import project.dto.product.ProductDto;
 import project.dto.product.ProductSummaryDto;
 import project.dto.product.StockDto;
 import project.dto.search.HomePageData;
@@ -21,7 +20,10 @@ import project.entity.product.Producer;
 import project.entity.product.Product;
 import project.entity.product.Stock;
 import project.repository.ProductRepository;
-import project.service.product.*;
+import project.service.product.BlogService;
+import project.service.product.ProducerService;
+import project.service.product.ProductService;
+import project.service.product.StockService;
 
 import java.util.List;
 import java.util.Optional;
@@ -139,7 +141,7 @@ public class ProductServiceImpl implements ProductService {
 	public Optional<Object> getByProductTypeAndByName(String type, String name) {
 		String namePath = name.replace("-", " ");
 		Product p = productRepo.getByProductTypeAndByName(type, namePath);
-		ProductDto productDto = productUtils.createProductDto(p);
+//		ProductDto productDto = productUtils.createProductDto(p);
 		BlogDto blogDto = new BlogDto();
 		Optional<Blog> blog = blogService.getBlogByProductId(p.getId());
 		productUtils.setBlogImageAndContent(blogDto, blog);
@@ -147,15 +149,16 @@ public class ProductServiceImpl implements ProductService {
 		Optional<Stock> stock = stockService.findByProductDetailId(p.getId());
 		StockDto stockDto = productUtils.createStockDto(stock, p.getId());
 
-		productDto.setProducer(p.getProducer().getName());
-		productDto.setImageList(List.of(p.getImage().split("\\|")));
-		productDto.setBlog(blogDto);
-		productDto.setSimilarProductList(productUtils.findTopSimilarProducts(p));
-		productDto.setStock(stockDto);
-		productDto.setConfigurationList(productRepo.getListConfiguration(namePath));
-		productUtils.setPurchaseComboItem(productDto);
-
-		productUtils.switchCase(type, p, productDto);
-		return Optional.of(productDto);
+//		productDto.setProducer(p.getProducer().getName());
+//		productDto.setImageList(List.of(p.getImage().split("\\|")));
+//		productDto.setBlog(blogDto);
+//		productDto.setSimilarProductList(productUtils.findTopSimilarProducts(p));
+//		productDto.setStock(stockDto);
+//		productDto.setConfigurationList(productRepo.getListConfiguration(namePath));
+//		productUtils.setPurchaseComboItem(productDto);
+//
+//		productUtils.switchCase(type, p, productDto);
+//		return Optional.of(productDto);
+		return null;
 	}
 }

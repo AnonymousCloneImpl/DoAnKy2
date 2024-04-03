@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.common.ProductSpecification;
-import project.common.ProductUtils;
 import project.dto.Pagination;
 import project.dto.product.ProductSummaryDto;
 import project.dto.search.RequestDto;
@@ -25,8 +24,8 @@ public class SearchServiceImpl implements SearchService {
 	private ModelMapper modelMapper;
 	@Autowired
 	private ProductSpecification productSpecification;
-	@Autowired
-	private ProductUtils productUtils;
+//	@Autowired
+//	private ProductUtils productUtils;
 
 	@Override
 	public List<ProductSummaryDto> findByName(String name, Integer limit) {
@@ -35,11 +34,12 @@ public class SearchServiceImpl implements SearchService {
 		}
 		List<Product> productList = productService.findAllByNameAndSortBySold(name, PageRequest.of(0, limit));
 		if (!productList.isEmpty()) {
-			List<ProductSummaryDto> productSummaryDtoList = productUtils
-					.convertProductsToProductSummaryDtoList(productList, modelMapper);
-			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
-			}
+			List<ProductSummaryDto> productSummaryDtoList = null;
+//					productUtils
+//					.convertProductsToProductSummaryDtoList(productList, modelMapper);
+//			for (ProductSummaryDto p : productSummaryDtoList) {
+//				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
+//			}
 			return productSummaryDtoList;
 		} else {
 			System.err.println("Error in getByName findByName : productList is null");
@@ -72,12 +72,13 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			Page<Product> productList = productService.getAllBySpecification(spec, pageable);
 
-			Pagination pagination = productUtils
-					.convertPageProductToPaginationObject(productList, modelMapper);
+			Pagination pagination = null;
+//					productUtils
+//					.convertPageProductToPaginationObject(productList, modelMapper);
+//
+//			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
 
-			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
-
-			pagination.setElementPerPage(productList.getNumberOfElements());
+//			pagination.setElementPerPage(productList.getNumberOfElements());
 
 			return pagination;
 		} catch (Exception e) {

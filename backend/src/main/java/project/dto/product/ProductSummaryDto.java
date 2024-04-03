@@ -1,7 +1,6 @@
 package project.dto.product;
 
 import lombok.*;
-import project.dto.product_detail.ProductDetailDto;
 
 import java.io.Serializable;
 
@@ -17,5 +16,4 @@ public class ProductSummaryDto implements Serializable {
 	private byte discountPercentage;
 	private String image;
 	private String type;
-	private ProductDetailDto configuration;
 }

@@ -15,7 +15,8 @@ public class StockServiceImpl implements StockService {
 
 	@Override
 	public Optional<Stock> findByProductDetailId(long id) {
-		return stockRepo.findByProductDetailId(id);
+//		return stockRepo.findByProductDetailId(id);
+		return null;
 	}
 
 	@Override

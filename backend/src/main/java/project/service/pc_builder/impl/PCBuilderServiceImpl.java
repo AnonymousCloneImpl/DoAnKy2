@@ -23,8 +23,6 @@ public class PCBuilderServiceImpl implements PCBuilderService {
 	public ProductRepository productRepo;
 	@Autowired
 	public StockRepository stockRepo;
-	@Autowired
-	public ProductDetailRepository productDetailRepo;
 
 	@Override
 	public PCBuilderPartResponse getAllListPart() {
@@ -53,13 +51,13 @@ public class PCBuilderServiceImpl implements PCBuilderService {
 			BeanUtils.copyProperties(p, pcBuilderPart);
 			pcBuilderPart.setImage(List.of(p.getImage().split("\\|")).getFirst());
 
-			long id = productDetailRepo.findByProductId(p.getId()).getId();
-			Optional<Stock> stock = stockRepo.findByProductDetailId(id);
-			StockDto stockDto = createStockDto(stock, p.getId());
-			pcBuilderPart.setStock(stockDto);
-
-			pcBuilderPart.setDetail(productDetailRepo.findPartDetailByProductId(p.getId()));
-			partList.add(pcBuilderPart);
+//			long id = productDetailRepo.findByProductId(p.getId()).getId();
+//			Optional<Stock> stock = stockRepo.findByProductDetailId(id);
+//			StockDto stockDto = createStockDto(stock, p.getId());
+//			pcBuilderPart.setStock(stockDto);
+//
+//			pcBuilderPart.setDetail(productDetailRepo.findPartDetailByProductId(p.getId()));
+//			partList.add(pcBuilderPart);
 		}
 		return partList;
 	}
