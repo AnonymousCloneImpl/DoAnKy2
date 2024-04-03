@@ -1,8 +1,8 @@
 package project.common;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -58,41 +58,37 @@ public class ProductUtils {
 	}
 
 	public List<ProductSummaryDto> convertProductsToProductSummaryDtoList(List<Product> productList) {
-		List<ProductSummaryDto> productSummaryDtoList = productList.stream().map((
-				product -> modelMapper.map(product, ProductSummaryDto.class)
-		)).toList();
-		for (ProductSummaryDto summaryDto : productSummaryDtoList) {
-			summaryDto.setImage(getFirstImageUrl(summaryDto.getImage()));
-			try {
-				LaptopDetailSummaryDto dto = objectMapper.readValue(summaryDto.getProductDetails().toString(), LaptopDetailSummaryDto.class);
-				summaryDto.setProductDetails(dto);
-			} catch (JsonProcessingException e) {
-				throw new RuntimeException(e);
-			}
-		}
-		return productSummaryDtoList;
+		return productList.stream().map((product -> {
+					ProductSummaryDto dto = modelMapper.map(product, ProductSummaryDto.class);
+					try {
+						LaptopDetailSummaryDto detail = objectMapper.readValue(product.getProductDetails(), LaptopDetailSummaryDto.class);
+						dto.setProductDetails(detail);
+						dto.setImage(getFirstImageUrl(dto.getImage()));
+					} catch (JsonProcessingException e) {
+						throw new RuntimeException(e);
+					}
+					return dto;
+				})
+		).toList();
 	}
 
 	public List<ProducerDto> convertProducerListToProducerDtoList(List<Producer> producerList, ModelMapper modelMapper) {
-		List<ProducerDto> producerDtoList = producerList.stream().map((
-				product -> modelMapper.map(product, ProducerDto.class)
+		return producerList.stream().map((
+				product -> {
+					ProducerDto producerDto = modelMapper.map(product, ProducerDto.class);
+					producerDto.setImage(getFirstImageUrl(producerDto.getImage()));
+					return producerDto;
+				}
 		)).toList();
-
-		for (ProducerDto producerDto : producerDtoList) {
-			producerDto.setImage(getFirstImageUrl(producerDto.getImage()));
-		}
-
-		return producerDtoList;
 	}
 
 	public Object getListConfiguration(String type) {
 		Object filter = null;
-		List<String> productDetails = new ArrayList<>();
 		if (type.equalsIgnoreCase("laptop")) {
 			filter = LaptopFilter.builder()
-					.displayList(productRepo.findConfigurationType())
-					.cpuList(productRepo.findConfigurationType())
-					.ramList(productRepo.findConfigurationType())
+					.displayList(productRepo.findConfigurationType("screenSize"))
+					.cpuList(productRepo.findConfigurationType("cpuType"))
+					.ramList(productRepo.findConfigurationType("ram"))
 					.build();
 		}
 
@@ -102,13 +98,6 @@ public class ProductUtils {
 					.build();
 		}
 		return filter;
-	}
-
-	public void getConfigurationForDto(List<ProductSummaryDto> productSummaryDtoList) {
-		for (ProductSummaryDto p : productSummaryDtoList) {
-//			ProductDetail detail = productDetailService.getByProductId(p.getId());
-//			p.setConfiguration(getDetailDto(p.getType().toLowerCase(), detail));
-		}
 	}
 
 //	public ProductDetailDto getDetailDto(String type, ProductDetail productDetail) {
@@ -210,26 +199,26 @@ public class ProductUtils {
 			blogContentStr = blog.get().getContent();
 		}
 		blogDto.setImageList(Optional.ofNullable(blogImageStr)
-			.map(str -> List.of(str.split("\\|")))
-			.orElse(Collections.emptyList()));
+				.map(str -> List.of(str.split("\\|")))
+				.orElse(Collections.emptyList()));
 		blogDto.setContentList(Optional.ofNullable(blogContentStr)
-			.map(str -> List.of(str.split("\\|")))
-			.orElse(Collections.emptyList()));
+				.map(str -> List.of(str.split("\\|")))
+				.orElse(Collections.emptyList()));
 		blogDto.setId(blog.get().getId());
 		blogDto.setHeader(blog.get().getHeader());
 	}
 
 	public StockDto createStockDto(Stock stock, long id) {
 		return StockDto.builder()
-			.productId(id)
-			.sold(stock.getSold())
-			.quantity(stock.getQuantity())
-			.build();
+				.productId(id)
+				.sold(stock.getSold())
+				.quantity(stock.getQuantity())
+				.build();
 	}
 
 	public List<SimilarProductDto> findTopSimilarProducts(Product product) {
 		List<Product> productList = productRepo.findTopSimilarByType(product.getType(), product.getId(),
-			PageRequest.of(0, 6));
+				PageRequest.of(0, 6));
 		SimilarProductDto sp;
 		List<SimilarProductDto> list = new ArrayList<>();
 		for (Product p : productList) {
@@ -257,9 +246,9 @@ public class ProductUtils {
 				String graphicsCard = rootNode.get("graphicsCard").asText();
 				StringBuilder config = new StringBuilder();
 				config.append(ram).append(" | ")
-					.append(hardDrive).append(" | ")
-					.append(cpu).append(" | ")
-					.append(graphicsCard);
+						.append(hardDrive).append(" | ")
+						.append(cpu).append(" | ")
+						.append(graphicsCard);
 				configurations.add(config.toString());
 			} catch (Exception e) {
 				throw new RuntimeException(e);

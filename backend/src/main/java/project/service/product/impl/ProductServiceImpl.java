@@ -1,6 +1,5 @@
 package project.service.product.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +26,6 @@ import project.service.product.ProducerService;
 import project.service.product.ProductService;
 import project.service.product.StockService;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,9 +101,6 @@ public class ProductServiceImpl implements ProductService {
 			List<ProductSummaryDto> productSummaryDtoList = productUtils
 					.convertProductsToProductSummaryDtoList(productList);
 
-			productUtils.getConfigurationForDto(productSummaryDtoList);
-
-			// TODO : filter
 			Object filter = productUtils.getListConfiguration(type);
 
 			return StaticDataProductPage.builder()
@@ -130,8 +124,6 @@ public class ProductServiceImpl implements ProductService {
 			Page<Product> productList = productRepo.findAll(spec, pageable);
 			Pagination pagination = productUtils
 					.convertPageProductToPaginationObject(productList);
-
-			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 

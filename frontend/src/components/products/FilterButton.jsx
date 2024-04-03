@@ -320,16 +320,16 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                                     }}
                                 >
                                     {filterValue.cpuFilter.map((p, index) => {
-                                        if (p.toLowerCase() === filter.cpu.replaceAll("-", " ").toLowerCase()) {
+                                        if (p.replace(/"/g, '').toLowerCase() === filter.cpu.replaceAll("-", " ").toLowerCase()) {
                                             return (
                                                 <div key={index}
                                                      className="h-8 w-20 mr-2 ml-2 bg-red-100 border-2 border-red-600 rounded-sm">
                                                     <button
                                                         className="w-full h-full text-red-600"
                                                         onClick={() => {
-                                                            handleCpuTypeClick({value: p})
+                                                            handleCpuTypeClick({value: p.replace(/"/g, '')})
                                                         }}>
-                                                        {p}
+                                                        {p.replace(/"/g, '')}
                                                     </button>
                                                 </div>
                                             )
@@ -340,9 +340,9 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                                                 <button
                                                     className="w-full h-full"
                                                     onClick={() => {
-                                                        handleCpuTypeClick({value: p})
+                                                        handleCpuTypeClick({value: p.replace(/"/g, '')})
                                                     }}>
-                                                    {p}
+                                                    {p.replace(/"/g, '')}
                                                 </button>
                                             </div>
                                         )
@@ -385,16 +385,16 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                                     }}
                                 >
                                     {filterValue.ramFilter.map((p, index) => {
-                                        if (p === filter.ram) {
+                                        if (p.replace(/"/g, '') === filter.ram) {
                                             return (
                                                 <div key={index}
                                                      className="bg-red-100 border-2 border-red-600 h-8 w-20 mr-2 ml-2 rounded-lg">
                                                     <button
                                                         className="w-full h-full text-red-600"
                                                         onClick={() => {
-                                                            handleRamTypeClick({value: p})
+                                                            handleRamTypeClick({value: p.replace(/"/g, '')})
                                                         }}>
-                                                        {p}
+                                                        {p.replace(/"/g, '')}
                                                     </button>
                                                 </div>
                                             )
@@ -405,9 +405,9 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                                                 <button
                                                     className="w-full h-full"
                                                     onClick={() => {
-                                                        handleRamTypeClick({value: p})
+                                                        handleRamTypeClick({value: p.replace(/"/g, '')})
                                                     }}>
-                                                    {p}
+                                                    {p.replace(/"/g, '')}
                                                 </button>
                                             </div>
                                         )
@@ -449,16 +449,16 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                                     }}
                                 >
                                     {filterValue.displayFilter?.map((p, index) => {
-                                        if (p === filter.display) {
+                                        if (p.replace(/"/g, '') === filter.display) {
                                             return (
                                                 <div key={index}
                                                      className="bg-red-100 border-2 border-red-600 w-24 h-8 mr-2 ml-2 rounded-lg">
                                                     <button
                                                         className="w-full h-full text-red-600"
                                                         onClick={() => {
-                                                            handleDisplayTypeClick({value: p})
+                                                            handleDisplayTypeClick({value: p.replace(/"/g, '')})
                                                         }}>
-                                                        {p}
+                                                        {p.replace(/"/g, '')}
                                                     </button>
                                                 </div>
                                             )
@@ -469,9 +469,9 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                                                 <button
                                                     className="w-full h-full"
                                                     onClick={() => {
-                                                        handleDisplayTypeClick({value: p})
+                                                        handleDisplayTypeClick({value: p.replace(/"/g, '')})
                                                     }}>
-                                                    {p}
+                                                    {p.replace(/"/g, '')}
                                                 </button>
                                             </div>
                                         )
@@ -517,16 +517,16 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                                             }}
                                         >
                                             {filterValue.connection?.map((p, index) => {
-                                                if (p === filter.display) {
+                                                if (p.replace(/"/g, '') === filter.display) {
                                                     return (
                                                         <div key={index}
                                                              className="bg-red-100 border-2 border-red-600 w-24 h-8 mr-2 ml-2 rounded-lg">
                                                             <button
                                                                 className="w-full h-full text-red-600"
                                                                 onClick={() => {
-                                                                    handleConnectionTypeClick({value: p})
+                                                                    handleConnectionTypeClick({value: p.replace(/"/g, '')})
                                                                 }}>
-                                                                {p}
+                                                                {p.replace(/"/g, '')}
                                                             </button>
                                                         </div>
                                                     )
@@ -537,9 +537,9 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                                                         <button
                                                             className="w-full h-full"
                                                             onClick={() => {
-                                                                handleConnectionTypeClick({value: p})
+                                                                handleConnectionTypeClick({value: p.replace(/"/g, '')})
                                                             }}>
-                                                            {p}
+                                                            {p.replace(/"/g, '')}
                                                         </button>
                                                     </div>
                                                 )
