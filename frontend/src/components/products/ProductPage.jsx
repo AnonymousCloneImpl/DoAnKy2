@@ -5,9 +5,7 @@ import { faMinus, faPlus, faCircleXmark, faCaretUp, faCaretDown, faStar, faStarH
 import Link from "next/link";
 import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
-import Success from "@/pages/order/success";
-import Payment from "@/pages/payment";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import postMethodFetcher from "@/utils/postMethod";
 
 const ProductPage = ({ productBE }) => {

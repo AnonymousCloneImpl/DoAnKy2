@@ -14,5 +14,5 @@ import java.util.List;
 @AllArgsConstructor
 public class PurchaseComboItem implements Serializable {
 	private long id;
-	private List<ProductCompact> productList;
+	private List<SimilarProductDto> productList;
 }
