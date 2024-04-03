@@ -38,7 +38,7 @@ public class Product {
 	private String image;
 	@Column(nullable = false)
 	private byte discountPercentage;
-	@Column(name = "detail", columnDefinition = "TEXT")
+  @Column(name = "detail", columnDefinition = "TEXT")
 	private String productDetails;
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Stock> stock;

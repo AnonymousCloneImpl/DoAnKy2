@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.dto.Pagination;
 import project.dto.StaticDataProductPage;
-import project.dto.search.HomePageData;
 import project.entity.product.Producer;
 import project.service.product.ProducerService;
 import project.service.product.ProductService;
@@ -44,15 +43,7 @@ public class ProductController {
 	ResponseEntity<Object> getProductByType(@PathVariable String type,
 	                                        @Param(value = "page") Integer page,
 	                                        @Param(value = "limit") Integer limit) {
-		if (page == null) {
-			page = 1;
-		}
-		HomePageData searchDto = HomePageData.builder()
-				.type(type)
-				.page(page)
-				.limit(limit)
-				.build();
-		Pagination pagination = productService.getProductsByTypeWithPaging(searchDto);
+		Pagination pagination = productService.getProductsByTypeWithPaging(type, page, limit);
 		if (pagination != null) {
 			return ResponseEntity.ok().body(
 					pagination
@@ -74,13 +65,7 @@ public class ProductController {
 		if (limit == null) {
 			limit = 5;
 		}
-		StaticDataProductPage staticDataProductPage = productService.getStaticDataByType(type, limit);
-		return staticDataProductPage;
-	}
-
-	@GetMapping("/producer")
-	public List<Producer> getProducerList() {
-		return producerService.getAll();
+		return productService.getStaticDataByType(type, limit);
 	}
 
 	@GetMapping("/producer/{type}")

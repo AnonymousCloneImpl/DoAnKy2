@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 public class RequestDto implements Serializable {
 	private List<SearchRequestDto> searchRequestDtoList;
-	private GLOBAL_OPERATOR globalOperator;
 	private String sortColumn;
 	private SORT_DIRECTION sortDirection;
 	private Integer page;
@@ -22,15 +21,10 @@ public class RequestDto implements Serializable {
 		ASC, DESC
 	}
 
-	public enum GLOBAL_OPERATOR {
-		AND, OR;
-	}
-
 	@Override
 	public String toString() {
 		return "RequestDto{" +
 				"searchRequestDtoList=" + searchRequestDtoList +
-				", globalOperator=" + globalOperator +
 				", page=" + page +
 				", limit=" + limit +
 				'}';

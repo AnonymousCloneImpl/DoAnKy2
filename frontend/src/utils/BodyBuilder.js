@@ -3,13 +3,11 @@ export default function BodyBuilder(query) {
         "searchRequestDtoList": [
             {
                 "column": "type",
-                "value": query?.type,
-                "operator": "EQUAL"
+                "value": query?.type
             }
         ],
         "sortColumn": query?.sort === undefined ? "sold" : query?.sort,
         "sortDirection": query?.dir === undefined ? "ASC" : query?.dir,
-        "globalOperator": "AND",
         "page": query?.page ? query?.page : 1,
         "limit": 5
     };
