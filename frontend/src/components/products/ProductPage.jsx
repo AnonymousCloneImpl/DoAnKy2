@@ -252,7 +252,8 @@ const ProductPage = ({ productBE }) => {
 
       if (data !== undefined) {
         if (paymentMethod === "COD") {
-          route.push("/order/success");
+          console.log(orderData);
+          // route.push("/order/success");
         }
 
         if (paymentMethod === "PAYPAL") {
@@ -521,7 +522,7 @@ const ProductPage = ({ productBE }) => {
 
               <table className="detail-table">
                 <tbody>
-                  {Object.entries(product.productDetail).map(([key, value]) => (
+                  {Object.entries(JSON.parse(product.productDetails)).map(([key, value]) => (
                     <tr key={key}>
                       <td>{key.toUpperCase()}</td>
                       <td>{value}</td>
@@ -590,8 +591,10 @@ const ProductPage = ({ productBE }) => {
 
                 <div className="flex justify-center">
                   <div className="w-3/4 flex justify-center items-center">
-                    <h1 className="mr-3">Total Price:</h1>
-                    <FormatPrice price={totalPrice * 100 / 90} type={"discount"} />
+                    <h1 className="mr-3 font-bold">Total Price:</h1>
+                    <div className='mr-3'>
+                      <FormatPrice price={totalPrice} type={"discount"} />
+                    </div>
                     <FormatPrice price={totalPrice} />
                   </div>
                 </div>

@@ -37,17 +37,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 					"LIMIT 1")
 	Product findMostPurchaseByType(@Param("type") String type);
 
-	@Query(nativeQuery = true,
-			value = "SELECT p.* FROM product p " +
-					"JOIN (SELECT pd.product_id FROM stock s " +
-					"JOIN product_detail pd ON s.product_detail_id = pd.id " +
-					"JOIN product p2 ON pd.product_id = p2.id " +
-					"WHERE p2.type = :type " +
-					"ORDER BY s.sold DESC " +
-					"LIMIT :limit ) " +
-					"s ON p.id = s.product_id " +
-					"WHERE p.type = :type")
-	List<Product> getTopSellerByType(@Param("type") String type, @Param("limit") Integer limit);
+	@Query("SELECT p FROM Product p JOIN Stock s ON p.id = s.product.id WHERE p.type = :type ORDER BY s.sold DESC")
+	List<Product> getTopSellerByType(@Param("type") String type, Pageable pageable);
 //
 //	@Query(nativeQuery = true,
 //			value = "SELECT ld.ram FROM laptop_detail ld " +
@@ -63,6 +54,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 	@Query("select p from Product p join Stock s on p.id = s.product.id WHERE p.name LIKE CONCAT('%', :name, '%') order by s.sold desc")
 	List<Product> findAllByNameSortBySold(@Param("name") String name, Pageable pageable);
 
-	@Query("select p.productDetails from Product p where name = :name")
+	@Query("select p.productDetails from Product p where p.name = :name")
 	List<String> getProductDetailsByName(@Param("name") String name);
 }

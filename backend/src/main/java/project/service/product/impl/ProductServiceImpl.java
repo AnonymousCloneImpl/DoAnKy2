@@ -1,7 +1,5 @@
 package project.service.product.impl;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,8 +26,6 @@ import project.service.product.ProducerService;
 import project.service.product.ProductService;
 import project.service.product.StockService;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -97,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public StaticDataProductPage getStaticDataByType(String type, Integer limit) {
 		try {
-			List<Product> productList = productRepo.getTopSellerByType(type, limit);
+			List<Product> productList = productRepo.getTopSellerByType(type, PageRequest.of(0, limit));
 
 			List<ProductSummaryDto> productSummaryDtoList = productUtils
 					.convertProductsToProductSummaryDtoList(productList, modelMapper);

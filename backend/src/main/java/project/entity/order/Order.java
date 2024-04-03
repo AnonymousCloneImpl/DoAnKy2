@@ -34,7 +34,7 @@ public class Order extends BaseEntity {
 	@Column(name = "shipping_address")
 	private String shippingAddress;
 	@Column(name = "total_price")
-	private long totalPrice;
+	private double totalPrice;
 	@JsonManagedReference
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<OrderItem> orderItemList;
