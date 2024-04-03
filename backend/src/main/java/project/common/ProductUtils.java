@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import project.dto.LaptopFilter;
-import project.dto.MouseFilter;
 import project.dto.Pagination;
 import project.dto.product.*;
 import project.dto.product_detail.*;

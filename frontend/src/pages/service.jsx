@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
-const service = () => {
+const Service = () => {
   const [activeTab, setActiveTab] = useState("tab1");
   const [activeTable, setActiveTable] = useState("table1");
   const [isFormVisible, setFormVisible] = useState(false);
@@ -491,4 +491,4 @@ const service = () => {
   )
 }
 
-export default service;
+export default Service;

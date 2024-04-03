@@ -17,5 +17,5 @@ public class OrderCheckDto implements Serializable {
 	private LocalDateTime createdAt;
 	private ORDER_STATUS status;
 	private List<OrderItemDto> orderItemDtoList;
-	private long totalPrice;
+	private double totalPrice;
 }

@@ -96,7 +96,7 @@ export default function Header() {
         <nav>
           <ul className="info-menu1">
             <li className="info-menu1-li">
-              <Link className="info-menu1-a" href="/service"><p>Schedule A Repair</p></Link>
+              <Link className="info-menu1-a" href="/Service"><p>Schedule A Repair</p></Link>
             </li>
             <li className="info-menu1-li">
               <Link className="info-menu1-a" href="/about-us"><p>About Us</p></Link>

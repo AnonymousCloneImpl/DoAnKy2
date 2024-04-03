@@ -2,6 +2,7 @@ package project.common;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Component
+@Slf4j(topic = "PRODUCT-SPECIFICATION")
 public class ProductSpecification {
 	@Autowired
 	public EntityManager entityManager;
@@ -37,118 +39,91 @@ public class ProductSpecification {
 
 	public Specification<Product> specificationBuilder(RequestDto requestDto) {
 		return (root, query, criteriaBuilder) -> {
+
+			// JOIN TABLE
 			Join<Product, ProductDetail> productDetailsJoin = root.join("productDetails", JoinType.INNER);
 			Join<Product, Producer> producerJoin = root.join("producer", JoinType.INNER);
 			Join<ProductDetail, Stock> stockJoin = productDetailsJoin.join("stock", JoinType.INNER);
 
 			List<Predicate> predicateList = new ArrayList<>();
+
+			// CHECK COLUMN
 			for (SearchRequestDto searchRequestDto : requestDto.getSearchRequestDtoList()) {
 				String column = searchRequestDto.getColumn();
 				Path<Object> attributePath;
 
-//				if (column)
-				
-				if (column.equals("cpuType") || column.equals("ram")
-						|| column.equals("hardDisk") || column.equals("screenSize")
-						|| column.equals("mouseConnectType") || column.equals("keyboardConnectType")) {
-					attributePath = productDetailsJoin.get(column);
-				} else if (column.equals("producer")) {
-					attributePath = producerJoin.get("name");
-				} else {
-					attributePath = root.get(column);
-				}
-
-				switch (searchRequestDto.getOperator()) {
-					case IN -> {
-						String[] obj = searchRequestDto.getValue().split(",");
-						Predicate in = root.in(attributePath, List.of(obj));
-						predicateList.add(in);
-					}
-
-					case EQUAL -> {
-						Predicate equal = criteriaBuilder.equal(
-								attributePath
-								, searchRequestDto.getValue()
+				Predicate predicate;
+				switch (column) {
+					case "type" -> {
+						attributePath = root.get(column);
+						predicate = criteriaBuilder.equal(
+								attributePath.as(String.class),
+								searchRequestDto.getValue()
 						);
-						predicateList.add(equal);
+						predicateList.add(predicate);
 					}
 
-					case LIKE -> {
-						Predicate like = criteriaBuilder.like(
+					case "producer" -> {
+						attributePath = producerJoin.get("name");
+						predicate = criteriaBuilder.equal(
+								attributePath.as(String.class),
+								searchRequestDto.getValue()
+						);
+						predicateList.add(predicate);
+					}
+
+					case "cpuType", "ram", "hardDisk", "screenSize", "mouseConnectType", "keyboardConnectType" -> {
+						attributePath = productDetailsJoin.get(column);
+						predicate = criteriaBuilder.like(
 								attributePath.as(String.class),
 								"%" + searchRequestDto.getValue() + "%"
 						);
-						predicateList.add(like);
+						predicateList.add(predicate);
 					}
 
-					case BETWEEN -> {
-						String[] obj = searchRequestDto.getValue().split(",");
-						Expression<Double> discountedPrice = criteriaBuilder.diff(
-								root.get("price"),
-								criteriaBuilder.quot(
-										criteriaBuilder.prod(root.get("price"), root.get("discountPercentage")),
-										100.0
-								).as(Double.class)
-						);
-						Predicate between = criteriaBuilder.between(
-								discountedPrice,
-								Double.parseDouble(obj[0]),
-								Double.parseDouble(obj[1])
-						);
-						predicateList.add(between);
-					}
+					default -> log.warn("Error : column doesn't match!");
 
-					case LESS_THAN -> {
-						Predicate lessThan = criteriaBuilder.lessThan(
-								criteriaBuilder.upper(attributePath.as(String.class)),
-								searchRequestDto.getValue()
-						);
-						predicateList.add(lessThan);
-					}
+				}
 
-					case GREATER_THAN -> {
-						Predicate greaterThan = criteriaBuilder.greaterThan(
-								criteriaBuilder.upper(attributePath.as(String.class)),
-								searchRequestDto.getValue()
-						);
-						predicateList.add(greaterThan);
-					}
-
-					default -> {
-						System.err.println("ERROR IN specBuilder function!");
-					}
+				if (Objects.requireNonNull(requestDto.getGlobalOperator()) == RequestDto.GLOBAL_OPERATOR.OR) {
+					return criteriaBuilder.or(predicateList.toArray(new Predicate[0]));
 				}
 			}
 
-			//  SORT
+			Expression<Number> priceDiscount = criteriaBuilder.quot(
+					criteriaBuilder.prod(root.get("price"), root.get("discountPercentage")),
+					100.0
+			);
+
+			// SORT
 			if (requestDto.getSortDirection() == RequestDto.SORT_DIRECTION.ASC) {
 				switch (requestDto.getSortColumn()) {
 					case "sold", "inserted_time" ->
 							query.orderBy(criteriaBuilder.asc(stockJoin.get(requestDto.getSortColumn())));
 
-					case "price" -> query.orderBy(criteriaBuilder.asc(criteriaBuilder.diff(
-							root.get("price"),
-							criteriaBuilder.quot(
-									criteriaBuilder.prod(root.get("price"), root.get("discountPercentage")),
-									100.0
-							))));
+					case "price" -> query.orderBy(
+							criteriaBuilder.asc(
+									criteriaBuilder.diff(
+											root.get("price"),
+											priceDiscount
+									)
+							)
+					);
 				}
 			} else {
 				switch (requestDto.getSortColumn()) {
 					case "sold", "inserted_time" ->
 							query.orderBy(criteriaBuilder.desc(stockJoin.get(requestDto.getSortColumn())));
 
-					case "price" -> query.orderBy(criteriaBuilder.desc(criteriaBuilder.diff(
-							root.get("price"),
-							criteriaBuilder.quot(
-									criteriaBuilder.prod(root.get("price"), root.get("discountPercentage")),
-									100.0
-							))));
+					case "price" -> query.orderBy(
+							criteriaBuilder.desc(
+									criteriaBuilder.diff(
+											root.get("price"),
+											priceDiscount
+									)
+							)
+					);
 				}
-			}
-
-			if (Objects.requireNonNull(requestDto.getGlobalOperator()) == RequestDto.GLOBAL_OPERATOR.OR) {
-				return criteriaBuilder.or(predicateList.toArray(new Predicate[0]));
 			}
 
 			return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
@@ -161,17 +136,4 @@ public class ProductSpecification {
 		};
 	}
 
-	public Specification<ProductDetail> getByProductType(String productType) {
-		return (root, query, criteriaBuilder) -> {
-			query.distinct(true);
-
-			root.fetch("product", JoinType.INNER);
-
-			Predicate predicate = criteriaBuilder.equal(root.get("product").get("type"), productType);
-
-			query.where(predicate);
-
-			return predicate;
-		};
-	}
 }

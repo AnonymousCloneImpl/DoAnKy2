@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class PaypalRequestDto implements Serializable {
 	private Long paymentId;
 	private String orderCode;
-	private long total;
+	private double total;
 	private String currency;
 	private String method;
 	private String intent;

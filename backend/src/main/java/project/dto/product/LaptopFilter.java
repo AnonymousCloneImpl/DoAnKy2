@@ -1,4 +1,4 @@
-package project.dto;
+package project.dto.product;
 
 import lombok.*;
 
