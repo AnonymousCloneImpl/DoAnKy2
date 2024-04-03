@@ -1,8 +1,6 @@
 package project.dto.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import project.dto.product_detail.ProductDetailDto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,8 +16,7 @@ public class ProductDto implements Serializable {
 	private String model;
 	private String name;
 	private String type;
-	@JsonIgnoreProperties({"id", "detail"})
-	private ProductDetailDto productDetail;
+	private String productDetails;
 	private Double price;
 	private List<String> imageList;
 	private byte discountPercentage;

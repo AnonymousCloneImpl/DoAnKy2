@@ -1,7 +1,6 @@
 package project.entity.product;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,7 +38,7 @@ public class Product {
 	private String image;
 	@Column(nullable = false)
 	private byte discountPercentage;
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JsonManagedReference
-	private List<ProductDetail> productDetails;
+	private String productDetails;
+	@OneToMany
+	private List<Stock> stock;
 }

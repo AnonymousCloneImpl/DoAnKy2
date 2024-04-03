@@ -99,3 +99,8 @@ frontend/.env
 
 adminlte/.env
 /adminlte/.env
+
+/adminlte/vendor
+adminlte/vendor
+/adminlte/bootstrap
+adminlte/bootstrap

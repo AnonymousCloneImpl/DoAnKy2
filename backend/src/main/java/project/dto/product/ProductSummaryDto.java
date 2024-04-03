@@ -1,6 +1,5 @@
 package project.dto.product;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import project.dto.product_detail.ProductDetailDto;
 
@@ -18,6 +17,5 @@ public class ProductSummaryDto implements Serializable {
 	private byte discountPercentage;
 	private String image;
 	private String type;
-	@JsonIgnoreProperties({"material", "detail", "stockList", "dimensions", "releaseDate", "cpu", "screenResolution", "ports", "os"})
 	private ProductDetailDto configuration;
 }
