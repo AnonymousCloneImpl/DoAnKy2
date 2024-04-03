@@ -37,8 +37,6 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProducerService producerService;
 	@Autowired
-	private ProductDetailService productDetailService;
-	@Autowired
 	private ModelMapper modelMapper;
 	@Autowired
 	private ProductUtils productUtils;

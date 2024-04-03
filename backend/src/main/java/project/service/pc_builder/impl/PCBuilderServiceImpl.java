@@ -4,12 +4,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.const_.PC_PART_TYPE;
-import project.dto.pc_builder.PCBuilderPartDto;
+import project.dto.pc_builder.PCBuilderPart;
 import project.dto.pc_builder.PCBuilderPartResponse;
 import project.dto.product.StockDto;
 import project.entity.product.Product;
 import project.entity.product.Stock;
-import project.repository.ProductDetailRepository;
 import project.repository.ProductRepository;
 import project.repository.StockRepository;
 import project.service.pc_builder.PCBuilderService;
@@ -45,22 +44,22 @@ public class PCBuilderServiceImpl implements PCBuilderService {
 				.build();
 	}
 
-	private List<PCBuilderPartDto> getPartListByType(PC_PART_TYPE type) {
-		List<PCBuilderPartDto> partList = new ArrayList<>();
-		PCBuilderPartDto pcBuilderPartDto = new PCBuilderPartDto();
+	private List<PCBuilderPart> getPartListByType(PC_PART_TYPE type) {
+		List<PCBuilderPart> partList = new ArrayList<>();
+		PCBuilderPart pcBuilderPart = new PCBuilderPart();
 
 		List<Product> productList = productRepo.getListPart(type.val);
 		for (Product p : productList) {
-			BeanUtils.copyProperties(p, pcBuilderPartDto);
-			pcBuilderPartDto.setImage(List.of(p.getImage().split("\\|")).getFirst());
+			BeanUtils.copyProperties(p, pcBuilderPart);
+			pcBuilderPart.setImage(List.of(p.getImage().split("\\|")).getFirst());
 
 			long id = productDetailRepo.findByProductId(p.getId()).getId();
 			Optional<Stock> stock = stockRepo.findByProductDetailId(id);
 			StockDto stockDto = createStockDto(stock, p.getId());
-			pcBuilderPartDto.setStock(stockDto);
+			pcBuilderPart.setStock(stockDto);
 
-			pcBuilderPartDto.setDetail(productDetailRepo.findPartDetailByProductId(p.getId()));
-			partList.add(pcBuilderPartDto);
+			pcBuilderPart.setDetail(productDetailRepo.findPartDetailByProductId(p.getId()));
+			partList.add(pcBuilderPart);
 		}
 		return partList;
 	}

@@ -13,7 +13,6 @@ import project.dto.product_detail.*;
 import project.entity.product.*;
 import project.repository.ProductRepository;
 import project.repository.StockRepository;
-import project.service.product.ProductDetailService;
 
 import java.util.*;
 
@@ -189,27 +188,27 @@ public class ProductUtils {
 	}
 
 
-	public void switchCase(String type, Product p, ProductDto productDto) {
-		ProductDetail pDetail = productDetailService.getByProductId(p.getId());
-		ModelMapper modelMapper = new ModelMapper();
-
-		switch (type.toLowerCase()) {
-			case "laptop" -> {
-				LaptopDetailDto lDto = modelMapper.map(pDetail, LaptopDetailDto.class);
-				productDto.setProductDetail(lDto);
-			}
-			case "keyboard" -> {
-				KeyboardDetailDto kDto = modelMapper.map(pDetail, KeyboardDetailDto.class);
-				productDto.setProductDetail(kDto);
-			}
-			case "mouse" -> {
-				MouseDetailDto mDto = modelMapper.map(pDetail, MouseDetailDto.class);
-				productDto.setProductDetail(mDto);
-			}
-			case "headphone" -> {
-				HeadphoneDetailDto hDto = modelMapper.map(pDetail, HeadphoneDetailDto.class);
-				productDto.setProductDetail(hDto);
-			}
-		}
-	}
+//	public void switchCase(String type, Product p, ProductDto productDto) {
+//		ProductDetail pDetail = productDetailService.getByProductId(p.getId());
+//		ModelMapper modelMapper = new ModelMapper();
+//
+//		switch (type.toLowerCase()) {
+//			case "laptop" -> {
+//				LaptopDetailDto lDto = modelMapper.map(pDetail, LaptopDetailDto.class);
+//				productDto.setProductDetail(lDto);
+//			}
+//			case "keyboard" -> {
+//				KeyboardDetailDto kDto = modelMapper.map(pDetail, KeyboardDetailDto.class);
+//				productDto.setProductDetail(kDto);
+//			}
+//			case "mouse" -> {
+//				MouseDetailDto mDto = modelMapper.map(pDetail, MouseDetailDto.class);
+//				productDto.setProductDetail(mDto);
+//			}
+//			case "headphone" -> {
+//				HeadphoneDetailDto hDto = modelMapper.map(pDetail, HeadphoneDetailDto.class);
+//				productDto.setProductDetail(hDto);
+//			}
+//		}
+//	}
 }

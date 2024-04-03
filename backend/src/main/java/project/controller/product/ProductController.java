@@ -10,7 +10,6 @@ import project.dto.StaticDataProductPage;
 import project.dto.search.HomePageData;
 import project.entity.product.Producer;
 import project.service.product.ProducerService;
-import project.service.product.ProductDetailService;
 import project.service.product.ProductService;
 
 import java.util.List;
@@ -24,8 +23,6 @@ public class ProductController {
 	private ProductService productService;
 	@Autowired
 	private ProducerService producerService;
-	@Autowired
-	private ProductDetailService productDetailService;
 
 	@Deprecated
 	@GetMapping("")
