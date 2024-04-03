@@ -17,9 +17,9 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public void getListProductWithStock(CartDto cartDto) {
 		for (int i = 0; i < cartDto.getCartItemDtoList().size(); i++) {
-			long pDetailId = 1;
-			Optional<Stock> stock = stockService.findByProductDetailId(pDetailId);
-			cartDto.getCartItemDtoList().get(i).setQuantity(stock.get().getQuantity());
+			long pId = 1;
+			Stock stock = stockService.findByProductId(pId);
+			cartDto.getCartItemDtoList().get(i).setQuantity(stock.getQuantity());
 		}
 	}
 }
