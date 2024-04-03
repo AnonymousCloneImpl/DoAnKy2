@@ -100,59 +100,6 @@ public class ProductUtils {
 		return filter;
 	}
 
-//	public ProductDetailDto getDetailDto(String type, ProductDetail productDetail) {
-//		ProductDetailDto detailDto = new ProductDetailDto();
-//		switch (type) {
-//			case "laptop" -> detailDto = modelMapper.map(productDetail, LaptopDetailDto.class);
-//			case "keyboard" -> detailDto = modelMapper.map(productDetail, KeyboardDetailDto.class);
-//			case "mouse" -> detailDto = modelMapper.map(productDetail, MouseDetailDto.class);
-//			case "headphone" -> detailDto = modelMapper.map(productDetail, HeadphoneDetailDto.class);
-//		}
-//		return detailDto;
-//	}
-//
-//
-//	public ProductDto createProductDto(Product p) {
-//		ProductDto productDto = new ProductDto();
-//		BeanUtils.copyProperties(p, productDto);
-//		return productDto;
-//	}
-//
-//	public void setPurchaseComboItem(ProductDto productDto) {
-//		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
-//		try {
-//			String type = "";
-//			List<Product> productList = new ArrayList<>();
-//			for (int i = 0; i < 3; i++) {
-//				if (i == 0) {
-//					type = "mouse";
-//				}
-//				if (i == 1) {
-//					type = "keyboard";
-//				}
-//				if (i == 2) {
-//					type = "headphone";
-//				}
-//				productList.add(productRepo.findMostPurchaseByType(type));
-//			}
-//
-//			List<ProductCompact> pcList = new ArrayList<>();
-//			ProductCompact pc;
-//			for (Product p : productList) {
-//				pc = new ProductCompact();
-//				modelMapper.map(p, pc);
-//				pc.setImage(Arrays.stream(p.getImage().split("\\|")).toList().getFirst());
-//				pcList.add(pc);
-//			}
-//
-//			purchaseComboItem.setProductList(pcList);
-//			productDto.setPurchaseComboItem(purchaseComboItem);
-//		} catch (IllegalAccessError e) {
-//			System.err.println("Purchase Combo Item Is Null!");
-//			purchaseComboItem.setProductList(new ArrayList<>());
-//		}
-//	}
-
 	public ProductDto createProductDto(Product p) {
 		ProductDto productDto = new ProductDto();
 		BeanUtils.copyProperties(p, productDto);
