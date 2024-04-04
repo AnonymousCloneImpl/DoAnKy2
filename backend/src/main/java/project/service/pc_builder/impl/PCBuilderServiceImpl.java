@@ -4,12 +4,11 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.const_.PC_PART_TYPE;
-import project.dto.pc_builder.PCBuilderPartDto;
+import project.dto.pc_builder.PCBuilderPart;
 import project.dto.pc_builder.PCBuilderPartResponse;
 import project.dto.product.StockDto;
 import project.entity.product.Product;
 import project.entity.product.Stock;
-import project.repository.ProductDetailRepository;
 import project.repository.ProductRepository;
 import project.repository.StockRepository;
 import project.service.pc_builder.PCBuilderService;
@@ -24,8 +23,6 @@ public class PCBuilderServiceImpl implements PCBuilderService {
 	public ProductRepository productRepo;
 	@Autowired
 	public StockRepository stockRepo;
-	@Autowired
-	public ProductDetailRepository productDetailRepo;
 
 	@Override
 	public PCBuilderPartResponse getAllListPart() {
@@ -39,28 +36,28 @@ public class PCBuilderServiceImpl implements PCBuilderService {
 				.caseList(getPartListByType(PC_PART_TYPE.CASE))
 				.caseFanList(getPartListByType(PC_PART_TYPE.CASE_FAN))
 				.psuList(getPartListByType(PC_PART_TYPE.PSU))
-				.moniterList(getPartListByType(PC_PART_TYPE.MONITOR))
+				.monitorList(getPartListByType(PC_PART_TYPE.MONITOR))
 				.keyboardList(getPartListByType(PC_PART_TYPE.KEYBOARD))
 				.mouseList(getPartListByType(PC_PART_TYPE.MOUSE))
 				.build();
 	}
 
-	private List<PCBuilderPartDto> getPartListByType(PC_PART_TYPE type) {
-		List<PCBuilderPartDto> partList = new ArrayList<>();
-		PCBuilderPartDto pcBuilderPartDto = new PCBuilderPartDto();
+	private List<PCBuilderPart> getPartListByType(PC_PART_TYPE type) {
+		List<PCBuilderPart> partList = new ArrayList<>();
+		PCBuilderPart pcBuilderPart = new PCBuilderPart();
 
 		List<Product> productList = productRepo.getListPart(type.val);
 		for (Product p : productList) {
-			BeanUtils.copyProperties(p, pcBuilderPartDto);
-			pcBuilderPartDto.setImage(List.of(p.getImage().split("\\|")).getFirst());
+			BeanUtils.copyProperties(p, pcBuilderPart);
+			pcBuilderPart.setImage(List.of(p.getImage().split("\\|")).getFirst());
 
-			long id = productDetailRepo.findByProductId(p.getId()).getId();
-			Optional<Stock> stock = stockRepo.findByProductDetailId(id);
-			StockDto stockDto = createStockDto(stock, p.getId());
-			pcBuilderPartDto.setStock(stockDto);
-
-			pcBuilderPartDto.setDetail(productDetailRepo.findPartDetailByProductId(p.getId()));
-			partList.add(pcBuilderPartDto);
+//			long id = productDetailRepo.findByProductId(p.getId()).getId();
+//			Optional<Stock> stock = stockRepo.findByProductDetailId(id);
+//			StockDto stockDto = createStockDto(stock, p.getId());
+//			pcBuilderPart.setStock(stockDto);
+//
+//			pcBuilderPart.setDetail(productDetailRepo.findPartDetailByProductId(p.getId()));
+//			partList.add(pcBuilderPart);
 		}
 		return partList;
 	}

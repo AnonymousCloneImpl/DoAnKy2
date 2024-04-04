@@ -6,6 +6,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
+import project.common.PriceUtils;
 import project.const_.ORDER_STATUS;
 import project.dto.order.OrderCheckDto;
 import project.dto.order.OrderDto;
@@ -48,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
 	public Order createOrder(OrderDto orderDto) {
 		Order order = createOrderObj(orderDto);
 		BeanUtils.copyProperties(orderDto, order);
+		order.setTotalPrice(PriceUtils.roundedPrice(orderDto.getTotalPrice(), 2));
 
 		PaymentTbl paymentTbl = PaymentTbl.builder()
 				.orderCode(order.getOrderCode())
@@ -56,7 +58,6 @@ public class OrderServiceImpl implements OrderService {
 				.build();
 		paypalService.save(paymentTbl);
 		order.setPayment(paymentTbl);
-
 		orderRepo.save(order);
 
 		List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();

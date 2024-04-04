@@ -12,7 +12,6 @@ import fetcher from "@/utils/fetchAPI";
 import CustomErrorPage from "@/pages/error";
 import fetchAPIPost from "@/utils/fetchAPI-post";
 import BodyBuilder from "@/utils/BodyBuilder";
-import Image from "next/image";
 
 const ProductsPageByType = ({type}) => {
     const router = useRouter();
@@ -194,7 +193,7 @@ const ProductsPageByType = ({type}) => {
                     <p className="h-10">CHUYÊN TRANG THƯƠNG HIỆU</p>
                 </div>
                 <div className="w-full mt-3">
-                    <ul className="grid grid-cols-10 max-md:grid-cols-6 max-sm:grid-cols-4">
+                    <ul className="grid grid-cols-9 max-md:grid-cols-6 max-sm:grid-cols-4">
                         {producers?.map((producer) => (
                             <li key={producer.id} className="h-8 w-46 mb-3">
                                 {filter.producer.toLowerCase() === producer.name.toLowerCase() ? (

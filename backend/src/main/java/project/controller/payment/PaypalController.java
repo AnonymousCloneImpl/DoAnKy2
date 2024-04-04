@@ -3,8 +3,10 @@ package project.controller.payment;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import project.dto.payment.CheckoutDto;
 import project.dto.payment.PaypalRequestDto;
 import project.service.payment.paypal.PaypalService;
 
@@ -19,7 +21,7 @@ public class PaypalController {
 	@PostMapping("/create")
 	public String createPayment(@RequestBody PaypalRequestDto paymentRequest) {
 		Payment payment = paypalService.createPayment(paymentRequest);
-		paypalService.updatePayment(paymentRequest.getPaymentId(), payment.getId());
+		paypalService.updatePaymentById(payment.getId(), paymentRequest.getOrderCode());
 		for (Links link : payment.getLinks()) {
 			if (link.getRel().equals("approval_url")) {
 				return link.getHref();
@@ -28,15 +30,16 @@ public class PaypalController {
 		return null;
 	}
 
-	@GetMapping("/success")
-	public RedirectView successPay(@RequestParam("paymentId") String paymentCode, @RequestParam("PayerID") String payerId) {
-		Payment payment = paypalService.executePayment(paymentCode, payerId);
+	@PostMapping("/checkPayment")
+	public ResponseEntity<String> successPay(@RequestBody CheckoutDto body) {
+		System.out.println(body);
+		Payment payment = paypalService.executePayment(body.getPaymentId(), body.getPayerID());
 		if (!payment.getState().equals("approved")) {
-			paypalService.updatePayment(paymentCode, payment.getState());
-			return new RedirectView("http://localhost:3000/order/failed");
+			paypalService.updatePayment(body.getPaymentId(), payment.getState(), payment.getFailureReason());
+			return ResponseEntity.ok("Failed");
 		}
-		paypalService.updatePayment(paymentCode, payment.getState(), payment.getFailureReason());
-		return new RedirectView("http://localhost:3000/order/success");
+		paypalService.updatePayment(body.getPaymentId(), payment.getState());
+		return ResponseEntity.ok("Success");
 	}
 
 	@GetMapping("/cancel")

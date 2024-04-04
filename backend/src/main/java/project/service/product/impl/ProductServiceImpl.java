@@ -15,13 +15,15 @@ import project.dto.product.BlogDto;
 import project.dto.product.ProductDto;
 import project.dto.product.ProductSummaryDto;
 import project.dto.product.StockDto;
-import project.dto.search.HomePageData;
 import project.entity.product.Blog;
 import project.entity.product.Producer;
 import project.entity.product.Product;
 import project.entity.product.Stock;
 import project.repository.ProductRepository;
-import project.service.product.*;
+import project.service.product.BlogService;
+import project.service.product.ProducerService;
+import project.service.product.ProductService;
+import project.service.product.StockService;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,8 +38,6 @@ public class ProductServiceImpl implements ProductService {
 	private StockService stockService;
 	@Autowired
 	private ProducerService producerService;
-	@Autowired
-	private ProductDetailService productDetailService;
 	@Autowired
 	private ModelMapper modelMapper;
 	@Autowired
@@ -74,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
 			Page<Product> productPage = productRepo.findAll(pageable);
 
 			Pagination pagination = productUtils
-					.convertPageProductToPaginationObject(productPage, modelMapper);
+					.convertPageProductToPaginationObject(productPage);
 
 			for (ProductSummaryDto p : pagination.getProductSummaryDtoList()) {
 				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
@@ -92,14 +92,12 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public StaticDataProductPage getStaticDataByType(String type, Integer limit) {
 		try {
-			List<Product> productList = productRepo.getTopSellerByType(type, limit);
+			List<Product> productList = productRepo.getTopSellerByType(type, PageRequest.of(0, limit));
 
 			List<ProductSummaryDto> productSummaryDtoList = productUtils
-					.convertProductsToProductSummaryDtoList(productList, modelMapper);
+					.convertProductsToProductSummaryDtoList(productList);
 
 			List<Producer> producerDtos = producerService.findProducersByProductType(type);
-
-			productUtils.getConfigurationForDto(productSummaryDtoList);
 
 			Object filter = productUtils.getListConfiguration(type);
 
@@ -115,17 +113,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Pagination getProductsByTypeWithPaging(HomePageData homePageData) {
-		Specification<Product> spec = productSpecification.findByType(homePageData);
+	public Pagination getProductsByTypeWithPaging(String type, Integer page, Integer limit) {
+		Specification<Product> spec = productSpecification.findByType(type);
 
-		Pageable pageable = PageRequest.of((homePageData.getPage() - 1), homePageData.getLimit() == null ? Pagination.PAGE_SIZE : homePageData.getLimit());
+		Pageable pageable = PageRequest.of(page == null ? 0 : page - 1, limit == null ? Pagination.PAGE_SIZE : limit);
 
 		try {
 			Page<Product> productList = productRepo.findAll(spec, pageable);
 			Pagination pagination = productUtils
-					.convertPageProductToPaginationObject(productList, modelMapper);
-
-			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
+					.convertPageProductToPaginationObject(productList);
 
 			pagination.setElementPerPage(productList.getNumberOfElements());
 
@@ -146,7 +142,7 @@ public class ProductServiceImpl implements ProductService {
 		Optional<Blog> blog = blogService.getBlogByProductId(p.getId());
 		productUtils.setBlogImageAndContent(blogDto, blog);
 
-		Optional<Stock> stock = stockService.findByProductDetailId(p.getId());
+		Stock stock = stockService.findByProductId(p.getId());
 		StockDto stockDto = productUtils.createStockDto(stock, p.getId());
 
 		productDto.setProducer(p.getProducer().getName());
@@ -154,10 +150,8 @@ public class ProductServiceImpl implements ProductService {
 		productDto.setBlog(blogDto);
 		productDto.setSimilarProductList(productUtils.findTopSimilarProducts(p));
 		productDto.setStock(stockDto);
-		productDto.setConfigurationList(productRepo.getListConfiguration(namePath));
+		productDto.setConfigurationList(productUtils.getConfigurationsByProductName(p.getName()));
 		productUtils.setPurchaseComboItem(productDto);
-
-		productUtils.switchCase(type, p, productDto);
 		return Optional.of(productDto);
 	}
 }

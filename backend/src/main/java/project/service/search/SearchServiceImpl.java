@@ -35,11 +35,12 @@ public class SearchServiceImpl implements SearchService {
 		}
 		List<Product> productList = productService.findAllByNameAndSortBySold(name, PageRequest.of(0, limit));
 		if (!productList.isEmpty()) {
-			List<ProductSummaryDto> productSummaryDtoList = productUtils
-					.convertProductsToProductSummaryDtoList(productList, modelMapper);
-			for (ProductSummaryDto p : productSummaryDtoList) {
-				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
-			}
+			List<ProductSummaryDto> productSummaryDtoList = null;
+//					productUtils
+//					.convertProductsToProductSummaryDtoList(productList, modelMapper);
+//			for (ProductSummaryDto p : productSummaryDtoList) {
+//				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
+//			}
 			return productSummaryDtoList;
 		} else {
 			System.err.println("Error in getByName findByName : productList is null");
@@ -49,13 +50,29 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public Pagination findProductsByTypeWithPaging(RequestDto requestDto) {
+		validateRequestData(requestDto);
 
+		Specification<Product> spec = productSpecification.specificationBuilder(requestDto);
+		Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getLimit());
+		try {
+			Page<Product> productList = productService.getAllBySpecification(spec, pageable);
+			Pagination pagination = productUtils.convertPageProductToPaginationObject(productList);
+//			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
+			pagination.setElementPerPage(productList.getNumberOfElements());
+			return pagination;
+		} catch (Exception e) {
+			System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
+			return new Pagination();
+		}
+	}
+
+	public void validateRequestData(RequestDto requestDto) {
 		if (requestDto.getPage() == null) {
 			requestDto.setPage(1);
 		}
 
 		if (requestDto.getLimit() == null) {
-			requestDto.setLimit(10);
+			requestDto.setLimit(15);
 		}
 
 		if (requestDto.getSortColumn() == null || requestDto.getSortColumn().isEmpty()) {
@@ -63,26 +80,6 @@ public class SearchServiceImpl implements SearchService {
 		}
 		if (requestDto.getSortDirection() == null || requestDto.getSortDirection().describeConstable().isEmpty()) {
 			requestDto.setSortDirection(RequestDto.SORT_DIRECTION.ASC);
-		}
-
-		Specification<Product> spec = productSpecification.specificationBuilder(requestDto);
-
-		Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getLimit());
-
-		try {
-			Page<Product> productList = productService.getAllBySpecification(spec, pageable);
-
-			Pagination pagination = productUtils
-					.convertPageProductToPaginationObject(productList, modelMapper);
-
-			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
-
-			pagination.setElementPerPage(productList.getNumberOfElements());
-
-			return pagination;
-		} catch (Exception e) {
-			System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
-			return new Pagination();
 		}
 	}
 }

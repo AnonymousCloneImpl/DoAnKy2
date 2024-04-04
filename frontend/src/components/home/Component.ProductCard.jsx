@@ -5,7 +5,7 @@ import FormatPrice from "@/components/FormatPrice";
 import Image from "next/image";
 import HandleCartClick from "@/components/HandleCardClick";
 
-export default function ProductCardComponent({productData, type}) {
+export default function ProductCardComponent({productData}) {
     if (productData !== null && productData !== [] && productData !== undefined) {
         return (
             <div className="w-full grid grid-cols-5 productList">
@@ -106,15 +106,15 @@ export default function ProductCardComponent({productData, type}) {
                                     >
                                         <div className="inline-grid justify-items-center">
                                             <FontAwesomeIcon icon={faMicrochip}/>
-                                            <p>{p?.configuration?.cpuType}</p>
+                                            <p>{p?.productDetails?.cpuType}</p>
                                         </div>
                                         <div className="inline-grid justify-items-center">
                                             <FontAwesomeIcon icon={faMemory}/>
-                                            <p>{p?.configuration?.ram?.split(" ")[0]}</p>
+                                            <p>{p?.productDetails?.ram?.split(" ")[0]}</p>
                                         </div>
                                         <div className="inline-grid justify-items-center">
                                             <FontAwesomeIcon icon={faDisplay} />
-                                            <p>{p?.configuration?.screenSize}</p>
+                                            <p>{p?.productDetails?.screenSize}</p>
                                         </div>
                                     </div>
                                     <div className="flex justify-center items-center gpu mt-3"
@@ -128,7 +128,7 @@ export default function ProductCardComponent({productData, type}) {
                                                style={{width: "auto", height: "auto"}}
                                                priority="high"
                                         />
-                                        <p>{p.configuration?.graphicsCard?.split(",")[0]}</p>
+                                        <p>{p.productDetails?.graphicsCard?.split(",")[0]}</p>
                                     </div>
                                 </div>
                                 <div className="w-full h-16 flex justify-center items-center mb-2 mt-3">
