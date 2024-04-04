@@ -1,17 +1,17 @@
 package project.dto.payment;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
+@SuperBuilder
 @Getter
 @Setter
 @ToString
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaypalRequestDto implements Serializable {
-	private Long paymentId;
 	private String orderCode;
 	private double total;
 	private String currency;
@@ -19,7 +19,7 @@ public class PaypalRequestDto implements Serializable {
 	private String intent;
 	private String description;
 	private String cancelUrl = "http://localhost:8080/api/payment/paypal/cancel";
-	private String successUrl = "http://localhost:8080/api/payment/paypal/success";
+	private String successUrl = "http://localhost:3000/payment/processing";
 
 	/*
 		- total: Một số thực đại diện cho tổng số tiền của thanh toán. Ví dụ: 50.00.
