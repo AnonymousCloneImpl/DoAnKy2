@@ -38,7 +38,5 @@ public class Order extends BaseEntity {
 	@JsonManagedReference
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<OrderItem> orderItemList;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "shipping_method_id")
-	private ShippingMethod shippingMethod;
+	private String shippingMethod;
 }
