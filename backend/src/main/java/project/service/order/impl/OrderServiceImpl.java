@@ -28,7 +28,6 @@ import project.service.payment.paypal.PaypalService;
 import project.service.product.ProductService;
 import project.service.product.StockService;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -56,8 +55,7 @@ public class OrderServiceImpl implements OrderService {
 		Order order = createOrderObj(orderDto);
 		BeanUtils.copyProperties(orderDto, order);
 		order.setTotalPrice(PriceUtils.roundedPrice(orderDto.getTotalPrice(), 2));
-		order.setShippingMethod(shippingRepo.findByName(orderDto.getShippingMethod()));
-
+    order.setShippingMethod(shippingRepo.findByName(orderDto.getShippingMethod()));
 		orderRepo.save(order);
 
 		List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();

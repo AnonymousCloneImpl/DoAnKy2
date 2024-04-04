@@ -5,15 +5,11 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 public class PriceUtils {
-    public static double roundedPrice(double number, int decimalPlaces) {
-        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
-        symbols.setDecimalSeparator('.');
-        DecimalFormat df = new DecimalFormat("#." + "0".repeat(decimalPlaces), symbols);
-        String roundedNumber = df.format(number);
-        return Double.parseDouble(roundedNumber);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(roundedPrice(1.33333, 2));
-    }
+	public static double roundedPrice(double number, int decimalPlaces) {
+		DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.getDefault());
+		symbols.setDecimalSeparator('.');
+		DecimalFormat df = new DecimalFormat("#." + "0".repeat(decimalPlaces), symbols);
+		String roundedNumber = df.format(number);
+		return Double.parseDouble(roundedNumber);
+	}
 }
