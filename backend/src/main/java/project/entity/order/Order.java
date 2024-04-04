@@ -41,7 +41,4 @@ public class Order extends BaseEntity {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "shipping_method_id")
 	private ShippingMethod shippingMethod;
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "payment_id")
-	private PaymentTbl payment;
 }

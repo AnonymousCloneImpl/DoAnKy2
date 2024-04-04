@@ -25,11 +25,8 @@ public class OrderController {
 		try {
 			Order createdOrder = orderService.createOrder(orderDto);
 			orderService.sendEmail(createdOrder);
-			System.out.println(createdOrder.getOrderCode());
-			System.out.println(createdOrder.getPayment().getId());
 			OrderResponse response = OrderResponse.builder()
 					.message("Success to create order")
-					.paymentId(createdOrder.getPayment().getId())
 					.orderCode(createdOrder.getOrderCode())
 					.build();
 			return new ResponseEntity<>(response, HttpStatus.CREATED);

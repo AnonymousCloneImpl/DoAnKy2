@@ -22,186 +22,193 @@ import project.entity.product.Stock;
 import project.repository.ProductRepository;
 import project.service.product.StockService;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Component
 @Slf4j(topic = "PRODUCT-UTILS")
 public class ProductUtils {
-	@Autowired
-	private ProductRepository productRepo;
-	@Autowired
-	private StockService stockService;
-	@Autowired
-	private ModelMapper modelMapper;
-	private ObjectMapper objectMapper;
+    @Autowired
+    private ProductRepository productRepo;
+    @Autowired
+    private StockService stockService;
+    @Autowired
+    private ModelMapper modelMapper;
+    private ObjectMapper objectMapper;
 
-	@PostConstruct
-	public void init() {
-		objectMapper = new ObjectMapper();
-		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-	}
+    @PostConstruct
+    public void init() {
+        objectMapper = new ObjectMapper();
+        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
 
-	public String getFirstImageUrl(String imageList) {
-		return imageList.split("\\|")[0];
-	}
+    public String getFirstImageUrl(String imageList) {
+        return imageList.split("\\|")[0];
+    }
 
-	public Pagination convertPageProductToPaginationObject(Page<Product> products) {
-		return Pagination.builder()
-				.totalPageNumber(products.getTotalPages())
-				.totalElement(products.getTotalElements())
-				.elementPerPage(products.getNumberOfElements())
-				.productSummaryDtoList(
-						convertProductsToProductSummaryDtoList(
-								products.getContent()
-						))
-				.build();
-	}
+    public Pagination convertPageProductToPaginationObject(Page<Product> products) {
+        return Pagination.builder()
+            .totalPageNumber(products.getTotalPages())
+            .totalElement(products.getTotalElements())
+            .elementPerPage(products.getNumberOfElements())
+            .productSummaryDtoList(
+                convertProductsToProductSummaryDtoList(
+                    products.getContent()
+                ))
+            .build();
+    }
 
-	public List<ProductSummaryDto> convertProductsToProductSummaryDtoList(List<Product> productList) {
-		return productList.stream().map((product -> {
-					ProductSummaryDto dto = modelMapper.map(product, ProductSummaryDto.class);
-					try {
-						LaptopDetailSummaryDto detail = objectMapper.readValue(product.getProductDetails(), LaptopDetailSummaryDto.class);
-						dto.setProductDetails(detail);
-						dto.setImage(getFirstImageUrl(dto.getImage()));
-					} catch (JsonProcessingException e) {
-						throw new RuntimeException(e);
-					}
-					return dto;
-				})
-		).toList();
-	}
+    public List<ProductSummaryDto> convertProductsToProductSummaryDtoList(List<Product> productList) {
+        return productList.stream().map((product -> {
+                ProductSummaryDto dto = modelMapper.map(product, ProductSummaryDto.class);
+                try {
+                    LaptopDetailSummaryDto detail = objectMapper.readValue(product.getProductDetails(), LaptopDetailSummaryDto.class);
+                    dto.setProductDetails(detail);
+                    dto.setImage(getFirstImageUrl(dto.getImage()));
+                } catch (JsonProcessingException e) {
+                    throw new RuntimeException(e);
+                }
+                return dto;
+            })
+        ).toList();
+    }
 
-	public List<ProducerDto> convertProducerListToProducerDtoList(List<Producer> producerList, ModelMapper modelMapper) {
-		return producerList.stream().map((
-				product -> {
-					ProducerDto producerDto = modelMapper.map(product, ProducerDto.class);
-					producerDto.setImage(getFirstImageUrl(producerDto.getImage()));
-					return producerDto;
-				}
-		)).toList();
-	}
+    public List<ProducerDto> convertProducerListToProducerDtoList(List<Producer> producerList, ModelMapper modelMapper) {
+        return producerList.stream().map((
+            product -> {
+                ProducerDto producerDto = modelMapper.map(product, ProducerDto.class);
+                producerDto.setImage(getFirstImageUrl(producerDto.getImage()));
+                return producerDto;
+            }
+        )).toList();
+    }
 
-	public Object getListConfiguration(String type) {
-		Object filter = null;
-		if (type.equalsIgnoreCase("laptop")) {
-			filter = LaptopFilter.builder()
-					.displayList(productRepo.findConfigurationType("screenSize"))
-					.cpuList(productRepo.findConfigurationType("cpuType"))
-					.ramList(productRepo.findConfigurationType("ram"))
-					.build();
-		}
+    public Object getListConfiguration(String type) {
+        Object filter = null;
+        if (type.equalsIgnoreCase("laptop")) {
+            filter = LaptopFilter.builder()
+                .displayList(productRepo.findConfigurationType("screenSize"))
+                .cpuList(productRepo.findConfigurationType("cpuType"))
+                .ramList(productRepo.findConfigurationType("ram"))
+                .build();
+        }
 
-		if (type.equalsIgnoreCase("mouse")) {
-			filter = MouseFilter.builder()
+        if (type.equalsIgnoreCase("mouse")) {
+            filter = MouseFilter.builder()
 //					.connection(productDetailService.getConnectionList())
-					.build();
-		}
-		return filter;
-	}
+                .build();
+        }
+        return filter;
+    }
 
-	public ProductDto createProductDto(Product p) {
-		ProductDto productDto = new ProductDto();
-		BeanUtils.copyProperties(p, productDto);
-		return productDto;
-	}
+    public List<String> splitStringToList(String str) {
+        return str != null ? List.of(str.split("\\|")) : List.of();
+    }
 
-	public void setPurchaseComboItem(ProductDto productDto) {
-		PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
-		List<Product> productList;
-		String type = "";
-		try {
-			productList = new ArrayList<>();
-			for (int i = 0; i < 3; i++) {
-				if (i == 0) type = "mouse";
-				if (i == 1) type = "keyboard";
-				if (i == 2) type = "headphone";
-				productList.add(productRepo.findMostPurchaseByType(type));
-			}
+    public ProductDto createProductDto(Product p) {
+        ProductDto productDto = new ProductDto();
+        BeanUtils.copyProperties(p, productDto);
+        return productDto;
+    }
 
-			List<SimilarProductDto> spList = new ArrayList<>();
-			SimilarProductDto sp;
-			for (Product p : productList) {
-				if (p != null) {
-					sp = new SimilarProductDto();
-					modelMapper.map(p, sp);
-					sp.setImage(Arrays.stream(p.getImage().split("\\|")).findFirst().orElse(null));
-					spList.add(sp);
-				}
-			}
+    public void setPurchaseComboItem(ProductDto productDto) {
+        PurchaseComboItem purchaseComboItem = new PurchaseComboItem();
+        List<Product> productList = new ArrayList<>();
+        String[] comboTypes = {"mouse", "keyboard", "headphone"};
 
-			purchaseComboItem.setProductList(spList);
-			productDto.setPurchaseComboItem(purchaseComboItem);
-		} catch (IllegalAccessError e) {
-			System.err.println("Purchase Combo Item Is Null!");
-			purchaseComboItem.setProductList(new ArrayList<>());
-		}
-	}
+        for (String type : comboTypes) {
+            Product p = productRepo.findMostPurchaseByType(type);
+            if (p != null) productList.add(p);
+        }
 
-	public void setBlogImageAndContent(BlogDto blogDto, Optional<Blog> blog) {
-		String blogImageStr = "";
-		String blogContentStr = "";
-		if (blog.isPresent()) {
-			blogImageStr = blog.get().getImage();
-			blogContentStr = blog.get().getContent();
-		}
-		blogDto.setImageList(Optional.ofNullable(blogImageStr)
-				.map(str -> List.of(str.split("\\|")))
-				.orElse(Collections.emptyList()));
-		blogDto.setContentList(Optional.ofNullable(blogContentStr)
-				.map(str -> List.of(str.split("\\|")))
-				.orElse(Collections.emptyList()));
-		blogDto.setId(blog.get().getId());
-		blogDto.setHeader(blog.get().getHeader());
-	}
+        List<SimilarProductDto> spList = new ArrayList<>();
+        for (Product p : productList) {
+            SimilarProductDto sp = new SimilarProductDto();
+            modelMapper.map(p, sp);
+            sp.setImage(splitStringToList(p.getImage()).get(0));
+            spList.add(sp);
+        }
 
-	public StockDto createStockDto(Stock stock, long id) {
-		return StockDto.builder()
-				.productId(id)
-				.sold(stock.getSold())
-				.quantity(stock.getQuantity())
-				.build();
-	}
+        purchaseComboItem.setProductList(spList);
+        productDto.setPurchaseComboItem(purchaseComboItem);
+    }
 
-	public List<SimilarProductDto> findTopSimilarProducts(Product product) {
-		List<Product> productList = productRepo.findTopSimilarByType(product.getType(), product.getId(),
-				PageRequest.of(0, 6));
-		SimilarProductDto sp;
-		List<SimilarProductDto> list = new ArrayList<>();
-		for (Product p : productList) {
-			sp = new SimilarProductDto();
-			BeanUtils.copyProperties(p, sp);
-			Stock stock = stockService.findByProductId(p.getId());
-			StockDto stockDto = createStockDto(stock, p.getId());
-			sp.setImage(List.of(p.getImage().split("\\|")).getFirst());
-			sp.setStock(stockDto);
-			list.add(sp);
-		}
-		return list;
-	}
+    public void setBlogImageAndContent(BlogDto blogDto, Optional<Blog> blog) {
+        if (blog.isPresent()) {
+            Blog b = blog.get();
+            blogDto.setImageList(splitStringToList(b.getImage()));
+            blogDto.setContentList(splitStringToList(b.getContent()));
+            blogDto.setId(b.getId());
+            blogDto.setHeader(b.getHeader());
+        }
+    }
 
-	public List<String> getConfigurationsByProductName(String name) {
-		List<String> productDetails = productRepo.getProductDetailsByName(name);
-		List<String> configurations = new ArrayList<>();
-		for (String pDetail : productDetails) {
-			ObjectMapper mapper = new ObjectMapper();
-			try {
-				JsonNode rootNode = mapper.readTree(pDetail);
-				String ram = rootNode.get("ram").asText();
-				String hardDrive = rootNode.get("hardDrive").asText();
-				String cpu = rootNode.get("cpu").asText();
-				String graphicsCard = rootNode.get("graphicsCard").asText();
+    public StockDto createStockDto(Stock stock, long id) {
+        return StockDto.builder()
+            .productId(id)
+            .sold(stock.getSold())
+            .quantity(stock.getQuantity())
+            .build();
+    }
+
+    public List<SimilarProductDto> findTopSimilarProducts(Product product) {
+        List<Product> productList = productRepo.findTopSimilarByType(product.getType(), product.getId(),
+            PageRequest.of(0, 6));
+        SimilarProductDto sp;
+        List<SimilarProductDto> list = new ArrayList<>();
+        for (Product p : productList) {
+            sp = new SimilarProductDto();
+            BeanUtils.copyProperties(p, sp);
+            Stock stock = stockService.findByProductId(p.getId());
+            if (stock != null) {
+                StockDto stockDto = createStockDto(stock, p.getId());
+                sp.setImage(splitStringToList(p.getImage()).get(0));
+                sp.setStock(stockDto);
+                list.add(sp);
+            }
+        }
+        return list;
+    }
+
+    public List<String> getConfigurationsByProductName(String name) {
+        List<String> productDetails = productRepo.getProductDetailsByName(name);
+        List<String> configurations = new ArrayList<>();
+        for (String pDetail : productDetails) {
+            try {
+                JsonNode rootNode = new ObjectMapper().readTree(pDetail);
+				String ram = getNodeValueIgnoreCase(rootNode, "ram");
+				String hardDrive = getNodeValueIgnoreCase(rootNode, "hardDrive");
+				String cpu = getNodeValueIgnoreCase(rootNode, "cpu");
+				String graphicsCard = getNodeValueIgnoreCase(rootNode, "graphicsCard");
 				StringBuilder config = new StringBuilder();
 				config.append(ram).append(" | ")
-						.append(hardDrive).append(" | ")
-						.append(cpu).append(" | ")
-						.append(graphicsCard);
+					.append(hardDrive).append(" | ")
+					.append(cpu).append(" | ")
+					.append(graphicsCard);
 				configurations.add(config.toString());
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-		return configurations;
-	}
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return configurations;
+    }
+
+    private String getNodeValueIgnoreCase(JsonNode node, String key) {
+        String lowercaseKey = key.toLowerCase();
+        if (node.has(lowercaseKey)) {
+            return node.get(lowercaseKey).asText();
+        }
+        for (JsonNode child : node) {
+            if (child.isObject()) {
+                String childName = child.fieldNames().next();
+                if (childName.equalsIgnoreCase(key)) {
+                    return child.get(childName).asText();
+                }
+            }
+        }
+        return null;
+    }
 
 }

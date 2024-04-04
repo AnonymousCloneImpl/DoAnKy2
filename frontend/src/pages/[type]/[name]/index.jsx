@@ -24,8 +24,6 @@ const ProductDetailPage = () => {
         return <div>Loading...</div>;
     }
 
-    console.log(data)
-
     return <ProductPage productBE={data} />
 };
 

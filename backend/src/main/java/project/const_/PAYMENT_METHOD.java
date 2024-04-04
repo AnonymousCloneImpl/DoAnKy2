@@ -2,7 +2,9 @@ package project.const_;
 
 public enum PAYMENT_METHOD {
     COD("Cash On Delivery"),
-    PAYPAL("Online Payment");
+    PAYPAL("PayPal"),
+    VNPAY("VN Pay"),
+    MOMO("MoMo");
     public final String val;
 
     PAYMENT_METHOD(String type) {

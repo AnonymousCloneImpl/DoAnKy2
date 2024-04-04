@@ -134,9 +134,19 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 //	@Cacheable(key = "#name", value = "productByTypeAndName")
-	public Optional<Object> getByProductTypeAndByName(String type, String name) {
-		String namePath = name.replace("-", " ");
-		Product p = productRepo.getByProductTypeAndByName(type, namePath);
+	public Optional<Object> getByProductTypeAndByName(String type, String namePath) {
+		if (type == null || namePath == null || type.isEmpty() || namePath.isEmpty()) {
+			System.err.println("type or name is null");
+			return Optional.empty();
+		}
+
+		String name = namePath.replace("-", " ");
+		Product p = productRepo.getByProductTypeAndByName(type, name);
+		if (p == null) {
+			System.err.println("can't find product: " + name);
+			return Optional.empty();
+		}
+
 		ProductDto productDto = productUtils.createProductDto(p);
 		BlogDto blogDto = new BlogDto();
 		Optional<Blog> blog = blogService.getBlogByProductId(p.getId());
@@ -146,7 +156,7 @@ public class ProductServiceImpl implements ProductService {
 		StockDto stockDto = productUtils.createStockDto(stock, p.getId());
 
 		productDto.setProducer(p.getProducer().getName());
-		productDto.setImageList(List.of(p.getImage().split("\\|")));
+		productDto.setImageList(productUtils.splitStringToList(p.getImage()));
 		productDto.setBlog(blogDto);
 		productDto.setSimilarProductList(productUtils.findTopSimilarProducts(p));
 		productDto.setStock(stockDto);

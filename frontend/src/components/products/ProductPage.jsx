@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus, faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faPhone, faEnvelope, faUser, faMinus, faPlus, faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
@@ -50,7 +50,6 @@ const ProductPage = ({ productBE }) => {
 
   // Set quantity----------------------------------------------------------------------------------------------
   const [quantity, setQuantity] = useState(1);
-
   useEffect(() => {
     const quantityInput = document.querySelector('.quantity-input');
     const decreaseButton = document.querySelector('.quantity-decrease');
@@ -131,14 +130,9 @@ const ProductPage = ({ productBE }) => {
     setTotalPrice(calculatedTotalPrice * 90 / 100 + discountedPrice);
   }, [product.purchaseComboItem, checkedItems]);
 
-  // Expand/Collapse content----------------------------------------------------------------------------------------------
-  const [expanded, setExpanded] = useState(false);
-  const toggleContent = () => setExpanded(!expanded);
-
   // Open/Close order form----------------------------------------------------------------------------------------------
   const [isFormVisible, setFormVisible] = useState(false);
   const formRef = useRef(null);
-
   const openForm = () => setFormVisible(true);
   const closeForm = () => setFormVisible(false);
 
@@ -162,13 +156,7 @@ const ProductPage = ({ productBE }) => {
     setWards(selectedDistrict[4]);
   };
 
-  // Place Order----------------------------------------------------------------------------------------------
-  const [customerName, setCustomerName] = useState('');
-  const [customerPhone, setCustomerPhone] = useState('');
-  const [customerEmail, setCustomerEmail] = useState('');
-  const [houseAddress, setHouseAddress] = useState('');
-
-  // get address from json file
+  // get address from json file----------------------------------------------------------------------------------------------
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -186,17 +174,30 @@ const ProductPage = ({ productBE }) => {
     fetchData();
   }, []);
 
-  const route = useRouter();
-  // get payment method
-  const [paymentMethod, setPaymentMethod] = useState('PAYPAL');
-  const handlePaymentChange = (e) => {
-    const selectedPayment = e.target.value;
-    const paymentMapping = {
-      'COD': 'COD',
-      'PAYPAL': 'PAYPAL',
+  // get shipping method
+  const [shippingMethod, setShippingMethod] = useState('STANDARD');
+  const handleShippingChange = (e) => {
+    const selectedShipping = e.target.value;
+    const shipMapping = {
+      'STANDARD': 'STANDARD_SHIPPING',
+      'FAST': 'FAST_SHIPPING',
     };
-    setPaymentMethod(paymentMapping[selectedPayment]);
+    setShippingMethod(shipMapping[selectedShipping]);
   };
+
+  // get payment method----------------------------------------------------------------------------------------------
+  const [paymentMethod, setPaymentMethod] = useState('COD');
+  const handleCheckedPayment = (e) => {
+    setPaymentMethod(e.target.value)
+  };
+
+
+  // Place Order----------------------------------------------------------------------------------------------
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [houseAddress, setHouseAddress] = useState('');
+  const route = useRouter();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -221,7 +222,7 @@ const ProductPage = ({ productBE }) => {
       return;
     }
 
-    // get combo items
+    // get combo items----------------------------------------------------------------------------------------------
     const selectedCombo = product.purchaseComboItem.productList.filter((item) =>
       checkedItems.includes(item.id)
     );
@@ -241,30 +242,28 @@ const ProductPage = ({ productBE }) => {
           quantity: 1,
         })),
       ],
-      totalPrice
+      totalPrice,
+      shippingMethod,
+      paymentMethod
     };
 
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
-
     try {
-
       const data = await postMethodFetcher(orderUrl, orderData)
-
       if (data !== undefined) {
         if (paymentMethod === "COD") {
-          console.log(orderData);
-          // route.push("/order/success");
+          route.push("/order/success");
         }
 
         if (paymentMethod === "PAYPAL") {
           route.push(`/payment?price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
         }
       } else alert('Failed to place order');
-
     } catch (error) {
       console.error('Error sending order request', error);
     }
   };
+
 
 
   // Validate Order----------------------------------------------------------------------------------------------
@@ -272,21 +271,17 @@ const ProductPage = ({ productBE }) => {
     const nameRegex = /^[a-zA-ZÀ-ỹ\s]+$/;
     return nameRegex.test(name);
   };
-
   const validPhoneNumber = (phoneNumber) => {
     const phoneNumberRegex = /^(\+?84|0)(3[2-9]|5[689]|7[06-9]|8[1-9]|9\d)\d{7}$/;
     return phoneNumberRegex.test(phoneNumber) && phoneNumber.length <= 10 && phoneNumber.length >= 9;
   };
-
   const validEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  // cart notification----------------------------------------------------------------------------------------------
+  // Add To card----------------------------------------------------------------------------------------------
   const [cartNotifications, setCartNotifications] = useState([]);
-
-  //Add To card
   const addToCart = (product) => {
     const storedItemList = localStorage.getItem('itemList');
     let cartItemList = [];
@@ -341,6 +336,11 @@ const ProductPage = ({ productBE }) => {
     }, 3000);
   };
 
+  // Expand/Collapse blog----------------------------------------------------------------------------------------------
+  const [expanded, setExpanded] = useState(false);
+  const toggleContent = () => setExpanded(!expanded);
+
+  // Hiden buy btn if sold out----------------------------------------------------------------------------------------------
   const isSoldOut = product.stock.quantity === 0;
 
   if (!productBE) {
@@ -662,7 +662,8 @@ const ProductPage = ({ productBE }) => {
                 <form className="order-form" onSubmit={handleFormSubmit}>
                   <div className='flex justify-between'>
                     <div className='phone-ship'>
-                      <label htmlFor="customerName">Name</label>
+                      <label htmlFor="customerPhone">Contact Info</label>
+                      <span className='input-icon'><FontAwesomeIcon icon={faUser} /></span>
                       <input type="text"
                         value={customerName}
                         onChange={(e) => setCustomerName(e.target.value)}
@@ -673,7 +674,8 @@ const ProductPage = ({ productBE }) => {
                       </input>
                     </div>
                     <div className='phone-ship'>
-                      <label htmlFor="customerEmail">Email</label>
+                      <div className="h-10"> </div>
+                      <span className='input-icon'><FontAwesomeIcon icon={faEnvelope} /></span>
                       <input type="email" className="customerEmail"
                         value={customerEmail}
                         onChange={(e) => setCustomerEmail(e.target.value)}
@@ -684,7 +686,6 @@ const ProductPage = ({ productBE }) => {
                     </div>
                   </div>
 
-                  <label htmlFor="shippingAddress">Address</label>
                   <div className="address-selects">
                     <select
                       className="province"
@@ -738,7 +739,7 @@ const ProductPage = ({ productBE }) => {
                     </select>
                   </div>
 
-                  <label htmlFor="houseAddress">House Address</label>
+                  <span className='input-icon'><FontAwesomeIcon icon={faLocationDot} /></span>
                   <input type="text"
                     value={houseAddress}
                     onChange={(e) => setHouseAddress(e.target.value)}
@@ -750,33 +751,95 @@ const ProductPage = ({ productBE }) => {
 
                   <div className='flex justify-between'>
                     <div className='phone-ship'>
-                      <label htmlFor="customerPhone">Phone Number</label>
                       <div className="phone-wrapper">
+                        <span className='input-icon'><FontAwesomeIcon icon={faPhone} /></span>
                         <input type="tel" className="customerPhone"
                           value={customerPhone}
                           onChange={(e) => setCustomerPhone(e.target.value)}
                           name="customerPhone"
+                          placeholder="Phone number"
                           id="customerPhone" required>
                         </input>
                       </div>
                     </div>
 
                     <div className='phone-ship'>
-                      <label htmlFor="customerPhone">Payment</label>
                       <div className="ship">
                         <select
                           className="shipping"
-                          name="payment"
-                          id="payment"
+                          name="shipping"
+                          id="shipping"
                           required
                           defaultValue=""
-                          onChange={(e) => handlePaymentChange(e)}
+                          onChange={(e) => handleShippingChange(e)}
                         >
-                          <option value="" disabled className='option-css'>--- Select Method ---</option>
-                          <option value="COD">Ship COD</option>
-                          <option value="PAYPAL">PAYPAL</option>
+                          <option value="" disabled className='option-css'>--- Shipping Method ---</option>
+                          <option value="STANDARD">Standard Shipping - $50</option>
+                          <option value="FAST">Fast Shipping - $100</option>
                         </select>
                       </div>
+                    </div>
+                  </div>
+
+                  <div className="payment-label">Payment Method</div>
+                  <div className="payment-option">
+                    <div>
+                      <input
+                        type="radio"
+                        className="payment-checkbox"
+                        id="COD"
+                        name="payment"
+                        value="COD"
+                        checked={paymentMethod === 'COD'}
+                        onChange={handleCheckedPayment}
+                      />
+                      <label htmlFor="COD">
+                        <img src='https://thanhthinhbui.cdn.vccloud.vn/wp-content/uploads/2020/07/giao-hang-COD-1.png'></img>
+                      </label>
+                    </div>
+                    <div>
+                      <input
+                        type="radio"
+                        className="payment-checkbox"
+                        id="PAYPAL"
+                        name="payment"
+                        value="PAYPAL"
+                        checked={paymentMethod === 'PAYPAL'}
+                        onChange={handleCheckedPayment}
+                      />
+                      <label htmlFor="PAYPAL">
+                        <img src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png'></img>
+                      </label>
+                    </div>
+
+                    <div>
+                      <input
+                        type="radio"
+                        className="payment-checkbox"
+                        id="VNPAY"
+                        name="payment"
+                        value="VNPAY"
+                        checked={paymentMethod === 'VNPAY'}
+                        onChange={handleCheckedPayment}
+                      />
+                      <label htmlFor="VNPAY">
+                        <img src='https://cdn.bio.link/uploads/profile_pictures/2023-08-09/ZCXnagobVPlSSCAOrumGbLsEQI1KPYsq.png'></img>
+                      </label>
+                    </div>
+
+                    <div>
+                      <input
+                        type="radio"
+                        className="payment-checkbox"
+                        id="MOMO"
+                        name="payment"
+                        value="MOMO"
+                        checked={paymentMethod === 'MOMO'}
+                        onChange={handleCheckedPayment}
+                      />
+                      <label htmlFor="MOMO">
+                        <img src='https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png'></img>
+                      </label>
                     </div>
                   </div>
 

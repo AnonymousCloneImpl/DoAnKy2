@@ -11,12 +11,13 @@ import project.entity.BaseEntity;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "payment_method")
+@Table(name = "payment")
 public class PaymentTbl extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "payment_method")
+	@Enumerated(EnumType.STRING)
 	private PAYMENT_METHOD paymentMethod;
 	@Column(name = "payment_id")
 	private String paymentId;
