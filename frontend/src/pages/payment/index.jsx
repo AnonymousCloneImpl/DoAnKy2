@@ -1,7 +1,18 @@
 import axios from "axios";
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 import CustomErrorPage from "@/pages/error";
+
+/*
+Tên param: vnp_Amount, Giá trị: 1000000
+Tên param: vnp_BankCode, Giá trị: VNPAY
+Tên param: vnp_CardType, Giá trị: QRCODE
+Tên param: vnp_PayDate, Giá trị: 20240403172037
+Tên param: vnp_ResponseCode, Giá trị: 24
+Tên param: vnp_TmnCode, Giá trị: T86B7AXA
+Tên param: vnp_TransactionNo, Giá trị: 0
+Tên param: vnp_TransactionStatus, Giá trị: 02
+Tên param: vnp_TxnRef, Giá trị: 33619595
+ */
 
 const Payment = () => {
   const router = useRouter();

@@ -252,8 +252,8 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
     };
 
     return (
-        <div className="flex items-center mt-3">
-            <div className="h-10 w-24 mr-5">
+        <div className="flex items-center flex-wrap mt-3">
+            <div className="h-10 w-24 mr-5 mt-2">
                 {/* Ô input cho giá min và max */}
                 {showPriceInput ? (
                     <>
@@ -301,7 +301,7 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
             </div>
             {pageType?.toLowerCase() === 'laptop' ? (
                 <>
-                    <div className="h-10 w-24 mr-5 relative left-0">
+                    <div className="h-10 w-24 mr-5 relative left-0 mt-2">
                         {/* Ô input cho cpu */}
                         {showCpuOption ? (
                             <>
@@ -365,7 +365,7 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                         )}
                     </div>
 
-                    <div className="h-10 w-24 relative mr-5">
+                    <div className="h-10 w-24 relative mr-5 mt-2">
                         {/* Ô input cho RAM */}
                         {showRamOption ? (
                             <>
@@ -429,7 +429,7 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                         )}
                     </div>
 
-                    <div className="h-10 w-24 relative">
+                    <div className="h-10 w-24 relative mt-2">
                         {/* Ô input cho Display */}
                         {showDisplayOption ? (
                             <>
@@ -497,7 +497,7 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                 <>
                     {pageType?.toLowerCase() === 'mouse' ? (
                         <>
-                            <div className="h-10 w-24">
+                            <div className="h-10 w-24 mt-2">
                                 {/* Ô input cho Connection */}
                                 {showConnectionOption ? (
                                     <>

@@ -29,7 +29,7 @@ public class PaypalService {
 	}
 
 	public Payment createPayment(PaypalRequestDto paypalRequestDto) {
-		Double total = new BigDecimal(paypalRequestDto.getTotal()).setScale(2, RoundingMode.HALF_UP).doubleValue();
+		Double total = BigDecimal.valueOf(paypalRequestDto.getTotal()).setScale(2, RoundingMode.HALF_UP).doubleValue();
 		Amount amount = new Amount();
 		amount.setCurrency(paypalRequestDto.getCurrency());
 		amount.setTotal(String.valueOf(total));
@@ -60,7 +60,13 @@ public class PaypalService {
 		}
 	}
 
-	public void updatePayment(Long id, String paymentCode) {
+	public Long getByOrderCode(String orderCode) {
+		PaymentTbl paymentTbl = repository.findByOrderCode(orderCode);
+		return paymentTbl.getId();
+	}
+
+	public void updatePaymentById(String paymentCode, String orderCode) {
+		Long id = getByOrderCode(orderCode);
 		System.out.println(id + " " + paymentCode);
 		repository.updatePaymentCodeById(id, paymentCode, LocalDateTime.now());
 	}
