@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public interface PaymentTblRepository extends JpaRepository<PaymentTbl, Long> {
 	@Modifying
 	@Transactional
-	@Query(nativeQuery = true, value = "UPDATE payment_method  p SET p.payment_id  = :paymentCode, p.updated_at = :updatedAt WHERE p.id = :id")
+	@Query(nativeQuery = true, value = "UPDATE payment p SET p.payment_id  = :paymentCode, p.updated_at = :updatedAt WHERE p.id = :id")
 	void updatePaymentCodeById(@Param("id") Long id, @Param("paymentCode") String paymentCode, @Param("updatedAt") LocalDateTime updatedAt);
 
 	@Modifying

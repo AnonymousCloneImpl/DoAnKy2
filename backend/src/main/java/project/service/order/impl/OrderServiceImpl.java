@@ -15,12 +15,15 @@ import project.dto.product.StockDto;
 import project.email.EmailService;
 import project.entity.order.Order;
 import project.entity.order.OrderItem;
+import project.entity.order.ShippingMethod;
 import project.entity.payment.PaymentTbl;
 import project.entity.product.Product;
 import project.entity.product.Stock;
 import project.repository.OrderItemRepository;
 import project.repository.OrderRepository;
+import project.repository.ShippingRepository;
 import project.service.order.OrderService;
+import project.service.payment.PaymentService;
 import project.service.payment.paypal.PaypalService;
 import project.service.product.ProductService;
 import project.service.product.StockService;
@@ -43,7 +46,9 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private EmailService emailService;
 	@Autowired
-	private PaypalService paypalService;
+	private ShippingRepository shippingRepo;
+	@Autowired
+	private PaymentService paymentService;
 
 	@Transactional
 	@Override
@@ -51,14 +56,7 @@ public class OrderServiceImpl implements OrderService {
 		Order order = createOrderObj(orderDto);
 		BeanUtils.copyProperties(orderDto, order);
 		order.setTotalPrice(PriceUtils.roundedPrice(orderDto.getTotalPrice(), 2));
-
-		PaymentTbl paymentTbl = PaymentTbl.builder()
-				.orderCode(order.getOrderCode())
-				.state("chuathanhtoan")
-				.paymentMethod(orderDto.getPaymentMethod())
-				.build();
-		paypalService.save(paymentTbl);
-		order.setPayment(paymentTbl);
+		order.setShippingMethod(shippingRepo.findByName(orderDto.getShippingMethod()));
 
 		orderRepo.save(order);
 
@@ -72,6 +70,9 @@ public class OrderServiceImpl implements OrderService {
 			}
 		}
 		orderItemRepo.saveAll(orderItems);
+
+		paymentService.createPaymentTbl(orderDto, order);
+
 		return order;
 	}
 
