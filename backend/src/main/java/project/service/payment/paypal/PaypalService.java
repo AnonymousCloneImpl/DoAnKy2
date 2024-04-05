@@ -87,6 +87,7 @@ public class PaypalService {
 			paymentExecute.setPayerId(payerId);
 			return payment.execute(apiContext, paymentExecute);
 		} catch (PayPalRESTException e) {
+			payment.setState("PAYMENT_ALREADY_DONE");
 			log.warn("Payment failed : " + e.getMessage());
 		}
 		return payment;

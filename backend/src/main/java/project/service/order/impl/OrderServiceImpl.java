@@ -15,8 +15,6 @@ import project.dto.product.StockDto;
 import project.email.EmailService;
 import project.entity.order.Order;
 import project.entity.order.OrderItem;
-import project.entity.order.ShippingMethod;
-import project.entity.payment.PaymentTbl;
 import project.entity.product.Product;
 import project.entity.product.Stock;
 import project.repository.OrderItemRepository;
@@ -24,7 +22,6 @@ import project.repository.OrderRepository;
 import project.repository.ShippingRepository;
 import project.service.order.OrderService;
 import project.service.payment.PaymentService;
-import project.service.payment.paypal.PaypalService;
 import project.service.product.ProductService;
 import project.service.product.StockService;
 
@@ -55,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
 		Order order = createOrderObj(orderDto);
 		BeanUtils.copyProperties(orderDto, order);
 		order.setTotalPrice(PriceUtils.roundedPrice(orderDto.getTotalPrice(), 2));
-    order.setShippingMethod(shippingRepo.findByName(orderDto.getShippingMethod()));
+		order.setShippingMethod(shippingRepo.findByName(orderDto.getShippingMethod()));
 		orderRepo.save(order);
 
 		List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();

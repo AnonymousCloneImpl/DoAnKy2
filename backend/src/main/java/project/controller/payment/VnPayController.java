@@ -25,7 +25,7 @@ public class VnPayController extends HttpServlet {
 
 	@PostMapping("/create")
 	public String createPayment(@RequestParam(name = "amount") Double amount) {
-		Double finalAmount = amount;
+		Double finalAmount = amount * 100 * 24740;
 		String vnp_Version = "2.1.0";
 		String vnp_Command = "pay";
 		String orderType = "other";
@@ -39,7 +39,7 @@ public class VnPayController extends HttpServlet {
 		vnp_Params.put("vnp_Version", vnp_Version);
 		vnp_Params.put("vnp_Command", vnp_Command);
 		vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-		vnp_Params.put("vnp_Amount", String.valueOf(amount));
+		vnp_Params.put("vnp_Amount", String.valueOf(finalAmount));
 		vnp_Params.put("vnp_CurrCode", "VND");
 
 		vnp_Params.put("vnp_BankCode", bankCode);
@@ -60,13 +60,13 @@ public class VnPayController extends HttpServlet {
 		String vnp_ExpireDate = formatter.format(cld.getTime());
 		vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 
-		List fieldNames = new ArrayList(vnp_Params.keySet());
+		List<String> fieldNames = new ArrayList<>(vnp_Params.keySet());
 		Collections.sort(fieldNames);
 		StringBuilder hashData = new StringBuilder();
 		StringBuilder query = new StringBuilder();
-		Iterator itr = fieldNames.iterator();
+		Iterator<String> itr = fieldNames.iterator();
 		while (itr.hasNext()) {
-			String fieldName = (String) itr.next();
+			String fieldName = itr.next();
 			String fieldValue = vnp_Params.get(fieldName);
 			if ((fieldValue != null) && (!fieldValue.isEmpty())) {
 				//Build hash data

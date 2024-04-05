@@ -171,7 +171,7 @@ const ProductsPageByType = ({type}) => {
              className="h-full"
         >
             <div className="">
-                <img src={"/panel/products-panel.jpg"} alt={"banner"} className="w-full h-96" />
+                <img src={"/panel/products-panel.jpg"} alt={"banner"} loading={"lazy"} className="w-full h-96" />
             </div>
 
             <div className="h-auto mt-10 bg-gray-300 bg-custom">
@@ -204,6 +204,7 @@ const ProductsPageByType = ({type}) => {
                                             <img
                                                 src={`${producer.image}`}
                                                 className="h-4/6 w-11/12"
+                                                loading={"lazy"}
                                             />
                                         </button>
                                     </div>
@@ -216,6 +217,7 @@ const ProductsPageByType = ({type}) => {
                                             <img
                                                 src={`${producer.image}`}
                                                 className="h-4/6 w-11/12"
+                                                loading={"lazy"}
                                             />
                                         </button>
                                     </div>
