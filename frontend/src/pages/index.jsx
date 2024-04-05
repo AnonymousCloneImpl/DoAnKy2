@@ -6,10 +6,8 @@ import fetcher from "@/utils/fetchAPI";
 import ProductListComponent from "@/components/home/ProductList";
 import Head from "next/head";
 import CustomErrorPage from "@/pages/error";
-import Component1 from "@/components/home/component1";
 import {useState} from "react";
-import Notification from "@/components/notification";
-import NotificationRender from "@/components/notificationList";
+import CartNotification from "@/components/CartNotification";
 
 dotenv.config();
 
@@ -284,8 +282,7 @@ export default function Home() {
                     </Link>
                 </div>
             </div>
-
-            <NotificationRender cartNotifications={cartNotifications} />
+            <CartNotification cartNotifications={cartNotifications}/>
 
         </div>
     )

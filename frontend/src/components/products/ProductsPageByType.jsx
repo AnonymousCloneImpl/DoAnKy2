@@ -12,8 +12,7 @@ import fetcher from "@/utils/fetchAPI";
 import CustomErrorPage from "@/pages/error";
 import fetchAPIPost from "@/utils/fetchAPI-post";
 import BodyBuilder from "@/utils/BodyBuilder";
-import Notification from "@/components/notification";
-import NotificationRender from "@/components/notificationList";
+import CartNotification from "@/components/CartNotification";
 
 const ProductsPageByType = ({type}) => {
     const router = useRouter();
@@ -289,7 +288,7 @@ const ProductsPageByType = ({type}) => {
                 </div>
             </div>
 
-            <NotificationRender cartNotifications={cartNotifications} />
+            <CartNotification cartNotifications={cartNotifications} />
 
         </div>
     );
