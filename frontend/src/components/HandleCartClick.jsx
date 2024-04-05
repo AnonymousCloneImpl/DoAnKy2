@@ -1,6 +1,8 @@
-function HandleCardClick({ product }) {
-  // Add To card
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
+function HandleCartClick({ product }) {
   const storedItemList = localStorage.getItem('itemList');
   let cartItemList = [];
 
@@ -42,6 +44,32 @@ function HandleCardClick({ product }) {
   }
 
   localStorage.setItem('itemList', JSON.stringify(cartItemList));
+
+  const [cartNotifications, setCartNotifications] = useState([]);
+  const newNotification = {
+    message: 'The product has been added to Cart !',
+  };
+
+  setCartNotifications((prevNotifications) => [...prevNotifications, newNotification]);
+
+  setTimeout(() => {
+    setCartNotifications((prevNotifications) => prevNotifications.filter((n) => n !== newNotification));
+  }, 3000);
+
+  return (
+    <div>
+      {cartNotifications.map((notification, index) => (
+        <div
+          key={index}
+          className="cart-notification"
+          style={{ bottom: `${10 + index * 40}px`, display: 'block' }}
+        >
+          <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
+          {notification.message}
+        </div>
+      ))}
+    </div>
+  )
 }
 
-export default HandleCardClick;
+export default HandleCartClick;
