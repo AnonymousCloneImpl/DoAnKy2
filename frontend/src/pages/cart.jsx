@@ -2,6 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
+import { useRouter } from "next/router";
+import OrderForm from '@/components/OrderForm';
+import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
 
 import FormatPrice from "@/components/FormatPrice";
 
@@ -135,12 +138,15 @@ const CartPage = () => {
     const selectedProvince = provinces.find((province) => province[0] === provinceId);
     setSelectedProvinceId(provinceId);
     setDistricts(selectedProvince[4]);
+    setSelectedDistrictId('');
+    setWards([]);
   };
 
   const handleDistrictChange = (districtId) => {
     const selectedDistrict = districts.find((district) => district[0] === districtId);
     setSelectedDistrictId(districtId);
     setWards(selectedDistrict[4]);
+    setSelectedWardId('');
   };
 
   // Checkbox----------------------------------------------------------------------------------------------
@@ -156,16 +162,6 @@ const CartPage = () => {
     });
   };
 
-  const [shippingCost, setShippingCost] = useState(50);
-  const handleShippingChange = (event) => {
-    const selectedShipping = event.target.value;
-    const costMapping = {
-      'Standard shipping - $ 50 / 1 Products': 50,
-      'Fast shipping - $ 100 / 1 Products': 100,
-    };
-    setShippingCost(costMapping[selectedShipping]);
-  };
-
   useEffect(() => {
     const isItemChecked = checkedItems.length > 0;
     const calculatedTotalPrice = items.reduce((accumulator, item) => {
@@ -175,25 +171,35 @@ const CartPage = () => {
       return accumulator;
     }, 0);
 
-    const finalTotalPrice = isItemChecked ? calculatedTotalPrice + shippingCost : calculatedTotalPrice;
+    const finalTotalPrice = isItemChecked ? calculatedTotalPrice : calculatedTotalPrice;
     setTotalPrice(finalTotalPrice);
-  }, [items, checkedItems, shippingCost]);
+  }, [items, checkedItems]);
 
-  // place order----------------------------------------------------------------------------------------------
+
+  // get shipping method
+  const [shippingMethod, setShippingMethod] = useState('STANDARD');
+  const handleShippingChange = (e) => {
+    const selectedShipping = e.target.value;
+    const shipMapping = {
+      'STANDARD': 'STANDARD_SHIPPING',
+      'FAST': 'FAST_SHIPPING',
+    };
+    setShippingMethod(shipMapping[selectedShipping]);
+  };
+
+  // get payment method----------------------------------------------------------------------------------------------
+  const [paymentMethod, setPaymentMethod] = useState('COD');
+  const handleCheckedPayment = (e) => {
+    setPaymentMethod(e.target.value)
+  };
+
+
+  // Place Order----------------------------------------------------------------------------------------------
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [houseAddress, setHouseAddress] = useState('');
-
-  const [paymentMethod, setPaymentMethod] = useState('PAYPAL');
-  const handlePaymentChange = (e) => {
-    const selectedPayment = e.target.value;
-    const paymentMapping = {
-      'COD': 'COD',
-      'PAYPAL': 'PAYPAL',
-    };
-    setPaymentMethod(paymentMapping[selectedPayment]);
-  };
+  const route = useRouter();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -201,7 +207,6 @@ const CartPage = () => {
     const selectedWard = wards.find(w => w[0] === selectedWardId);
     const selectedDistrict = districts.find(d => d[0] === selectedDistrictId);
     const selectedProvince = provinces.find(p => p[0] === selectedProvinceId);
-
     const shippingAddress = `${houseAddress}, ${selectedWard ? selectedWard[1] : ''}, ${selectedDistrict ? selectedDistrict[1] : ''}, ${selectedProvince ? selectedProvince[1] : ''}`;
 
     if (!validName(customerName)) {
@@ -219,8 +224,8 @@ const CartPage = () => {
       return;
     }
 
-    // get combo items
-    const selectedCartItem = items.filter((item) =>
+    // get cart items
+    const selectedCartItems = items.filter((item) =>
       checkedItems.includes(item.id)
     );
 
@@ -230,59 +235,34 @@ const CartPage = () => {
       customerEmail,
       shippingAddress,
       orderItemDtoList: [
-        ...selectedCartItem.map((item) => ({
+        ...selectedCartItems.map((item) => ({
           productId: item.id,
-          quantity: item.quantity
-        }))
+          quantity: item.quantity,
+        })),
       ],
       totalPrice,
+      shippingMethod,
       paymentMethod
     };
 
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
-    const paymentUrl = `http://localhost:3000/payment`;
-
     try {
-      const response = await fetch(orderUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-      });
+      const data = await postMethodFetcher(orderUrl, orderData)
+      if (data !== undefined) {
+        const filteredItems = items.filter((item, index) => !checkedItems.includes(index));
+        localStorage.setItem('itemList', JSON.stringify(filteredItems));
 
-      if (response.ok) {
-        closeForm();
-        paymentMethod == 'COD' ? alert('Success Order !') : window.location.href = paymentUrl;
-
-        for (let i = 0; i < checkedItems.length; i++) {
-          items.splice(i, 1);
+        if (paymentMethod === "COD") {
+          route.push("/order/success");
         }
 
-        localStorage.setItem('itemList', JSON.stringify(items));
-        if (paymentMethod === 'COD') window.location.reload();
-
+        if (paymentMethod === "PAYPAL") {
+          route.push(`/payment?price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
+        }
       } else alert('Failed to place order');
-
     } catch (error) {
       console.error('Error sending order request', error);
     }
-  };
-
-  // Validate Order
-  const validName = (name) => {
-    const nameRegex = /^[a-zA-ZÀ-ỹ\s]+$/;
-    return nameRegex.test(name);
-  };
-
-  const validPhoneNumber = (phoneNumber) => {
-    const phoneNumberRegex = /^(\+?84|0)(3[2-9]|5[689]|7[06-9]|8[1-9]|9\d)\d{7}$/;
-    return phoneNumberRegex.test(phoneNumber) && phoneNumber.length <= 10 && phoneNumber.length >= 9;
-  };
-
-  const validEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
   };
 
   return (
@@ -370,15 +350,7 @@ const CartPage = () => {
               <FormatPrice price={totalPrice} type={"discount"} />
             </div>
 
-            <div className="mt-20">
-              <label htmlFor="shipping" className="font-medium inline-block mb-3 text-sm uppercase">SHIPPING</label>
-              <select className="block p-2 text-gray-600 w-full text-sm" onChange={handleShippingChange}>
-                <option>Standard shipping - $ 50 / 1 Products</option>
-                <option>Fast shipping - $ 100 / 1 Products</option>
-              </select>
-            </div>
-
-            <div className="border-t mt-8">
+            <div className="border-t mt-20">
               <button className="bg-indigo-600 font-semibold hover:bg-red-700 py-3 text-sm text-white uppercase w-full"
                 onClick={openForm}> Submit Order
               </button>
@@ -388,149 +360,41 @@ const CartPage = () => {
       </div>
 
       {/* FORM ORDER */}
-      {
-        isFormVisible && (
-          <>
-            <div className="overlay" onClick={closeForm}></div>
+      {isFormVisible && (
+        <>
+          <div className="overlay" onClick={closeForm}></div>
 
-            <div className="order-popup" ref={formRef}>
-              <div className="popup-content">
-                <span className="close-form-btn" onClick={closeForm}>
-                  <FontAwesomeIcon icon={faCircleXmark} />
-                </span>
-                <img className='order-logo' src='/favico.png'></img>
-                <h1>Order Form</h1>
-
-                <form className="order-form" onSubmit={handleFormSubmit}>
-                  <div className='flex justify-between'>
-                    <div className='phone-ship'>
-                      <label htmlFor="customerName">Name</label>
-                      <input type="text"
-                        value={customerName}
-                        onChange={(e) => setCustomerName(e.target.value)}
-                        className="customerName"
-                        name="customerName"
-                        placeholder="example: Ngọc Trinh..."
-                        id="customerName" required>
-                      </input>
-                    </div>
-                    <div className='phone-ship'>
-                      <label htmlFor="customerEmail">Email</label>
-                      <input type="email" className="customerEmail"
-                        value={customerEmail}
-                        onChange={(e) => setCustomerEmail(e.target.value)}
-                        name="customerEmail"
-                        placeholder="example@gmail.com"
-                        id="customerEmail" required>
-                      </input>
-                    </div>
-                  </div>
-
-                  <label htmlFor="shippingAddress">Address</label>
-                  <div className="address-selects">
-                    <select
-                      className="province"
-                      name="province"
-                      id="province"
-                      required
-                      defaultValue=""
-                      onChange={(e) => handleProvinceChange(e.target.value)}
-                    >
-                      <option value="" disabled className='option-css'>--- Province ---</option>
-                      {provinces.map((province) => (
-                        <option key={province}
-                          value={province[0]}>
-                          {province[1]}
-                        </option>
-                      ))}
-                    </select>
-
-                    <select
-                      className="district"
-                      name="district"
-                      id="district"
-                      required
-                      defaultValue=""
-                      onChange={(e) => handleDistrictChange(e.target.value)}
-                    >
-                      <option value="" disabled className='option-css'>--- District ---</option>
-                      {districts.map((district) => (
-                        <option key={district}
-                          value={district[0]}>
-                          {district[1]}
-                        </option>
-                      ))}
-                    </select>
-
-                    <select
-                      className="ward"
-                      name="ward"
-                      id="ward"
-                      required
-                      defaultValue=""
-                      onChange={(e) => setSelectedWardId(e.target.value)}
-                    >
-                      <option value="" disabled className='option-css'>--- Ward ---</option>
-                      {wards.map((ward) => (
-                        <option key={ward}
-                          value={ward[0]}>
-                          {ward[1]}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <label htmlFor="houseAddress">House Address</label>
-                  <input type="text"
-                    value={houseAddress}
-                    onChange={(e) => setHouseAddress(e.target.value)}
-                    className="customerName"
-                    name="houseAddress"
-                    placeholder="Boulevard, alley, house number,..."
-                    id="houseAddress" required>
-                  </input>
-
-                  <div>
-                    <div className='flex justify-between'>
-                      <div className='phone-ship'>
-                        <label htmlFor="customerPhone">Phone Number</label>
-                        <div className="phone-wrapper">
-                          <input type="tel" className="customerPhone"
-                            value={customerPhone}
-                            onChange={(e) => setCustomerPhone(e.target.value)}
-                            name="customerPhone"
-                            id="customerPhone" required>
-                          </input>
-                        </div>
-                      </div>
-
-                      <div className='phone-ship'>
-                        <label htmlFor="customerPhone">Payment</label>
-                        <div className="ship">
-                          <select
-                            className="shipping"
-                            name="payment"
-                            id="payment"
-                            required
-                            defaultValue=""
-                            onChange={(e) => handlePaymentChange(e)}
-                          >
-                            <option value="" disabled className='option-css'>--- Select Method ---</option>
-                            <option value="COD">Ship COD</option>
-                            <option value="PAYPAL">PAYPAL</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <button type="submit">Confirm Order</button>
-                </form>
-              </div>
+          <div className="order-popup" ref={formRef}>
+            <div className="popup-content">
+              <span className="close-form-btn" onClick={closeForm}>
+                <FontAwesomeIcon icon={faCircleXmark} />
+              </span>
+              <img className='order-logo' src='/favico.png'></img>
+              <h1>Order Form</h1>
+              <OrderForm
+                provinces={provinces}
+                districts={districts}
+                wards={wards}
+                handleProvinceChange={handleProvinceChange}
+                handleDistrictChange={handleDistrictChange}
+                setSelectedWardId={setSelectedWardId}
+                handleShippingChange={handleShippingChange}
+                paymentMethod={paymentMethod}
+                handleCheckedPayment={handleCheckedPayment}
+                handleFormSubmit={handleFormSubmit}
+                customerName={customerName}
+                setCustomerName={setCustomerName}
+                customerEmail={customerEmail}
+                setCustomerEmail={setCustomerEmail}
+                houseAddress={houseAddress}
+                setHouseAddress={setHouseAddress}
+                customerPhone={customerPhone}
+                setCustomerPhone={setCustomerPhone}
+              />
             </div>
-          </>
-        )
-      }
+          </div>
+        </>
+      )}
 
     </div >
   )

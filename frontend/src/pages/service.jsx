@@ -188,72 +188,7 @@ const Service = () => {
         </div>
         <div id="myTableContent">
           <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "table1" ? '' : 'hidden'}`} id="table1" role="tabpanel" aria-labelledby="table1-tab">
-            <h1 className="text-center text-xl font-bold pb-5 uppercase">Warranty service price list</h1>
-            <table>
-              <thead>
-                <tr>
-                  <th>Price Range</th>
-                  <th>1-to-1 VIP Exchange</th>
-                  <th>S24 + 12 Months</th>
-                  <th>S24 + 24 Months</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td>10.000.000</td>
-                  <td>700.000</td>
-                  <td>700.000</td>
-                  <td>1.400.000</td>
-                </tr>
-
-                <tr>
-                  <td>10.000.001 - 15.000.000</td>
-                  <td>1.500.000</td>
-                  <td>1.400.000</td>
-                  <td>2.300.000</td>
-                </tr>
-
-                <tr>
-                  <td>15.000.001 - 20.000.000</td>
-                  <td>1.500.000</td>
-                  <td>1.400.000</td>
-                  <td>2.300.000</td>
-                </tr>
-
-                <tr>
-                  <td>25.000.001 - 30.000.000</td>
-                  <td>2.200.000</td>
-                  <td>2.200.000</td>
-                  <td>3.400.000</td>
-                </tr>
-
-                <tr>
-                  <td>30.000.001 - 35.000.000</td>
-                  <td>2.600.000</td>
-                  <td>2.600.000</td>
-                  <td>3.800.000</td>
-                </tr>
-
-                <tr>
-                  <td>35.000.001 - 40.000.000</td>
-                  <td>3.000.000</td>
-                  <td>3.000.000</td>
-                  <td>4.000.000</td>
-                </tr>
-
-                <tr>
-                  <td>45.000.001 - 100.000.000</td>
-                  <td>4.000.000</td>
-                  <td>4.000.000</td>
-                  <td>5.000.000</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "table2" ? '' : 'hidden'}`} id="table2" role="tabpanel" aria-labelledby="table2-tab">
-            <h1 class="text-center text-xl font-bold pb-5 uppercase">Extended Warranty for Premium Accessories</h1>
+            <h1 className="text-center text-xl font-bold pb-5 uppercase">Extended Warranty for Premium Accessories</h1>
             <table>
               <thead>
                 <tr>
@@ -333,8 +268,73 @@ const Service = () => {
             </table>
           </div>
 
+          <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "table2" ? '' : 'hidden'}`} id="table2" role="tabpanel" aria-labelledby="table2-tab">
+            <h1 className="text-center text-xl font-bold pb-5 uppercase">Warranty service price list</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>Price Range</th>
+                  <th>1-to-1 VIP Exchange</th>
+                  <th>S24 + 12 Months</th>
+                  <th>S24 + 24 Months</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>10.000.000</td>
+                  <td>700.000</td>
+                  <td>700.000</td>
+                  <td>1.400.000</td>
+                </tr>
+
+                <tr>
+                  <td>10.000.001 - 15.000.000</td>
+                  <td>1.500.000</td>
+                  <td>1.400.000</td>
+                  <td>2.300.000</td>
+                </tr>
+
+                <tr>
+                  <td>15.000.001 - 20.000.000</td>
+                  <td>1.500.000</td>
+                  <td>1.400.000</td>
+                  <td>2.300.000</td>
+                </tr>
+
+                <tr>
+                  <td>25.000.001 - 30.000.000</td>
+                  <td>2.200.000</td>
+                  <td>2.200.000</td>
+                  <td>3.400.000</td>
+                </tr>
+
+                <tr>
+                  <td>30.000.001 - 35.000.000</td>
+                  <td>2.600.000</td>
+                  <td>2.600.000</td>
+                  <td>3.800.000</td>
+                </tr>
+
+                <tr>
+                  <td>35.000.001 - 40.000.000</td>
+                  <td>3.000.000</td>
+                  <td>3.000.000</td>
+                  <td>4.000.000</td>
+                </tr>
+
+                <tr>
+                  <td>45.000.001 - 100.000.000</td>
+                  <td>4.000.000</td>
+                  <td>4.000.000</td>
+                  <td>5.000.000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
           <div className={`p-4 rounded-lg dark:bg-gray-800 ${activeTable === "table3" ? '' : 'hidden'}`} id="table3" role="tabpanel" aria-labelledby="table3-tab">
-            <h1 class="text-center text-xl font-bold pb-5 uppercase">Classification of Extended Warranties Corresponding to Products</h1>
+            <h1 className="text-center text-xl font-bold pb-5 uppercase">Classification of Extended Warranties Corresponding to Products</h1>
             <table>
               <thead>
                 <tr>
