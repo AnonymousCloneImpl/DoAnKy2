@@ -21,7 +21,7 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
     const [displaySelect, setDisplaySelect] = useState(false);
     // Param
     const [minPrice, setMinPrice] = useState(query.minPrice || 0);
-    const [maxPrice, setMaxPrice] = useState(query.maxPrice || 200000000);
+    const [maxPrice, setMaxPrice] = useState(query.maxPrice || 5000);
 
     useEffect(() => {
         setShowPriceInput(false);
@@ -39,6 +39,9 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
         }
         if (showPriceInput) {
             setShowPriceInput(!showPriceInput);
+        }
+        if (showDisplayOption) {
+            setShowDisplayOption(!showDisplayOption);
         }
         setShowCpuOption(!showCpuOption);
     };
@@ -268,7 +271,7 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
 
                         <div className="rounded-2xl bg-white mt-3"
                              style={{
-                                 width: '500px',
+                                 width: '400px',
                                  boxShadow: ' rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
                              }}
                         >
@@ -434,7 +437,7 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                         {showDisplayOption ? (
                             <>
                                 <button onClick={handleDisplayClick}
-                                        className={`h-full rounded-md text-red-600 border border-red-600 overflow-hidden flex justify-center items-center`}
+                                        className={`h-full rounded-md text-red-600 border relative border-red-600 overflow-hidden flex justify-center items-center`}
                                 >
                                     <FontAwesomeIcon className="ml-2" icon={faDisplay}/>
                                     <p className="h-full w-4/6 ml-1 flex items-center">
@@ -586,12 +589,12 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
     return (
         <div className="flex justify-center flex-wrap w-full">
             <Range
-                step={500000}
+                step={100}
                 min={0}
-                max={200000000}
+                max={5000}
                 values={values}
                 onChange={handleChange}
-                renderThumb={({props, isDragged}) => (
+                renderThumb={({props}) => (
                     <div
                         {...props}
                         className="h-6 w-6 bg-white border-2 border-gray-300 rounded-full z-10"
@@ -606,7 +609,7 @@ const PriceRangeSlider = ({minPrice, maxPrice, setMinPrice, setMaxPrice}) => {
                                 values,
                                 colors: ['#ccc', '#548BF4', '#ccc'],
                                 min: 0,
-                                max: 200000000,
+                                max: 5000,
                             }),
                         }}
                     >

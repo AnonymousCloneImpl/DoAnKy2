@@ -101,7 +101,7 @@ public class ProductSpecification {
 					Expression<String> expression = criteriaBuilder.function(
 							"json_extract",
 							String.class,
-							root.get("productDetails"),
+							root.get("details"),
 							criteriaBuilder.literal("$." + searchRequestDto.getColumn())
 					);
 					predicate = criteriaBuilder.like(

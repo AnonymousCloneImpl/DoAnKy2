@@ -35,12 +35,11 @@ public class SearchServiceImpl implements SearchService {
 		}
 		List<Product> productList = productService.findAllByNameAndSortBySold(name, PageRequest.of(0, limit));
 		if (!productList.isEmpty()) {
-			List<ProductSummaryDto> productSummaryDtoList = null;
-//					productUtils
-//					.convertProductsToProductSummaryDtoList(productList, modelMapper);
-//			for (ProductSummaryDto p : productSummaryDtoList) {
-//				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
-//			}
+			List<ProductSummaryDto> productSummaryDtoList = productUtils
+					.convertProductsToProductSummaryDtoList(productList);
+			for (ProductSummaryDto p : productSummaryDtoList) {
+				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
+			}
 			return productSummaryDtoList;
 		} else {
 			System.err.println("Error in getByName findByName : productList is null");

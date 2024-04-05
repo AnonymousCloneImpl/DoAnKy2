@@ -176,10 +176,10 @@ const ProductsPageByType = ({type}) => {
                 </title>
             </Head>
             <div className="">
-                <img src={"/panel/products-panel.jpg"} alt={"banner"} loading={"lazy"} className="w-full h-96" />
+                <img src={"/panel/products-panel.jpg"} alt={"banner"} loading={"lazy"} className="w-full rounded-xl mt-3 h-96 max-lg:h-60" />
             </div>
 
-            <div className="h-auto mt-10 bg-gray-300 bg-custom">
+            <div className="h-auto mt-10 bg-gray-300 bg-custom rounded-xl">
                 <div className="h-24">
                     <p className="h-full w-full flex justify-center items-center text-5xl text-white">
                         TOP SELLER
@@ -201,32 +201,20 @@ const ProductsPageByType = ({type}) => {
                     <ul className="grid grid-cols-9 max-md:grid-cols-6 max-sm:grid-cols-4">
                         {producers?.map((producer) => (
                             <li key={producer.id} className="h-8 w-46 mb-3">
-                                {filter.producer.toLowerCase() === producer.name.toLowerCase() ? (
-                                    <div className="h-full flex items-center">
-                                        <button className="h-full bg-white relative w-1/2 border-2 border-red-600 rounded-md overflow-hidden flex justify-center items-center"
-                                                onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}
-                                        >
-                                            <img
-                                                src={`${producer.image}`}
-                                                className="h-4/6 w-11/12"
-                                                loading={"lazy"}
-                                            />
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <div className="h-full">
-                                        <button
-                                            className="h-full bg-white w-1/2 rounded-md overflow-hidden flex justify-center items-center"
-                                            onClick={() => handleProducerClick({name: producer.name.toLowerCase()})}
-                                        >
-                                            <img
-                                                src={`${producer.image}`}
-                                                className="h-4/6 w-11/12"
-                                                loading={"lazy"}
-                                            />
-                                        </button>
-                                    </div>
-                                )}
+                                <div className="h-full flex items-center">
+                                    <button
+                                        className={`h-full bg-white rounded-md overflow-hidden flex justify-center items-center
+                                            ${filter.producer.toLowerCase() === producer.name.toLowerCase() ? "border-2 border-red-600" : ''}
+                                        `}
+                                        onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}
+                                    >
+                                        <img
+                                            src={`${producer.image}`}
+                                            className="h-4/6 w-11/12"
+                                            loading={"lazy"}
+                                        />
+                                    </button>
+                                </div>
                             </li>
                         ))}
                     </ul>

@@ -90,7 +90,7 @@ export default function ProductCardComponent({ productData, setCartNotifications
                 <div className="flex items-start pt-3 w-full productNameSize">
                   <Link
                     href={`/${p?.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}>
-                    <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
+                    <p className="pl-3 h-full w-full font-bold hover:text-blue-600">{p.name}</p>
                   </Link>
                 </div>
                 <div className="div-price justify-around">
