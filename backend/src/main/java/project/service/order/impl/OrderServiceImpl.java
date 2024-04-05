@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
 import project.common.PriceUtils;
 import project.const_.ORDER_STATUS;
-import project.dto.order.OrderCheckDto;
+import project.dto.order.CheckOrderResponse;
 import project.dto.order.OrderDto;
 import project.dto.order.OrderItemDto;
 import project.dto.product.StockDto;
@@ -19,7 +19,6 @@ import project.entity.product.Product;
 import project.entity.product.Stock;
 import project.repository.OrderItemRepository;
 import project.repository.OrderRepository;
-import project.repository.ShippingRepository;
 import project.service.order.OrderService;
 import project.service.payment.PaymentService;
 import project.service.product.ProductService;
@@ -42,8 +41,6 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private EmailService emailService;
 	@Autowired
-	private ShippingRepository shippingRepo;
-	@Autowired
 	private PaymentService paymentService;
 
 	@Transactional
@@ -52,7 +49,7 @@ public class OrderServiceImpl implements OrderService {
 		Order order = createOrderObj(orderDto);
 		BeanUtils.copyProperties(orderDto, order);
 		order.setTotalPrice(PriceUtils.roundedPrice(orderDto.getTotalPrice(), 2));
-		order.setShippingMethod(shippingRepo.findByName(orderDto.getShippingMethod()));
+    order.setShippingMethod(orderDto.getShippingMethod());
 		orderRepo.save(order);
 
 		List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();
@@ -107,13 +104,13 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderCheckDto> getOrderByPhoneNumber(String phone) {
+	public List<CheckOrderResponse> getOrderByPhoneNumber(String phone) {
 		List<Order> orders = orderRepo.findByCustomerPhone(phone);
 		List<OrderItem> orderItems;
 
-		List<OrderCheckDto> orderDtos = new ArrayList<>();
+		List<CheckOrderResponse> orderDtos = new ArrayList<>();
 		List<OrderItemDto> orderItemDtos;
-		OrderCheckDto orderDto;
+		CheckOrderResponse orderRes;
 		OrderItemDto orderItemDto;
 
 		for (Order o : orders) {
@@ -127,10 +124,12 @@ public class OrderServiceImpl implements OrderService {
 				orderItemDto.setProductName(item.getProduct().getName());
 				orderItemDtos.add(orderItemDto);
 			}
-			orderDto = new OrderCheckDto();
-			BeanUtils.copyProperties(o, orderDto);
-			orderDto.setOrderItemDtoList(orderItemDtos);
-			orderDtos.add(orderDto);
+			orderRes = new CheckOrderResponse();
+			BeanUtils.copyProperties(o, orderRes);
+			orderRes.setPaymentMethod(paymentService.getPaymentMethodByOrderCode(o.getOrderCode()));
+
+			orderRes.setOrderItemDtoList(orderItemDtos);
+			orderDtos.add(orderRes);
 		}
 		return orderDtos;
 	}
