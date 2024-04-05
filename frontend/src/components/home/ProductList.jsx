@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ProductCardComponent from "@/components/home/Component.ProductCard";
 
-const ProductListComponent = ({productData, renderFromHomePage, type}) => {
+const ProductListComponent = ({productData, renderFromHomePage, type, setCartNotifications}) => {
     if (renderFromHomePage) {
         return (
             <div
@@ -10,7 +10,7 @@ const ProductListComponent = ({productData, renderFromHomePage, type}) => {
                     width: '98.8%'
                 }}
             >
-                <ProductCardComponent productData={productData} type={type} />
+                <ProductCardComponent productData={productData} type={type} setCartNotifications={setCartNotifications} />
                 <div className="w-full h-16 flex items-center justify-center">
                     <Link href={productData[0]?.type.toLowerCase() || "/"}
                         className="bg-white flex justify-center items-center rounded-2xl transition duration-100 ease-in-out transform hover:scale-110 hover:font-bold watch-more"
@@ -32,7 +32,7 @@ const ProductListComponent = ({productData, renderFromHomePage, type}) => {
                 width: '98.8%'
             }}
         >
-            <ProductCardComponent productData={productData} type={type} />
+            <ProductCardComponent productData={productData} type={type} setCartNotifications={setCartNotifications} />
         </div>
     );
 };

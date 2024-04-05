@@ -12,6 +12,8 @@ import fetcher from "@/utils/fetchAPI";
 import CustomErrorPage from "@/pages/error";
 import fetchAPIPost from "@/utils/fetchAPI-post";
 import BodyBuilder from "@/utils/BodyBuilder";
+import Notification from "@/components/notification";
+import NotificationRender from "@/components/notificationList";
 
 const ProductsPageByType = ({type}) => {
     const router = useRouter();
@@ -25,6 +27,7 @@ const ProductsPageByType = ({type}) => {
         connection : query.connect || '',
         display : query.display || ''
     });
+    const [cartNotifications, setCartNotifications] = useState([]);
     const [filterValue, setFilterValue] = useState({});
     // Data for render
     const [products, setProducts] = useState([]);
@@ -181,7 +184,7 @@ const ProductsPageByType = ({type}) => {
                     </p>
                 </div>
                 <div className="mb-8">
-                    <ProductCardComponent productData={topSeller} type={"laptop"}/>
+                    <ProductCardComponent productData={topSeller} type={"laptop"} setCartNotifications={setCartNotifications} />
                 </div>
                 <div className="h-3">
 
@@ -248,7 +251,7 @@ const ProductsPageByType = ({type}) => {
 
             <div className="flex flex-wrap h-auto mt-10">
                 {products?.length !== 0 ? (
-                    <ProductList productData={products} type={type}/>
+                    <ProductList productData={products} type={type} setCartNotifications={setCartNotifications}/>
                 ) : (
                     <div className="w-full">
                         <p className="text-5xl w-full text-center">No products found</p>
@@ -285,6 +288,9 @@ const ProductsPageByType = ({type}) => {
                     })}
                 </div>
             </div>
+
+            <NotificationRender cartNotifications={cartNotifications} />
+
         </div>
     );
 }

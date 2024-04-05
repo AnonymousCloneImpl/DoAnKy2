@@ -7,10 +7,15 @@ import ProductListComponent from "@/components/home/ProductList";
 import Head from "next/head";
 import CustomErrorPage from "@/pages/error";
 import Component1 from "@/components/home/component1";
+import {useState} from "react";
+import Notification from "@/components/notification";
+import NotificationRender from "@/components/notificationList";
 
 dotenv.config();
 
 export default function Home() {
+    const [cartNotifications, setCartNotifications] = useState([]);
+
     const laptopApi = `${process.env.DOMAIN}/products/laptop?limit=5`;
     const headphoneApi = `${process.env.DOMAIN}/products/headphone?limit=5`;
     const mouseApi = `${process.env.DOMAIN}/products/mouse?limit=5`;
@@ -53,6 +58,7 @@ export default function Home() {
                 <ProductListComponent productData={laptopData.productSummaryDtoList}
                                       type={"laptop"}
                                       renderFromHomePage={false}
+                                      setCartNotifications={setCartNotifications}
                 />
             </div>
 
@@ -111,8 +117,11 @@ export default function Home() {
                     </p>
                     <span className="w-48 h-0 border border-t-black"></span>
                 </div>
-                <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"}
-                                      renderFromHomePage={true}/>
+                <ProductListComponent productData={laptopData.productSummaryDtoList}
+                                      type={"laptop"}
+                                      renderFromHomePage={true}
+                                      setCartNotifications={setCartNotifications}
+                />
             </div>
 
             <div
@@ -128,8 +137,11 @@ export default function Home() {
                     </p>
                     <span className="w-36 h-0 border border-t-black"></span>
                 </div>
-                <ProductListComponent productData={laptopData.productSummaryDtoList} type={"laptop"}
-                                      renderFromHomePage={true}/>
+                <ProductListComponent productData={laptopData.productSummaryDtoList}
+                                      type={"laptop"}
+                                      renderFromHomePage={true}
+                                      setCartNotifications={setCartNotifications}
+                />
             </div>
 
             <div
@@ -176,7 +188,10 @@ export default function Home() {
                     </p>
                     <span className="w-36 h-0 border border-t-black"></span>
                 </div>
-                <ProductListComponent productData={headphoneData.productSummaryDtoList} renderFromHomePage={true}/>
+                <ProductListComponent productData={headphoneData.productSummaryDtoList}
+                                      renderFromHomePage={true}
+                                      setCartNotifications={setCartNotifications}
+                />
             </div>
 
             <div
@@ -191,7 +206,10 @@ export default function Home() {
                     </p>
                     <span className="w-20 h-0 border border-t-black"></span>
                 </div>
-                <ProductListComponent productData={mouseData.productSummaryDtoList} renderFromHomePage={true}/>
+                <ProductListComponent productData={mouseData.productSummaryDtoList}
+                                      renderFromHomePage={true}
+                                      setCartNotifications={setCartNotifications}
+                />
             </div>
 
             <div className="category-hompage w-full flex justify-center flex-wrap h-80 pb-4 mt-10"
@@ -266,6 +284,8 @@ export default function Home() {
                     </Link>
                 </div>
             </div>
+
+            <NotificationRender cartNotifications={cartNotifications} />
 
         </div>
     )

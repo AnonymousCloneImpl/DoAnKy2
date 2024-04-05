@@ -1,8 +1,5 @@
-import {useState} from "react";
-import postMethodFetcher from "@/utils/postMethod";
-import Success from "@/pages/order/success";
 import {useRouter} from "next/router";
-
+import postMethodFetcher from "@/utils/postMethod";
 
 export default function Process() {
     const router = useRouter();

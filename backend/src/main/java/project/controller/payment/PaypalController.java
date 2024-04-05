@@ -8,20 +8,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 import project.dto.payment.CheckoutDto;
 import project.dto.payment.PaypalRequestDto;
-import project.service.payment.paypal.PaypalService;
+import project.service.payment.PaymentService;
+import project.service.payment.PaypalService;
 
 @RestController
 @RequestMapping("/api/payment/paypal")
 @CrossOrigin(origins = "*")
 public class PaypalController {
-
+	@Autowired
+	private PaymentService paymentService;
 	@Autowired
 	private PaypalService paypalService;
 
 	@PostMapping("/create")
 	public String createPayment(@RequestBody PaypalRequestDto paymentRequest) {
-		Payment payment = paypalService.createPayment(paymentRequest);
-		paypalService.updatePaymentById(payment.getId(), paymentRequest.getOrderCode());
+		Payment payment = paypalService.createPaypalPayment(paymentRequest);
+		paymentService.updatePaymentByOrderCode(payment.getId(), paymentRequest.getOrderCode());
 		for (Links link : payment.getLinks()) {
 			if (link.getRel().equals("approval_url")) {
 				return link.getHref();
@@ -39,10 +41,10 @@ public class PaypalController {
 				return ResponseEntity.ok("PAYMENT_ALREADY_DONE");
 			}
 			if (!payment.getState().equals("approved")) {
-				paypalService.updatePayment(body.getPaymentId(), payment.getState(), payment.getFailureReason());
+				paymentService.updatePayment(body.getPaymentId(), payment.getState(), payment.getFailureReason());
 				return ResponseEntity.ok("Failed");
 			} else {
-				paypalService.updatePayment(body.getPaymentId(), payment.getState());
+				paymentService.updatePayment(body.getPaymentId(), payment.getState());
 				return ResponseEntity.ok("Success");
 			}
 		}

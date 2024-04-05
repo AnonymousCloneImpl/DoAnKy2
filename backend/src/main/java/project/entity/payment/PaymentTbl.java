@@ -22,7 +22,7 @@ public class PaymentTbl extends BaseEntity {
 	@Column(name = "payment_id")
 	private String paymentId;
 	private String state;
-	@Column(name = "failure_reason")
-	private String failureReason;
 	private String orderCode;
+	@Column(columnDefinition = "TEXT")
+	private String detail;
 }
