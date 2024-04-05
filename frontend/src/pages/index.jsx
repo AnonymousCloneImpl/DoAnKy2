@@ -71,6 +71,7 @@ export default function Home() {
                             style={{
                                 height: '80%'
                             }}
+                            loading={"lazy"}
                         />
                     </Link>
                     <Link href="" className="h-full ml-1 mr-1">
@@ -80,6 +81,7 @@ export default function Home() {
                             style={{
                                 height: '80%'
                             }}
+                            loading={"lazy"}
                         />
                     </Link>
                     <Link href="" className="h-full ml-1 mr-1">
@@ -89,6 +91,7 @@ export default function Home() {
                             style={{
                                 height: '80%'
                             }}
+                            loading={"lazy"}
                         />
                     </Link>
                 </div>
@@ -139,6 +142,7 @@ export default function Home() {
                     <img
                         className="rounded-2xl h-3/4 max-md:h-40"
                         src={'https://file.hstatic.net/200000722513/file/1580x510_man_hinh_thang_03_435810e7223043ec866bd0ed8dc1cf09.png'}
+                        loading={"lazy"}
                     />
                 </Link>
                 <div className="ml-8 h-3/4 w-4/12 max-md:ml-0 max-md:mt-3 max-lg:w-8/12 max-lg:ml-0">
@@ -146,12 +150,14 @@ export default function Home() {
                         <img
                             className="rounded-2xl h-1/2 max-lg:w-full"
                             src={'https://file.hstatic.net/200000722513/file/banner_790x250_tai_nghe_6f6dcb17d3a54fcc88b3de96762d2d41.jpg'}
+                            loading={"lazy"}
                         />
                     </Link>
                     <Link href={'/'}>
                         <img
                             className="rounded-2xl mt-1 h-1/2"
                             src={'https://file.hstatic.net/200000722513/file/bot_promotion_banner_small_2_2ad55c2345c64fbfb87dab4957b33914.png'}
+                            loading={"lazy"}
                         />
                     </Link>
                 </div>
@@ -203,7 +209,9 @@ export default function Home() {
                         href="/laptop">
                         <img src="https://dlcdnwebimgs.asus.com/gain/868C3307-DD02-4624-8BA7-31B62EE4A38F/w240/h175"
                              alt="image"
-                             className="h-4/5 w-full"/>
+                             className="h-4/5 w-full"
+                             loading={"lazy"}
+                        />
                         <p className="h-1/5 text-center w-full text-2xl pt-2">LAPTOP</p>
                     </Link>
                     <Link
@@ -211,7 +219,9 @@ export default function Home() {
                         href="/headphone">
                         <img src="https://dlcdnwebimgs.asus.com/gain/070A915A-ED63-4C9E-B837-F6F1766E2863/w240/h175"
                              alt="image"
-                             className="h-4/5 w-full"/>
+                             className="h-4/5 w-full"
+                             loading={"lazy"}
+                        />
                         <p className="h-1/5 text-center w-full text-2xl pt-2">HEADPHONE</p>
                     </Link>
                     <Link
@@ -219,7 +229,9 @@ export default function Home() {
                         href="/mouse">
                         <img src="https://dlcdnwebimgs.asus.com/gain/F919198E-4F2B-4A8A-969A-E6E4757674AC/w240/h175"
                              alt="image"
-                             className="h-4/5 w-full"/>
+                             className="h-4/5 w-full"
+                             loading={"lazy"}
+                        />
                         <p className="h-1/5 text-center w-full text-2xl pt-2">MOUSE</p>
                     </Link>
                     <Link
@@ -227,7 +239,9 @@ export default function Home() {
                         href="/monitor">
                         <img src="https://dlcdnwebimgs.asus.com/gain/718462E2-0FF1-424B-8070-9EE75A96DC64/w240/h175"
                              alt="image"
-                             className="h-4/5 w-full"/>
+                             className="h-4/5 w-full"
+                             loading={"lazy"}
+                        />
                         <p className="h-1/5 text-center w-full text-2xl pt-2">MONITOR</p>
                     </Link>
                     <Link
@@ -235,7 +249,9 @@ export default function Home() {
                         href="/storage">
                         <img src="https://dlcdnwebimgs.asus.com/gain/D8D19FB9-2485-478F-9E58-4344265E0E69/w240/h175"
                              alt="image"
-                             className="h-4/5 w-full"/>
+                             className="h-4/5 w-full"
+                             loading={"lazy"}
+                        />
                         <p className="h-1/5 text-center w-full text-2xl pt-2">STORAGE</p>
                     </Link>
                     <Link
@@ -243,7 +259,9 @@ export default function Home() {
                         href="/graphics-card">
                         <img src="https://dlcdnwebimgs.asus.com/gain/01480520-08BA-439E-A626-2E3D6F0D9908/w240/h175"
                              alt="image"
-                             className="h-4/5 w-full"/>
+                             className="h-4/5 w-full"
+                             loading={"lazy"}
+                        />
                         <p className="h-1/5 text-center w-full text-2xl pt-2">GRAPHICS CARD</p>
                     </Link>
                 </div>

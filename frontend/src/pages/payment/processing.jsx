@@ -16,13 +16,20 @@ export default function Process() {
     if (query.paymentId !== null && query.paymentId !== undefined && query.PayerID !== null && query.PayerID !== undefined) {
         const checkout = async () => {
             const data = await postMethodFetcher(`${process.env.DOMAIN}/api/payment/paypal/checkPayment`, body);
-            console.log(data)
-            if (data.data === "Success") {
-                router.push("/order/success");
+            if (data === "PAYMENT_ALREADY_DONE") {
+                await router.push("/order/success");
+            }
+            if (data === "Success") {
+                await router.push("/order/success");
             }
         }
-
         checkout();
     }
+
+    return (
+        <div>
+
+        </div>
+    )
 
 }
