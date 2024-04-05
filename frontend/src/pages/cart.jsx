@@ -193,7 +193,6 @@ const CartPage = () => {
     setPaymentMethod(e.target.value)
   };
 
-
   // Place Order----------------------------------------------------------------------------------------------
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
@@ -273,74 +272,81 @@ const CartPage = () => {
           <h2 className="font-semibold text-2xl uppercase">{items.length} Items</h2>
         </div>
         <div className="flex shadow-md">
-          <div className="w-3/4 bg-white px-10 py-5">
-            <div className="flex border-b text-xl text-700 pb-5 font-semibold uppercase">
-              <h3 className="w-1/2">Product Details</h3>
-              <h3 className="w-1/5 ml-10">Quantity</h3>
-              <h3 className="w-1/5 ml-3">Price</h3>
-              <h3 className="w-1/5">Total</h3>
-            </div>
+          <table className="w-3/4 bg-white px-10 py-5">
+            <thead className="flex border-b text-xl text-700 pb-5 font-semibold uppercase">
+              <tr>
+                <th className="w-1/12"></th>
+                <th className="w-5/12 flex flex-start">Product Details</th>
+                <th className="w-3/12 pr-5">Quantity</th>
+                <th className="w-1/12 pr-10">Price</th>
+                <th className="w-2/12 pr-10">Total</th>
+              </tr>
+            </thead>
 
-            {items.map((item, index) => (
-              <div key={index} className=" border-b flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-                <div className="flex items-center mb-4">
-                  <input type="checkbox" className="product scale-125 mr-5 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
-                    onChange={() => handleCheckboxChange(item.id)}
-                    checked={checkedItems.includes(item.id)}
-                  />
-                </div>
-                <div className="flex w-2/5">
-                  <div className="w-1/3">
-                    <img className="h-20" src={item.image} alt={item.name} />
-                  </div>
-                  <div className="w-2/3 flex flex-col justify-between ml-4 flex-grow">
-                    <Link href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
-                      {item.name}
-                    </Link>
-                    <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm" onClick={() => removeItem(index)}>
-                      <FontAwesomeIcon icon={faTrashCan} /> REMOVE
-                    </b>
-                  </div>
-                </div>
-
-                <div className="quantity">
-                  <div className="quantity-control px-10">
-                    <button className="quantity-decrease" onClick={() => decreaseQuantity(index)}><FontAwesomeIcon icon={faMinus} /></button>
-                    <input
-                      type="number"
-                      min="1"
-                      max={item.stock}
-                      value={item.quantity}
-                      onChange={(e) => limitQuantity(index, parseInt(e.target.value, 10))}
-                      onBlur={(e) => resetIfEmpty(index, e.target.value)}
-                      className="quantity-input"
+            <tbody>
+              {items.map((item, index) => (
+                <tr key={index} className=" border-b flex items-center hover:bg-gray-100 px-6 py-5">
+                  <td className="flex items-center w-1/12">
+                    <input type="checkbox" className="product scale-125 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
+                      onChange={() => handleCheckboxChange(item.id)}
+                      checked={checkedItems.includes(item.id)}
                     />
-                    <button className="quantity-increase" onClick={() => increaseQuantity(index)}><FontAwesomeIcon icon={faPlus} /></button>
-                  </div>
-                  <div className="text-center text-red-600 font-semibold text-sm uppercase">
-                    {item.stock} Left in Stock
-                  </div>
-                </div>
+                  </td>
+                  <td className="flex w-5/12">
+                    <div className="w-28">
+                      <img className="h-20" src={item.image} alt={item.name} />
+                    </div>
+                    <div className="flex flex-col justify-between ml-4 flex-grow">
+                      <Link href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
+                        {item.name}
+                      </Link>
+                      <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm" onClick={() => removeItem(index)}>
+                        <FontAwesomeIcon icon={faTrashCan} /> REMOVE
+                      </b>
+                    </div>
+                  </td>
+
+                  <td className="quantity w-3/12 text-center">
+                    <div className="quantity-control px-10">
+                      <button className="quantity-decrease" onClick={() => decreaseQuantity(index)}><FontAwesomeIcon icon={faMinus} /></button>
+                      <input
+                        type="number"
+                        min="1"
+                        max={item.stock}
+                        value={item.quantity}
+                        onChange={(e) => limitQuantity(index, parseInt(e.target.value, 10))}
+                        onBlur={(e) => resetIfEmpty(index, e.target.value)}
+                        className="quantity-input"
+                      />
+                      <button className="quantity-increase" onClick={() => increaseQuantity(index)}><FontAwesomeIcon icon={faPlus} /></button>
+                    </div>
+                    <div className="text-center text-red-600 font-semibold text-sm uppercase">
+                      {item.stock} Left in Stock
+                    </div>
+                  </td>
 
 
-                <div className="block text-center w-1/6 font-semibold text-base">
-                  <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100} type={"discount"} />
-                </div>
-                <div className="text-center text-red-600 w-1/6 font-semibold text-base">
-                  <FormatPrice price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity} type={"discount"} />
-                </div>
-              </div>
-            ))}
+                  <td className="block text-center font-semibold text-base w-1/12">
+                    <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100} type={"discount"} />
+                  </td>
 
-            <Link href="/" className="flex font-semibold text-indigo-600 text-base uppercase mt-10">
+                  <td className="text-center text-red-600 font-semibold text-base w-2/12 text-center">
+                    <FormatPrice price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity} type={"discount"} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
 
-              <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
-                <path
-                  d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
-              </svg>
-              Continue Shopping
-            </Link>
-          </div>
+            <tfoot>
+              <Link href="/" className="flex font-semibold text-indigo-600 text-base uppercase mt-10">
+                <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
+                  <path
+                    d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
+                </svg>
+                Continue Shopping
+              </Link>
+            </tfoot>
+          </table>
 
           <div id="summary" className="w-1/4 px-8 py-10">
             <h1 className="font-semibold text-2xl border-b pb-8">ORDER SUMARY</h1>
@@ -356,6 +362,7 @@ const CartPage = () => {
               </button>
             </div>
           </div>
+
         </div>
       </div>
 

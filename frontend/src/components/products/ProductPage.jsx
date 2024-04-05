@@ -11,7 +11,6 @@ import QuantityControl from "@/components/QuantityControl";
 import OrderForm from '@/components/OrderForm';
 import HandleCartClick from "@/components/HandleCartClick";
 import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
-import Notification from "@/components/notification";
 import NotificationRender from "@/components/notificationList";
 
 const ProductPage = ({ productBE }) => {
