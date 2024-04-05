@@ -5,7 +5,7 @@ import FormatPrice from "@/components/FormatPrice";
 import Image from "next/image";
 import HandleCartClick from "@/components/HandleCartClick";
 
-export default function ProductCardComponent({ productData }) {
+export default function ProductCardComponent({ productData, setCartNotifications }) {
   if (productData !== null && productData !== [] && productData !== undefined) {
     return (
       <div className="w-full grid grid-cols-5 productList">
@@ -48,7 +48,7 @@ export default function ProductCardComponent({ productData }) {
                     <FormatPrice price={p.price} />
                   </div>
                   <div className="w-full h-16 flex justify-center items-center mb-2">
-                    <button onClick={() => HandleCartClick({ product: p })}
+                    <button onClick={() => HandleCartClick({ product: p, setCartNotifications: setCartNotifications})}
                       className="h-3/4 rounded-md w-4/12 button-style">
                       <FontAwesomeIcon
                         icon={faCartPlus}
@@ -132,7 +132,7 @@ export default function ProductCardComponent({ productData }) {
                   </div>
                 </div>
                 <div className="w-full h-16 flex justify-center items-center mb-2 mt-3">
-                  <button onClick={() => HandleCartClick({ product: p })}
+                  <button onClick={() => HandleCartClick({ product: p, setCartNotifications: setCartNotifications })}
                     className="h-3/4 rounded-md w-4/12 button-style">
                     <FontAwesomeIcon
                       icon={faCartPlus}

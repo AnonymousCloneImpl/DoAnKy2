@@ -11,8 +11,11 @@ import QuantityControl from "@/components/QuantityControl";
 import OrderForm from '@/components/OrderForm';
 import HandleCartClick from "@/components/HandleCartClick";
 import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
+import Notification from "@/components/notification";
+import NotificationRender from "@/components/notificationList";
 
 const ProductPage = ({ productBE }) => {
+  const [cartNotifications, setCartNotifications] = useState([]);
   const product = productBE;
 
   // set product image----------------------------------------------------------------------------------------------
@@ -380,7 +383,7 @@ const ProductPage = ({ productBE }) => {
                 <div className="left-in-stock">{product.stock.quantity} Left In Stock</div>
 
                 <div className="btn-box">
-                  <button className="cart-btn" onClick={() => HandleCartClick({ product })}>
+                  <button className="cart-btn" onClick={() => HandleCartClick({ product, setCartNotifications })}>
                     <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                   </button>
                   <button className={`buy-btn ${isSoldOut ? 'disabled-btn' : ''}`}
@@ -563,7 +566,9 @@ const ProductPage = ({ productBE }) => {
             </div>
           </>
         )}
-        
+
+        <NotificationRender cartNotifications={cartNotifications} />
+
       </div>
     );
   }

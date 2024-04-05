@@ -28,6 +28,10 @@ public class PaymentService {
 		paymentRepo.save(payment);
 	}
 
+	public PAYMENT_METHOD getPaymentMethodByOrderCode(String code) {
+		return paymentRepo.getPaymentMethodByOrderCode(code);
+	}
+
 	public Long getByOrderCode(String orderCode) {
 		PaymentTbl paymentTbl = paymentRepo.findByOrderCode(orderCode);
 		return paymentTbl.getId();

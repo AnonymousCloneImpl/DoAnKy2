@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
-function HandleCartClick({ product }) {
+function HandleCartClick({ product, setCartNotifications}) {
   const storedItemList = localStorage.getItem('itemList');
   let cartItemList = [];
 
@@ -45,7 +45,6 @@ function HandleCartClick({ product }) {
 
   localStorage.setItem('itemList', JSON.stringify(cartItemList));
 
-  const [cartNotifications, setCartNotifications] = useState([]);
   const newNotification = {
     message: 'The product has been added to Cart !',
   };
@@ -56,20 +55,8 @@ function HandleCartClick({ product }) {
     setCartNotifications((prevNotifications) => prevNotifications.filter((n) => n !== newNotification));
   }, 3000);
 
-  return (
-    <div>
-      {cartNotifications.map((notification, index) => (
-        <div
-          key={index}
-          className="cart-notification"
-          style={{ bottom: `${10 + index * 40}px`, display: 'block' }}
-        >
-          <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
-          {notification.message}
-        </div>
-      ))}
-    </div>
-  )
+  return null;
+
 }
 
 export default HandleCartClick;
