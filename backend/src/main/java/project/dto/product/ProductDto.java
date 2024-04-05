@@ -16,7 +16,7 @@ public class ProductDto implements Serializable {
 	private String model;
 	private String name;
 	private String type;
-	private String productDetails;
+	private String details;
 	private Double price;
 	private List<String> imageList;
 	private byte discountPercentage;

@@ -209,12 +209,21 @@ const ProductPage = ({ productBE }) => {
     try {
       const data = await postMethodFetcher(orderUrl, orderData)
       if (data !== undefined) {
+        console.log(paymentMethod)
         if (paymentMethod === "COD") {
           route.push("/order/success");
         }
 
         if (paymentMethod === "PAYPAL") {
-          route.push(`/payment?price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
+          route.push(`/payment?type=PAYPAL&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
+        }
+
+        if (paymentMethod === "VNPAY") {
+          route.push(`/payment?type=VNPAY&price=${orderData.totalPrice}&orderCode=${data.orderCode}`);
+        }
+
+        if (paymentMethod === "MOMO") {
+          route.push(`/payment?type=MOMO&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
         }
       } else alert('Failed to place order');
     } catch (error) {
@@ -393,7 +402,7 @@ const ProductPage = ({ productBE }) => {
               <h1 className="detail-name">The detail information of product</h1>
               <table className="detail-table">
                 <tbody>
-                  {Object.entries(JSON.parse(product.productDetails)).map(([key, value]) => (
+                  {Object.entries(JSON.parse(product.details)).map(([key, value]) => (
                     <tr key={key}>
                       <td>{key.toUpperCase()}</td>
                       <td>{value}</td>

@@ -1,4 +1,4 @@
-package project.service.payment.paypal;
+package project.service.payment;
 
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.APIContext;
@@ -7,12 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dto.payment.PaypalRequestDto;
-import project.entity.payment.PaymentTbl;
-import project.repository.PaymentTblRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +18,8 @@ import java.util.List;
 public class PaypalService {
 	@Autowired
 	private APIContext apiContext;
-	@Autowired
-	private PaymentTblRepository repository;
 
-	public void save(PaymentTbl paymentTbl) {
-		repository.save(paymentTbl);
-	}
-
-	public Payment createPayment(PaypalRequestDto paypalRequestDto) {
+	public Payment createPaypalPayment(PaypalRequestDto paypalRequestDto) {
 		Double total = BigDecimal.valueOf(paypalRequestDto.getTotal()).setScale(2, RoundingMode.HALF_UP).doubleValue();
 		Amount amount = new Amount();
 		amount.setCurrency(paypalRequestDto.getCurrency());
@@ -58,25 +49,6 @@ public class PaypalService {
 		} catch (PayPalRESTException e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	public Long getByOrderCode(String orderCode) {
-		PaymentTbl paymentTbl = repository.findByOrderCode(orderCode);
-		return paymentTbl.getId();
-	}
-
-	public void updatePaymentById(String paymentCode, String orderCode) {
-		Long id = getByOrderCode(orderCode);
-		System.out.println(id + " " + paymentCode);
-		repository.updatePaymentCodeById(id, paymentCode, LocalDateTime.now());
-	}
-
-	public void updatePayment(String paymentCode, String status) {
-		repository.updatePaymentCodeById(paymentCode, status, LocalDateTime.now());
-	}
-
-	public void updatePayment(String paymentCode, String status, String failureReason) {
-		repository.updatePaymentCodeById(paymentCode, status, failureReason, LocalDateTime.now());
 	}
 
 	public Payment executePayment(String paymentId, String payerId) {
