@@ -518,7 +518,7 @@ const ProductPage = ({ productBE }) => {
                       <p>{`Down ${item.discountPercentage}%`}</p>
                     </div>
                     <div className="similar-product-btn-box">
-                      <button className="cart-btn" onClick={() => HandleCartClick({ product: item })}>
+                      <button className="cart-btn" onClick={() => HandleCartClick({ product: item, setCartNotifications })}>
                         <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                       </button>
                     </div>

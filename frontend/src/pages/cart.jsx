@@ -265,16 +265,16 @@ const CartPage = () => {
   };
 
   return (
-    <div style={{ margin: "0 auto" }} className="bg-gray-100 w-11/12">
+    <div style={{ margin: "0 auto" }} className="w-11/12">
       <div className="container mx-auto mt-10">
         <div className="bg-white flex justify-between pb-8">
           <h1 className="font-semibold text-3xl uppercase">Shopping Cart</h1>
           <h2 className="font-semibold text-2xl uppercase">{items.length} Items</h2>
         </div>
-        <div className="flex shadow-md">
+        <div className="flex shadow-md flex-col md:flex-row">
           <table className="w-3/4 bg-white px-10 py-5">
-            <thead className="flex border-b text-xl text-700 pb-5 font-semibold uppercase">
-              <tr>
+            <thead className="flex text-xl text-700 pb-5 font-semibold uppercase text-center">
+              <tr className="w-full flex">
                 <th className="w-1/12"></th>
                 <th className="w-5/12 flex flex-start">Product Details</th>
                 <th className="w-3/12 pr-5">Quantity</th>
@@ -285,9 +285,9 @@ const CartPage = () => {
 
             <tbody>
               {items.map((item, index) => (
-                <tr key={index} className=" border-b flex items-center hover:bg-gray-100 px-6 py-5">
+                <tr key={index} className=" border-t flex items-center hover:bg-gray-100 px-6 py-5">
                   <td className="flex items-center w-1/12">
-                    <input type="checkbox" className="product scale-125 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
+                    <input type="checkbox" className="product scale-150 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
                       onChange={() => handleCheckboxChange(item.id)}
                       checked={checkedItems.includes(item.id)}
                     />
@@ -325,7 +325,6 @@ const CartPage = () => {
                     </div>
                   </td>
 
-
                   <td className="block text-center font-semibold text-base w-1/12">
                     <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100} type={"discount"} />
                   </td>
@@ -336,19 +335,9 @@ const CartPage = () => {
                 </tr>
               ))}
             </tbody>
-
-            <tfoot>
-              <Link href="/" className="flex font-semibold text-indigo-600 text-base uppercase mt-10">
-                <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
-                  <path
-                    d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
-                </svg>
-                Continue Shopping
-              </Link>
-            </tfoot>
           </table>
 
-          <div id="summary" className="w-1/4 px-8 py-10">
+          <div id="summary" className="w-full md:w-1/4 px-8 py-10 bg-gray-100">
             <h1 className="font-semibold text-2xl border-b pb-8">ORDER SUMARY</h1>
 
             <h1 className="font-semibold text-2xl my-3">TOTAL COST</h1>
@@ -362,7 +351,16 @@ const CartPage = () => {
               </button>
             </div>
           </div>
+        </div>
 
+        <div>
+          <Link href="/" className="flex font-semibold text-indigo-600 text-base uppercase my-10">
+            <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
+              <path
+                d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
+            </svg>
+            Continue Shopping
+          </Link>
         </div>
       </div>
 
