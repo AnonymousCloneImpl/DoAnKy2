@@ -84,13 +84,13 @@ export default function Sort() {
     };
 
     return (
-        <div className="flex">
+        <div className="flex flex-wrap">
             {value.map((item, index) => {
                 if (sortActive === item.name) {
                     return (
                         <button
                             key={index}
-                            className="flex z-0 items-center justify-around mr-3 text-red-600 bg-red-50 border-2 border-red-600 rounded-md"
+                            className="flex z-0 w-auto mr-3 mt-2 items-center justify-around text-red-600 bg-red-50 border-2 border-red-600 rounded-md"
                             style={{
                                 height: '40px'
                             }}
@@ -106,7 +106,7 @@ export default function Sort() {
                 return (
                     <button
                         key={index}
-                        className="flex justify-around bg-gray-200 items-center mr-3 rounded-md"
+                        className="flex justify-around bg-gray-200 items-center mr-3 mt-2 rounded-md"
                         style={{
                             height: '40px'
                         }}
