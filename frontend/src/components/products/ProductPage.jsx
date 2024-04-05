@@ -11,7 +11,7 @@ import QuantityControl from "@/components/QuantityControl";
 import OrderForm from '@/components/OrderForm';
 import HandleCartClick from "@/components/HandleCartClick";
 import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
-import CartNotification from "@/components/CartNotification";
+import NotificationRender from "@/components/notificationList";
 
 const ProductPage = ({ productBE }) => {
   const [cartNotifications, setCartNotifications] = useState([]);
@@ -518,7 +518,7 @@ const ProductPage = ({ productBE }) => {
                       <p>{`Down ${item.discountPercentage}%`}</p>
                     </div>
                     <div className="similar-product-btn-box">
-                      <button className="cart-btn" onClick={() => HandleCartClick({ product: item })}>
+                      <button className="cart-btn" onClick={() => HandleCartClick({ product: item, setCartNotifications })}>
                         <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                       </button>
                     </div>
@@ -566,7 +566,7 @@ const ProductPage = ({ productBE }) => {
           </>
         )}
 
-        <CartNotification cartNotifications={cartNotifications} />
+        <NotificationRender cartNotifications={cartNotifications} />
 
       </div>
     );

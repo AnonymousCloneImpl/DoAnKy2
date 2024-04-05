@@ -27,15 +27,10 @@ const CheckOrder = () => {
     setWaiting(true);
   };
 
-  // const sleep = (ms) => {
-  //   return new Promise(resolve => setTimeout(resolve, ms));
-  // }
-
   const [data, setData] = useState([]);
   const [showTable, setShowTable] = useState(false);
   const fetchOrders = () => {
     setLoading(true);
-    // await sleep(3000);
     fetch(`${process.env.DOMAIN}/check-order?q=${searchPhone}`)
       .then(response => response.json())
       .then(data => {
