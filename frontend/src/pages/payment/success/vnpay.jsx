@@ -1,7 +1,8 @@
 import {useRouter} from "next/router";
 import axios from "axios";
-import {dom} from "@fortawesome/fontawesome-svg-core";
 import moment from "moment";
+import Success from "@/pages/order/success";
+import Loading from "@/components/Loading";
 
 export default function VnpayPayment() {
     const router = useRouter();
@@ -36,38 +37,39 @@ export default function VnpayPayment() {
     };
 
     const date = new Date();
+    const vnp_RequestId = moment(date).format("HHmmss");
+    let vnp_CreateDate = moment(date).format('YYYYMMDDHHmmss');
 
     let dataObj = {
-        'vnp_RequestId': moment(date).format("HHmmss"),
-        'vnp_Version': '2.0.1',
+        'vnp_RequestId': vnp_RequestId,
+        'vnp_Version': '2.1.0',
         'vnp_Command': 'querydr',
         'vnp_TmnCode': vnp_TmnCode,
         'vnp_TxnRef': vnp_TxnRef,
         'vnp_OrderInfo': vnp_OrderInfo,
         'vnp_TransactionDate': vnp_PayDate,
-        'vnp_CreateDate': moment(date).format("YYYYMMDDHHmmss"),
-        'vnp_IpAddr': vnp_IpAddr,
+        'vnp_CreateDate': vnp_CreateDate,
+        'vnp_IpAddr': '0.0.0.1',
         'vnp_SecureHash': vnp_SecureHash
     };
 
     const doPost = async () => {
-        if (vnp_ResponseCode !== null && vnp_ResponseCode !== undefined) {
-            if (vnp_ResponseCode === '24') {
-                await router.push("/payment/cancel");
-            }
-            if (vnp_ResponseCode === '00') {
-                const url = `${process.env.DOMAIN}/api/payment/vnpay/checkPayment`;
-                await axios.post(url, body);
-                await router.push("/order/success");
-            }
+        if (vnp_TxnRef !== undefined) {
+            await axios.post(
+                `${process.env.DOMAIN}/api/payment/vnpay/checkPayment`,
+                dataObj
+            )
+                .then((res) => {
+                    if (res.data === "Success") {
+                        router.push("/order/success");
+                    }
+                });
         }
     }
 
     doPost();
 
     return (
-        <div>
-            ĐANG XỬ LÝ
-        </div>
+        <Loading />
     )
 }
