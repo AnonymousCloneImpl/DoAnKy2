@@ -1,21 +1,24 @@
 import { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot, faPhone, faEnvelope, faUser, faMinus, faPlus, faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faPhone, faEnvelope, faUser, faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
 import { useRouter } from "next/router";
 import postMethodFetcher from "@/utils/postMethod";
+import QuantityControl from "@/components/QuantityControl";
 
 const ProductPage = ({ productBE }) => {
   const product = productBE;
 
-  // set main image----------------------------------------------------------------------------------------------
+  // set product image----------------------------------------------------------------------------------------------
   const [mainImg, setMainImg] = useState('');
   const [activeIndex, setActiveIndex] = useState(0);
   const subImgItems = product.imageList;
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const openImgPopup = () => setIsPopupOpen(true);
+  const closePopup = () => setIsPopupOpen(false);
 
   useEffect(() => {
     setMainImg(subImgItems[activeIndex]);
@@ -28,10 +31,7 @@ const ProductPage = ({ productBE }) => {
     }
   };
 
-  const openImgPopup = () => setIsPopupOpen(true);
-  const closePopup = () => setIsPopupOpen(false);
-
-  // set choose product ram----------------------------------------------------------------------------------------------
+  // set choose product configuration----------------------------------------------------------------------------------------------
   const activeBtn = (button) => {
     let buttons = document.querySelectorAll('.pmodel');
     buttons.forEach((btn) => {
@@ -50,55 +50,8 @@ const ProductPage = ({ productBE }) => {
 
   // Set quantity----------------------------------------------------------------------------------------------
   const [quantity, setQuantity] = useState(1);
-  useEffect(() => {
-    const quantityInput = document.querySelector('.quantity-input');
-    const decreaseButton = document.querySelector('.quantity-decrease');
-    const increaseButton = document.querySelector('.quantity-increase');
-
-    const handleDecrease = () => decreaseQuantity();
-    const handleIncrease = () => increaseQuantity();
-    const handleInput = () => limitQuantity();
-    const handleBlur = () => resetIfEmpty();
-
-    decreaseButton.addEventListener('click', handleDecrease);
-    increaseButton.addEventListener('click', handleIncrease);
-    quantityInput.addEventListener('input', handleInput);
-    quantityInput.addEventListener('blur', handleBlur);
-
-    return () => {
-      decreaseButton.removeEventListener('click', handleDecrease);
-      increaseButton.removeEventListener('click', handleIncrease);
-      quantityInput.removeEventListener('input', handleInput);
-      quantityInput.removeEventListener('blur', handleBlur);
-    };
-  }, []);
-
-
-  const decreaseQuantity = (e) => {
-    if (e) {
-      e.preventDefault();
-      setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
-    }
-  }
-
-  const increaseQuantity = (e) => {
-    if (e) {
-      e.preventDefault();
-      setQuantity((prevQuantity) => Math.min(prevQuantity + 1, product.stock.quantity));
-    }
-  }
-
-  const limitQuantity = (e) => {
-    if (e) {
-      const value = parseInt(e.target.value, 10);
-      setQuantity(Math.min(Math.max(value || 1, 1), product.stock.quantity));
-    }
-  };
-
-  const resetIfEmpty = (e) => {
-    if (e && e.target.value === '' || product.stock.quantity === 0) {
-      setQuantity(1);
-    }
+  const handleQuantityChange = (newQuantity) => {
+    setQuantity(newQuantity);
   };
 
   // Set combo----------------------------------------------------------------------------------------------
@@ -480,19 +433,7 @@ const ProductPage = ({ productBE }) => {
 
                 <div className="quantity">
                   <p>Quantity</p>
-                  <div className="quantity-control">
-                    <button className="quantity-decrease" onClick={decreaseQuantity}><FontAwesomeIcon icon={faMinus} /></button>
-                    <input
-                      type="number"
-                      min="1"
-                      max={product.stock.quantity}
-                      value={quantity}
-                      onChange={(e) => limitQuantity(e)}
-                      onBlur={(e) => resetIfEmpty(e)}
-                      className="quantity-input"
-                    />
-                    <button className="quantity-increase" onClick={increaseQuantity}><FontAwesomeIcon icon={faPlus} /></button>
-                  </div>
+                  <QuantityControl initialQuantity={1} maxQuantity={productBE.stock.quantity} onChange={handleQuantityChange} />
                 </div>
 
                 <div className="left-in-stock">{product.stock.quantity} Left In Stock</div>
