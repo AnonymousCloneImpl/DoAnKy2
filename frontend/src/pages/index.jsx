@@ -6,10 +6,9 @@ import fetcher from "@/utils/fetchAPI";
 import ProductListComponent from "@/components/home/ProductList";
 import Head from "next/head";
 import CustomErrorPage from "@/pages/error";
-import Component1 from "@/components/home/component1";
 import {useState} from "react";
-import Notification from "@/components/notification";
-import NotificationRender from "@/components/notificationList";
+import CartNotification from "@/components/CartNotification";
+import Loading from "@/components/Loading";
 
 dotenv.config();
 
@@ -20,15 +19,15 @@ export default function Home() {
     const headphoneApi = `${process.env.DOMAIN}/products/headphone?limit=5`;
     const mouseApi = `${process.env.DOMAIN}/products/mouse?limit=5`;
 
-    const { data: laptopData, error: laptopError } = useSWR(laptopApi, fetcher);
-    const { data: headphoneData, error: headphoneError } = useSWR(headphoneApi, fetcher);
-    const { data: mouseData, error: mouseError } = useSWR(mouseApi, fetcher);
+    const { data: laptopData, isLoading: loading, error: laptopError } = useSWR(laptopApi, fetcher);
+    const { data: headphoneData, isLoading: loading2, error: headphoneError } = useSWR(headphoneApi, fetcher);
+    const { data: mouseData, isLoading: loading3, error: mouseError } = useSWR(mouseApi, fetcher);
 
     if (laptopError || headphoneError || mouseError) return <CustomErrorPage statusCode="404" />;
 
     if (laptopError === [] || headphoneError === [] || mouseError === []) return <CustomErrorPage statusCode="404" />;
 
-    if (!laptopData || !headphoneData || !mouseData) return <div>Loading...</div>;
+    if (loading || loading2 || loading3) return <Loading />;
 
     return (
 
@@ -224,7 +223,7 @@ export default function Home() {
                 <div className="w-10/12 h-3/5 flex justify-around">
                     <Link
                         className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/laptop">
+                        href={"/laptop"}>
                         <img src="https://dlcdnwebimgs.asus.com/gain/868C3307-DD02-4624-8BA7-31B62EE4A38F/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"
@@ -234,7 +233,7 @@ export default function Home() {
                     </Link>
                     <Link
                         className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/headphone">
+                        href={"/headphone"}>
                         <img src="https://dlcdnwebimgs.asus.com/gain/070A915A-ED63-4C9E-B837-F6F1766E2863/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"
@@ -244,7 +243,7 @@ export default function Home() {
                     </Link>
                     <Link
                         className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/mouse">
+                        href={"/mouse"}>
                         <img src="https://dlcdnwebimgs.asus.com/gain/F919198E-4F2B-4A8A-969A-E6E4757674AC/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"
@@ -254,7 +253,7 @@ export default function Home() {
                     </Link>
                     <Link
                         className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/monitor">
+                        href={"/monitor"}>
                         <img src="https://dlcdnwebimgs.asus.com/gain/718462E2-0FF1-424B-8070-9EE75A96DC64/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"
@@ -264,7 +263,7 @@ export default function Home() {
                     </Link>
                     <Link
                         className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/storage">
+                        href={"/storage"}>
                         <img src="https://dlcdnwebimgs.asus.com/gain/D8D19FB9-2485-478F-9E58-4344265E0E69/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"
@@ -274,7 +273,7 @@ export default function Home() {
                     </Link>
                     <Link
                         className="h-full w-2/12 overflow-hidden transition-transform transform hover:scale-110 hover:transition-transform hover:duration-500 rounded-md"
-                        href="/graphics-card">
+                        href={"/graphics-card"}>
                         <img src="https://dlcdnwebimgs.asus.com/gain/01480520-08BA-439E-A626-2E3D6F0D9908/w240/h175"
                              alt="image"
                              className="h-4/5 w-full"
@@ -285,7 +284,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <NotificationRender cartNotifications={cartNotifications} />
+            <CartNotification cartNotifications={cartNotifications}/>
 
         </div>
     )

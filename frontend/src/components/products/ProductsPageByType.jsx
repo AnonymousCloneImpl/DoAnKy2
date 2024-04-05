@@ -12,8 +12,9 @@ import fetcher from "@/utils/fetchAPI";
 import CustomErrorPage from "@/pages/error";
 import fetchAPIPost from "@/utils/fetchAPI-post";
 import BodyBuilder from "@/utils/BodyBuilder";
-import Notification from "@/components/notification";
-import NotificationRender from "@/components/notificationList";
+import CartNotification from "@/components/CartNotification";
+import Loading from "@/components/Loading";
+import Head from "next/head";
 
 const ProductsPageByType = ({type}) => {
     const router = useRouter();
@@ -113,11 +114,7 @@ const ProductsPageByType = ({type}) => {
 
     if (loading || isLoading) {
         return (
-            <div>
-                <p>
-                    Loading...
-                </p>
-            </div>
+            <Loading />
         )
     }
 
@@ -173,6 +170,11 @@ const ProductsPageByType = ({type}) => {
         }}
              className="h-full"
         >
+            <Head>
+                <title>
+                    {type.toUpperCase()}
+                </title>
+            </Head>
             <div className="">
                 <img src={"/panel/products-panel.jpg"} alt={"banner"} loading={"lazy"} className="w-full h-96" />
             </div>
@@ -289,7 +291,7 @@ const ProductsPageByType = ({type}) => {
                 </div>
             </div>
 
-            <NotificationRender cartNotifications={cartNotifications} />
+            <CartNotification cartNotifications={cartNotifications} />
 
         </div>
     );
