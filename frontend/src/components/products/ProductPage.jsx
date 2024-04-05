@@ -11,7 +11,7 @@ import QuantityControl from "@/components/QuantityControl";
 import OrderForm from '@/components/OrderForm';
 import HandleCartClick from "@/components/HandleCartClick";
 import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
-import NotificationRender from "@/components/notificationList";
+import NotificationRender from "@/components/CartNotification";
 
 const ProductPage = ({ productBE }) => {
   const [cartNotifications, setCartNotifications] = useState([]);
