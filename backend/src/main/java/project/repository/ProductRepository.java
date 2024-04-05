@@ -40,9 +40,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 	@Query("select p from Product p join Stock s on p.id = s.product.id WHERE p.name LIKE CONCAT('%', :name, '%') order by s.sold desc")
 	List<Product> findAllByNameSortBySold(@Param("name") String name, Pageable pageable);
 
-	@Query("select p.productDetails from Product p where p.name = :name")
+	@Query("select p.details from Product p where p.name = :name")
 	List<String> getProductDetailsByName(@Param("name") String name);
-  
-	@Query("SELECT DISTINCT FUNCTION('JSON_EXTRACT', p.productDetails, CONCAT('$.', :configuration)) AS cpuType FROM Product p")
+
+	@Query("SELECT DISTINCT FUNCTION('JSON_EXTRACT', p.details, CONCAT('$.', :configuration)) AS cpuType FROM Product p")
 	List<String> findConfigurationType(@Param("configuration") String configuration);
 }

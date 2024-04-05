@@ -18,6 +18,7 @@ const Payment = () => {
   const router = useRouter();
   const query = router.query;
 
+  const type = query.type;
   const price = query.price;
   const orderCode = query.orderCode;
   const paymentId = query.paymentId;
@@ -27,26 +28,45 @@ const Payment = () => {
   }
 
   if (price > 0) {
-    axios({
-      method: 'post',
-      url: `${process.env.DOMAIN}/api/payment/paypal/create`,
-      headers: {},
-      data: {
-        "orderCode": orderCode,
-        "paymentId": paymentId,
-        "total": price,
-        "currency": "USD",
-        "method": "paypal",
-        "intent": "sale",
-        "description": "thanh toan don hang"
-      }
-    })
-      .then((response) => {
-        router.push(response.data);
+    let url;
+    console.log(type)
+    if (type === "PAYPAL") {
+      url = `${process.env.DOMAIN}/api/payment/paypal/create`;
+      axios({
+        method: 'post',
+        url: url,
+        headers: {},
+        data: {
+          "orderCode": orderCode,
+          "paymentId": paymentId,
+          "total": price,
+          "currency": "USD",
+          "method": "paypal",
+          "intent": "sale",
+          "description": "thanh toan don hang"
+        }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+          .then((response) => {
+            router.push(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
+    if (type === "VNPAY") {
+      url = `${process.env.DOMAIN}/api/payment/vnpay/create?amount=${price}&orderCode=${orderCode}`;
+      axios({
+        method: 'post',
+        url: url,
+        headers: {}
+      })
+          .then((response) => {
+            router.push(response.data);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+    }
   }
 
   return (

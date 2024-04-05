@@ -3,9 +3,11 @@ package project.controller.payment;
 import com.google.gson.JsonObject;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import project.config.VnPayConfig;
+import project.dto.payment.VnpayCheckoutDto;
+import project.service.payment.PaymentService;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -22,10 +24,12 @@ import java.util.*;
 @RequestMapping("/api/payment/vnpay")
 @CrossOrigin(origins = "*")
 public class VnPayController extends HttpServlet {
+	@Autowired
+	private PaymentService paymentService;
 
 	@PostMapping("/create")
-	public String createPayment(@RequestParam(name = "amount") Double amount) {
-		Double finalAmount = amount * 100 * 24740;
+	public String createPayment(@RequestParam(name = "amount") Double amount, @RequestParam(name = "orderCode") String orderCode) {
+		double doubleAmount = amount * 24740.0 * 100;
 		String vnp_Version = "2.1.0";
 		String vnp_Command = "pay";
 		String orderType = "other";
@@ -39,7 +43,7 @@ public class VnPayController extends HttpServlet {
 		vnp_Params.put("vnp_Version", vnp_Version);
 		vnp_Params.put("vnp_Command", vnp_Command);
 		vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-		vnp_Params.put("vnp_Amount", String.valueOf(finalAmount));
+		vnp_Params.put("vnp_Amount", String.valueOf(Math.round(doubleAmount)));
 		vnp_Params.put("vnp_CurrCode", "VND");
 
 		vnp_Params.put("vnp_BankCode", bankCode);
@@ -86,21 +90,22 @@ public class VnPayController extends HttpServlet {
 		String queryUrl = query.toString();
 		String vnp_SecureHash = VnPayConfig.hmacSHA512(VnPayConfig.secretKey, hashData.toString());
 		queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
+		paymentService.updatePaymentByOrderCode(vnp_TxnRef, orderCode);
 		return VnPayConfig.vnp_PayUrl + "?" + queryUrl;
 	}
 
-	@PostMapping("/ajaxServlet2")
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	@PostMapping("/checkPayment")
+	public void checkPayment(@RequestBody VnpayCheckoutDto checkoutDto, HttpServletRequest req) throws IOException {
 		//Command:querydr
-
+		System.out.println("a");
 		String vnp_RequestId = VnPayConfig.getRandomNumber(8);
-		String vnp_Version = "2.1.0";
+		String vnp_Version = VnPayConfig.vnp_Version;
 		String vnp_Command = "querydr";
-		String vnp_TmnCode = VnPayConfig.vnp_TmnCode;
-		String vnp_TxnRef = req.getParameter("order_id");
+		String vnp_TmnCode = checkoutDto.getVnp_TmnCode();
+		String vnp_TxnRef = checkoutDto.getVnp_TxnRef();
 		String vnp_OrderInfo = "Kiem tra ket qua GD OrderId:" + vnp_TxnRef;
-		//String vnp_TransactionNo = req.getParameter("transactionNo");
-		String vnp_TransDate = req.getParameter("trans_date");
+		String vnp_TransactionNo = checkoutDto.getVnp_TransactionNo();
+		String vnp_TransDate = checkoutDto.getVnp_PayDate();
 
 		Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -116,7 +121,7 @@ public class VnPayController extends HttpServlet {
 		vnp_Params.addProperty("vnp_TmnCode", vnp_TmnCode);
 		vnp_Params.addProperty("vnp_TxnRef", vnp_TxnRef);
 		vnp_Params.addProperty("vnp_OrderInfo", vnp_OrderInfo);
-		//vnp_Params.put("vnp_TransactionNo", vnp_TransactionNo);
+		vnp_Params.addProperty("vnp_TransactionNo", vnp_TransactionNo);
 		vnp_Params.addProperty("vnp_TransactionDate", vnp_TransDate);
 		vnp_Params.addProperty("vnp_CreateDate", vnp_CreateDate);
 		vnp_Params.addProperty("vnp_IpAddr", vnp_IpAddr);
@@ -142,11 +147,14 @@ public class VnPayController extends HttpServlet {
 		BufferedReader in = new BufferedReader(
 				new InputStreamReader(con.getInputStream()));
 		String output;
-		StringBuilder response = new StringBuilder();
+		StringBuffer response = new StringBuffer();
 		while ((output = in.readLine()) != null) {
 			response.append(output);
 		}
 		in.close();
 		System.out.println(response);
+		if (!response.toString().equals("{\"vnp_ResponseCode\":\"94\",\"vnp_Message\":\"Request is duplicated\"}")) {
+			paymentService.updatePayment(vnp_TxnRef, "approved", response.toString());
+		}
 	}
 }

@@ -8,8 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Random;
 
 public class VnPayConfig {
+	public static String vnp_Version = "2.1.0";
 	public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-	public static String vnp_ReturnUrl = "http://localhost:3000/order/success";
+	public static String vnp_ReturnUrl = "http://localhost:3000/payment/success/vnpay";
 	public static String vnp_TmnCode = "T86B7AXA";
 	public static String secretKey = "CFFMCBMVYTHQVUSYFZHOIGBULCYYWDIX";
 	public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";

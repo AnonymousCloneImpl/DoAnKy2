@@ -19,7 +19,7 @@ public class PaypalRequestDto implements Serializable {
 	private String intent;
 	private String description;
 	private String cancelUrl = "http://localhost:8080/api/payment/paypal/cancel";
-	private String successUrl = "http://localhost:3000/payment/processing";
+	private String successUrl = "http://localhost:3000/payment/success/paypal";
 
 	/*
 		- total: Một số thực đại diện cho tổng số tiền của thanh toán. Ví dụ: 50.00.
