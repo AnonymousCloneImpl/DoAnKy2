@@ -1,7 +1,7 @@
 package project.service.order;
 
 import org.springframework.stereotype.Service;
-import project.dto.order.OrderCheckDto;
+import project.dto.order.CheckOrderResponse;
 import project.dto.order.OrderDto;
 import project.dto.order.OrderItemDto;
 import project.entity.order.Order;
@@ -14,7 +14,7 @@ public interface OrderService {
 
 	public void updateStock(OrderItemDto item);
 
-	public List<OrderCheckDto> getOrderByPhoneNumber(String number);
+	public List<CheckOrderResponse> getOrderByPhoneNumber(String number);
 
 	public void sendEmail(Order order);
 }

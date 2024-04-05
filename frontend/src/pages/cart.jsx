@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faLocationDot, faPhone, faEnvelope, faUser, faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import FormatPrice from "@/components/FormatPrice";
 
@@ -156,16 +157,6 @@ const CartPage = () => {
     });
   };
 
-  const [shippingCost, setShippingCost] = useState(50);
-  const handleShippingChange = (event) => {
-    const selectedShipping = event.target.value;
-    const costMapping = {
-      'Standard shipping - $ 50 / 1 Products': 50,
-      'Fast shipping - $ 100 / 1 Products': 100,
-    };
-    setShippingCost(costMapping[selectedShipping]);
-  };
-
   useEffect(() => {
     const isItemChecked = checkedItems.length > 0;
     const calculatedTotalPrice = items.reduce((accumulator, item) => {
@@ -175,25 +166,35 @@ const CartPage = () => {
       return accumulator;
     }, 0);
 
-    const finalTotalPrice = isItemChecked ? calculatedTotalPrice + shippingCost : calculatedTotalPrice;
+    const finalTotalPrice = isItemChecked ? calculatedTotalPrice : calculatedTotalPrice;
     setTotalPrice(finalTotalPrice);
-  }, [items, checkedItems, shippingCost]);
+  }, [items, checkedItems]);
 
-  // place order----------------------------------------------------------------------------------------------
+
+  // get shipping method
+  const [shippingMethod, setShippingMethod] = useState('STANDARD');
+  const handleShippingChange = (e) => {
+    const selectedShipping = e.target.value;
+    const shipMapping = {
+      'STANDARD': 'STANDARD_SHIPPING',
+      'FAST': 'FAST_SHIPPING',
+    };
+    setShippingMethod(shipMapping[selectedShipping]);
+  };
+
+  // get payment method----------------------------------------------------------------------------------------------
+  const [paymentMethod, setPaymentMethod] = useState('COD');
+  const handleCheckedPayment = (e) => {
+    setPaymentMethod(e.target.value)
+  };
+
+
+  // Place Order----------------------------------------------------------------------------------------------
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [customerEmail, setCustomerEmail] = useState('');
   const [houseAddress, setHouseAddress] = useState('');
-
-  const [paymentMethod, setPaymentMethod] = useState('PAYPAL');
-  const handlePaymentChange = (e) => {
-    const selectedPayment = e.target.value;
-    const paymentMapping = {
-      'COD': 'COD',
-      'PAYPAL': 'PAYPAL',
-    };
-    setPaymentMethod(paymentMapping[selectedPayment]);
-  };
+  const route = useRouter();
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -201,7 +202,6 @@ const CartPage = () => {
     const selectedWard = wards.find(w => w[0] === selectedWardId);
     const selectedDistrict = districts.find(d => d[0] === selectedDistrictId);
     const selectedProvince = provinces.find(p => p[0] === selectedProvinceId);
-
     const shippingAddress = `${houseAddress}, ${selectedWard ? selectedWard[1] : ''}, ${selectedDistrict ? selectedDistrict[1] : ''}, ${selectedProvince ? selectedProvince[1] : ''}`;
 
     if (!validName(customerName)) {
@@ -219,8 +219,8 @@ const CartPage = () => {
       return;
     }
 
-    // get combo items
-    const selectedCartItem = items.filter((item) =>
+    // get cart items
+    const selectedCartItems = items.filter((item) =>
       checkedItems.includes(item.id)
     );
 
@@ -230,44 +230,37 @@ const CartPage = () => {
       customerEmail,
       shippingAddress,
       orderItemDtoList: [
-        ...selectedCartItem.map((item) => ({
+        ...selectedCartItems.map((item) => ({
           productId: item.id,
-          quantity: item.quantity
-        }))
+          quantity: item.quantity,
+        })),
       ],
       totalPrice,
+      shippingMethod,
       paymentMethod
     };
 
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
-    const paymentUrl = `http://localhost:3000/payment`;
-
     try {
-      const response = await fetch(orderUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-      });
+      const data = await postMethodFetcher(orderUrl, orderData)
+      if (data !== undefined) {
+        const filteredItems = items.filter((item, index) => !checkedItems.includes(index));
+        localStorage.setItem('itemList', JSON.stringify(filteredItems));
 
-      if (response.ok) {
-        closeForm();
-        paymentMethod == 'COD' ? alert('Success Order !') : window.location.href = paymentUrl;
-
-        for (let i = 0; i < checkedItems.length; i++) {
-          items.splice(i, 1);
+        if (paymentMethod === "COD") {
+          route.push("/order/success");
         }
 
-        localStorage.setItem('itemList', JSON.stringify(items));
-        if (paymentMethod === 'COD') window.location.reload();
-
+        if (paymentMethod === "PAYPAL") {
+          route.push(`/payment?price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
+        }
       } else alert('Failed to place order');
-
     } catch (error) {
       console.error('Error sending order request', error);
     }
   };
+
+
 
   // Validate Order
   const validName = (name) => {
@@ -370,15 +363,7 @@ const CartPage = () => {
               <FormatPrice price={totalPrice} type={"discount"} />
             </div>
 
-            <div className="mt-20">
-              <label htmlFor="shipping" className="font-medium inline-block mb-3 text-sm uppercase">SHIPPING</label>
-              <select className="block p-2 text-gray-600 w-full text-sm" onChange={handleShippingChange}>
-                <option>Standard shipping - $ 50 / 1 Products</option>
-                <option>Fast shipping - $ 100 / 1 Products</option>
-              </select>
-            </div>
-
-            <div className="border-t mt-8">
+            <div className="border-t mt-20">
               <button className="bg-indigo-600 font-semibold hover:bg-red-700 py-3 text-sm text-white uppercase w-full"
                 onClick={openForm}> Submit Order
               </button>
@@ -388,149 +373,208 @@ const CartPage = () => {
       </div>
 
       {/* FORM ORDER */}
-      {
-        isFormVisible && (
-          <>
-            <div className="overlay" onClick={closeForm}></div>
+      {isFormVisible && (
+        <>
+          <div className="overlay" onClick={closeForm}></div>
 
-            <div className="order-popup" ref={formRef}>
-              <div className="popup-content">
-                <span className="close-form-btn" onClick={closeForm}>
-                  <FontAwesomeIcon icon={faCircleXmark} />
-                </span>
-                <img className='order-logo' src='/favico.png'></img>
-                <h1>Order Form</h1>
+          <div className="order-popup" ref={formRef}>
+            <div className="popup-content">
+              <span className="close-form-btn" onClick={closeForm}>
+                <FontAwesomeIcon icon={faCircleXmark} />
+              </span>
+              <img className='order-logo' src='/favico.png'></img>
+              <h1>Order Form</h1>
 
-                <form className="order-form" onSubmit={handleFormSubmit}>
-                  <div className='flex justify-between'>
-                    <div className='phone-ship'>
-                      <label htmlFor="customerName">Name</label>
-                      <input type="text"
-                        value={customerName}
-                        onChange={(e) => setCustomerName(e.target.value)}
-                        className="customerName"
-                        name="customerName"
-                        placeholder="example: Ngọc Trinh..."
-                        id="customerName" required>
-                      </input>
-                    </div>
-                    <div className='phone-ship'>
-                      <label htmlFor="customerEmail">Email</label>
-                      <input type="email" className="customerEmail"
-                        value={customerEmail}
-                        onChange={(e) => setCustomerEmail(e.target.value)}
-                        name="customerEmail"
-                        placeholder="example@gmail.com"
-                        id="customerEmail" required>
+              <form className="order-form" onSubmit={handleFormSubmit}>
+                <div className='flex justify-between'>
+                  <div className='phone-ship'>
+                    <label htmlFor="customerPhone">Contact Info</label>
+                    <span className='input-icon'><FontAwesomeIcon icon={faUser} /></span>
+                    <input type="text"
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                      className="customerName"
+                      name="customerName"
+                      placeholder="Example: Ngọc Trinh..."
+                      id="customerName" required>
+                    </input>
+                  </div>
+                  <div className='phone-ship'>
+                    <div className="h-10"> </div>
+                    <span className='input-icon'><FontAwesomeIcon icon={faEnvelope} /></span>
+                    <input type="email" className="customerEmail"
+                      value={customerEmail}
+                      onChange={(e) => setCustomerEmail(e.target.value)}
+                      name="customerEmail"
+                      placeholder="Example@gmail.com"
+                      id="customerEmail" required>
+                    </input>
+                  </div>
+                </div>
+
+                <div className="address-selects">
+                  <select
+                    className="province"
+                    name="province"
+                    id="province"
+                    required
+                    defaultValue=""
+                    onChange={(e) => handleProvinceChange(e.target.value)}
+                  >
+                    <option value="" disabled className='option-css'>--- Province ---</option>
+                    {provinces.map((province) => (
+                      <option key={province}
+                        value={province[0]}>
+                        {province[1]}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    className="district"
+                    name="district"
+                    id="district"
+                    required
+                    defaultValue=""
+                    onChange={(e) => handleDistrictChange(e.target.value)}
+                  >
+                    <option value="" disabled className='option-css'>--- District ---</option>
+                    {districts.map((district) => (
+                      <option key={district}
+                        value={district[0]}>
+                        {district[1]}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    className="ward"
+                    name="ward"
+                    id="ward"
+                    required
+                    defaultValue=""
+                    onChange={(e) => setSelectedWardId(e.target.value)}
+                  >
+                    <option value="" disabled className='option-css'>--- Ward ---</option>
+                    {wards.map((ward) => (
+                      <option key={ward}
+                        value={ward[0]}>
+                        {ward[1]}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <span className='input-icon'><FontAwesomeIcon icon={faLocationDot} /></span>
+                <input type="text"
+                  value={houseAddress}
+                  onChange={(e) => setHouseAddress(e.target.value)}
+                  className="customerName"
+                  name="houseAddress"
+                  placeholder="Boulevard, alley, house number,..."
+                  id="houseAddress" required>
+                </input>
+
+                <div className='flex justify-between'>
+                  <div className='phone-ship'>
+                    <div className="phone-wrapper">
+                      <span className='input-icon'><FontAwesomeIcon icon={faPhone} /></span>
+                      <input type="tel" className="customerPhone"
+                        value={customerPhone}
+                        onChange={(e) => setCustomerPhone(e.target.value)}
+                        name="customerPhone"
+                        placeholder="Phone number"
+                        id="customerPhone" required>
                       </input>
                     </div>
                   </div>
 
-                  <label htmlFor="shippingAddress">Address</label>
-                  <div className="address-selects">
-                    <select
-                      className="province"
-                      name="province"
-                      id="province"
-                      required
-                      defaultValue=""
-                      onChange={(e) => handleProvinceChange(e.target.value)}
-                    >
-                      <option value="" disabled className='option-css'>--- Province ---</option>
-                      {provinces.map((province) => (
-                        <option key={province}
-                          value={province[0]}>
-                          {province[1]}
-                        </option>
-                      ))}
-                    </select>
-
-                    <select
-                      className="district"
-                      name="district"
-                      id="district"
-                      required
-                      defaultValue=""
-                      onChange={(e) => handleDistrictChange(e.target.value)}
-                    >
-                      <option value="" disabled className='option-css'>--- District ---</option>
-                      {districts.map((district) => (
-                        <option key={district}
-                          value={district[0]}>
-                          {district[1]}
-                        </option>
-                      ))}
-                    </select>
-
-                    <select
-                      className="ward"
-                      name="ward"
-                      id="ward"
-                      required
-                      defaultValue=""
-                      onChange={(e) => setSelectedWardId(e.target.value)}
-                    >
-                      <option value="" disabled className='option-css'>--- Ward ---</option>
-                      {wards.map((ward) => (
-                        <option key={ward}
-                          value={ward[0]}>
-                          {ward[1]}
-                        </option>
-                      ))}
-                    </select>
+                  <div className='phone-ship'>
+                    <div className="ship">
+                      <select
+                        className="shipping"
+                        name="shipping"
+                        id="shipping"
+                        required
+                        defaultValue=""
+                        onChange={(e) => handleShippingChange(e)}
+                      >
+                        <option value="" disabled className='option-css'>--- Shipping Method ---</option>
+                        <option value="STANDARD">Standard Shipping - $50</option>
+                        <option value="FAST">Fast Shipping - $100</option>
+                      </select>
+                    </div>
                   </div>
+                </div>
 
-                  <label htmlFor="houseAddress">House Address</label>
-                  <input type="text"
-                    value={houseAddress}
-                    onChange={(e) => setHouseAddress(e.target.value)}
-                    className="customerName"
-                    name="houseAddress"
-                    placeholder="Boulevard, alley, house number,..."
-                    id="houseAddress" required>
-                  </input>
+                <div className="payment-label">Payment Method</div>
+                <div className="payment-option">
+                  <div>
+                    <input
+                      type="radio"
+                      className="payment-checkbox"
+                      id="COD"
+                      name="payment"
+                      value="COD"
+                      checked={paymentMethod === 'COD'}
+                      onChange={handleCheckedPayment}
+                    />
+                    <label htmlFor="COD">
+                      <img src='https://thanhthinhbui.cdn.vccloud.vn/wp-content/uploads/2020/07/giao-hang-COD-1.png'></img>
+                    </label>
+                  </div>
+                  <div>
+                    <input
+                      type="radio"
+                      className="payment-checkbox"
+                      id="PAYPAL"
+                      name="payment"
+                      value="PAYPAL"
+                      checked={paymentMethod === 'PAYPAL'}
+                      onChange={handleCheckedPayment}
+                    />
+                    <label htmlFor="PAYPAL">
+                      <img src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png'></img>
+                    </label>
+                  </div>
 
                   <div>
-                    <div className='flex justify-between'>
-                      <div className='phone-ship'>
-                        <label htmlFor="customerPhone">Phone Number</label>
-                        <div className="phone-wrapper">
-                          <input type="tel" className="customerPhone"
-                            value={customerPhone}
-                            onChange={(e) => setCustomerPhone(e.target.value)}
-                            name="customerPhone"
-                            id="customerPhone" required>
-                          </input>
-                        </div>
-                      </div>
-
-                      <div className='phone-ship'>
-                        <label htmlFor="customerPhone">Payment</label>
-                        <div className="ship">
-                          <select
-                            className="shipping"
-                            name="payment"
-                            id="payment"
-                            required
-                            defaultValue=""
-                            onChange={(e) => handlePaymentChange(e)}
-                          >
-                            <option value="" disabled className='option-css'>--- Select Method ---</option>
-                            <option value="COD">Ship COD</option>
-                            <option value="PAYPAL">PAYPAL</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
+                    <input
+                      type="radio"
+                      className="payment-checkbox"
+                      id="VNPAY"
+                      name="payment"
+                      value="VNPAY"
+                      checked={paymentMethod === 'VNPAY'}
+                      onChange={handleCheckedPayment}
+                    />
+                    <label htmlFor="VNPAY">
+                      <img src='https://cdn.bio.link/uploads/profile_pictures/2023-08-09/ZCXnagobVPlSSCAOrumGbLsEQI1KPYsq.png'></img>
+                    </label>
                   </div>
 
-                  <button type="submit">Confirm Order</button>
-                </form>
-              </div>
+                  <div>
+                    <input
+                      type="radio"
+                      className="payment-checkbox"
+                      id="MOMO"
+                      name="payment"
+                      value="MOMO"
+                      checked={paymentMethod === 'MOMO'}
+                      onChange={handleCheckedPayment}
+                    />
+                    <label htmlFor="MOMO">
+                      <img src='https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png'></img>
+                    </label>
+                  </div>
+                </div>
+
+                <button type="submit">Confirm Order</button>
+              </form>
             </div>
-          </>
-        )
-      }
+          </div>
+        </>
+      )}
 
     </div >
   )

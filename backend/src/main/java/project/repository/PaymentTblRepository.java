@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import project.const_.PAYMENT_METHOD;
 import project.entity.payment.PaymentTbl;
 
 import java.time.LocalDateTime;
@@ -28,4 +29,9 @@ public interface PaymentTblRepository extends JpaRepository<PaymentTbl, Long> {
 	void updatePaymentCodeById(@Param("paymentCode") String paymentCode, @Param("state") String state, @Param("failureReason") String failureReason, @Param("updatedAt") LocalDateTime updatedAt);
 
 	PaymentTbl findByOrderCode(@Param("orderCode") String orderCode);
+
+	@Query("Select p.paymentMethod from PaymentTbl p " +
+		"join Order o on p.orderCode = o.orderCode " +
+		"where o.orderCode = :code")
+	PAYMENT_METHOD getPaymentMethodByOrderCode(@Param("code") String code);
 }
