@@ -1,13 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLocationDot, faPhone, faEnvelope, faUser, faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
 import { useRouter } from "next/router";
 import postMethodFetcher from "@/utils/postMethod";
 import QuantityControl from "@/components/QuantityControl";
+import OrderForm from '@/components/OrderForm';
+import HandleCartClick from "@/components/HandleCartClick";
+import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
 
 const ProductPage = ({ productBE }) => {
   const product = productBE;
@@ -80,8 +83,8 @@ const ProductPage = ({ productBE }) => {
       },
       0
     );
-    setTotalPrice(calculatedTotalPrice * 90 / 100 + discountedPrice);
-  }, [product.purchaseComboItem, checkedItems]);
+    setTotalPrice(calculatedTotalPrice * 90 / 100 + discountedPrice * quantity);
+  }, [checkedItems, discountedPrice, product.purchaseComboItem.productList, quantity]);
 
   // Open/Close order form----------------------------------------------------------------------------------------------
   const [isFormVisible, setFormVisible] = useState(false);
@@ -101,12 +104,15 @@ const ProductPage = ({ productBE }) => {
     const selectedProvince = provinces.find((province) => province[0] === provinceId);
     setSelectedProvinceId(provinceId);
     setDistricts(selectedProvince[4]);
+    setSelectedDistrictId('');
+    setWards([]);
   };
 
   const handleDistrictChange = (districtId) => {
     const selectedDistrict = districts.find((district) => district[0] === districtId);
     setSelectedDistrictId(districtId);
     setWards(selectedDistrict[4]);
+    setSelectedWardId('');
   };
 
   // get address from json file----------------------------------------------------------------------------------------------
@@ -143,7 +149,6 @@ const ProductPage = ({ productBE }) => {
   const handleCheckedPayment = (e) => {
     setPaymentMethod(e.target.value)
   };
-
 
   // Place Order----------------------------------------------------------------------------------------------
   const [customerName, setCustomerName] = useState('');
@@ -224,78 +229,6 @@ const ProductPage = ({ productBE }) => {
     } catch (error) {
       console.error('Error sending order request', error);
     }
-  };
-
-
-
-  // Validate Order----------------------------------------------------------------------------------------------
-  const validName = (name) => {
-    const nameRegex = /^[a-zA-ZÀ-ỹ\s]+$/;
-    return nameRegex.test(name);
-  };
-  const validPhoneNumber = (phoneNumber) => {
-    const phoneNumberRegex = /^(\+?84|0)(3[2-9]|5[689]|7[06-9]|8[1-9]|9\d)\d{7}$/;
-    return phoneNumberRegex.test(phoneNumber) && phoneNumber.length <= 10 && phoneNumber.length >= 9;
-  };
-  const validEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  // Add To card----------------------------------------------------------------------------------------------
-  const [cartNotifications, setCartNotifications] = useState([]);
-  const addToCart = (product) => {
-    const storedItemList = localStorage.getItem('itemList');
-    let cartItemList = [];
-
-    if (storedItemList) {
-      cartItemList = JSON.parse(storedItemList);
-    }
-
-    const existingProductIndex = cartItemList.findIndex(item => item.name === product.name);
-    if (existingProductIndex !== -1) {
-      const updatedCartItemList = [...cartItemList];
-      let quantity;
-      updatedCartItemList.map((item) => {
-        if (item.id === product.id) {
-          quantity = 1 + parseInt(item.quantity, 10);
-        }
-      })
-      updatedCartItemList[existingProductIndex] = {
-        "id": product.id,
-        "image": product.image,
-        "name": product.name,
-        "price": product.price,
-        "discountPercentage": product.discountPercentage,
-        "type": product.type,
-        "quantity": quantity,
-        "stock": null
-      };
-      cartItemList = updatedCartItemList;
-    } else {
-      cartItemList.push({
-        "id": product.id,
-        "image": product.image,
-        "name": product.name,
-        "price": product.price,
-        "discountPercentage": product.discountPercentage,
-        "type": product.type,
-        "quantity": 1,
-        "stock": null
-      });
-    }
-
-    localStorage.setItem('itemList', JSON.stringify(cartItemList));
-
-    const newNotification = {
-      message: 'The product has been added to Cart !',
-    };
-
-    setCartNotifications((prevNotifications) => [...prevNotifications, newNotification]);
-
-    setTimeout(() => {
-      setCartNotifications((prevNotifications) => prevNotifications.filter((n) => n !== newNotification));
-    }, 3000);
   };
 
   // Expand/Collapse blog----------------------------------------------------------------------------------------------
@@ -422,6 +355,7 @@ const ProductPage = ({ productBE }) => {
                   </div>
                   <FormatPrice price={product.price * quantity} />
                 </div>
+
                 <div className="product-price-ratio">
                   <p>{`Down ${product.discountPercentage}%`}</p>
                 </div>
@@ -432,7 +366,6 @@ const ProductPage = ({ productBE }) => {
                 </div>
 
                 <p className="model">Configuration</p>
-
                 <div className="product-model">
 
                   {product.configurationList.map((item, index) => (
@@ -444,11 +377,10 @@ const ProductPage = ({ productBE }) => {
                   <p>Quantity</p>
                   <QuantityControl initialQuantity={1} maxQuantity={productBE.stock.quantity} onChange={handleQuantityChange} />
                 </div>
-
                 <div className="left-in-stock">{product.stock.quantity} Left In Stock</div>
 
                 <div className="btn-box">
-                  <button className="cart-btn" onClick={() => addToCart(product)}>
+                  <button className="cart-btn" onClick={() => HandleCartClick({ product })}>
                     <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                   </button>
                   <button className={`buy-btn ${isSoldOut ? 'disabled-btn' : ''}`}
@@ -466,10 +398,8 @@ const ProductPage = ({ productBE }) => {
             </div>
 
             <div className="right-box-bottom">
-
               {/* Detail table */}
               <h1 className="detail-name">The detail information of product</h1>
-
               <table className="detail-table">
                 <tbody>
                   {Object.entries(JSON.parse(product.details)).map(([key, value]) => (
@@ -494,12 +424,13 @@ const ProductPage = ({ productBE }) => {
                   <div className="recommended-main-content">
                     <h1>{product.name}</h1>
                     <div className="flex pl-5 w-full">
-                      <div className='mr-2'><FormatPrice price={discountedPrice} type={"discount"} /></div>
-                      <FormatPrice price={product.price} />
+                      <div className='mr-2'><FormatPrice price={discountedPrice * quantity} type={"discount"} /></div>
+                      <FormatPrice price={product.price * quantity} />
                     </div>
                     <div className="accessories-price-ratio">
                       <p>{`Down ${product.discountPercentage}%`}</p>
                     </div>
+                    <p className="font-semibold float-start ml-5">Quantity: {quantity}</p>
                   </div>
                 </div>
 
@@ -585,7 +516,7 @@ const ProductPage = ({ productBE }) => {
                       <p>{`Down ${item.discountPercentage}%`}</p>
                     </div>
                     <div className="similar-product-btn-box">
-                      <button className="cart-btn" onClick={() => addToCart(item)}>
+                      <button className="cart-btn" onClick={() => HandleCartClick({ product: item })}>
                         <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                       </button>
                     </div>
@@ -608,209 +539,31 @@ const ProductPage = ({ productBE }) => {
                 </span>
                 <img className='order-logo' src='/favico.png'></img>
                 <h1>Order Form</h1>
-
-                <form className="order-form" onSubmit={handleFormSubmit}>
-                  <div className='flex justify-between'>
-                    <div className='phone-ship'>
-                      <label htmlFor="customerPhone">Contact Info</label>
-                      <span className='input-icon'><FontAwesomeIcon icon={faUser} /></span>
-                      <input type="text"
-                        value={customerName}
-                        onChange={(e) => setCustomerName(e.target.value)}
-                        className="customerName"
-                        name="customerName"
-                        placeholder="Example: Ngọc Trinh..."
-                        id="customerName" required>
-                      </input>
-                    </div>
-                    <div className='phone-ship'>
-                      <div className="h-10"> </div>
-                      <span className='input-icon'><FontAwesomeIcon icon={faEnvelope} /></span>
-                      <input type="email" className="customerEmail"
-                        value={customerEmail}
-                        onChange={(e) => setCustomerEmail(e.target.value)}
-                        name="customerEmail"
-                        placeholder="Example@gmail.com"
-                        id="customerEmail" required>
-                      </input>
-                    </div>
-                  </div>
-
-                  <div className="address-selects">
-                    <select
-                      className="province"
-                      name="province"
-                      id="province"
-                      required
-                      defaultValue=""
-                      onChange={(e) => handleProvinceChange(e.target.value)}
-                    >
-                      <option value="" disabled className='option-css'>--- Province ---</option>
-                      {provinces.map((province) => (
-                        <option key={province}
-                          value={province[0]}>
-                          {province[1]}
-                        </option>
-                      ))}
-                    </select>
-
-                    <select
-                      className="district"
-                      name="district"
-                      id="district"
-                      required
-                      defaultValue=""
-                      onChange={(e) => handleDistrictChange(e.target.value)}
-                    >
-                      <option value="" disabled className='option-css'>--- District ---</option>
-                      {districts.map((district) => (
-                        <option key={district}
-                          value={district[0]}>
-                          {district[1]}
-                        </option>
-                      ))}
-                    </select>
-
-                    <select
-                      className="ward"
-                      name="ward"
-                      id="ward"
-                      required
-                      defaultValue=""
-                      onChange={(e) => setSelectedWardId(e.target.value)}
-                    >
-                      <option value="" disabled className='option-css'>--- Ward ---</option>
-                      {wards.map((ward) => (
-                        <option key={ward}
-                          value={ward[0]}>
-                          {ward[1]}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <span className='input-icon'><FontAwesomeIcon icon={faLocationDot} /></span>
-                  <input type="text"
-                    value={houseAddress}
-                    onChange={(e) => setHouseAddress(e.target.value)}
-                    className="customerName"
-                    name="houseAddress"
-                    placeholder="Boulevard, alley, house number,..."
-                    id="houseAddress" required>
-                  </input>
-
-                  <div className='flex justify-between'>
-                    <div className='phone-ship'>
-                      <div className="phone-wrapper">
-                        <span className='input-icon'><FontAwesomeIcon icon={faPhone} /></span>
-                        <input type="tel" className="customerPhone"
-                          value={customerPhone}
-                          onChange={(e) => setCustomerPhone(e.target.value)}
-                          name="customerPhone"
-                          placeholder="Phone number"
-                          id="customerPhone" required>
-                        </input>
-                      </div>
-                    </div>
-
-                    <div className='phone-ship'>
-                      <div className="ship">
-                        <select
-                          className="shipping"
-                          name="shipping"
-                          id="shipping"
-                          required
-                          defaultValue=""
-                          onChange={(e) => handleShippingChange(e)}
-                        >
-                          <option value="" disabled className='option-css'>--- Shipping Method ---</option>
-                          <option value="STANDARD">Standard Shipping - $50</option>
-                          <option value="FAST">Fast Shipping - $100</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="payment-label">Payment Method</div>
-                  <div className="payment-option">
-                    <div>
-                      <input
-                        type="radio"
-                        className="payment-checkbox"
-                        id="COD"
-                        name="payment"
-                        value="COD"
-                        checked={paymentMethod === 'COD'}
-                        onChange={handleCheckedPayment}
-                      />
-                      <label htmlFor="COD">
-                        <img src='https://thanhthinhbui.cdn.vccloud.vn/wp-content/uploads/2020/07/giao-hang-COD-1.png'></img>
-                      </label>
-                    </div>
-                    <div>
-                      <input
-                        type="radio"
-                        className="payment-checkbox"
-                        id="PAYPAL"
-                        name="payment"
-                        value="PAYPAL"
-                        checked={paymentMethod === 'PAYPAL'}
-                        onChange={handleCheckedPayment}
-                      />
-                      <label htmlFor="PAYPAL">
-                        <img src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png'></img>
-                      </label>
-                    </div>
-
-                    <div>
-                      <input
-                        type="radio"
-                        className="payment-checkbox"
-                        id="VNPAY"
-                        name="payment"
-                        value="VNPAY"
-                        checked={paymentMethod === 'VNPAY'}
-                        onChange={handleCheckedPayment}
-                      />
-                      <label htmlFor="VNPAY">
-                        <img src='https://cdn.bio.link/uploads/profile_pictures/2023-08-09/ZCXnagobVPlSSCAOrumGbLsEQI1KPYsq.png'></img>
-                      </label>
-                    </div>
-
-                    <div>
-                      <input
-                        type="radio"
-                        className="payment-checkbox"
-                        id="MOMO"
-                        name="payment"
-                        value="MOMO"
-                        checked={paymentMethod === 'MOMO'}
-                        onChange={handleCheckedPayment}
-                      />
-                      <label htmlFor="MOMO">
-                        <img src='https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png'></img>
-                      </label>
-                    </div>
-                  </div>
-
-                  <button type="submit">Confirm Order</button>
-                </form>
+                <OrderForm
+                  provinces={provinces}
+                  districts={districts}
+                  wards={wards}
+                  handleProvinceChange={handleProvinceChange}
+                  handleDistrictChange={handleDistrictChange}
+                  setSelectedWardId={setSelectedWardId}
+                  handleShippingChange={handleShippingChange}
+                  paymentMethod={paymentMethod}
+                  handleCheckedPayment={handleCheckedPayment}
+                  handleFormSubmit={handleFormSubmit}
+                  customerName={customerName}
+                  setCustomerName={setCustomerName}
+                  customerEmail={customerEmail}
+                  setCustomerEmail={setCustomerEmail}
+                  houseAddress={houseAddress}
+                  setHouseAddress={setHouseAddress}
+                  customerPhone={customerPhone}
+                  setCustomerPhone={setCustomerPhone}
+                />
               </div>
             </div>
           </>
         )}
-
-        {/* Cart notifications */}
-        {cartNotifications.map((notification, index) => (
-          <div
-            key={index}
-            className="cart-notification"
-            style={{ bottom: `${10 + index * 40}px`, display: 'block' }}
-          >
-            <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
-            {notification.message}
-          </div>
-        ))}
+        
       </div>
     );
   }
