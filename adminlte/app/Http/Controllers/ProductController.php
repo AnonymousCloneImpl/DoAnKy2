@@ -41,7 +41,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -49,7 +49,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -86,7 +86,8 @@ class ProductController extends Controller
                 's.updated_time AS updated_time',
                 'b.image AS blog_image',
                 'b.content AS blog_content',
-                'b.header AS blog_header'
+                'b.header AS blog_header',
+                'p.status AS status'
             )
             ->join('producer AS pr', 'p.producer_id', '=', 'pr.id')
             ->join('stock AS s', 's.product_id', '=', 'p.id')
@@ -118,33 +119,54 @@ class ProductController extends Controller
             'updated_time' => 'sometimes|required|date',
             'status' => 'sometimes|required|integer|in:0,1',
             'image' => 'sometimes|string',
-            'content' => 'sometimes|string|max:10000',
+            'content' => 'sometimes|string',
             'header' => 'sometimes|string',
+            'producer'=> 'sometimes|required|integer|min:0|max:255' ,
+            'product_detail' => 'sometimes|nullable|json',
         ]);
 
         try {
             DB::beginTransaction();
             $fieldsToUpdate = $request->only([
-                'p.model', 'p.name', 'p.discount_percentage', 'p.price', 'p.producer_id', 'p.type',
-                's.quantity', 's.sold', 's.inserted_time', 's.updated_time', 'p.status', 'b.image',
-                'b.content', 'b.header', 'p.image'
+                'model', 'name', 'discount_percentage', 'price', 'producer', 'type',
+                'quantity', 'sold', 'inserted_time', 'status', 'blog_image',
+                'blog_content', 'blog_header', 'product_image', 'product_detail'
             ]);
 
-            $fieldsToUpdate['s.updated_date'] = now();
+            $fieldsToUpdate['updated_time'] = now();
 
             DB::table('product AS p')
                 ->join('producer AS pr', 'p.producer_id', '=', 'pr.id')
                 ->join('stock AS s', 's.product_id', '=', 'p.id')
                 ->join('blog AS b', 'b.product_id', '=', 'p.id')
                 ->where('p.id', $id)
-                ->update($fieldsToUpdate);
+                ->update([
+                    'p.model' => $fieldsToUpdate['model'],
+                    'p.name' => $fieldsToUpdate['name'],
+                    'p.discount_percentage' => $fieldsToUpdate['discount_percentage'],
+                    'p.price' => $fieldsToUpdate['price'],
+                    'p.producer_id' => $fieldsToUpdate['producer'],
+                    'p.type' => $fieldsToUpdate['type'],
+                    's.quantity' => $fieldsToUpdate['quantity'],
+                    's.sold' => $fieldsToUpdate['sold'],
+                    's.inserted_time' => $fieldsToUpdate['inserted_time'],
+                    's.updated_time' => $fieldsToUpdate['updated_time'],
+                    'p.status' => $fieldsToUpdate['status'],
+                    'b.image' => $fieldsToUpdate['blog_image'],
+                    'b.content' => $fieldsToUpdate['blog_content'],
+                    'b.header' => $fieldsToUpdate['blog_header'],
+                    'p.image' => $fieldsToUpdate['product_image'],
+                    'p.detail' => $fieldsToUpdate['product_detail'],
+                ]);
+
 
             DB::commit();
             toastr()->success('Product updated successfully', 'Success');
             return redirect()->route('productList');
         } catch (\Exception $e){
-            // Something went wrong, rollback the transaction
+            // Roll back if something went wrong
             DB::rollBack();
+            echo($e);
             toastr()->error('Product is not updated', 'Oops! Something went wrong!');
             return redirect()->back();
         }

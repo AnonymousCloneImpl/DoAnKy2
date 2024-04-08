@@ -37,4 +37,7 @@ Route::middleware(AdminMiddleware::class)->group(function () {
     Route::put('/dashboard/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
 
     Route::delete('/dashboard/products/delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+    Route::get('/dashboard/products/create',[ProductController::class, 'create'])->name('products.create');
+    Route::post('/dashboard/products/store',[ProductController::class, 'store'])->name('products.store');
 });
