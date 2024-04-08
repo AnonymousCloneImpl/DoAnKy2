@@ -5,5 +5,5 @@ import project.dto.cart.CartDto;
 
 @Service
 public interface CartService {
-	public void getListProductWithStock(CartDto cartDto);
+  public void getListProductWithStock(CartDto cartDto);
 }

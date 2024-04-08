@@ -13,6 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PurchaseComboItem implements Serializable {
-	private long id;
-	private List<SimilarProductDto> productList;
+  private long id;
+  private List<SimilarProductDto> productList;
 }

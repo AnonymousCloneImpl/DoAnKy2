@@ -7,9 +7,9 @@ import java.util.Optional;
 
 @Service
 public interface StockService {
-	Stock findByProductId(long id);
+  Stock findByProductId(long id);
 
-	Optional<Stock> getById(long id);
+  Optional<Stock> getById(long id);
 
-	Stock save(Stock stock);
+  Stock save(Stock stock);
 }

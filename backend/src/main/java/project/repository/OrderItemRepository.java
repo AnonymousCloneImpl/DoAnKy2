@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
-	List<Order> findAll(Specification<Order> spec);
+  List<Order> findAll(Specification<Order> spec);
 }

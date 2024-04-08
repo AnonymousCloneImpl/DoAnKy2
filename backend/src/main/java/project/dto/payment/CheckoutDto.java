@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckoutDto {
-	private String paymentId;
-	private String payerID;
+  private String paymentId;
+  private String payerID;
 }
