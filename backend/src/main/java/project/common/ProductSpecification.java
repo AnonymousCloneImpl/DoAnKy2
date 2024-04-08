@@ -19,52 +19,19 @@ public class ProductSpecification {
 
 	public Specification<Product> specificationBuilder(RequestDto requestDto) {
 		return (root, query, criteriaBuilder) -> {
-			List<Predicate> predicateList = getPredicateList(root, criteriaBuilder, requestDto.getSearchRequestDtoList());
-
-			// Tạo biểu thức tính giá sale
-			Expression<Number> priceDiscount = criteriaBuilder.diff(
-					root.get("price"),
-					criteriaBuilder.quot(
-							criteriaBuilder.prod(root.get("price"), root.get("discountPercentage")),
-							100.0
-					)
-			);
-
+			// CREATE PREDICATE LIST
+			List<Predicate> predicateList =
+					this.getPredicateList(root, criteriaBuilder, requestDto.getSearchRequestDtoList());
 			// SORT
-			Join<Product, Stock> stockJoin = root.join("stock", JoinType.INNER);
-			if (requestDto.getSortDirection() == RequestDto.SORT_DIRECTION.ASC) {
-				switch (requestDto.getSortColumn().toLowerCase()) {
-					case "sold", "inserted_time" ->
-							query.orderBy(criteriaBuilder.asc(stockJoin.get(requestDto.getSortColumn())));
-
-					case "price" -> query.orderBy(
-							criteriaBuilder.asc(
-									priceDiscount
-							)
-					);
-				}
-			} else {
-				switch (requestDto.getSortColumn().toLowerCase()) {
-					case "sold", "inserted_time" ->
-							query.orderBy(criteriaBuilder.desc(stockJoin.get(requestDto.getSortColumn())));
-
-					case "price" -> query.orderBy(
-							criteriaBuilder.desc(
-									priceDiscount
-							)
-					);
-				}
-			}
-
+			this.sortProductPage(criteriaBuilder, root, query, requestDto);
 			return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
 		};
 	}
 
-	public List<Predicate> getPredicateList(Root<Product> root, CriteriaBuilder criteriaBuilder, List<SearchRequestDto> searchRequestDtoList) {
+	public List<Predicate> getPredicateList(Root<Product> root,
+	                                        CriteriaBuilder criteriaBuilder,
+	                                        List<SearchRequestDto> searchRequestDtoList) {
 		List<Predicate> predicateList = new ArrayList<>();
-		// JOIN TABLE
-		Join<Product, Producer> producerJoin = root.join("producer", JoinType.INNER);
-
 		// CHECK COLUMN
 		for (SearchRequestDto searchRequestDto : searchRequestDtoList) {
 			String column = searchRequestDto.getColumn();
@@ -73,13 +40,14 @@ public class ProductSpecification {
 				case "price":
 					String[] objects = searchRequestDto.getValue().split(",");
 					predicate = criteriaBuilder.between(
-							root.get("price"),
+							this.createExpressionPrice(criteriaBuilder, root),
 							Double.parseDouble(objects[0]),
 							Double.parseDouble(objects[1])
 					);
 					break;
 
 				case "producer":
+					Join<Product, Producer> producerJoin = root.join("producer", JoinType.INNER);
 					predicate = criteriaBuilder.equal(
 							producerJoin.get("name"),
 							searchRequestDto.getValue()
@@ -98,14 +66,8 @@ public class ProductSpecification {
 				case "hardDisk":
 				case "screenSize":
 				case "mouseConnectType":
-					Expression<String> expression = criteriaBuilder.function(
-							"json_extract",
-							String.class,
-							root.get("details"),
-							criteriaBuilder.literal("$." + searchRequestDto.getColumn())
-					);
 					predicate = criteriaBuilder.like(
-							expression,
+							this.createExpressionJson(criteriaBuilder, root, searchRequestDto.getColumn()),
 							"%" + searchRequestDto.getValue() + "%"
 					);
 					break;
@@ -115,10 +77,47 @@ public class ProductSpecification {
 					continue;
 			}
 			predicateList.add(predicate);
-			criteriaBuilder.and(predicateList.toArray(new Predicate[0]));
 		}
-
 		return predicateList;
+	}
+
+	public void sortProductPage(CriteriaBuilder criteriaBuilder,
+	                            Root<Product> root,
+	                            CriteriaQuery<?> query,
+	                            RequestDto requestDto) {
+		Join<Product, Stock> stockJoin = root.join("stock", JoinType.INNER);
+		Expression<Double> priceExpression = this.createExpressionPrice(criteriaBuilder, root);
+		switch (requestDto.getSortColumn()) {
+			case "sold", "insertedTime" -> query.orderBy(
+					criteriaBuilder.desc(stockJoin.get(requestDto.getSortColumn()))
+			);
+
+			case "price" -> query.orderBy(
+					requestDto.getSortDirection() == RequestDto.SORT_DIRECTION.ASC
+							? criteriaBuilder.asc(priceExpression)
+							: criteriaBuilder.desc(priceExpression)
+			);
+			default -> log.error("Column for SORT doesn't not match!");
+		}
+	}
+
+	public Expression<Double> createExpressionPrice(CriteriaBuilder criteriaBuilder, Root<Product> root) {
+		return criteriaBuilder.diff(
+				root.get("price"),
+				criteriaBuilder.quot(
+						criteriaBuilder.prod(root.get("price"), root.get("discountPercentage")),
+						100.0
+				).as(Double.class)
+		);
+	}
+
+	public Expression<String> createExpressionJson(CriteriaBuilder criteriaBuilder, Root<Product> root, String column) {
+		return criteriaBuilder.function(
+				"json_extract",
+				String.class,
+				root.get("details"),
+				criteriaBuilder.literal("$." + column)
+		);
 	}
 
 	public Specification<Product> findByType(String type) {

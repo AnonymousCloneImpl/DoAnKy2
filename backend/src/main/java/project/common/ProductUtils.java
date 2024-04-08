@@ -97,7 +97,7 @@ public class ProductUtils {
 
 		if (type.equalsIgnoreCase("mouse")) {
 			filter = MouseFilter.builder()
-//					.connection(productDetailService.getConnectionList())
+					.connection(productRepo.findConfigurationType("connection"))
 					.build();
 		}
 		return filter;

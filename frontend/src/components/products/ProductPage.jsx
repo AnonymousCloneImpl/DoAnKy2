@@ -12,6 +12,7 @@ import OrderForm from '@/components/OrderForm';
 import HandleCartClick from "@/components/HandleCartClick";
 import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
 import NotificationRender from "@/components/CartNotification";
+import AddSpaceBeforeUpperCase from "@/utils/textUtils";
 
 const ProductPage = ({ productBE }) => {
   const [cartNotifications, setCartNotifications] = useState([]);
@@ -316,13 +317,13 @@ const ProductPage = ({ productBE }) => {
 
             {/* blog list */}
             <div className={`product-content ${expanded ? 'expanded' : ''}`}>
-              <h2>{product.blog.header}</h2>
-              {product.blog.contentList.map((content, index) => (
+              <h2>{product?.blog?.header}</h2>
+              {product?.blog?.contentList?.map((content, index) => (
                 <div key={index}>
                   <p>{content}</p>
-                  {product.blog.imageList.length > index && (
+                  {product?.blog?.imageList.length > index && (
                     <div className="content-img">
-                      <img src={product.blog.imageList[index]} alt={`Image ${index}`} />
+                      <img src={product?.blog?.imageList[index]} alt={`Image ${index}`} />
                     </div>
                   )}
                 </div>
@@ -406,7 +407,9 @@ const ProductPage = ({ productBE }) => {
                 <tbody>
                   {Object.entries(JSON.parse(product.details)).map(([key, value]) => (
                     <tr key={key}>
-                      <td>{key.toUpperCase()}</td>
+                      <td>
+                        <AddSpaceBeforeUpperCase str={key} />
+                      </td>
                       <td>{value}</td>
                     </tr>
                   ))}

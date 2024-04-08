@@ -20,13 +20,14 @@ const productType = [
 const ProductsPageRoute = () => {
     const router = useRouter();
 
-    let type = router.query.type?.replace("-", " ") || null;
-
-    for (let i = 0; i < productType.length; i++) {
-        if (productType[i] === type) {
-            return  (
-                <ProductsPageByType type={type} />
-            )
+    let type = router.query.type?.replace("-", "") || null;
+    if (type !== null) {
+        for (let i = 0; i < productType.length; i++) {
+            if (productType[i].toLowerCase() === type.toLowerCase()) {
+                return  (
+                    <ProductsPageByType type={type} />
+                )
+            }
         }
     }
 

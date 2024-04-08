@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartItemDto {
-	private long productId;
+	private Long productId;
 	private Integer quantity;
 }

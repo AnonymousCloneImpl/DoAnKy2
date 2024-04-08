@@ -23,10 +23,11 @@ const Filter = ({ filter, setFilter, filterValue, pageType }) => {
             minPrice : '',
             maxPrice : '',
             producer : '',
+            display : '',
             cpu : '',
             ram : ''
         })
-        const { ram, minPrice, maxPrice, producer, cpu, ...newQuery } = query;
+        const { ram, minPrice, display, maxPrice, producer, cpu, ...newQuery } = query;
         await new Promise((resolve) => {
             router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
             resolve();
