@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Service
 public interface BlogService {
-	Optional<Blog> getBlogByProductId(Long id);
+  Optional<Blog> getBlogByProductId(Long id);
 }

@@ -9,20 +9,19 @@ import project.service.cart.CartService;
 import project.service.product.StockService;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService {
-	@Autowired
-	StockService stockService;
+  @Autowired
+  StockService stockService;
 
-	@Override
-	public void getListProductWithStock(CartDto cartDto) {
-		List<CartItemDto> ls = cartDto.getCartItemDtoList();
-		for (CartItemDto item : ls) {
-			long id = item.getProductId();
-			Stock stock = stockService.findByProductId(id);
-			item.setQuantity(stock.getQuantity());
-		}
-	}
+  @Override
+  public void getListProductWithStock(CartDto cartDto) {
+    List<CartItemDto> ls = cartDto.getCartItemDtoList();
+    for (CartItemDto item : ls) {
+      long id = item.getProductId();
+      Stock stock = stockService.findByProductId(id);
+      item.setQuantity(stock.getQuantity());
+    }
+  }
 }

@@ -14,13 +14,13 @@ import project.service.pc_builder.PCBuilderService;
 @RequestMapping("/build-pc")
 @CrossOrigin(origins = "*")
 public class PCBuilderController {
-	@Autowired
-	PCBuilderService pcBuilderService;
+  @Autowired
+  PCBuilderService pcBuilderService;
 
-	@GetMapping("")
-	ResponseEntity<PCBuilderPartResponse> getAllListPart() {
-		PCBuilderPartResponse response = pcBuilderService.getAllListPart();
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(response);
-	}
+  @GetMapping("")
+  ResponseEntity<PCBuilderPartResponse> getAllListPart() {
+    PCBuilderPartResponse response = pcBuilderService.getAllListPart();
+    return ResponseEntity.status(HttpStatus.OK)
+      .body(response);
+  }
 }

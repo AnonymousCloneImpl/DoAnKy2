@@ -10,6 +10,6 @@ import java.io.Serializable;
 @Setter
 @ToString
 public class SearchRequestDto implements Serializable {
-	private String column;
-	private String value;
+  private String column;
+  private String value;
 }

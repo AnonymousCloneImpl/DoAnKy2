@@ -316,13 +316,13 @@ const ProductPage = ({ productBE }) => {
 
             {/* blog list */}
             <div className={`product-content ${expanded ? 'expanded' : ''}`}>
-              <h2>{product.blog.header}</h2>
-              {product.blog.contentList.map((content, index) => (
+              <h2>{product?.blog?.header}</h2>
+              {product?.blog?.contentList?.map((content, index) => (
                 <div key={index}>
                   <p>{content}</p>
-                  {product.blog.imageList.length > index && (
+                  {product?.blog?.imageList.length > index && (
                     <div className="content-img">
-                      <img src={product.blog.imageList[index]} alt={`Image ${index}`} />
+                      <img src={product?.blog?.imageList[index]} alt={`Image ${index}`} />
                     </div>
                   )}
                 </div>

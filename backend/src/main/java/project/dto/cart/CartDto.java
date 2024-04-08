@@ -10,5 +10,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartDto {
-	private List<CartItemDto> cartItemDtoList;
+  private List<CartItemDto> cartItemDtoList;
 }

@@ -1,4 +1,3 @@
-
 function HandleCartClick({ product, setCartNotifications}) {
   const storedItemList = localStorage.getItem('itemList');
   let cartItemList = [];

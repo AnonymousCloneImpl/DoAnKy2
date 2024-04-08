@@ -10,11 +10,11 @@ import java.util.Optional;
 
 @Service
 public class BlogServiceImpl implements BlogService {
-	@Autowired
-	BlogRepository blogRepo;
+  @Autowired
+  BlogRepository blogRepo;
 
-	@Override
-	public Optional<Blog> getBlogByProductId(Long id) {
-		return blogRepo.findByProductId(id);
-	}
+  @Override
+  public Optional<Blog> getBlogByProductId(Long id) {
+    return blogRepo.findByProductId(id);
+  }
 }

@@ -10,12 +10,12 @@ import project.dto.product.StockDto;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PCBuilderPart {
-	private long id;
-	private String name;
-	private String type;
-	private Long price;
-	private String image;
-	private byte discountPercentage;
-	@JsonIgnoreProperties("sold")
-	private StockDto stock;
+  private long id;
+  private String name;
+  private String type;
+  private double price;
+  private String image;
+  private byte discountPercentage;
+  @JsonIgnoreProperties("sold")
+  private StockDto stock;
 }
