@@ -13,7 +13,7 @@ const ProductListComponent = ({productData, renderFromHomePage, type, setCartNot
                 <ProductCardComponent productData={productData} type={type} setCartNotifications={setCartNotifications} />
                 <div className="w-full h-16 flex items-center justify-center">
                     <Link href={productData[0]?.type.toLowerCase() || "/"}
-                        className="bg-white flex justify-center items-center rounded-2xl transition duration-100 ease-in-out transform hover:scale-110 hover:font-bold watch-more"
+                        className="bg-white flex justify-center items-center rounded-2xl transition duration-100 ease-in-out transform hover:font-bold watch-more"
                         style={{
                             width: '10%',
                             height: '60%'

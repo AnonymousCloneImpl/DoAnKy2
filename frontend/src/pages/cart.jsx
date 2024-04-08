@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import {useState, useEffect, useRef, useMemo} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
@@ -7,34 +7,40 @@ import OrderForm from '@/components/OrderForm';
 import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
 
 import FormatPrice from "@/components/FormatPrice";
-
-const postMethodFetcher = async (url, body) => {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  return response.json();
-};
+import postMethodFetcher from "@/utils/postMethod";
 
 const CartPage = () => {
   const [items, setItems] = useState([]);
-  let body = {
+  const body = useMemo(() => ({
     "cartItemDtoList": []
-  }
+  }), []);
 
   useEffect(() => {
     const storedItemList = localStorage.getItem('itemList');
     if (storedItemList) {
       const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item }));
-      setItems(loadedItems);
+      loadedItems.map((item) => {
+        body.cartItemDtoList.push(
+            {
+              "productId": item.id,
+              "quantity": null
+            }
+        );
+      });
+      const getStock = async () => {
+        const quantityApi = `${process.env.DOMAIN}/cart`;
+        const result = await postMethodFetcher(quantityApi, body);
+        for (let i = 0; i < loadedItems.length; i++) {
+          for (let j = 0; j < result.cartItemDtoList.length; j++) {
+            if (loadedItems[i].id === result.cartItemDtoList[j].productId) {
+              loadedItems[i].stock = result.cartItemDtoList[j].quantity;
+              break;
+            }
+          }
+        }
+        setItems(loadedItems);
+      }
+      getStock();
     } else {
       console.log('Undefined itemList');
     }
@@ -52,35 +58,7 @@ const CartPage = () => {
     };
     fetchData();
 
-  }, []);
-
-  const quantityApi = `${process.env.DOMAIN}/cart`;
-
-  const sendPostRequest = async () => {
-    const result = await postMethodFetcher(quantityApi, body);
-
-    for (let i = 0; i < items.length; i++) {
-      for (let j = 0; j < result.cartItemDtoList.length; j++) {
-        if (items[i].id === result.cartItemDtoList[j].productId) {
-          items[i].stock = result.cartItemDtoList[j].quantity;
-          break;
-        }
-      }
-    }
-  }
-
-  if (items !== undefined) {
-    let arr = items.map(item => item.id);
-    arr.map((item) => {
-      body.cartItemDtoList.push(
-        {
-          "productId": item,
-          "quantity": null
-        }
-      );
-    });
-    sendPostRequest();
-  }
+  }, [body]);
 
   const removeItem = (index) => {
     const updatedItems = [...items];

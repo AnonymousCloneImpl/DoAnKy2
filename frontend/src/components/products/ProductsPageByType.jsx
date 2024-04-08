@@ -81,7 +81,7 @@ const ProductsPageByType = ({type}) => {
         }
 
         setCurrentPage(page);
-    }, [data]);
+    }, [data, page]);
 
     const staticData = `${process.env.DOMAIN}/products/staticData?type=${type}`;
 
@@ -110,7 +110,7 @@ const ProductsPageByType = ({type}) => {
                 connection : res?.filter?.connection
             })
         }
-    }, [res]);
+    }, [res, type]);
 
     if (loading || isLoading) {
         return (
@@ -195,7 +195,7 @@ const ProductsPageByType = ({type}) => {
 
             <div className="mt-8">
                 <div className="text-2xl">
-                    <p className="h-10">CHUYÊN TRANG THƯƠNG HIỆU</p>
+                    <p className="h-10">BRAND PAGE</p>
                 </div>
                 <div className="w-full mt-3">
                     <ul className="grid grid-cols-9 max-md:grid-cols-6 max-sm:grid-cols-4">

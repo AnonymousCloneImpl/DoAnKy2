@@ -12,6 +12,7 @@ import OrderForm from '@/components/OrderForm';
 import HandleCartClick from "@/components/HandleCartClick";
 import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
 import NotificationRender from "@/components/CartNotification";
+import AddSpaceBeforeUpperCase from "@/utils/textUtils";
 
 const ProductPage = ({ productBE }) => {
   const [cartNotifications, setCartNotifications] = useState([]);
@@ -406,7 +407,9 @@ const ProductPage = ({ productBE }) => {
                 <tbody>
                   {Object.entries(JSON.parse(product.details)).map(([key, value]) => (
                     <tr key={key}>
-                      <td>{key.toUpperCase()}</td>
+                      <td>
+                        <AddSpaceBeforeUpperCase str={key} />
+                      </td>
                       <td>{value}</td>
                     </tr>
                   ))}
