@@ -111,7 +111,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="quantity">Stock</label>
-                        <input id="quantity" name="quantity" type="number" value="{{$editItem->quantity}}"
+                        <input id="quantity" name="quantity" type="number" value="{{$editItem->stock}}"
                                class="form-control validate" min="0" max="1000000000000"/>
                         <div class="text-danger">
                             @error('quantity')

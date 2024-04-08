@@ -17,22 +17,22 @@ class ProductController extends Controller
             ->select(
                 'p.id AS id',
                 'p.model AS model',
-                'p.name AS name',
-                'p.discount_percentage',
-                'p.price',
+                'p.name AS product_name',
+                'p.discount_percentage AS discount',
+                'p.price AS price',
                 'pr.name AS producer',
-                'p.type',
-                's.quantity AS quantity',
+                'p.type AS product_type',
+                's.quantity AS stock',
                 's.sold AS sold',
-                's.inserted_time',
-                's.updated_time'
+                's.inserted_time AS inserted_time',
+                's.updated_time AS updated_time',
             )
-            ->join('product_detail AS pd', 'p.id', '=', 'pd.product_id')
-            ->join('stock AS s', 'pd.id', '=', 's.product_detail_id')
-            ->join('blog AS b', 'p.blog_id', '=', 'b.id')
             ->join('producer AS pr', 'p.producer_id', '=', 'pr.id')
+            ->join('stock AS s', 's.product_id', '=', 'p.id')
+            ->join('blog AS b', 'b.product_id', '=', 'p.id')
             ->where('p.status', 1)
-            ->get(); // Retrieve all records without pagination
+            ->get();
+
         return view("dashboard.product.products", compact("productList"));
     }
 
@@ -79,25 +79,23 @@ class ProductController extends Controller
                 'p.price AS price',
                 'p.producer_id AS producer',
                 'p.type AS type',
-                's.quantity AS quantity',
+                'p.detail AS product_detail',
+                's.quantity AS stock',
                 's.sold AS sold',
                 's.inserted_time AS inserted_time',
                 's.updated_time AS updated_time',
                 'b.image AS blog_image',
                 'b.content AS blog_content',
-                'b.header AS blog_header',
-                'pd.dimensions AS dimensions',
-                'pd.material AS material',
-                'pd.release_date AS release_date',
+                'b.header AS blog_header'
             )
-            ->join('product_detail AS pd', 'p.id', '=', 'pd.product_id')
-            ->join('stock AS s', 'pd.id', '=', 's.product_detail_id')
-            ->join('blog AS b', 'p.blog_id', '=', 'b.id')
             ->join('producer AS pr', 'p.producer_id', '=', 'pr.id')
+            ->join('stock AS s', 's.product_id', '=', 'p.id')
+            ->join('blog AS b', 'b.product_id', '=', 'p.id')
             ->where('p.id', $id)
             ->first();
         if (!$editItem) {
-            return redirect()->back()->with('error', 'Product not found');
+            toastr()->error('Product does not exist in the database', 'Oops! Something went wrong!');
+            return redirect()->back();
         }
         return view('dashboard.product.edit', compact('editItem', 'producerList'));
 
@@ -120,9 +118,6 @@ class ProductController extends Controller
             'updated_time' => 'sometimes|required|date',
             'status' => 'sometimes|required|integer|in:0,1',
             'image' => 'sometimes|string',
-            'dimensions' => 'sometimes|string',
-            'material' => 'sometimes|string',
-            'release_date' => 'sometimes|string',
             'content' => 'sometimes|string|max:10000',
             'header' => 'sometimes|string',
         ]);
@@ -132,16 +127,15 @@ class ProductController extends Controller
             $fieldsToUpdate = $request->only([
                 'p.model', 'p.name', 'p.discount_percentage', 'p.price', 'p.producer_id', 'p.type',
                 's.quantity', 's.sold', 's.inserted_time', 's.updated_time', 'p.status', 'b.image',
-                'b.content', 'b.header', 'pd.dimensions', 'pd.material', 'pd.release_date', 'p.image'
+                'b.content', 'b.header', 'p.image'
             ]);
 
             $fieldsToUpdate['s.updated_date'] = now();
 
             DB::table('product AS p')
-                ->join('product_detail AS pd', 'p.id', '=', 'pd.product_id')
-                ->join('stock AS s', 'pd.id', '=', 's.product_detail_id')
-                ->join('blog AS b', 'p.blog_id', '=', 'b.id')
                 ->join('producer AS pr', 'p.producer_id', '=', 'pr.id')
+                ->join('stock AS s', 's.product_id', '=', 'p.id')
+                ->join('blog AS b', 'b.product_id', '=', 'p.id')
                 ->where('p.id', $id)
                 ->update($fieldsToUpdate);
 
