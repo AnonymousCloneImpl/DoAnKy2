@@ -19,66 +19,65 @@ import java.util.List;
 
 @Service
 public class SearchServiceImpl implements SearchService {
-  @Autowired
-  private ProductService productService;
-  @Autowired
-  private ModelMapper modelMapper;
-  @Autowired
-  private ProductSpecification productSpecification;
-  @Autowired
-  private ProductUtils productUtils;
+	@Autowired
+	private ProductService productService;
+	@Autowired
+	private ModelMapper modelMapper;
+	@Autowired
+	private ProductSpecification productSpecification;
+	@Autowired
+	private ProductUtils productUtils;
 
-  @Override
-  public List<ProductSummaryDto> findByName(String name, Integer limit) {
-    if (limit == null) {
-      limit = Pagination.PAGE_SIZE;
-    }
-    List<Product> productList = productService.findAllByNameAndSortBySold(name, PageRequest.of(0, limit));
-    if (!productList.isEmpty()) {
-      List<ProductSummaryDto> productSummaryDtoList = productUtils
-        .convertProductsToProductSummaryDtoList(productList);
-      for (ProductSummaryDto p : productSummaryDtoList) {
-        p.setImage(productUtils.getFirstImageUrl(p.getImage()));
-      }
-      return productSummaryDtoList;
-    } else {
-      System.err.println("Error in getByName findByName : productList is null");
-      return null;
-    }
-  }
+	@Override
+	public List<ProductSummaryDto> findByName(String name, Integer limit) {
+		if (limit == null) {
+			limit = Pagination.PAGE_SIZE;
+		}
+		List<Product> productList = productService.findAllByNameAndSortBySold(name, PageRequest.of(0, limit));
+		if (!productList.isEmpty()) {
+			List<ProductSummaryDto> productSummaryDtoList = productUtils
+					.convertProductsToProductSummaryDtoList(productList);
+			for (ProductSummaryDto p : productSummaryDtoList) {
+				p.setImage(productUtils.getFirstImageUrl(p.getImage()));
+			}
+			return productSummaryDtoList;
+		} else {
+			System.err.println("Error in getByName findByName : productList is null");
+			return null;
+		}
+	}
 
-  @Override
-  public Pagination findProductsByTypeWithPaging(RequestDto requestDto) {
-    validateRequestData(requestDto);
+	@Override
+	public Pagination findProductsByTypeWithPaging(RequestDto requestDto) {
+		validateRequestData(requestDto);
 
-    Specification<Product> spec = productSpecification.specificationBuilder(requestDto);
-    Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getLimit());
-    try {
-      Page<Product> productList = productService.getAllBySpecification(spec, pageable);
-      Pagination pagination = productUtils.convertPageProductToPaginationObject(productList);
-//			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
-      pagination.setElementPerPage(productList.getNumberOfElements());
-      return pagination;
-    } catch (Exception e) {
-      System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
-      return new Pagination();
-    }
-  }
+		Specification<Product> spec = productSpecification.specificationBuilder(requestDto);
+		Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getLimit());
+		try {
+			Page<Product> productList = productService.getAllBySpecification(spec, pageable);
+			Pagination pagination = productUtils.convertPageProductToPaginationObject(productList);
+			pagination.setElementPerPage(productList.getNumberOfElements());
+			return pagination;
+		} catch (Exception e) {
+			System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
+			return new Pagination();
+		}
+	}
 
-  public void validateRequestData(RequestDto requestDto) {
-    if (requestDto.getPage() == null) {
-      requestDto.setPage(1);
-    }
+	public void validateRequestData(RequestDto requestDto) {
+		if (requestDto.getPage() == null) {
+			requestDto.setPage(1);
+		}
 
-    if (requestDto.getLimit() == null) {
-      requestDto.setLimit(15);
-    }
+		if (requestDto.getLimit() == null) {
+			requestDto.setLimit(15);
+		}
 
-    if (requestDto.getSortColumn() == null || requestDto.getSortColumn().isEmpty()) {
-      requestDto.setSortColumn("sold");
-    }
-    if (requestDto.getSortDirection() == null || requestDto.getSortDirection().describeConstable().isEmpty()) {
-      requestDto.setSortDirection(RequestDto.SORT_DIRECTION.ASC);
-    }
-  }
+		if (requestDto.getSortColumn() == null || requestDto.getSortColumn().isEmpty()) {
+			requestDto.setSortColumn("sold");
+		}
+		if (requestDto.getSortDirection() == null || requestDto.getSortDirection().describeConstable().isEmpty()) {
+			requestDto.setSortDirection(RequestDto.SORT_DIRECTION.ASC);
+		}
+	}
 }

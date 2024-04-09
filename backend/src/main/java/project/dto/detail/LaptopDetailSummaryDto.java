@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LaptopDetailSummaryDto {
-  private String cpuType;
-  private String ram;
-  private String screenSize;
-  private String graphicsCard;
+	private String cpuType;
+	private String ram;
+	private String screenSize;
+	private String gpu;
 }

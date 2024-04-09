@@ -152,7 +152,7 @@ export default function Header() {
             </div>
           </div>
           <div className="main-menu-container">
-            <ul className="main-menu">
+            <ul className="main-menu mr-2">
               <li className="main-menu-left">
                 <Link className="main-menu-a hover:text-red-800" href="/check-order">
                   <FontAwesomeIcon icon={faFileSignature} className="main-menu-i" />
@@ -168,79 +168,87 @@ export default function Header() {
 
       {/*SUB MENU*/}
       <nav id="sub-menu-nav">
-        <ul id="sub-menu" className="font-semibold uppercase">
+        <ul id="sub-menu" className="font-semibold uppercase grid grid-cols-5">
           <li>
             <Link href="/laptop" className="flex justify-center items-center m-1">
-              <FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />
+              <FontAwesomeIcon icon={faLaptop} className="sub-menu-i"/>
               <p className="sub-menu-item text-xl pl-2">
                 Laptop
               </p>
             </Link>
           </li>
           <li>
+            <Link href="/service" className="flex justify-center items-center m-1">
+              <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
+              <p className="sub-menu-item text-xl">
+                Service
+              </p>
+            </Link>
+          </li>
+          <li>
             <div className="">
               <div className="flex justify-center items-center m-1">
-                <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i" />
-                <p className="sub-menu-item text-xl pl-2">Gear</p>
+                <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i"/>
+                <p className="sub-menu-item text-xl">Gear</p>
               </div>
             </div>
             <ul id="sub-drop">
-              <li><img src="/header_img/drop-menu-mouse.webp" alt="" />
+              <li><img src="/header_img/drop-menu-mouse.webp" alt=""/>
                 <Link href="/mouse">Mouse</Link>
               </li>
-              <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt="" />
+              <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt=""/>
                 <Link href="/keyboard">Keyboard</Link>
               </li>
               <li>
-                <img id="fix" src="/header_img/drop-menu-headphone.webp" alt="" />
+                <img id="fix" src="/header_img/drop-menu-headphone.webp" alt=""/>
                 <Link href="/headphone">Headphone</Link>
               </li>
             </ul>
           </li>
           <li>
             <Link href="/pc-component" className="flex justify-center items-center m-1">
-              <FontAwesomeIcon icon={faGears} className="sub-menu-i" />
-              <p className="sub-menu-item text-xl pl-2">
+              <FontAwesomeIcon icon={faGears} className="sub-menu-i"/>
+              <p className="sub-menu-item text-xl">
                 PC Parts
               </p>
             </Link>
             <ul id="sub-drop">
-              <li><img id='fix' src="/header_img/drop-menu-cpu.jfif" alt="" />
+              <li><img id='fix' src="/header_img/drop-menu-cpu.jfif" alt=""/>
                 <Link href="/cpu">CPU</Link>
               </li>
-              <li><img id="fix" src="/header_img/drop-menu-cpu-cooler.jfif" alt="" />
+              <li><img id="fix" src="/header_img/drop-menu-cpu-cooler.jfif" alt=""/>
                 <Link href="/cpu-cooler">CPU COOLER</Link>
               </li>
               <li>
-                <img id="fix" src="/header_img/drop-menu-motherboard.jfif" alt="" />
+                <img id="fix" src="/header_img/drop-menu-motherboard.jfif" alt=""/>
                 <Link href="/motherboard">MOTHERBOARD</Link>
               </li>
               <li>
-                <img id="fix" src="/header_img/drop-menu-memory.jfif" alt="" />
+                <img id="fix" src="/header_img/drop-menu-memory.jfif" alt=""/>
                 <Link href="/memory">MEMORY</Link>
               </li>
               <li>
-                <img id="fix" src="/header_img/drop-menu-storage.jfif" alt="" />
+                <img id="fix" src="/header_img/drop-menu-storage.jfif" alt=""/>
                 <Link href="/storage">STORAGE</Link>
               </li>
               <li>
-                <img id="fix" src="/header_img/drop-menu-gpu.jfif" alt="" />
+                <img id="fix" src="/header_img/drop-menu-gpu.jfif" alt=""/>
                 <Link href="/gpu">GPU</Link>
               </li>
               <li>
-                <img id="fix" src="/header_img/drop-menu-case.jpg" alt="" />
+                <img id="fix" src="/header_img/drop-menu-case.jpg" alt=""/>
                 <Link href="/case">CASE</Link>
               </li>
               <li>
-                <img id="fix" src="/header_img/drop-menu-case-fan.jpg" alt="" />
+                <img id="fix" src="/header_img/drop-menu-case-fan.jpg" alt=""/>
                 <Link href="/case-fan">CASE FAN</Link>
               </li>
               <li>
-                <img id="fix" src="/header_img/drop-menu-power.jfif" alt="" />
+                <img id="fix" src="/header_img/drop-menu-power.jfif" alt=""/>
                 <Link href="/power-supply-unit">POWER SUPPLY UNIT</Link>
               </li>
               <li>
-                <img id="fix" src="/header_img/drop-menu-monitor.webp" alt="" />
+                <img id="fix" src="/header_img/drop-menu-monitor.webp" alt=""/>
                 <Link href="/monitor">MONITOR</Link>
               </li>
             </ul>
@@ -248,8 +256,8 @@ export default function Header() {
           <li>
             <div className="">
               <Link href="/build-pc" className="flex justify-center items-center m-1">
-                <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
-                <p className="sub-menu-item text-xl pl-2">Build PC</p>
+                <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
+                <p className="sub-menu-item text-xl">Build PC</p>
               </Link>
             </div>
           </li>
@@ -257,14 +265,14 @@ export default function Header() {
       </nav>
 
       {showResults && (
-        <div className="search_result"
-          onMouseEnter={handleSearchResultHover}
-          onMouseLeave={handleSearchResultLeave}
-        >
-          {
-            results.length > 0 ? (
-              results.map((result) => (
-                <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id} href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
+          <div className="search_result"
+               onMouseEnter={handleSearchResultHover}
+               onMouseLeave={handleSearchResultLeave}
+          >
+            {
+              results.length > 0 ? (
+                  results.map((result) => (
+                      <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id} href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
                   <div className="flex">
                     <div className="result_image">
                       <img className="result_image_item" src={result.image} />

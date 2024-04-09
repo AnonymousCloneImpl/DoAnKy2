@@ -179,9 +179,9 @@ public class ProductUtils {
 			try {
 				JsonNode rootNode = new ObjectMapper().readTree(pDetail);
 				String ram = getNodeValueIgnoreCase(rootNode, "ram");
-				String hardDrive = getNodeValueIgnoreCase(rootNode, "hardDrive");
+				String hardDrive = getNodeValueIgnoreCase(rootNode, "storage");
 				String cpu = getNodeValueIgnoreCase(rootNode, "cpu");
-				String graphicsCard = getNodeValueIgnoreCase(rootNode, "graphicsCard");
+				String graphicsCard = getNodeValueIgnoreCase(rootNode, "gpu");
 				StringBuilder config = new StringBuilder();
 				config.append(ram).append(" | ")
 						.append(hardDrive).append(" | ")
