@@ -90,7 +90,7 @@ export default function ProductCardComponent({ productData, setCartNotifications
                 <div className="flex items-start pt-3 w-full productNameSize">
                   <Link
                     href={`/${p?.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}>
-                    <p className="pl-3 h-full w-full font-bold hover:text-blue-600">{p.name}</p>
+                    <p className="pl-3 h-full w-full font-bold hover:text-blue-600">{p.name + " " + p.model}</p>
                   </Link>
                 </div>
                 <div className="div-price justify-around">
@@ -128,7 +128,7 @@ export default function ProductCardComponent({ productData, setCartNotifications
                       style={{ width: "auto", height: "auto" }}
                       priority="high"
                     />
-                    <p>{p.productDetails?.graphicsCard?.split(",")[0]}</p>
+                    <p>{p.productDetails?.gpu?.split(",")[0]}</p>
                   </div>
                 </div>
                 <div className="w-full h-16 flex justify-center items-center mb-2 mt-3">

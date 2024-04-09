@@ -31,10 +31,12 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 
     Route::get('/dashboard/products', [ProductController::class, 'index'])->name('productList');
 
-    Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('orderList');
-
     Route::get('/dashboard/products/edit/{id}', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('/dashboard/products/update/{id}', [ProductController::class, 'update'])->name('products.update');
 
     Route::delete('/dashboard/products/delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+    Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('orderList');
+
+    Route::post('/dashboard/orders/update', [OrderController::class, 'update'])->name('updateOrder');
 });

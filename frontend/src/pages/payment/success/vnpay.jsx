@@ -1,7 +1,6 @@
 import {useRouter} from "next/router";
 import axios from "axios";
 import moment from "moment";
-import Success from "@/pages/order/success";
 import Loading from "@/components/Loading";
 
 export default function VnpayPayment() {
@@ -62,6 +61,8 @@ export default function VnpayPayment() {
                 .then((res) => {
                     if (res.data === "Success") {
                         router.push("/order/success");
+                    } else {
+                        router.push("/payment/failed");
                     }
                 });
         }

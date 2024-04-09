@@ -210,6 +210,7 @@ const ProductPage = ({ productBE }) => {
 
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
     try {
+      console.log(orderData)
       const data = await postMethodFetcher(orderUrl, orderData)
       if (data !== undefined) {
         console.log(paymentMethod)
@@ -339,7 +340,7 @@ const ProductPage = ({ productBE }) => {
           <div className="right-box">
             {/* Right box top */}
             <div className="right-box-top">
-              <div className="pname">{product.name}</div>
+              <div className="pname">{product.name + " " + product.model}</div>
               <p className="sold">{product.stock.sold} Sold</p>
 
               <div className="right-box-top-child">

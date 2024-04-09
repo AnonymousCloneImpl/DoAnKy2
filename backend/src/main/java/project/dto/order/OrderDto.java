@@ -9,15 +9,16 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDto implements Serializable {
-  private String customerName;
-  private String customerPhone;
-  private String customerEmail;
-  private String shippingAddress;
-  private List<OrderItemDto> orderItemDtoList;
-  private double totalPrice;
-  private String shippingMethod;
-  private PAYMENT_METHOD paymentMethod;
+	private String customerName;
+	private String customerPhone;
+	private String customerEmail;
+	private String shippingAddress;
+	private List<OrderItemDto> orderItemDtoList;
+	private double totalPrice;
+	private String shippingMethod;
+	private PAYMENT_METHOD paymentMethod;
 }

@@ -57,7 +57,8 @@ const ProductsPageByType = ({type}) => {
             revalidateIfStale: false,
             revalidateOnFocus: false,
             revalidateOnReconnect: false
-        });
+        }
+    );
 
     useEffect(() => {
         mutate(ProductPageCategoryDataApi);

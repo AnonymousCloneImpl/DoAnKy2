@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-ul {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-}
-
 .border-box {
   box-sizing: border-box;
 }
@@ -114,15 +106,11 @@ ul#main-menu li:hover i {
 }
 
 ul#sub-menu {
-  display: flex;
-  justify-content: space-around;
   background: #ffa507;
   cursor: pointer;
 }
 
 ul#sub-menu li {
-  position: relative;
-  width: 100%;
   text-align: center;
   transition: all 0.3s ease-in-out;
 }
