@@ -120,6 +120,7 @@
                     {{--                            @enderror--}}
                     {{--                        </div>--}}
                     {{--                    </div>--}}
+
                     <div class="form-row">
                         <div class="col form-group mb-3">
                             <label for="quantity">Stock</label>
