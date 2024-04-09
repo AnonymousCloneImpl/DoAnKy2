@@ -251,7 +251,7 @@ const ProductPage = ({ productBE }) => {
       <div className="body-wrapper w-11/12">
         <Head>
           <title>
-            {product.name}
+            {product.name} {product.model}
           </title>
         </Head>
         <div className="url">
@@ -259,7 +259,7 @@ const ProductPage = ({ productBE }) => {
           <b> &#8250; </b>
           <Link href={`/${product.type}`}>{product.type}</Link>
           <b> &#8250; </b>
-          <b className="name">{product.name}</b>
+          <b className="name">{product.name} {product.model}</b>
         </div>
 
         <div className="top-line"></div>
@@ -428,7 +428,7 @@ const ProductPage = ({ productBE }) => {
                     <img src={product.imageList[0]}></img>
                   </div>
                   <div className="recommended-main-content">
-                    <h1>{product.name}</h1>
+                    <h1>{product.name} {product.model}</h1>
                     <div className="flex pl-5 w-full">
                       <div className='mr-2'><FormatPrice price={discountedPrice * quantity} type={"discount"} /></div>
                       <FormatPrice price={product.price * quantity} />
@@ -455,8 +455,10 @@ const ProductPage = ({ productBE }) => {
                         <img src={item.image} alt="First Image" />
                       </div>
                       <div className="recommended-accessories-content">
-                        <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
-                          {item.name}
+                        <Link
+                            href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/\s/g, "-")}?model=${item.model.toLowerCase().replace(/\s/g, "-")}`}
+                        >
+                          {item.name + " " + item.model}
                         </Link>
                         <div className="flex pl-5 w-full">
                           <div className='mr-2'>
@@ -509,8 +511,10 @@ const ProductPage = ({ productBE }) => {
                     <img src={item.image} alt="First Image" />
                   </div>
                   <div className="similar-product-content">
-                    <Link href={"/" + item.type.toLowerCase() + "/" + item.name.toLowerCase().replace(/ /g, "-")}>
-                      {item.name}
+                    <Link
+                        href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/\s/g, "-")}?model=${item.model.toLowerCase().replace(/\s/g, "-")}`}
+                    >
+                      {item.name + " " + item.model}
                     </Link>
                     <div className="similar-price flex w-full pl-5 items-center">
                       <div className='mr-2'>

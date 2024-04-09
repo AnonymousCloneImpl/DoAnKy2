@@ -141,6 +141,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 
 		String name = namePath.replace("-", " ");
+		model = model.replace("-", " ");
 		Product p = productRepo.getByProductTypeAndByName(type, name, model);
 		if (p == null) {
 			System.err.println("can't find product: " + name);

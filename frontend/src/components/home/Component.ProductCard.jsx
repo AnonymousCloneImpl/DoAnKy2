@@ -21,8 +21,8 @@ export default function ProductCardComponent({ productData, setCartNotifications
                   </div>
                   <div className="h-52 w-full">
                     <Link
-                      href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}
-                      className="flex items-center justify-center w-full h-full"
+                        href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
+                        className="flex items-center justify-center w-full h-full"
                     >
                       <div
                         style={{
@@ -37,9 +37,10 @@ export default function ProductCardComponent({ productData, setCartNotifications
                   </div>
                   <div className="flex items-start pt-3 h-20 w-full">
                     <Link
-                      className="h-full"
-                      href={`/${p?.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}>
-                      <p className="pl-3 h-full w-full hover:text-blue-600">{p.name}</p>
+                        href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
+                        className="flex items-center justify-center w-full h-full"
+                    >
+                      <p className="pl-3 h-full w-full hover:text-blue-600">{p.name + " " + p.model}</p>
                     </Link>
                   </div>
                   <div className="div-price flex justify-around">
@@ -73,7 +74,7 @@ export default function ProductCardComponent({ productData, setCartNotifications
                 </div>
                 <div className="h-52 w-full">
                   <Link
-                    href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}
+                    href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
                     className="flex items-center justify-center w-full h-full"
                   >
                     <div
@@ -89,7 +90,9 @@ export default function ProductCardComponent({ productData, setCartNotifications
                 </div>
                 <div className="flex items-start pt-3 w-full productNameSize">
                   <Link
-                    href={`/${p?.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}`}>
+                      href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
+                      className="flex items-center justify-center w-full h-full"
+                  >
                     <p className="pl-3 h-full w-full font-bold hover:text-blue-600">{p.name + " " + p.model}</p>
                   </Link>
                 </div>
