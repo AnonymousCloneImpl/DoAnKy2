@@ -1,7 +1,5 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 import { config, library } from '@fortawesome/fontawesome-svg-core';
-import { faComputer, faGears, faLaptop, faKeyboard, faScrewdriverWrench, faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faGears, faLaptop, faKeyboard, faScrewdriverWrench, faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useEffect } from "react";
 import fetcher from "@/utils/fetchAPI";
@@ -154,7 +152,7 @@ export default function Header() {
             </div>
           </div>
           <div className="main-menu-container">
-            <ul className="main-menu mr-2">
+            <ul className="main-menu">
               <li className="main-menu-left">
                 <Link className="main-menu-a hover:text-red-800" href="/check-order">
                   <FontAwesomeIcon icon={faFileSignature} className="main-menu-i" />
@@ -170,23 +168,7 @@ export default function Header() {
 
       {/*SUB MENU*/}
       <nav id="sub-menu-nav">
-        <ul id="sub-menu" className="font-semibold uppercase grid grid-cols-5">
-          <li>
-            <div className="">
-              <Link href="/build-pc" className="flex justify-center items-center m-1">
-                <FontAwesomeIcon icon={faComputer} className="sub-menu-i" />
-                <p className="sub-menu-item text-xl pl-2">Build PC</p>
-              </Link>
-            </div>
-          </li>
-          <li>
-            <Link href="/service" className="flex justify-center items-center m-1">
-              <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
-              <p className="sub-menu-item text-xl pl-2">
-                Schedule A Repair
-              </p>
-            </Link>
-          </li>
+        <ul id="sub-menu" className="font-semibold uppercase">
           <li>
             <Link href="/laptop" className="flex justify-center items-center m-1">
               <FontAwesomeIcon icon={faLaptop} className="sub-menu-i"/>
@@ -196,18 +178,10 @@ export default function Header() {
             </Link>
           </li>
           <li>
-            <Link href="/service" className="flex justify-center items-center m-1">
-              <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
-              <p className="sub-menu-item text-xl">
-                Service
-              </p>
-            </Link>
-          </li>
-          <li>
             <div className="">
               <div className="flex justify-center items-center m-1">
                 <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i"/>
-                <p className="sub-menu-item text-xl">Gear</p>
+                <p className="sub-menu-item text-xl pl-2">Gear</p>
               </div>
             </div>
             <ul id="sub-drop">
@@ -226,7 +200,7 @@ export default function Header() {
           <li>
             <Link href="/pc-component" className="flex justify-center items-center m-1">
               <FontAwesomeIcon icon={faGears} className="sub-menu-i"/>
-              <p className="sub-menu-item text-xl">
+              <p className="sub-menu-item text-xl pl-2">
                 PC Parts
               </p>
             </Link>
@@ -271,50 +245,64 @@ export default function Header() {
               </li>
             </ul>
           </li>
+          <li>
+            <Link href="/service" className="flex justify-center items-center m-1">
+              <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
+              <p className="sub-menu-item text-xl pl-2">
+                Service
+              </p>
+            </Link>
+          </li>
+          <li>
+            <div className="">
+              <Link href="/build-pc" className="flex justify-center items-center m-1">
+                <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
+                <p className="sub-menu-item text-xl pl-2">Build PC</p>
+              </Link>
+            </div>
+          </li>
         </ul>
       </nav>
 
-      {
-        showResults && (
+      {showResults && (
           <div className="search_result"
-            onMouseEnter={handleSearchResultHover}
-            onMouseLeave={handleSearchResultLeave}
+               onMouseEnter={handleSearchResultHover}
+               onMouseLeave={handleSearchResultLeave}
           >
             {
               results.length > 0 ? (
-                results.map((result) => (
-                  <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id} href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
-                    <div className="flex">
-                      <div className="result_image">
-                        <img className="result_image_item" src={result.image} />
+                  results.map((result) => (
+                      <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id} href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
+                  <div className="flex">
+                    <div className="result_image">
+                      <img className="result_image_item" src={result.image} />
+                    </div>
+                    <div className="result_info">
+                      <div className="top_result">
+                        <p className="result_name font-bold mt-1">{result.name}</p>
+                        <div className="result_price_ratio">
+                          <p className="result_price_ratio_value text-center">{`-${result.discountPercentage}%`}</p>
+                        </div>
                       </div>
-                      <div className="result_info">
-                        <div className="top_result">
-                          <p className="result_name font-bold mt-1">{result.name}</p>
-                          <div className="result_price_ratio">
-                            <p className="result_price_ratio_value text-center">{`-${result.discountPercentage}%`}</p>
-                          </div>
+                      <div className="bottom_result pt-npm8">
+                        <div className='mr-2'>
+                          <FormatPrice price={result.price - (result.price * result.discountPercentage / 100)} type={"discount"} />
                         </div>
-                        <div className="bottom_result pt-npm8">
-                          <div className='mr-2'>
-                            <FormatPrice price={result.price - (result.price * result.discountPercentage / 100)} type={"discount"} />
-                          </div>
-                          <FormatPrice price={result.price} />
-                        </div>
+                        <FormatPrice price={result.price} />
                       </div>
                     </div>
-                  </Link>
-                ))
-              ) : (
-                <div className="flex justify-center h-20 items-center">
-                  <p>No results found.</p>
-                </div>
-              )
-            }
-          </div>
-        )
-      }
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className="flex justify-center h-20 items-center">
+                <p>No results found.</p>
+              </div>
+            )
+          }
+        </div>
+      )}
 
-    </header >
+    </header>
   )
 }
