@@ -17,12 +17,12 @@ export default function QuantityControl({ initialQuantity, maxQuantity, onChange
   const limitQuantity = (value) => {
     const newValue = parseInt(value, 10) || 1;
     const newQuantity = Math.min(Math.max(newValue, 1), maxQuantity);
-    setQuantity(newQuantity, () => onChange(newQuantity));
+    setQuantity(newQuantity);
   };
 
   const resetIfEmpty = (value) => {
     if (value === '' || maxQuantity === 0) {
-      setQuantity(1, () => onChange(1));
+      setQuantity(1);
     }
   };
 
