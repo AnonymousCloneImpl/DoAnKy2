@@ -1,8 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @next/next/no-img-element */
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import { useEffect, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark, faCircleUp, faCommentDots, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { Stomp } from '@stomp/stompjs';
 
 export default function Layout({ children }) {
 
@@ -17,11 +20,7 @@ export default function Layout({ children }) {
   }, []);
 
   const handleScroll = () => {
-    if (window.scrollY > 500) {
-      setIsVisible(true);
-    } else {
-      setIsVisible(false);
-    }
+    window.scrollY > 500 ? setIsVisible(true) : setIsVisible(false);
   };
 
   const scrollToTop = () => {
@@ -31,51 +30,43 @@ export default function Layout({ children }) {
     });
   };
 
-  // open/close chat pop up
+  // chat-----------------------------------------------------------------------------------------------------
+  const [chatMessages, setChatMessages] = useState([]);
+  const ws = useRef(null);
+
   const openChat = () => {
-    if (isChatVisible) {
-      closeChat();
-    } else {
-      setChatVisible(true);
-    }
+    // connectWebSocket();
+    isChatVisible ? closeChat() : setChatVisible(true);
   };
 
   const closeChat = () => {
     setChatVisible(false);
+    if (ws.current) {
+      ws.current.disconnect();
+    }
   };
 
-  const [chatMessages, setChatMessages] = useState([]);
-  const [ws, setWs] = useState(null);
-  const chatRef = useRef(null);
-
-  // useEffect(() => {
-  //   const newWs = new WebSocket('ws://127.0.0.1:8000/dashboard/chat');
-
-  //   newWs.onopen = () => {
-  //     console.log('WebSocket connected');
-  //     setWs(newWs);
-  //   };
-
-  //   newWs.onmessage = (event) => {
-  //     const message = event.data;
-  //     setChatMessages(prevMessages => [...prevMessages, message]);
-  //     scrollChatBox();
-  //   };
-
-  //   return () => {
-  //     newWs.close();
-  //   };
-  // }, []);
+  // const connectWebSocket = () => {
+  //   ws.current = Stomp.over(() => new WebSocket('ws://localhost:8080/chat'));
+  //   ws.current.connect({}, () => {
+  //     console.log("connecting WebSocket")
+  //     ws.current.subscribe('/topic/messages', (message) => {
+  //       setChatMessages([...chatMessages, message.body]);
+  //       scrollChatBox();
+  //     });
+  //   });
+  // };
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     const message = e.target.elements.chat.value.trim();
     if (message !== "") {
-      if (ws) {
-        ws.send(message);
-      }
+      // if (ws.current && ws.current.connected) {
+      //   ws.current.send('/chat', {}, message);
+      // }
       setChatMessages([...chatMessages, message]);
       e.target.reset();
+      console.log(message);
     }
   };
 
@@ -83,12 +74,13 @@ export default function Layout({ children }) {
     scrollChatBox();
   }, [chatMessages]);
 
-  function scrollChatBox() {
+  const scrollChatBox = () => {
     const chatBox = document.getElementById('chat-box');
     if (chatBox) {
       chatBox.scrollTop = chatBox.scrollHeight;
     }
   }
+
 
   return (
     <div>
