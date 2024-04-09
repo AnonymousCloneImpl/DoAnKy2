@@ -81,7 +81,6 @@ class OrderController extends Controller
      */
     public function update(Request $request): int
     {
-        //
         $orderCode = $request->request->get('order_code');
         $dataToUpdate = [
             'customer_name' => $request->input('customer_name'),
@@ -90,6 +89,7 @@ class OrderController extends Controller
             'shipping_address' => $request->input('shipping_address'),
             'status' => $request->input('status'),
         ];
+        echo $dataToUpdate[4];
 
         $currentData = DB::table('orders')
             ->where('order_code', $orderCode)

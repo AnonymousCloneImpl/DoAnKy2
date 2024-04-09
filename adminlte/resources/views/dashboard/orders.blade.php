@@ -5,7 +5,6 @@
 <!-- Content Header (Page header) -->
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>Order</title>
 </head>
 <section class="content-header">
     <div class="container-fluid">
@@ -59,10 +58,10 @@
                                         {{$order->customer_name}}
                                     </td>
                                     <td>
-                                        <p  class="editable" data-field="customer_phone">
+                                        <p class="editable" data-field="customer_phone">
                                             {{$order->customer_phone}}
                                         </p>
-                                        <p  class="editable" data-field="customer_email">
+                                        <p class="editable" data-field="customer_email">
                                             {{$order->customer_email}}
                                         </p>
                                     </td>
@@ -134,32 +133,25 @@
         </div>
     </div>
     <!-- /.container-fluid -->
-</section>
-<!-- /.content -->
-
-@endsection
-
-@section('scripts')
     <script>
         jQuery(function($) {
             $('.submit-btn').click(function() {
                 let orderRow = $(this).closest('.order-row');
-                    let orderData = {
-                        order_code: orderRow.find('[data-field="order_code"]').text().trim(),
-                        customer_name: orderRow.find('[data-field="customer_name"]').text().trim(),
-                        customer_phone: orderRow.find('[data-field="customer_phone"]').text().trim(),
-                        customer_email: orderRow.find('[data-field="customer_email"]').text().trim(),
-                        shipping_address: orderRow.find('[data-field="shipping_address"]').text().trim(),
-                        status: orderRow.find('[data-field="status"]').text().trim(),
-                        _token: '{{ csrf_token() }}'
-                    };
+                let orderData = {
+                    order_code: orderRow.find('[data-field="order_code"]').text().trim(),
+                    customer_name: orderRow.find('[data-field="customer_name"]').text().trim(),
+                    customer_phone: orderRow.find('[data-field="customer_phone"]').text().trim(),
+                    customer_email: orderRow.find('[data-field="customer_email"]').text().trim(),
+                    shipping_address: orderRow.find('[data-field="shipping_address"]').text().trim(),
+                    status: orderRow.find('[data-field="status"]').text().trim(),
+                    _token: '{{ csrf_token() }}'
+                };
                 console.log(orderData)
                 $.ajax({
                     url: '/dashboard/orders/update',
                     method: 'POST',
                     data: orderData,
                     success: function(response) {
-                        console.log(response)
                         if (response > 0) {
                             toastr.success(`Order ${orderData.order_code} updated successfully`, 'Success');
                         } else {
@@ -207,6 +199,7 @@
                             const parentCell = this.parentElement;
                             parentCell.removeChild(this);
                             const p = document.createElement('p');
+                            p.setAttribute('data-field', 'customer_phone');
                             p.innerHTML = newText;
                             parentCell.append(p);
                             isInputExist = false;
@@ -256,4 +249,7 @@
             });
         });
     </script>
+</section>
+<!-- /.content -->
+
 @endsection
