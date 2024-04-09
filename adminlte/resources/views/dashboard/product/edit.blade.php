@@ -2,12 +2,12 @@
 @section('title', 'Edit')
 @section('content')
     <div class="container tm-mt-big tm-mb-big">
-        <div class="row">
+        <div class="row pt-3">
             <div class="col-12">
                 <h2 class="tm-block-title d-inline-block">Edit Product</h2>
             </div>
         </div>
-        <div class="row tm-edit-product-row">
+        <div class="row pb-2">
             <div class="col-xl-12 col-lg-12 col-md-12">
                 <form id="edit-product-form"
                       action="{{ route('products.update', ['id' => $editItem->id]) }}" method="POST"

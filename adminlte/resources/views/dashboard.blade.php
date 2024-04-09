@@ -7,13 +7,16 @@
         </h1>
     </div>
 
-    <a href="{{ route('productList') }}" class="btn btn-primary btn-lg btn-block text-uppercase">
-        Products
-    </a>
+    <div class="col-12">
+        <a href="{{ route('productList') }}" class="btn btn-primary btn-lg btn-block text-uppercase">
+            Products
+        </a>
 
-    <a href="{{ route('orderList') }}" class="btn btn-primary btn-lg btn-block text-uppercase">
-        Orders
-    </a>
+        <a href="{{ route('orderList') }}" class="btn btn-primary btn-lg btn-block text-uppercase">
+            Orders
+        </a>
+    </div>
+
 
 
 @endsection

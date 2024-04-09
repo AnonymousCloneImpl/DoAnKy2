@@ -41,7 +41,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-
+        return view('dashboard.product.create');
     }
 
     /**
@@ -121,7 +121,7 @@ class ProductController extends Controller
             'image' => 'sometimes|string',
             'content' => 'sometimes|string',
             'header' => 'sometimes|string',
-            'producer'=> 'sometimes|required|integer|min:0|max:255' ,
+            'producer' => 'sometimes|required|integer|min:0|max:255',
             'product_detail' => 'sometimes|nullable|json',
         ]);
 
@@ -163,7 +163,7 @@ class ProductController extends Controller
             DB::commit();
             toastr()->success('Product updated successfully', 'Success');
             return redirect()->route('productList');
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             // Roll back if something went wrong
             DB::rollBack();
             echo($e);
@@ -183,7 +183,7 @@ class ProductController extends Controller
             DB::commit();
             toastr()->success('Product removed successfully', 'Success');
             return redirect()->back();
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             // Something went wrong, rollback the transaction
             DB::rollBack();
             toastr()->error('Product is not removed', 'Oops! Something went wrong!');

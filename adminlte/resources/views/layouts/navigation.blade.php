@@ -39,7 +39,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{route('productList')}}" class="nav-link {{ request()->routeIs('manage.orders') ? 'active' : '' }}">
+                        <a href="{{route('products.create')}}" class="nav-link {{ request()->routeIs('manage.orders') ? 'active' : '' }}">
                             <i class="fas fa-plus-square nav-icon"></i>
                             <p>Add Products</p>
                         </a>

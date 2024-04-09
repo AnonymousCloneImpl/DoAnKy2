@@ -57,7 +57,7 @@
                                             <td>{{$p->id}}</td>
                                             <td>{{$p->model}}</td>
                                             <td>{{$p->product_name}}</td>
-                                            <td>{{$p->discount}}</td>
+                                            <td><strong>{{$p->discount}} %</strong></td>
                                             <td>{{$p->price}}</td>
                                             <td>{{$p->producer}}</td>
                                             <td>{{$p->product_type}}</td>
