@@ -90,10 +90,9 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void updateStock(OrderItemDto item) {
-		Optional<Stock> stockOptional = stockService.getById(item.getProductId());
+		Stock stock = stockService.getById(item.getProductId());
 
-		if (stockOptional.isPresent()) {
-			Stock stock = stockOptional.get();
+		if (stock != null) {
 			StockDto stockDto = StockDto.builder()
 					.quantity(stock.getQuantity() - item.getQuantity())
 					.sold(stock.getSold() + item.getQuantity())

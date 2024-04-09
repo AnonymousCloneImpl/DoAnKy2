@@ -8,6 +8,6 @@ import project.entity.product.Stock;
 
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Long> {
-  @Query("SELECT s FROM Stock s WHERE s.product.id = :id")
-  Stock findByProductId(@Param("id") long id);
+	@Query("SELECT s FROM Stock s WHERE s.product.id = :id")
+	Stock findByProductId(@Param("id") long id);
 }

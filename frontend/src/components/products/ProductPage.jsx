@@ -187,7 +187,6 @@ const ProductPage = ({ productBE }) => {
     const selectedCombo = product.purchaseComboItem.productList.filter((item) =>
       checkedItems.includes(item.id)
     );
-
     const orderData = {
       customerName,
       customerPhone,
@@ -210,24 +209,23 @@ const ProductPage = ({ productBE }) => {
 
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
     try {
-      console.log(orderData)
       const data = await postMethodFetcher(orderUrl, orderData)
       if (data !== undefined) {
         console.log(paymentMethod)
         if (paymentMethod === "COD") {
-          route.push("/order/success");
+          await route.push("/order/success");
         }
 
         if (paymentMethod === "PAYPAL") {
-          route.push(`/payment?type=PAYPAL&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
+          await route.push(`/payment?type=PAYPAL&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
         }
 
         if (paymentMethod === "VNPAY") {
-          route.push(`/payment?type=VNPAY&price=${orderData.totalPrice}&orderCode=${data.orderCode}`);
+          await route.push(`/payment?type=VNPAY&price=${orderData.totalPrice}&orderCode=${data.orderCode}`);
         }
 
         if (paymentMethod === "MOMO") {
-          route.push(`/payment?type=MOMO&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
+          await route.push(`/payment?type=MOMO&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
         }
       } else alert('Failed to place order');
     } catch (error) {
@@ -379,7 +377,7 @@ const ProductPage = ({ productBE }) => {
 
                 <div className="quantity">
                   <p>Quantity</p>
-                  <QuantityControl initialQuantity={1} maxQuantity={productBE.stock.quantity} onChange={handleQuantityChange} />
+                  <QuantityControl initialQuantity={1} maxQuantity={productBE.stock.quantity} onChange={handleQuantityChange} quantity={quantity} setQuantity={setQuantity} />
                 </div>
                 <div className="left-in-stock">{product.stock.quantity} Left In Stock</div>
 
