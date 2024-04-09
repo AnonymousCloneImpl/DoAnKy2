@@ -36,6 +36,10 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 
     Route::delete('/dashboard/products/delete/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
 
+    Route::get('/dashboard/products/create',[ProductController::class, 'create'])->name('products.create');
+
+    Route::post('/dashboard/products/store',[ProductController::class, 'store'])->name('products.store');
+
     Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('orderList');
 
     Route::post('/dashboard/orders/update', [OrderController::class, 'update'])->name('updateOrder');
