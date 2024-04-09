@@ -104,3 +104,4 @@ adminlte/.env
 adminlte/vendor
 /adminlte/bootstrap
 adminlte/bootstrap
+/adminlte/storage/logs/lavarel.log
