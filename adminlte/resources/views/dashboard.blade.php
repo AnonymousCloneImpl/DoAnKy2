@@ -2,17 +2,21 @@
 @section("title", "Admin Dashboard")
 @section("content")
     <div class="text-center">
-        <h1>
-            DASHBOARD
+        <h1 class="font-weight-bold text-uppercase">
+            Admin Dashboard
         </h1>
     </div>
 
-    <div class="d-flex row-cols-3">
-        <a href="/dashboard/products" class="text-center">
+    <div class="col-12">
+        <a href="{{ route('productList') }}" class="btn btn-primary btn-lg btn-block text-uppercase">
             Products
         </a>
-        <a href="/dashboard/orders" class="text-center">
+
+        <a href="{{ route('orderList') }}" class="btn btn-primary btn-lg btn-block text-uppercase">
             Orders
         </a>
     </div>
+
+
+
 @endsection

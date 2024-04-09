@@ -43,3 +43,4 @@ Route::middleware(AdminMiddleware::class)->group(function () {
 
     Route::post('/dashboard/orders/update', [OrderController::class, 'update'])->name('updateOrder');
 });
+
