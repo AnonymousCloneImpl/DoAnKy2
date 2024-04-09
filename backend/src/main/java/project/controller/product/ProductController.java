@@ -52,12 +52,12 @@ public class ProductController {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
   }
 
-  @GetMapping("/{type}/{name}")
-  ResponseEntity<Optional<Object>> getProductByTypeAndName(@PathVariable String type, @PathVariable String name) {
+  @GetMapping("/{type}/{name}?{model}")
+  ResponseEntity<Optional<Object>> getProductByTypeAndName(@PathVariable String type, @PathVariable String name, @RequestParam String model) {
 
-    Optional<Object> list = productService.getByProductTypeAndByName(type, name);
+    Optional<Object> product = productService.getByProductTypeAndByName(type, name, model);
 
-    return ResponseEntity.ok().body(list);
+    return ResponseEntity.ok().body(product);
   }
 
   @GetMapping("/staticData")
