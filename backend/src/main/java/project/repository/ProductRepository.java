@@ -20,8 +20,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpec
 			"ORDER BY s.quantity DESC")
 	List<Product> findTopSimilarByType(@Param("type") String type, @Param("productId") Long productId, Pageable pageable);
 
-	@Query(nativeQuery = true, value = "SELECT * FROM product p WHERE p.type LIKE :type AND p.name = :name")
-	Product getByProductTypeAndByName(String type, String name);
+	@Query(nativeQuery = true, value = "SELECT * FROM product p WHERE p.type LIKE :type AND p.name = :name AND p.model = :model")
+	Product getByProductTypeAndByName(String type, String name, String model);
 
 	@Query(nativeQuery = true,
 			value = "SELECT p.* FROM product p " +
