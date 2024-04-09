@@ -17,35 +17,36 @@ import java.util.List;
 @RequestMapping("/")
 @CrossOrigin(origins = "*")
 public class OrderController {
-  @Autowired
-  private OrderService orderService;
+	@Autowired
+	private OrderService orderService;
 
-  @PostMapping("/orders/place-order")
-  public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderDto orderDto) {
-    try {
-      Order createdOrder = orderService.createOrder(orderDto);
-      orderService.sendEmail(createdOrder);
-      OrderResponse response = OrderResponse.builder()
-        .message("Success to create order")
-        .orderCode(createdOrder.getOrderCode())
-        .build();
-      return new ResponseEntity<>(response, HttpStatus.CREATED);
-    } catch (Exception e) {
-      return new ResponseEntity<>(
-        null,
-        HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
+	@PostMapping("/orders/place-order")
+	public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderDto orderDto) {
+		System.err.println(orderDto.toString());
+		try {
+			Order createdOrder = orderService.createOrder(orderDto);
+			orderService.sendEmail(createdOrder);
+			OrderResponse response = OrderResponse.builder()
+					.message("Success to create order")
+					.orderCode(createdOrder.getOrderCode())
+					.build();
+			return new ResponseEntity<>(response, HttpStatus.CREATED);
+		} catch (Exception e) {
+			return new ResponseEntity<>(
+					null,
+					HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
 
-  @GetMapping("/check-order")
-  ResponseEntity<ResponseObject> checkOrder(@RequestParam("q") String number) {
-    List<CheckOrderResponse> orderList = orderService.getOrderByPhoneNumber(number);
-    if (!orderList.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.OK)
-        .body(new ResponseObject("OK", "Get product successfully", orderList));
-    } else {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND)
-        .body(new ResponseObject("Failed", "Can't find order with phone number = " + number, ""));
-    }
-  }
+	@GetMapping("/check-order")
+	ResponseEntity<ResponseObject> checkOrder(@RequestParam("q") String number) {
+		List<CheckOrderResponse> orderList = orderService.getOrderByPhoneNumber(number);
+		if (!orderList.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ResponseObject("OK", "Get product successfully", orderList));
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND)
+					.body(new ResponseObject("Failed", "Can't find order with phone number = " + number, ""));
+		}
+	}
 }

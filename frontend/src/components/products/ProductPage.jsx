@@ -210,6 +210,7 @@ const ProductPage = ({ productBE }) => {
 
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
     try {
+      console.log(orderData)
       const data = await postMethodFetcher(orderUrl, orderData)
       if (data !== undefined) {
         console.log(paymentMethod)

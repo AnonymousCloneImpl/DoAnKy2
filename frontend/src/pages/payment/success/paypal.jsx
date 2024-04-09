@@ -1,5 +1,6 @@
 import {useRouter} from "next/router";
 import postMethodFetcher from "@/utils/postMethod";
+import Loading from "@/components/Loading";
 
 export default function Process() {
     const router = useRouter();
@@ -19,14 +20,15 @@ export default function Process() {
             if (data === "Success") {
                 await router.push("/order/success");
             }
+            if (data === "Failed") {
+                await router.push("/payment/failed");
+            }
         }
         checkout();
     }
 
     return (
-        <div>
-
-        </div>
+        <Loading />
     )
 
 }

@@ -79,9 +79,41 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request): int
     {
         //
+        $orderCode = $request->request->get('order_code');
+        $dataToUpdate = [
+            'customer_name' => $request->input('customer_name'),
+            'customer_phone' => $request->input('customer_phone'),
+            'customer_email' => $request->input('customer_email'),
+            'shipping_address' => $request->input('shipping_address'),
+            'status' => $request->input('status'),
+        ];
+
+        $currentData = DB::table('orders')
+            ->where('order_code', $orderCode)
+            ->first();
+
+        $isDifferent = false;
+
+        foreach ($currentData as $key => $value) {
+            if (array_key_exists($key, $dataToUpdate)) {
+                if ($dataToUpdate[$key] !== $value) {
+                    $isDifferent = true;
+                    break;
+                }
+            }
+        }
+
+        if ($isDifferent) {
+            $dataToUpdate['updated_at'] = now();
+            return DB::table('orders')
+                ->where('order_code', $orderCode)
+                ->update($dataToUpdate);
+        }
+
+        return 0;
     }
 
     /**
