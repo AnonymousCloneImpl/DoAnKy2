@@ -134,14 +134,14 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 //	@Cacheable(key = "#name", value = "productByTypeAndName")
-	public Optional<Object> getByProductTypeAndByName(String type, String namePath) {
+	public Optional<Object> getByProductTypeAndByName(String type, String namePath, String model) {
 		if (type == null || namePath == null || type.isEmpty() || namePath.isEmpty()) {
 			System.err.println("type or name is null");
 			return Optional.empty();
 		}
 
 		String name = namePath.replace("-", " ");
-		Product p = productRepo.getByProductTypeAndByName(type, name);
+		Product p = productRepo.getByProductTypeAndByName(type, name, model);
 		if (p == null) {
 			System.err.println("can't find product: " + name);
 			return Optional.empty();
