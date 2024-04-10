@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCircleCheck, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
+import { faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
@@ -40,21 +40,13 @@ const ProductPage = ({ productBE }) => {
   };
 
   // set choose product configuration----------------------------------------------------------------------------------------------
-  const activeBtn = (button) => {
-    let buttons = document.querySelectorAll('.pmodel');
-    buttons.forEach((btn) => {
-      btn.classList.remove('active');
+  const activeBtn = async (modelName) => {
+    const { model, ...query } = route.query;
+    await new Promise((resolve) => {
+      route.push({ pathname: route.pathname, query: { ...query, model: modelName } }, undefined, { shallow: true, scroll: false });
+      resolve();
     });
-    button.classList.add('active');
   };
-
-  useEffect(() => {
-    const firstButton = document.querySelector('.pmodel');
-    if (firstButton) {
-      firstButton.classList.add('active');
-      activeBtn(firstButton);
-    }
-  }, []);
 
   // Set quantity----------------------------------------------------------------------------------------------
   const [quantity, setQuantity] = useState(1);
@@ -139,14 +131,9 @@ const ProductPage = ({ productBE }) => {
   }, []);
 
   // get shipping method
-  const [shippingMethod, setShippingMethod] = useState('STANDARD');
-  const handleShippingChange = (e) => {
-    const selectedShipping = e.target.value;
-    const shipMapping = {
-      'STANDARD': 'STANDARD_SHIPPING',
-      'FAST': 'FAST_SHIPPING',
-    };
-    setShippingMethod(shipMapping[selectedShipping]);
+  const [shippingMethod, setShippingMethod] = useState('STANDARD_SHIPPING');
+  const handleShippingChange = (selectedShipping) => {
+    setShippingMethod(selectedShipping);
   };
 
   // get payment method----------------------------------------------------------------------------------------------
@@ -371,9 +358,14 @@ const ProductPage = ({ productBE }) => {
 
                 <p className="model">Configuration</p>
                 <div className="product-model">
-
-                  {product.configurationList.map((item, index) => (
-                    <button key={index} className="pmodel" onClick={(e) => activeBtn(e.target)}>{item}</button>
+                  {Object.entries(product.configurationMap).map(([key, value]) => (
+                    <div key={key}>
+                      {key === route.query.model ? (
+                        <button className="pmodel active" onClick={(e) => activeBtn(key)}>{value}</button>
+                      ) : (
+                        <button className="pmodel" onClick={(e) => activeBtn(key)}>{value}</button>
+                      )}
+                    </div>
                   ))}
                 </div>
 
@@ -456,7 +448,7 @@ const ProductPage = ({ productBE }) => {
                       </div>
                       <div className="recommended-accessories-content">
                         <Link
-                            href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/\s/g, "-")}?model=${item.model.toLowerCase().replace(/\s/g, "-")}`}
+                          href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/\s/g, "-")}?model=${item.model.toLowerCase().replace(/\s/g, "-")}`}
                         >
                           {item.name + " " + item.model}
                         </Link>
@@ -512,7 +504,7 @@ const ProductPage = ({ productBE }) => {
                   </div>
                   <div className="similar-product-content">
                     <Link
-                        href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/\s/g, "-")}?model=${item.model.toLowerCase().replace(/\s/g, "-")}`}
+                      href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/\s/g, "-")}?model=${item.model.toLowerCase().replace(/\s/g, "-")}`}
                     >
                       {item.name + " " + item.model}
                     </Link>
@@ -556,6 +548,7 @@ const ProductPage = ({ productBE }) => {
                   handleProvinceChange={handleProvinceChange}
                   handleDistrictChange={handleDistrictChange}
                   setSelectedWardId={setSelectedWardId}
+                  shippingMethod={shippingMethod}
                   handleShippingChange={handleShippingChange}
                   paymentMethod={paymentMethod}
                   handleCheckedPayment={handleCheckedPayment}
@@ -568,6 +561,7 @@ const ProductPage = ({ productBE }) => {
                   setHouseAddress={setHouseAddress}
                   customerPhone={customerPhone}
                   setCustomerPhone={setCustomerPhone}
+                  totalPrice={totalPrice}
                 />
               </div>
             </div>

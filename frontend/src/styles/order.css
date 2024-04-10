@@ -1,0 +1,164 @@
+/* ORDER FORM */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+.order-popup {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.order-line {
+  width: 1px;
+  background: rgb(147, 147, 147);
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.popup-content h1 {
+  font-size: 30px;
+  font-weight: 500;
+  padding-top: 10px;
+}
+
+.close-form-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.close-form-btn:hover {
+  color: #2F80ED;
+  font-weight: bolder;
+}
+
+.open-form-btn {
+  cursor: pointer;
+}
+
+.order-form {
+  width: 100%;
+  margin: 10px auto;
+}
+
+.order-form label {
+  float: left;
+  display: block;
+  margin: 10px 0 5px 0;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.order-form input {
+  width: 100%;
+  height: 40px;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #696969;
+  outline: none;
+  letter-spacing: 1px;
+  padding-left: 40px;
+}
+
+.input-icon {
+  position: absolute;
+  font-size: 20px;
+  padding-left: 5px;
+  padding-top: 5px;
+  color: #333;
+}
+
+.order-form .form-btn {
+  background: #2F80ED;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 20px 0;
+  transition: 0.3s all ease;
+}
+
+.order-form .form-btn:hover {
+  background: #0000FF;
+}
+
+.shipping-btn {
+  border: 2px solid rgb(100, 100, 100);
+  border-radius: 5px;
+  margin-right: 5px;
+  padding: 5px 10px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.active-shipping {
+  border-color: rgb(255, 162, 0);
+}
+
+.phone-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.order-logo {
+  width: 60px;
+  margin: 10px auto 0 auto;
+}
+
+.address-selects {
+  display: flex;
+  width: 100%;
+  height: 40px;
+  margin-bottom: 30px;
+  justify-content: space-between;
+}
+
+.address-selects select {
+  width: 32%;
+  text-align: center;
+  height: 40px;
+  border-bottom: 1px solid #696969;
+  outline: none;
+}
+
+/* Payment----------------------------------------------------- */
+.payment-item {
+  display: flex;
+  height: 70px;
+}
+
+.payment-item input {
+  width: 50px;
+  margin-top: 15px;
+}
+
+.payment-option img {
+  height: 100%;
+  margin: 0 auto;
+}
+
+.payment-checkbox {
+  transform: scale(0.5);
+}

@@ -172,27 +172,23 @@ public class ProductUtils {
 		return list;
 	}
 
-	public List<String> getConfigurationsByProductName(String name) {
-		List<String> productDetails = productRepo.getProductDetailsByName(name);
-		List<String> configurations = new ArrayList<>();
-		for (String pDetail : productDetails) {
+	public String getConfigurationsByProductConfig(String config) {
+    StringBuilder detailTab;
 			try {
-				JsonNode rootNode = new ObjectMapper().readTree(pDetail);
+				JsonNode rootNode = new ObjectMapper().readTree(config);
 				String ram = getNodeValueIgnoreCase(rootNode, "ram");
 				String hardDrive = getNodeValueIgnoreCase(rootNode, "storage");
 				String cpu = getNodeValueIgnoreCase(rootNode, "cpu");
 				String graphicsCard = getNodeValueIgnoreCase(rootNode, "gpu");
-				StringBuilder config = new StringBuilder();
-				config.append(ram).append(" | ")
+				detailTab = new StringBuilder();
+        detailTab.append(ram).append(" | ")
 						.append(hardDrive).append(" | ")
 						.append(cpu).append(" | ")
 						.append(graphicsCard);
-				configurations.add(config.toString());
 			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
-		}
-		return configurations;
+		return detailTab.toString();
 	}
 
 	private String getNodeValueIgnoreCase(JsonNode node, String key) {

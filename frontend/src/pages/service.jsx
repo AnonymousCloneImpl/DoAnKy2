@@ -189,80 +189,80 @@ const Service = () => {
         <div id="myTableContent">
           <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "table1" ? '' : 'hidden'}`} id="table1" role="tabpanel" aria-labelledby="table1-tab">
             <h1 className="text-center text-xl font-bold pb-5 uppercase">Extended Warranty for Premium Accessories</h1>
-            <table>
+            <table className='service-table'>
               <thead>
                 <tr>
-                  <th>Price Range</th>
-                  <th>1-to-1 VIP Exchange</th>
-                  <th>S24 + 12 Months</th>
+                  <th className='service-th'>Price Range</th>
+                  <th className='service-th'>1-to-1 VIP Exchange</th>
+                  <th className='service-th'>S24 + 12 Months</th>
                 </tr>
               </thead>
 
               <tbody>
                 <tr>
-                  <td>1.000.000</td>
-                  <td>100.000</td>
-                  <td>100.000</td>
+                  <td className='service-td'>1.000.000</td>
+                  <td className='service-td'>100.000</td>
+                  <td className='service-td'>100.000</td>
                 </tr>
 
                 <tr>
-                  <td>1.000.001 - 2.000.000</td>
-                  <td>200.000</td>
-                  <td>100.000</td>
+                  <td className='service-td'>1.000.001 - 2.000.000</td>
+                  <td className='service-td'>200.000</td>
+                  <td className='service-td'>100.000</td>
                 </tr>
 
                 <tr>
-                  <td>2.000.001 - 3.000.000</td>
-                  <td>300.000</td>
-                  <td>150.000</td>
+                  <td className='service-td'>2.000.001 - 3.000.000</td>
+                  <td className='service-td'>300.000</td>
+                  <td className='service-td'>150.000</td>
                 </tr>
 
                 <tr>
-                  <td>3.000.001 - 4.000.000</td>
-                  <td>400.000</td>
-                  <td>200.000</td>
+                  <td className='service-td'>3.000.001 - 4.000.000</td>
+                  <td className='service-td'>400.000</td>
+                  <td className='service-td'>200.000</td>
                 </tr>
 
                 <tr>
-                  <td>4.000.001 - 5.000.000</td>
-                  <td>400.000</td>
-                  <td>300.000</td>
+                  <td className='service-td'>4.000.001 - 5.000.000</td>
+                  <td className='service-td'>400.000</td>
+                  <td className='service-td'>300.000</td>
                 </tr>
 
                 <tr>
-                  <td>5.000.001 - 8.000.000</td>
-                  <td>600.000</td>
-                  <td>400.000</td>
+                  <td className='service-td'>5.000.001 - 8.000.000</td>
+                  <td className='service-td'>600.000</td>
+                  <td className='service-td'>400.000</td>
                 </tr>
 
                 <tr>
-                  <td>8.000.001 - 10.000.000</td>
-                  <td>800.000</td>
-                  <td>500.000</td>
+                  <td className='service-td'>8.000.001 - 10.000.000</td>
+                  <td className='service-td'>800.000</td>
+                  <td className='service-td'>500.000</td>
                 </tr>
 
                 <tr>
-                  <td>10.000.001 - 15.000.000</td>
-                  <td>1.000.000</td>
-                  <td>650.000</td>
+                  <td className='service-td'>10.000.001 - 15.000.000</td>
+                  <td className='service-td'>1.000.000</td>
+                  <td className='service-td'>650.000</td>
                 </tr>
 
                 <tr>
-                  <td>15.000.001 - 20.000.000</td>
-                  <td>1.400.000</td>
-                  <td>800.000</td>
+                  <td className='service-td'>15.000.001 - 20.000.000</td>
+                  <td className='service-td'>1.400.000</td>
+                  <td className='service-td'>800.000</td>
                 </tr>
 
                 <tr>
-                  <td>20.000.001 - 30.000.000</td>
-                  <td>2.000.000</td>
-                  <td>1.000.000</td>
+                  <td className='service-td'>20.000.001 - 30.000.000</td>
+                  <td className='service-td'>2.000.000</td>
+                  <td className='service-td'>1.000.000</td>
                 </tr>
 
                 <tr>
-                  <td>30.000.001 - 40.000.000</td>
-                  <td>2.000.000</td>
-                  <td>1.200.000</td>
+                  <td className='service-td'>30.000.001 - 40.000.000</td>
+                  <td className='service-td'>2.000.000</td>
+                  <td className='service-td'>1.200.000</td>
                 </tr>
               </tbody>
             </table>
@@ -270,64 +270,64 @@ const Service = () => {
 
           <div className={`p-4 rounded-lg tab-header dark:bg-gray-800 ${activeTable === "table2" ? '' : 'hidden'}`} id="table2" role="tabpanel" aria-labelledby="table2-tab">
             <h1 className="text-center text-xl font-bold pb-5 uppercase">Warranty service price list</h1>
-            <table>
+            <table className='service-table'>
               <thead>
                 <tr>
-                  <th>Price Range</th>
-                  <th>1-to-1 VIP Exchange</th>
-                  <th>S24 + 12 Months</th>
-                  <th>S24 + 24 Months</th>
+                  <th className='service-th'>Price Range</th>
+                  <th className='service-th'>1-to-1 VIP Exchange</th>
+                  <th className='service-th'>S24 + 12 Months</th>
+                  <th className='service-th'>S24 + 24 Months</th>
                 </tr>
               </thead>
 
               <tbody>
                 <tr>
-                  <td>10.000.000</td>
-                  <td>700.000</td>
-                  <td>700.000</td>
-                  <td>1.400.000</td>
+                  <td className='service-td'>10.000.000</td>
+                  <td className='service-td'>700.000</td>
+                  <td className='service-td'>700.000</td>
+                  <td className='service-td'>1.400.000</td>
                 </tr>
 
                 <tr>
-                  <td>10.000.001 - 15.000.000</td>
-                  <td>1.500.000</td>
-                  <td>1.400.000</td>
-                  <td>2.300.000</td>
+                  <td className='service-td'>10.000.001 - 15.000.000</td>
+                  <td className='service-td'>1.500.000</td>
+                  <td className='service-td'>1.400.000</td>
+                  <td className='service-td'>2.300.000</td>
                 </tr>
 
                 <tr>
-                  <td>15.000.001 - 20.000.000</td>
-                  <td>1.500.000</td>
-                  <td>1.400.000</td>
-                  <td>2.300.000</td>
+                  <td className='service-td'>15.000.001 - 20.000.000</td>
+                  <td className='service-td'>1.500.000</td>
+                  <td className='service-td'>1.400.000</td>
+                  <td className='service-td'>2.300.000</td>
                 </tr>
 
                 <tr>
-                  <td>25.000.001 - 30.000.000</td>
-                  <td>2.200.000</td>
-                  <td>2.200.000</td>
-                  <td>3.400.000</td>
+                  <td className='service-td'>25.000.001 - 30.000.000</td>
+                  <td className='service-td'>2.200.000</td>
+                  <td className='service-td'>2.200.000</td>
+                  <td className='service-td'>3.400.000</td>
                 </tr>
 
                 <tr>
-                  <td>30.000.001 - 35.000.000</td>
-                  <td>2.600.000</td>
-                  <td>2.600.000</td>
-                  <td>3.800.000</td>
+                  <td className='service-td'>30.000.001 - 35.000.000</td>
+                  <td className='service-td'>2.600.000</td>
+                  <td className='service-td'>2.600.000</td>
+                  <td className='service-td'>3.800.000</td>
                 </tr>
 
                 <tr>
-                  <td>35.000.001 - 40.000.000</td>
-                  <td>3.000.000</td>
-                  <td>3.000.000</td>
-                  <td>4.000.000</td>
+                  <td className='service-td'>35.000.001 - 40.000.000</td>
+                  <td className='service-td'>3.000.000</td>
+                  <td className='service-td'>3.000.000</td>
+                  <td className='service-td'>4.000.000</td>
                 </tr>
 
                 <tr>
-                  <td>45.000.001 - 100.000.000</td>
-                  <td>4.000.000</td>
-                  <td>4.000.000</td>
-                  <td>5.000.000</td>
+                  <td className='service-td'>45.000.001 - 100.000.000</td>
+                  <td className='service-td'>4.000.000</td>
+                  <td className='service-td'>4.000.000</td>
+                  <td className='service-td'>5.000.000</td>
                 </tr>
               </tbody>
             </table>
@@ -335,76 +335,76 @@ const Service = () => {
 
           <div className={`p-4 rounded-lg dark:bg-gray-800 ${activeTable === "table3" ? '' : 'hidden'}`} id="table3" role="tabpanel" aria-labelledby="table3-tab">
             <h1 className="text-center text-xl font-bold pb-5 uppercase">Classification of Extended Warranties Corresponding to Products</h1>
-            <table>
+            <table className='service-table'>
               <thead>
                 <tr>
-                  <th>Product Group</th>
-                  <th>BHMR 1-to-1 VIP Exchange</th>
-                  <th>BHMR RV-RN</th>
-                  <th>BHMR 24+</th>
+                  <th className='service-th'>Product Group</th>
+                  <th className='service-th'>BHMR 1-to-1 VIP Exchange</th>
+                  <th className='service-th'>BHMR RV-RN</th>
+                  <th className='service-th'>BHMR 24+</th>
                 </tr>
               </thead>
 
               <tbody>
                 <tr>
-                  <td>Apple</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
+                  <td className='service-td'>Apple</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
                 </tr>
                 <tr>
-                  <td>ASUS</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
+                  <td className='service-td'>ASUS</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
                 </tr>
                 <tr>
-                  <td>Huawei</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
+                  <td className='service-td'>Huawei</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
                 </tr>
                 <tr>
-                  <td>Others</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
+                  <td className='service-td'>Others</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
                 </tr>
                 <tr>
-                  <td>Nokia</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
+                  <td className='service-td'>Nokia</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
                 </tr>
                 <tr>
-                  <td>Samsung</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
+                  <td className='service-td'>Samsung</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
                 </tr>
                 <tr>
-                  <td>Laptop</td>
-                  <td>No</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
+                  <td className='service-td'>Laptop</td>
+                  <td className='service-td'>No</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
                 </tr>
                 <tr>
-                  <td>Smart Watches</td>
-                  <td>No</td>
-                  <td>Yes</td>
-                  <td>No</td>
+                  <td className='service-td'>Smart Watches</td>
+                  <td className='service-td'>No</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>No</td>
                 </tr>
                 <tr>
-                  <td>Used Phones</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
-                  <td>No</td>
+                  <td className='service-td'>Used Phones</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>No</td>
                 </tr>
                 <tr>
-                  <td>Premium Accessories</td>
-                  <td>No</td>
-                  <td>Yes</td>
-                  <td>No</td>
+                  <td className='service-td'>Premium Accessories</td>
+                  <td className='service-td'>No</td>
+                  <td className='service-td'>Yes</td>
+                  <td className='service-td'>No</td>
                 </tr>
               </tbody>
             </table>

@@ -25,7 +25,7 @@ public interface ProductService {
 
   Pagination getProductsByTypeWithPaging(String type, Integer page, Integer limit);
 
-  Optional<Object> getByProductTypeAndByName(String type, String name, String model);
+  Optional<Object> getByProductNameAndModel(String type, String name, String model);
 
   List<Product> findAllByNameAndSortBySold(String name, Pageable pageable);
 }
