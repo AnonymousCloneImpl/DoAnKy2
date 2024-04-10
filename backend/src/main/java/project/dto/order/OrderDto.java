@@ -2,6 +2,7 @@ package project.dto.order;
 
 import lombok.*;
 import project.const_.PAYMENT_METHOD;
+import project.const_.SHIPPING_METHOD;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +20,6 @@ public class OrderDto implements Serializable {
 	private String shippingAddress;
 	private List<OrderItemDto> orderItemDtoList;
 	private double totalPrice;
-	private String shippingMethod;
+	private SHIPPING_METHOD shippingMethod;
 	private PAYMENT_METHOD paymentMethod;
 }
