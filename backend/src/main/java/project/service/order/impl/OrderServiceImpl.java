@@ -103,6 +103,7 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+  @Transactional
 	public List<CheckOrderResponse> getOrderByPhoneNumber(String phone) {
 		List<Order> orders = orderRepo.findByCustomerPhone(phone);
 		List<OrderItem> orderItems;

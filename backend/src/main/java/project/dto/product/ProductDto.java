@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -24,5 +25,5 @@ public class ProductDto implements Serializable {
   private PurchaseComboItem purchaseComboItem;
   private List<SimilarProductDto> similarProductList;
   private StockDto stock;
-  private List<String> configurationList;
+  private Map<String, String> configurationMap;
 }

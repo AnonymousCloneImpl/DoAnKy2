@@ -1,4 +1,4 @@
-import {useState, useEffect, useRef, useMemo} from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
@@ -21,10 +21,10 @@ const CartPage = () => {
       const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item }));
       loadedItems.map((item) => {
         body.cartItemDtoList.push(
-            {
-              "productId": item.id,
-              "quantity": null
-            }
+          {
+            "productId": item.id,
+            "quantity": null
+          }
         );
       });
       const getStock = async () => {
@@ -153,16 +153,10 @@ const CartPage = () => {
     setTotalPrice(finalTotalPrice);
   }, [items, checkedItems]);
 
-
   // get shipping method
-  const [shippingMethod, setShippingMethod] = useState('STANDARD');
-  const handleShippingChange = (e) => {
-    const selectedShipping = e.target.value;
-    const shipMapping = {
-      'STANDARD': 'STANDARD_SHIPPING',
-      'FAST': 'FAST_SHIPPING',
-    };
-    setShippingMethod(shipMapping[selectedShipping]);
+  const [shippingMethod, setShippingMethod] = useState('STANDARD_SHIPPING');
+  const handleShippingChange = (selectedShipping) => {
+    setShippingMethod(selectedShipping);
   };
 
   // get payment method----------------------------------------------------------------------------------------------
@@ -361,6 +355,7 @@ const CartPage = () => {
                 handleProvinceChange={handleProvinceChange}
                 handleDistrictChange={handleDistrictChange}
                 setSelectedWardId={setSelectedWardId}
+                shippingMethod={shippingMethod}
                 handleShippingChange={handleShippingChange}
                 paymentMethod={paymentMethod}
                 handleCheckedPayment={handleCheckedPayment}
@@ -373,6 +368,7 @@ const CartPage = () => {
                 setHouseAddress={setHouseAddress}
                 customerPhone={customerPhone}
                 setCustomerPhone={setCustomerPhone}
+                totalPrice={totalPrice}
               />
             </div>
           </div>

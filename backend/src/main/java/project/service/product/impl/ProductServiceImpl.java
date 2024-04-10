@@ -25,7 +25,9 @@ import project.service.product.ProducerService;
 import project.service.product.ProductService;
 import project.service.product.StockService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -156,12 +158,19 @@ public class ProductServiceImpl implements ProductService {
 		Stock stock = stockService.findByProductId(p.getId());
 		StockDto stockDto = productUtils.createStockDto(stock, p.getId());
 
+    Map<String, String> configurationMap = new HashMap<>();
+    List<String> modelList = productRepo.getProductModelByName(p.getName());
+    for (String pModel : modelList) {
+      String config = productRepo.getConfigByModel(pModel);
+      configurationMap.put(pModel, productUtils.getConfigurationsByProductConfig(config));
+    }
+
 		productDto.setProducer(p.getProducer().getName());
 		productDto.setImageList(productUtils.splitStringToList(p.getImage()));
 		productDto.setBlog(blogDto);
 		productDto.setSimilarProductList(productUtils.findTopSimilarProducts(p));
 		productDto.setStock(stockDto);
-		productDto.setConfigurationList(productUtils.getConfigurationsByProductName(p.getName()));
+    productDto.setConfigurationMap(configurationMap);
 		productUtils.setPurchaseComboItem(productDto);
 		return Optional.of(productDto);
 	}
