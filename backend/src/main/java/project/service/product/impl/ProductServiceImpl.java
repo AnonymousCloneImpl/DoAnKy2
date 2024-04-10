@@ -1,7 +1,9 @@
 package project.service.product.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@Slf4j(topic = "PRODUCT_SERVICE")
 public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ProductRepository productRepo;
@@ -86,7 +89,7 @@ public class ProductServiceImpl implements ProductService {
 
 			return pagination;
 		} catch (Exception e) {
-			System.err.println("Error in getWithPaging function : " + e.getMessage());
+      log.error("Error in getWithPaging function : {}", e.getMessage());
 			return null;
 		}
 	}
@@ -109,7 +112,7 @@ public class ProductServiceImpl implements ProductService {
 					.filter(filter)
 					.build();
 		} catch (Exception e) {
-			System.err.println("Error in getStaticDataByType function : " + e.getMessage());
+      log.error("Error in getStaticDataByType function : {}", e.getMessage());
 			return null;
 		}
 	}
@@ -129,24 +132,24 @@ public class ProductServiceImpl implements ProductService {
 
 			return pagination;
 		} catch (Exception e) {
-			System.err.println("Error in getProductsByTypeWithPaging function : " + e.getMessage());
+      log.error("Error in getProductsByTypeWithPaging function : {}", e.getMessage());
 			return null;
 		}
 	}
 
 	@Override
-//	@Cacheable(key = "#name", value = "productByTypeAndName")
-	public Optional<Object> getByProductTypeAndByName(String type, String namePath, String model) {
+	@Cacheable(key = "#model", value = "productDetail")
+	public Optional<Object> getByProductNameAndModel(String type, String namePath, String model) {
 		if (type == null || namePath == null || type.isEmpty() || namePath.isEmpty()) {
-			System.err.println("type or name is null");
+			log.error("type or name is null");
 			return Optional.empty();
 		}
 
 		String name = namePath.replace("-", " ");
 		model = model.replace("-", " ");
-		Product p = productRepo.getByProductTypeAndByName(type, name, model);
+		Product p = productRepo.getByProductNameAndModel(type, name, model);
 		if (p == null) {
-			System.err.println("can't find product: " + name);
+      log.error("can't find product: {}", name);
 			return Optional.empty();
 		}
 

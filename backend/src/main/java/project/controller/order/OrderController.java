@@ -22,7 +22,6 @@ public class OrderController {
 
 	@PostMapping("/orders/place-order")
 	public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderDto orderDto) {
-		System.err.println(orderDto.toString());
 		try {
 			Order createdOrder = orderService.createOrder(orderDto);
 			orderService.sendEmail(createdOrder);

@@ -54,7 +54,7 @@ public class ProductController {
 
 	@GetMapping("/{type}/{name}")
 	ResponseEntity<Optional<Object>> getProductByTypeAndName(@PathVariable String type, @PathVariable String name, @RequestParam String model) {
-		Optional<Object> product = productService.getByProductTypeAndByName(type, name, model);
+		Optional<Object> product = productService.getByProductNameAndModel(type, name, model);
 
 		return ResponseEntity.ok().body(product);
 	}

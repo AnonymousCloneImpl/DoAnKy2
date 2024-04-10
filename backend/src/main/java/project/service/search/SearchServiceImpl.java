@@ -1,5 +1,6 @@
 package project.service.search;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import project.service.product.ProductService;
 import java.util.List;
 
 @Service
+@Slf4j(topic = "SEARCH_SERVICE")
 public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private ProductService productService;
@@ -42,7 +44,7 @@ public class SearchServiceImpl implements SearchService {
 			}
 			return productSummaryDtoList;
 		} else {
-			System.err.println("Error in getByName findByName : productList is null");
+			log.error("Error in getByName findByName : productList is null");
 			return null;
 		}
 	}

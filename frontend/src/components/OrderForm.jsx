@@ -218,7 +218,7 @@ const OrderForm = ({
           </div>
 
           <div className='flex float-left font-bold text-lg my-5'>Total Price:
-            <p className='text-red-600 ml-3'>${parseFloat(totalPrice).toFixed(2)}</p>
+            <p className='text-red-600 ml-3'>${parseFloat(shippingMethod === 'STANDARD_SHIPPING' ? totalPrice + 50 : totalPrice + 100).toFixed(2)}</p>
           </div>
         </div>
       </div>

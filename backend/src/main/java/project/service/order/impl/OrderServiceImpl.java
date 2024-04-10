@@ -1,7 +1,10 @@
 package project.service.order.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +29,11 @@ import project.service.product.StockService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
+@Slf4j(topic = "ORDER_SERVICE")
 public class OrderServiceImpl implements OrderService {
 	@Autowired
 	private OrderRepository orderRepo;
@@ -42,6 +47,8 @@ public class OrderServiceImpl implements OrderService {
 	private EmailService emailService;
 	@Autowired
 	private PaymentService paymentService;
+  @Autowired
+  CacheManager cacheManager;
 
 	@Transactional
 	@Override
@@ -59,14 +66,17 @@ public class OrderServiceImpl implements OrderService {
 			if (orderItem != null) {
 				orderItems.add(orderItem);
 				updateStock(item);
+        evictSingleCacheValue("productDetail", orderItem.getProduct().getModel());
 			}
 		}
 		orderItemRepo.saveAll(orderItems);
-
 		paymentService.createPaymentTbl(orderDto, order);
-
 		return order;
 	}
+
+  public void evictSingleCacheValue(String cacheName, String cacheKey) {
+    Objects.requireNonNull(cacheManager.getCache(cacheName)).evict(cacheKey);
+  }
 
 	private Order createOrderObj(OrderDto orderDto) {
 		return Order.builder()
@@ -147,7 +157,7 @@ public class OrderServiceImpl implements OrderService {
 					.append("Total Price: ").append(order.getTotalPrice()).append("\n");
 			emailService.sendEmail(order.getCustomerEmail(), "Success Order", email.toString());
 		} catch (Exception e) {
-			System.err.println(e.getMessage());
+      log.error("Can't send email : {}", e.getMessage());
 		}
 	}
 }

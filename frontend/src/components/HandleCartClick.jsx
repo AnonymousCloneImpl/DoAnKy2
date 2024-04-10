@@ -1,4 +1,4 @@
-function HandleCartClick({ product, setCartNotifications}) {
+function HandleCartClick({ product, setCartNotifications }) {
   const storedItemList = localStorage.getItem('itemList');
   let cartItemList = [];
 
@@ -6,7 +6,7 @@ function HandleCartClick({ product, setCartNotifications}) {
     cartItemList = JSON.parse(storedItemList);
   }
 
-  const existingProductIndex = cartItemList.findIndex(item => item.name === product.name);
+  const existingProductIndex = cartItemList.findIndex(item => item.model === product.model);
   if (existingProductIndex !== -1) {
     const updatedCartItemList = [...cartItemList];
     let quantity;
@@ -19,6 +19,7 @@ function HandleCartClick({ product, setCartNotifications}) {
       "id": product.id,
       "image": product.image,
       "name": product.name,
+      "model": product.model,
       "price": product.price,
       "discountPercentage": product.discountPercentage,
       "type": product.type,
@@ -31,6 +32,7 @@ function HandleCartClick({ product, setCartNotifications}) {
       "id": product.id,
       "image": product.image,
       "name": product.name,
+      "model": product.model,
       "price": product.price,
       "discountPercentage": product.discountPercentage,
       "type": product.type,

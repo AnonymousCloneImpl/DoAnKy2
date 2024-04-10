@@ -13,11 +13,14 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+import java.time.Duration;
 import java.util.Objects;
 
 @EnableCaching
 @Configuration
+@EnableScheduling
 public class RedisConfig implements CachingConfigurer {
   @Autowired
   private RedisConnectionFactory redisConnectionFactory;
@@ -37,9 +40,11 @@ public class RedisConfig implements CachingConfigurer {
 
   @Bean
   public RedisCacheManager redisCacheManager(RedisTemplate<String, Object> redisTemplate) {
-    RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+    RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(
+      Objects.requireNonNull(redisTemplate.getConnectionFactory()));
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-      .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()));
+      .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()))
+      .entryTtl(Duration.ofHours(1));
     return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
   }
 }

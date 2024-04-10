@@ -98,12 +98,6 @@ const CartPage = () => {
     }
   };
 
-  // Open/Close order form----------------------------------------------------------------------------------------------
-  const [isFormVisible, setFormVisible] = useState(false);
-  const formRef = useRef(null);
-  const openForm = () => setFormVisible(true);
-  const closeForm = () => setFormVisible(false);
-
   // Select option address----------------------------------------------------------------------------------------------
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -140,20 +134,38 @@ const CartPage = () => {
     });
   };
 
+  // Open/Close order form----------------------------------------------------------------------------------------------
+  const [isFormVisible, setFormVisible] = useState(false);
+  const formRef = useRef(null);
+  const [hasSelectedItems, setHasSelectedItems] = useState(false);
   useEffect(() => {
-    const isItemChecked = checkedItems.length > 0;
+    setHasSelectedItems(checkedItems.length > 0);
+  }, [checkedItems]);
+
+  const openForm = () => {
+    if (!hasSelectedItems) {
+      alert('Please select at least one item before submitting the order.');
+    } else {
+      setFormVisible(true);
+    }
+  };
+
+  const closeForm = () => setFormVisible(false);
+
+  // get checked item------------------------------------------------------------------------------------------------
+  useEffect(() => {
     const calculatedTotalPrice = items.reduce((accumulator, item) => {
-      if (isItemChecked && checkedItems.includes(item.id)) {
+      if (hasSelectedItems && checkedItems.includes(item.id)) {
         return accumulator + (item.price - (item.price * item.discountPercentage) / 100) * item.quantity;
       }
       return accumulator;
     }, 0);
 
-    const finalTotalPrice = isItemChecked ? calculatedTotalPrice : calculatedTotalPrice;
+    const finalTotalPrice = hasSelectedItems ? calculatedTotalPrice : calculatedTotalPrice;
     setTotalPrice(finalTotalPrice);
-  }, [items, checkedItems]);
+  }, [checkedItems, hasSelectedItems, items]);
 
-  // get shipping method
+  // get shipping method---------------------------------------------------------------------------------------------
   const [shippingMethod, setShippingMethod] = useState('STANDARD_SHIPPING');
   const handleShippingChange = (selectedShipping) => {
     setShippingMethod(selectedShipping);
@@ -195,7 +207,7 @@ const CartPage = () => {
       return;
     }
 
-    // get cart items
+    // get cart items--------------------------------------------------------------------------------------------------
     const selectedCartItems = items.filter((item) =>
       checkedItems.includes(item.id)
     );
@@ -220,7 +232,7 @@ const CartPage = () => {
     try {
       const data = await postMethodFetcher(orderUrl, orderData)
       if (data !== undefined) {
-        const filteredItems = items.filter((item, index) => !checkedItems.includes(index));
+        const filteredItems = items.filter(item => !checkedItems.includes(item.id));
         localStorage.setItem('itemList', JSON.stringify(filteredItems));
 
         if (paymentMethod === "COD") {
@@ -269,8 +281,8 @@ const CartPage = () => {
                       <img className="h-20" src={item.image} alt={item.name} />
                     </div>
                     <div className="flex flex-col justify-between ml-4 flex-grow">
-                      <Link href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
-                        {item.name}
+                      <Link href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}?model=${item.model.toLowerCase()}`} className="font-bold text-base">
+                        {item.name + " " + item.model}
                       </Link>
                       <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm" onClick={() => removeItem(index)}>
                         <FontAwesomeIcon icon={faTrashCan} /> REMOVE

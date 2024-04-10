@@ -11,7 +11,7 @@ const CheckOrder = () => {
   const [otp, setOTP] = useState('');
   const [otpSent, setOTPSent] = useState(false);
   const [waiting, setWaiting] = useState(false);
-  const [resetTime, setResetTime] = useState(10);
+  const [resetTime, setResetTime] = useState(5);
 
   const handleSearch = () => {
     if (!validPhoneNumber(searchPhone)) {
@@ -69,7 +69,7 @@ const CheckOrder = () => {
   useEffect(() => {
     if (resetTime === 0) {
       setWaiting(false);
-      setResetTime(10);
+      setResetTime(5);
     }
   }, [resetTime]);
 
@@ -80,7 +80,7 @@ const CheckOrder = () => {
     setOTP('');
     setOTPSent(false);
     setWaiting(false);
-    setResetTime(10);
+    setResetTime(5);
   };
 
   const validPhoneNumber = (phoneNumber) => {
