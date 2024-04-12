@@ -7,7 +7,7 @@ import java.util.List;
 
 @Service
 public interface ProducerService {
-  List<Producer> getAll();
+    List<Producer> getAll();
 
-  List<Producer> findProducersByProductType(String type);
+    List<Producer> findProducersByProductType(String type);
 }

@@ -7,15 +7,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CacheInitializer implements CommandLineRunner {
-  @Autowired
-  private CacheManager cacheManager;
+    @Autowired
+    private CacheManager cacheManager;
 
-  @Override
-  public void run(String... args) throws Exception {
-    clearAllCaches();
-  }
+    @Override
+    public void run(String... args) throws Exception {
+        clearAllCaches();
+    }
 
-  private void clearAllCaches() {
-    cacheManager.getCacheNames().forEach(cacheName -> cacheManager.getCache(cacheName).clear());
-  }
+    private void clearAllCaches() {
+        cacheManager.getCacheNames().forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+    }
 }

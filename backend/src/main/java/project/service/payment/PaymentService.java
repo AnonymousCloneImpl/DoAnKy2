@@ -12,42 +12,42 @@ import java.time.LocalDateTime;
 
 @Service
 public class PaymentService {
-  @Autowired
-  private PaymentTblRepository paymentRepo;
+    @Autowired
+    private PaymentTblRepository paymentRepo;
 
-  public void createPaymentTbl(OrderDto orderDto, Order order) {
-    PAYMENT_METHOD paymentMethod = orderDto.getPaymentMethod();
-    System.err.println(paymentMethod);
+    public void createPaymentTbl(OrderDto orderDto, Order order) {
+        PAYMENT_METHOD paymentMethod = orderDto.getPaymentMethod();
+        System.err.println(paymentMethod);
 
-    PaymentTbl payment = PaymentTbl.builder()
-      .orderCode(order.getOrderCode())
-      .state("PENDING")
-      .paymentMethod(paymentMethod)
-      .build();
+        PaymentTbl payment = PaymentTbl.builder()
+                .orderCode(order.getOrderCode())
+                .state("PENDING")
+                .paymentMethod(paymentMethod)
+                .build();
 
-    paymentRepo.save(payment);
-  }
+        paymentRepo.save(payment);
+    }
 
-  public PAYMENT_METHOD getPaymentMethodByOrderCode(String code) {
-    return paymentRepo.getPaymentMethodByOrderCode(code);
-  }
+    public PAYMENT_METHOD getPaymentMethodByOrderCode(String code) {
+        return paymentRepo.getPaymentMethodByOrderCode(code);
+    }
 
-  public Long getByOrderCode(String orderCode) {
-    PaymentTbl paymentTbl = paymentRepo.findByOrderCode(orderCode);
-    return paymentTbl.getId();
-  }
+    public Long getByOrderCode(String orderCode) {
+        PaymentTbl paymentTbl = paymentRepo.findByOrderCode(orderCode);
+        return paymentTbl.getId();
+    }
 
-  public void updatePaymentByOrderCode(String paymentCode, String orderCode) {
-    Long id = getByOrderCode(orderCode);
-    System.out.println(id + " " + paymentCode);
-    paymentRepo.updatePaymentCodeById(id, paymentCode, LocalDateTime.now());
-  }
+    public void updatePaymentByOrderCode(String paymentCode, String orderCode) {
+        Long id = getByOrderCode(orderCode);
+        System.out.println(id + " " + paymentCode);
+        paymentRepo.updatePaymentCodeById(id, paymentCode, LocalDateTime.now());
+    }
 
-  public void updatePayment(String paymentCode, String status) {
-    paymentRepo.updatePaymentCodeById(paymentCode, status, LocalDateTime.now());
-  }
+    public void updatePayment(String paymentCode, String status) {
+        paymentRepo.updatePaymentCodeById(paymentCode, status, LocalDateTime.now());
+    }
 
-  public void updatePayment(String paymentCode, String status, String detail) {
-    paymentRepo.updatePaymentCodeById(paymentCode, status, detail, LocalDateTime.now());
-  }
+    public void updatePayment(String paymentCode, String status, String detail) {
+        paymentRepo.updatePaymentCodeById(paymentCode, status, detail, LocalDateTime.now());
+    }
 }

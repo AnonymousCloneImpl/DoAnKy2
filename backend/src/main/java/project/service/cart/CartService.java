@@ -5,5 +5,5 @@ import project.model.cart.Cart;
 
 @Service
 public interface CartService {
-  public void getListProductWithStock(Cart cart);
+    public void getListProductWithStock(Cart cart);
 }

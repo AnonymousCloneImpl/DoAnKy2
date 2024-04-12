@@ -10,12 +10,12 @@ import project.service.cart.CartService;
 @RequestMapping("/cart")
 @CrossOrigin(origins = "*")
 public class CartController {
-  @Autowired
-  private CartService cartService;
+    @Autowired
+    private CartService cartService;
 
-  @PostMapping("")
-  public ResponseEntity<Cart> getCartItemQuantity(@RequestBody Cart cart) {
-    cartService.getListProductWithStock(cart);
-    return ResponseEntity.ok(cart);
-  }
+    @PostMapping("")
+    public ResponseEntity<Cart> getCartItemQuantity(@RequestBody Cart cart) {
+        cartService.getListProductWithStock(cart);
+        return ResponseEntity.ok(cart);
+    }
 }

@@ -13,9 +13,9 @@ import lombok.Setter;
 @Entity
 @Table(name = "producer")
 public class Producer {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
-  private String name;
-  private String image;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    private String name;
+    private String image;
 }

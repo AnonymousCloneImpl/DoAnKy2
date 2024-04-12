@@ -1,10 +1,10 @@
 package project.const_;
 
 public enum SHIPPING_METHOD {
-	STANDARD_SHIPPING(50), FAST_SHIPPING(100);
-	public final int shippingPrice;
+    STANDARD_SHIPPING(50), FAST_SHIPPING(100);
+    public final int shippingPrice;
 
-	SHIPPING_METHOD(int val) {
-		this.shippingPrice = val;
-	}
+    SHIPPING_METHOD(int val) {
+        this.shippingPrice = val;
+    }
 }

@@ -8,9 +8,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MomoOrderData {
-  private String orderCode;
-  private double totalPrice;
-  private String currency;
-  private String method;
-  private String description;
+    private String orderCode;
+    private double totalPrice;
+    private String currency;
+    private String method;
+    private String description;
 }

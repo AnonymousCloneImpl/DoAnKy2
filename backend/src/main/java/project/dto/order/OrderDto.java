@@ -14,12 +14,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDto implements Serializable {
-	private String customerName;
-	private String customerPhone;
-	private String customerEmail;
-	private String shippingAddress;
-	private List<OrderItemDto> orderItemDtoList;
-	private double totalPrice;
-	private SHIPPING_METHOD shippingMethod;
-	private PAYMENT_METHOD paymentMethod;
+    private String customerName;
+    private String customerPhone;
+    private String customerEmail;
+    private String shippingAddress;
+    private List<OrderItemDto> orderItemDtoList;
+    private double totalPrice;
+    private SHIPPING_METHOD shippingMethod;
+    private PAYMENT_METHOD paymentMethod;
 }
