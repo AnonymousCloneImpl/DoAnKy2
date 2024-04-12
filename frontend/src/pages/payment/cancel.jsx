@@ -1,4 +1,3 @@
-
 export default function Failed() {
     return (
         <div className="h-60">

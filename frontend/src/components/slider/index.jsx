@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 
@@ -42,7 +42,8 @@ const HomePageSlider = () => {
                         index === currentSlide ? 'opacity-100' : 'opacity-0'
                     } transition-opacity duration-1000 ease-in-out`}
                 >
-                    <img src={imageUrl} alt={`Slide ${index + 1}`} loading="lazy" className="w-full h-full object-cover" />
+                    <img src={imageUrl} alt={`Slide ${index + 1}`} loading="lazy"
+                         className="w-full h-full object-cover"/>
                 </div>
             ))}
 

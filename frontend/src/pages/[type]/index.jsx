@@ -24,8 +24,8 @@ const ProductsPageRoute = () => {
     if (type !== null) {
         for (let i = 0; i < productType.length; i++) {
             if (productType[i].toLowerCase() === type.toLowerCase()) {
-                return  (
-                    <ProductsPageByType type={type} />
+                return (
+                    <ProductsPageByType type={type}/>
                 )
             }
         }

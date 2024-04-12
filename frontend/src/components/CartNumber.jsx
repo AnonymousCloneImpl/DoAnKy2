@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCartShopping} from '@fortawesome/free-solid-svg-icons';
 
 const CartIcon = () => {
     const [value, setValue] = useState(0);
@@ -12,8 +12,8 @@ const CartIcon = () => {
             const storedItemList = JSON.parse(localStorage.getItem('itemList'));
             try {
                 setValue(storedItemList.length);
-            } catch (e){
-                
+            } catch (e) {
+
             }
 
         };
@@ -33,7 +33,7 @@ const CartIcon = () => {
     return (
         <>
             <Link className="main-menu-a hover:text-red-800" href="/cart">
-                <FontAwesomeIcon icon={faCartShopping} className="main-menu-i" />
+                <FontAwesomeIcon icon={faCartShopping} className="main-menu-i"/>
                 My cart
             </Link>
             <div className="cart-number-list">{value}</div>

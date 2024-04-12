@@ -1,15 +1,10 @@
-
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faFilter,
-    faFilterCircleXmark,
-    faXmark
-} from "@fortawesome/free-solid-svg-icons";
+import {faFilter, faXmark} from "@fortawesome/free-solid-svg-icons";
 import FilterButton from "@/components/products/FilterButton";
 import {useRouter} from "next/router";
 
-const Filter = ({ filter, setFilter, filterValue, pageType }) => {
+const Filter = ({filter, setFilter, filterValue, pageType}) => {
     const router = useRouter();
     const query = router.query;
     const [isFilterEmpty, setIsFilterEmpty] = useState(false);
@@ -20,16 +15,16 @@ const Filter = ({ filter, setFilter, filterValue, pageType }) => {
 
     const handleRemoveFilterClick = async () => {
         setFilter({
-            minPrice : '',
-            maxPrice : '',
-            producer : '',
-            display : '',
-            cpu : '',
-            ram : ''
+            minPrice: '',
+            maxPrice: '',
+            producer: '',
+            display: '',
+            cpu: '',
+            ram: ''
         })
-        const { ram, minPrice, display, maxPrice, producer, cpu, ...newQuery } = query;
+        const {ram, minPrice, display, maxPrice, producer, cpu, ...newQuery} = query;
         await new Promise((resolve) => {
-            router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+            router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {shallow: true, scroll: false});
             resolve();
         });
     };

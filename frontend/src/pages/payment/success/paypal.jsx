@@ -7,8 +7,8 @@ export default function Process() {
     const query = router.query;
 
     const body = {
-        "paymentId" : query.paymentId,
-        "payerID" : query.PayerID,
+        "paymentId": query.paymentId,
+        "payerID": query.PayerID,
     }
 
     if (query.paymentId !== null && query.paymentId !== undefined && query.PayerID !== null && query.PayerID !== undefined) {
@@ -28,7 +28,7 @@ export default function Process() {
     }
 
     return (
-        <Loading />
+        <Loading/>
     )
 
 }

@@ -71,6 +71,6 @@ export default function VnpayPayment() {
     doPost();
 
     return (
-        <Loading />
+        <Loading/>
     )
 }

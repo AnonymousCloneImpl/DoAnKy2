@@ -90,32 +90,41 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
         value = value.replace(" ", "-");
         setShowCpuOption(false);
         if (query.cpu === value) {
-            const { cpu, ...newQuery } = query;
+            const {cpu, ...newQuery} = query;
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                    shallow: true,
+                    scroll: false
+                });
                 resolve();
             });
             setCpuSelect(false);
             setFilter(prevState => ({
                 ...prevState,
-                cpu : ''
+                cpu: ''
             }))
         } else {
             if (query.cpu) {
-                const { cpu, ...newQuery } = query;
+                const {cpu, ...newQuery} = query;
                 await new Promise((resolve) => {
-                    router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                    router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                        shallow: true,
+                        scroll: false
+                    });
                     resolve();
                 });
             }
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...query, cpu: value } }, undefined, { shallow: true, scroll: false, });
+                router.push({pathname: router.pathname, query: {...query, cpu: value}}, undefined, {
+                    shallow: true,
+                    scroll: false,
+                });
                 resolve();
             });
             setCpuSelect(true);
             setFilter(prevState => ({
                 ...prevState,
-                cpu : value
+                cpu: value
             }))
         }
     };
@@ -123,32 +132,41 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
     const handleRamTypeClick = async ({value}) => {
         setShowRamOption(false);
         if (query.ram === value) {
-            const { ram, ...newQuery } = query;
+            const {ram, ...newQuery} = query;
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                    shallow: true,
+                    scroll: false
+                });
                 resolve();
             });
             setRamSelect(false);
             setFilter(prevState => ({
                 ...prevState,
-                ram : ''
+                ram: ''
             }))
         } else {
             if (query.ram) {
-                const { ram, ...newQuery } = query;
+                const {ram, ...newQuery} = query;
                 await new Promise((resolve) => {
-                    router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                    router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                        shallow: true,
+                        scroll: false
+                    });
                     resolve();
                 });
             }
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...query, ram: value } }, undefined, { shallow: true, scroll: false, });
+                router.push({pathname: router.pathname, query: {...query, ram: value}}, undefined, {
+                    shallow: true,
+                    scroll: false,
+                });
                 resolve();
             });
             setRamSelect(true);
             setFilter(prevState => ({
                 ...prevState,
-                ram : value
+                ram: value
             }))
         }
     };
@@ -156,32 +174,41 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
     const handleDisplayTypeClick = async ({value}) => {
         setShowDisplayOption(false);
         if (query.display === value.replace(" ", "-")) {
-            const { display, ...newQuery } = query;
+            const {display, ...newQuery} = query;
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                    shallow: true,
+                    scroll: false
+                });
                 resolve();
             });
             setDisplaySelect(false);
             setFilter(prevState => ({
                 ...prevState,
-                display : ''
+                display: ''
             }))
         } else {
             if (query.display) {
-                const { display, ...newQuery } = query;
+                const {display, ...newQuery} = query;
                 await new Promise((resolve) => {
-                    router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                    router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                        shallow: true,
+                        scroll: false
+                    });
                     resolve();
                 });
             }
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...query, display: value.replace(" ", "-") } }, undefined, { shallow: true, scroll: false, });
+                router.push({
+                    pathname: router.pathname,
+                    query: {...query, display: value.replace(" ", "-")}
+                }, undefined, {shallow: true, scroll: false,});
                 resolve();
             });
             setDisplaySelect(true);
             setFilter(prevState => ({
                 ...prevState,
-                display : value
+                display: value
             }))
         }
     };
@@ -189,47 +216,59 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
     const handleConnectionTypeClick = async ({value}) => {
         setShowConnectionOption(false);
         if (query.connect === value.toLowerCase()) {
-            const { connect, ...newQuery } = query;
+            const {connect, ...newQuery} = query;
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                    shallow: true,
+                    scroll: false
+                });
                 resolve();
             });
             setConnectionSelect(false);
             setFilter(prevState => ({
                 ...prevState,
-                connect : ''
+                connect: ''
             }))
         } else {
             if (query.connect) {
-                const { connect, ...newQuery } = query;
+                const {connect, ...newQuery} = query;
                 await new Promise((resolve) => {
-                    router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                    router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                        shallow: true,
+                        scroll: false
+                    });
                     resolve();
                 });
             }
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...query, connect: value.toLowerCase() } }, undefined, { shallow: true, scroll: false, });
+                router.push({
+                    pathname: router.pathname,
+                    query: {...query, connect: value.toLowerCase()}
+                }, undefined, {shallow: true, scroll: false,});
                 resolve();
             });
             setConnectionSelect(true);
             setFilter(prevState => ({
                 ...prevState,
-                connect : value
+                connect: value
             }))
         }
     };
 
     const handleApplyPriceFilter = async () => {
         if (query.minPrice || query.maxPrice) {
-            const { minPrice, maxPrice, ...newQuery } = query;
+            const {minPrice, maxPrice, ...newQuery} = query;
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                    shallow: true,
+                    scroll: false
+                });
                 resolve();
             });
             setFilter(prevState => ({
                 ...prevState,
-                minPrice : '',
-                maxPrice : ''
+                minPrice: '',
+                maxPrice: ''
             }))
         }
         await new Promise((resolve) => {
@@ -239,9 +278,10 @@ export default function FilterButton({filterValue, filter, setFilter, pageType})
                         ...query,
                         minPrice: minPrice || 0,
                         maxPrice: maxPrice || undefined,
-                    }},
+                    }
+                },
                 undefined,
-                { shallow: true, scroll: false, }
+                {shallow: true, scroll: false,}
             );
             resolve();
             setFilter(prevState => ({

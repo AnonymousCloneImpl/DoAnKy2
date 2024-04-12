@@ -19,15 +19,15 @@ export default function Home() {
     const headphoneApi = `${process.env.DOMAIN}/products/headphone?limit=5`;
     const mouseApi = `${process.env.DOMAIN}/products/mouse?limit=5`;
 
-    const { data: laptopData, isLoading: loading, error: laptopError } = useSWR(laptopApi, fetcher);
-    const { data: headphoneData, isLoading: loading2, error: headphoneError } = useSWR(headphoneApi, fetcher);
-    const { data: mouseData, isLoading: loading3, error: mouseError } = useSWR(mouseApi, fetcher);
+    const {data: laptopData, isLoading: loading, error: laptopError} = useSWR(laptopApi, fetcher);
+    const {data: headphoneData, isLoading: loading2, error: headphoneError} = useSWR(headphoneApi, fetcher);
+    const {data: mouseData, isLoading: loading3, error: mouseError} = useSWR(mouseApi, fetcher);
 
-    if (laptopError || headphoneError || mouseError) return <CustomErrorPage statusCode="404" />;
+    if (laptopError || headphoneError || mouseError) return <CustomErrorPage statusCode="404"/>;
 
-    if (laptopError === [] || headphoneError === [] || mouseError === []) return <CustomErrorPage statusCode="404" />;
+    if (laptopError === [] || headphoneError === [] || mouseError === []) return <CustomErrorPage statusCode="404"/>;
 
-    if (loading || loading2 || loading3) return <Loading />;
+    if (loading || loading2 || loading3) return <Loading/>;
 
     return (
 

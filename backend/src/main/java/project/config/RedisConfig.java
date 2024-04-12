@@ -48,7 +48,7 @@ public class RedisConfig implements CachingConfigurer {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
                 .serializeValuesWith(RedisSerializationContext.
                         SerializationPair.fromSerializer(redisTemplate.getValueSerializer()))
-                .entryTtl(Duration.ofHours(1));
+                .entryTtl(Duration.ofDays(1));
         return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
     }
 }

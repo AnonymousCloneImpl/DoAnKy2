@@ -5,20 +5,20 @@ import {useEffect, useState} from "react";
 
 const value = [
     {
-        name : "Popular",
-        icon : faFire
+        name: "Popular",
+        icon: faFire
     },
     {
-        name : "Price Low-High",
-        icon : faArrowDownShortWide
+        name: "Price Low-High",
+        icon: faArrowDownShortWide
     },
     {
-        name : "Price High-Low",
-        icon : faArrowDownWideShort
+        name: "Price High-Low",
+        icon: faArrowDownWideShort
     },
     {
-        name : "News",
-        icon : faCalendarDays
+        name: "News",
+        icon: faCalendarDays
     }
 ]
 
@@ -27,8 +27,8 @@ export default function Sort() {
     const {query} = useRouter();
     const [sortActive, setSortActive] = useState("Popular");
     const [sort, setSort] = useState({
-        column : query.sort || '',
-        dir : query.dir || ''
+        column: query.sort || '',
+        dir: query.dir || ''
     });
 
     useEffect(() => {
@@ -56,28 +56,40 @@ export default function Sort() {
                 arr[1] = "DESC";
             }
             if (query.sort) {
-                const { sort, dir, ...newQuery } = query;
+                const {sort, dir, ...newQuery} = query;
                 await new Promise((resolve) => {
-                    router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                    router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                        shallow: true,
+                        scroll: false
+                    });
                     resolve();
                 });
             }
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...query, sort: arr[0].toLowerCase(), dir: arr[1] } }, undefined, { shallow: true, scroll: false, });
+                router.push({
+                    pathname: router.pathname,
+                    query: {...query, sort: arr[0].toLowerCase(), dir: arr[1]}
+                }, undefined, {shallow: true, scroll: false,});
                 resolve();
             });
         }
         if (value === "Popular") {
-            const { sort, dir, ...newQuery } = query;
+            const {sort, dir, ...newQuery} = query;
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false, });
+                router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                    shallow: true,
+                    scroll: false,
+                });
                 resolve();
             });
         }
         if (value === "News") {
-            const { sort, dir, ...newQuery } = query;
+            const {sort, dir, ...newQuery} = query;
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...newQuery, sort: value.toLowerCase() } }, undefined, { shallow: true, scroll: false, });
+                router.push({
+                    pathname: router.pathname,
+                    query: {...newQuery, sort: value.toLowerCase()}
+                }, undefined, {shallow: true, scroll: false,});
                 resolve();
             });
         }

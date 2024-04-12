@@ -1,4 +1,3 @@
-
 import ProductCardComponent from "@/components/home/Component.ProductCard";
 import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
@@ -18,15 +17,15 @@ import Head from "next/head";
 
 const ProductsPageByType = ({type}) => {
     const router = useRouter();
-    const {query} =  useRouter();
+    const {query} = useRouter();
     const [filter, setFilter] = useState({
-        minPrice : query.minPrice || '',
-        maxPrice : query.maxPrice || '',
-        producer : query.producer || '',
-        cpu : query.cpu || '',
-        ram : query.ram || '',
-        connection : query.connect || '',
-        display : query.display || ''
+        minPrice: query.minPrice || '',
+        maxPrice: query.maxPrice || '',
+        producer: query.producer || '',
+        cpu: query.cpu || '',
+        ram: query.ram || '',
+        connection: query.connect || '',
+        display: query.display || ''
     });
     const [cartNotifications, setCartNotifications] = useState([]);
     const [filterValue, setFilterValue] = useState({});
@@ -52,7 +51,7 @@ const ProductsPageByType = ({type}) => {
 
     const ProductPageCategoryDataApi = `${process.env.DOMAIN}/search/searchByCondition`;
 
-    const { data, loading, error } = useSWR([ProductPageCategoryDataApi, body],
+    const {data, loading, error} = useSWR([ProductPageCategoryDataApi, body],
         () => fetchAPIPost(ProductPageCategoryDataApi, body), {
             revalidateIfStale: false,
             revalidateOnFocus: false,
@@ -86,7 +85,7 @@ const ProductsPageByType = ({type}) => {
 
     const staticData = `${process.env.DOMAIN}/products/staticData?type=${type}`;
 
-    const { data : res, isLoading : isLoading, error : err } = useSWR(staticData, fetcher,{
+    const {data: res, isLoading: isLoading, error: err} = useSWR(staticData, fetcher, {
         revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false
@@ -101,53 +100,59 @@ const ProductsPageByType = ({type}) => {
         setProducers(res?.producerList);
         if (type?.toLowerCase() === 'laptop') {
             setFilterValue({
-                cpuFilter : res?.filter?.cpuList,
-                ramFilter : res?.filter?.ramList,
-                displayFilter : res?.filter?.displayList
+                cpuFilter: res?.filter?.cpuList,
+                ramFilter: res?.filter?.ramList,
+                displayFilter: res?.filter?.displayList
             })
         }
         if (type?.toLowerCase() === 'mouse') {
             setFilterValue({
-                connection : res?.filter?.connection
+                connection: res?.filter?.connection
             })
         }
     }, [res, type]);
 
     if (loading || isLoading) {
         return (
-            <Loading />
+            <Loading/>
         )
     }
 
     if (err || error) {
-        return <CustomErrorPage />
+        return <CustomErrorPage/>
     }
 
     const handleProducerClick = async ({name}) => {
         if (query.producer === name) {
-            const { producer, ...newQuery } = query;
+            const {producer, ...newQuery} = query;
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, { shallow: true, scroll: false });
+                router.push({pathname: router.pathname, query: {...newQuery}}, undefined, {
+                    shallow: true,
+                    scroll: false
+                });
                 resolve();
             });
             setFilter(prevState => ({
                 ...prevState,
-                producer : ''
+                producer: ''
             }))
         } else {
             setFilter(prevState => ({
                 ...prevState,
-                producer : name
+                producer: name
             }))
             await new Promise((resolve) => {
-                router.push({ pathname: router.pathname, query: { ...query, producer: name } }, undefined, { shallow: true, scroll: false, });
+                router.push({pathname: router.pathname, query: {...query, producer: name}}, undefined, {
+                    shallow: true,
+                    scroll: false,
+                });
                 resolve();
             });
         }
     };
 
     const handlePageButtonClick = async (value) => {
-        const newQuery = { ...query, page: value };
+        const newQuery = {...query, page: value};
 
         setCurrentPage(value);
 
@@ -158,7 +163,7 @@ const ProductsPageByType = ({type}) => {
                     query: newQuery,
                 },
                 undefined,
-                { shallow: true, scroll: false}
+                {shallow: true, scroll: false}
             );
             resolve();
         })
@@ -177,7 +182,8 @@ const ProductsPageByType = ({type}) => {
                 </title>
             </Head>
             <div className="">
-                <img src={"/panel/products-panel.jpg"} alt={"banner"} loading={"lazy"} className="w-full rounded-xl mt-3 h-96 max-lg:h-60" />
+                <img src={"/panel/products-panel.jpg"} alt={"banner"} loading={"lazy"}
+                     className="w-full rounded-xl mt-3 h-96 max-lg:h-60"/>
             </div>
 
             <div className="h-auto mt-10 bg-gray-300 bg-custom rounded-xl">
@@ -187,7 +193,8 @@ const ProductsPageByType = ({type}) => {
                     </p>
                 </div>
                 <div className="mb-8">
-                    <ProductCardComponent productData={topSeller} type={"laptop"} setCartNotifications={setCartNotifications} />
+                    <ProductCardComponent productData={topSeller} type={"laptop"}
+                                          setCartNotifications={setCartNotifications}/>
                 </div>
                 <div className="h-3">
 
@@ -207,7 +214,7 @@ const ProductsPageByType = ({type}) => {
                                         className={`h-full bg-white rounded-md overflow-hidden flex justify-center items-center
                                             ${filter.producer.toLowerCase() === producer.name.toLowerCase() ? "border-2 border-red-600" : ''}
                                         `}
-                                        onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}
+                                        onClick={() => handleProducerClick({name: producer.name.toLowerCase()})}
                                     >
                                         <img
                                             src={`${producer.image}`}
@@ -236,7 +243,7 @@ const ProductsPageByType = ({type}) => {
                         <FontAwesomeIcon icon={faSort}/>
                         SORT
                     </div>
-                    <Sort />
+                    <Sort/>
                 </div>
             </div>
 
@@ -280,7 +287,7 @@ const ProductsPageByType = ({type}) => {
                 </div>
             </div>
 
-            <CartNotification cartNotifications={cartNotifications} />
+            <CartNotification cartNotifications={cartNotifications}/>
 
         </div>
     );
