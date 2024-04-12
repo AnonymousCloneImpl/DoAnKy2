@@ -16,4 +16,5 @@ public class OrderItemDto implements Serializable {
     private double price;
     private String productType;
     private String productName;
+    private String productModel;
 }

@@ -131,6 +131,7 @@ public class OrderServiceImpl implements OrderService {
                 orderItemDto.setProductId(item.getProduct().getId());
                 orderItemDto.setProductType(item.getProduct().getType());
                 orderItemDto.setProductName(item.getProduct().getName());
+                orderItemDto.setProductModel(item.getProduct().getModel());
                 orderItemDtos.add(orderItemDto);
             }
             orderRes = new CheckOrderResponse();

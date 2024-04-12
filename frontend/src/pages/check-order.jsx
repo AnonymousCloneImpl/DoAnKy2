@@ -206,8 +206,8 @@ const CheckOrder = () => {
                           <td className="px-4 py-3 text-ms font-semibold border">
                             {item.orderItemDtoList.map((p, index) => (
                               <p key={index}>
-                                <Link href={`/${p.productType.toLowerCase()}/${p.productName.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
-                                  <FontAwesomeIcon icon={faCircle} /> {p.productName}
+                                <Link href={`/${p.productType.toLowerCase()}/${p.productName.toLowerCase().replace(/ /g, '-')}?model=${p.productModel.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
+                                  <FontAwesomeIcon icon={faCircle} /> {p.productModel + " " + p.productModel}
                                 </Link>
                               </p>
                             ))}

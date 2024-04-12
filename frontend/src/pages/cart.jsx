@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +14,7 @@ import postMethodFetcher from "@/utils/postMethod";
 const CartPage = () => {
   const [items, setItems] = useState([]);
   const body = useMemo(() => ({
-    "cartItemDtoList": []
+    "cartItemList": []
   }), []);
 
   useEffect(() => {
@@ -20,7 +22,7 @@ const CartPage = () => {
     if (storedItemList) {
       const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item }));
       loadedItems.map((item) => {
-        body.cartItemDtoList.push(
+        body.cartItemList.push(
           {
             "productId": item.id,
             "quantity": null
@@ -31,9 +33,9 @@ const CartPage = () => {
         const quantityApi = `${process.env.DOMAIN}/cart`;
         const result = await postMethodFetcher(quantityApi, body);
         for (let i = 0; i < loadedItems.length; i++) {
-          for (let j = 0; j < result.cartItemDtoList.length; j++) {
-            if (loadedItems[i].id === result.cartItemDtoList[j].productId) {
-              loadedItems[i].stock = result.cartItemDtoList[j].quantity;
+          for (let j = 0; j < result.cartItemList.length; j++) {
+            if (loadedItems[i].id === result.cartItemList[j].productId) {
+              loadedItems[i].stock = result.cartItemList[j].quantity;
               break;
             }
           }
@@ -281,7 +283,7 @@ const CartPage = () => {
                       <img className="h-20" src={item.image} alt={item.name} />
                     </div>
                     <div className="flex flex-col justify-between ml-4 flex-grow">
-                      <Link href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}?model=${item.model.toLowerCase()}`} className="font-bold text-base">
+                      <Link href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}?model=${item.model.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
                         {item.name + " " + item.model}
                       </Link>
                       <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm" onClick={() => removeItem(index)}>
