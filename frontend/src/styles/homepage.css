@@ -1,143 +1,142 @@
 .bg-custom {
-    background: linear-gradient(rgb(0, 0, 0), rgb(138, 5, 5)) 0 0 / cover
+  background: linear-gradient(rgb(0, 0, 0), rgb(138, 5, 5)) 0 0 / cover
 }
 
 .slider {
-    height: 560px;
+  height: 560px;
 }
 
 .homepage-card-item {
-    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
 }
 
 .button-style {
-    background-color: white;
-    border: 1px solid #DC2626;
-    transition: background-color 0.5s ease, color 0.5s ease;
+  background-color: white;
+  border: 1px solid #DC2626;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .button-style:hover {
-    background-color: #DC2626;
-    color: white;
+  background-color: #DC2626;
+  color: white;
 }
 
 .icon-style {
-    color: #DC2626;
-    font-size: 20px;
-    transition: color 0.3s ease;
+  color: #DC2626;
+  font-size: 20px;
+  transition: color 0.3s ease;
 }
 
 .button-style:hover .icon-style {
-    color: white;
+  color: white;
 }
 
 .div-price {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .gpu {
-    height: 20px;
+  height: 20px;
 }
 
 .productNameSize {
-    height: 68px;
+  height: 68px;
 }
 
 .top-home-page {
-    height: 450px;
+  height: 450px;
 }
 
-.top-home-page-text {
-}
+.top-home-page-text {}
 
 @media screen and (min-width: 1050px) and (max-width: 1250px) {
-    .productList {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
+  .productList {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 
-    .watch-more {
-        width: 30% !important;
-    }
+  .watch-more {
+    width: 30% !important;
+  }
 
-    .top-home-page {
-        height: 400px;
-    }
+  .top-home-page {
+    height: 400px;
+  }
 }
 
 @media screen and (min-width: 900px) and (max-width: 1049px) {
-    .productList {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        font-size: 18px;
-    }
+  .productList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    font-size: 18px;
+  }
 
-    .top-home-page {
-        height: 350px !important;
-    }
+  .top-home-page {
+    height: 350px !important;
+  }
 
-    .watch-more {
-        width: 30% !important;
-    }
+  .watch-more {
+    width: 30% !important;
+  }
 
-    .top-home-page-text {
-        margin-bottom: 20px;
-        width: 100% !important;
-    }
+  .top-home-page-text {
+    margin-bottom: 20px;
+    width: 100% !important;
+  }
 }
 
 @media screen and (min-width: 600px) and (max-width: 899px) {
-    .productList {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        font-size: 18px;
-    }
+  .productList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    font-size: 18px;
+  }
 
-    .productNameSize {
-        height: 56px;
-    }
+  .productNameSize {
+    height: 56px;
+  }
 
-    .top-home-page {
-        height: 300px !important;
-    }
+  .top-home-page {
+    height: 300px !important;
+  }
 
-    .watch-more {
-        width: 30% !important;
-    }
+  .watch-more {
+    width: 30% !important;
+  }
 
-    .top-home-page-text {
-        margin-bottom: 20px;
-        width: 100% !important;
-    }
+  .top-home-page-text {
+    margin-bottom: 20px;
+    width: 100% !important;
+  }
 }
 
 @media screen and (min-width: 300px) and (max-width: 599px) {
-    .productList {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        font-size: 18px;
-    }
+  .productList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    font-size: 18px;
+  }
 
-    .productNameSize {
-        height: 72px;
-    }
+  .productNameSize {
+    height: 72px;
+  }
 
-    .top-home-page {
-        height: 350px !important;
-    }
+  .top-home-page {
+    height: 350px !important;
+  }
 
-    .top-home-page-image {
-        height: 200px;
-    }
+  .top-home-page-image {
+    height: 200px;
+  }
 
-    .top-home-page-text {
-        height: 150px;
-        width: 100% !important;
-    }
+  .top-home-page-text {
+    height: 150px;
+    width: 100% !important;
+  }
 
-    .watch-more {
-        width: 60% !important;
-    }
+  .watch-more {
+    width: 60% !important;
+  }
 
-    .slider {
-        height: 150px;
-    }
+  .slider {
+    height: 150px;
+  }
 }

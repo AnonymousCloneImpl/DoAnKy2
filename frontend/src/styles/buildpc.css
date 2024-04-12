@@ -1,59 +1,59 @@
 button {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 }
 
 .build-pc-wrapper {
-    margin: 0 auto;
-    padding: 0.5em;
+  margin: 0 auto;
+  padding: 0.5em;
 }
 
 .custom-width-11-12 {
-    width: 90%;
+  width: 90%;
 }
 
 .custom-width-5 {
-    width: 5.5%;
+  width: 5.5%;
 }
 
 
 .fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 100%;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5));
-    transition: width 0.15s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5));
+  transition: width 0.15s;
 }
 
 button:hover .fill {
-    width: 100%;
+  width: 100%;
 }
 
 .product-info {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .product-image {
-    width: 5rem;
-    height: auto;
-    margin-right: 10px;
+  width: 5rem;
+  height: auto;
+  margin-right: 10px;
 }
 
 .service-table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .service-th,
 .service-td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
 .service-th {
-    background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }

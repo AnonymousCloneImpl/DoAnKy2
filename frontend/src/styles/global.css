@@ -1,39 +1,39 @@
 @font-face {
-    font-family: 'Roboto Thin' !important;
+  font-family: 'Roboto Thin' !important;
 }
 
 * {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 
 @media screen and (min-width: 200px) and (max-width: 768px) {
-    * {
-        font-size: 13px;
-    }
+  * {
+    font-size: 13px;
+  }
 }
 
 .loading-spinner {
-    border: 7px solid rgba(0, 0, 0, 0.1);
-    border-left-color: #7986cb;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    position: relative;
+  border: 7px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #7986cb;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  position: relative;
 }
 
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+  to {
+    transform: rotate(360deg);
+  }
 }
