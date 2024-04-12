@@ -9,12 +9,70 @@ const Service = () => {
   const [isFormVisible, setFormVisible] = useState(false);
   const formRef = useRef(null);
 
-  const openForm = () => {
-    setFormVisible(true);
+  const openForm = () => setFormVisible(true);
+  const closeForm = () => setFormVisible(false);
+
+  // Schedule----------------------------------------------------------------------------------------------
+  const [customerName, setCustomerName] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [deviceName, setDeviceName] = useState('');
+  const [scheduleTime, setScheduleTime] = useState('');
+  const [selectedService, setSelectedService] = useState('');
+  const [selectedShopLocation, setSelectedShopLocation] = useState('');
+
+  const handleServiceOption = (service) => {
+    setSelectedService(service);
   };
 
-  const closeForm = () => {
-    setFormVisible(false);
+  const handleShopLocation = (shop) => {
+    setSelectedShopLocation(shop);
+  };
+
+  if (selectedService === "" || selectedService === undefined || selectedService === null) {
+    setSelectedService("Regular Maintenance");
+  }
+
+  if (selectedShopLocation === "" || selectedShopLocation === undefined || selectedShopLocation === null) {
+    setSelectedShopLocation("Zhōngnánhǎi Shop");
+  }
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    const scheduleData = {
+      customerName,
+      customerPhone,
+      customerEmail,
+      deviceName,
+      scheduleTime,
+      serviceType: selectedService,
+      location: selectedShopLocation
+    };
+
+    sessionStorage.setItem('scheduleData', JSON.stringify(scheduleData));
+
+    const scheduleUrl = `${process.env.DOMAIN}/service/schedule-a-repair`;
+    const successUrl = `/service/success`;
+    fetch(scheduleUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(scheduleData),
+    })
+      .then(response => {
+        if (response.ok) {
+          closeForm();
+          window.location.href = successUrl;
+        } else {
+          alert("Failed to schedule !");
+        }
+      })
+      .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+        alert("An error occurred while scheduling. Please try again later.");
+      });
   };
 
   return (
@@ -169,7 +227,6 @@ const Service = () => {
           </button>
         </div>
       </div>
-
 
       <div className="w-11/12 mx-auto">
         <h1 className="schedule-header text-3xl font-bold my-10 uppercase">Schedule A Repair Appointment</h1>
@@ -468,7 +525,7 @@ const Service = () => {
         <div>
           <div className="overlay" onClick={closeForm}></div>
           <div className="service-popup" ref={formRef}>
-            <form action="#" method="post">
+            <form action="#" onSubmit={handleFormSubmit}>
               <div className="mb-4">
                 <span className="close-form-btn" onClick={closeForm}>
                   <FontAwesomeIcon icon={faCircleXmark} />
@@ -478,19 +535,36 @@ const Service = () => {
                 <h2 className="text-lg font-bold mb-2">Customer Information</h2>
                 <label htmlFor="fullname" className="block text-sm font-semibold text-black-900">Full
                   Name:</label>
-                <input type="text" id="fullname" name="fullname" placeholder='Example: Ngọc Trinh...'
-                  className="bg-gray-100 mt-1 p-2 w-full border rounded-md" required />
+                <input
+                  type="text"
+                  id="fullname"
+                  name="fullname"
+                  placeholder='Example: Ngọc Trinh...'
+                  onChange={(e) => setCustomerName(e.target.value)}
+                  className="bg-gray-100 mt-1 p-2 w-full border rounded-md" required
+                />
+
                 <div className="flex justify-between mt-4">
                   <div className="w-1/2 mr-2">
                     <label htmlFor="email"
                       className="block text-sm font-semibold text-black-900">Email:</label>
-                    <input type="text" id="email" name="email" placeholder='Example@gmail.com'
+                    <input
+                      type="text"
+                      id="email"
+                      name="email"
+                      placeholder='Example@gmail.com'
+                      onChange={(e) => setCustomerEmail(e.target.value)}
                       className="bg-gray-100 mt-1 p-2 w-full border rounded-md" required />
                   </div>
+
                   <div className="w-1/2 ml-2">
                     <label htmlFor="phone" className="block text-sm font-semibold text-black-900">Phone
                       Number:</label>
-                    <input type="text" id="phone" name="phone"
+                    <input
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      onChange={(e) => setCustomerPhone(e.target.value)}
                       className="bg-gray-100 mt-1 p-2 w-full border rounded-md" required />
                   </div>
                 </div>
@@ -502,13 +576,22 @@ const Service = () => {
                   <div className="w-1/2 mr-2">
                     <label htmlFor="make" className="block text-sm font-semibold text-black-900">Device
                       Name:</label>
-                    <input type="text" id="make" name="make"
+                    <input
+                      type="text"
+                      id="make"
+                      name="make"
+                      onChange={(e) => setDeviceName(e.target.value)}
                       className="bg-gray-100 mt-1 p-2 w-full border rounded-md" required />
                   </div>
+
                   <div className="w-1/2 ml-2">
                     <label htmlFor="service" className="block text-sm font-semibold text-black-900">Select
                       Service:</label>
-                    <select id="service" name="service"
+                    <select
+                      id="service"
+                      name="service"
+                      defaultValue=""
+                      onChange={(e) => handleServiceOption(e.target.value)}
                       className="bg-gray-100 mt-1 p-2 w-full border rounded-md">
                       <option value="Regular Maintenance">Regular Maintenance</option>
                       <option value="Component Upgrade">Component Upgrade</option>
@@ -523,26 +606,37 @@ const Service = () => {
                   <div className="w-1/2 mr-2">
                     <label htmlFor="time"
                       className="block text-sm font-semibold text-black-900">Time:</label>
-                    <input type="text" id="time" name="time"
-                      className="bg-gray-100 mt-1 p-2 w-full border rounded-md"
-                      placeholder='8:00 AM - 7:00 PM' required />
+                    <input
+                      type="text"
+                      id="time" name="time"
+                      placeholder='8:00 AM - 7:00 PM'
+                      onChange={(e) => setScheduleTime(e.target.value)}
+                      className="bg-gray-100 mt-1 p-2 w-full border rounded-md" required />
                   </div>
+
                   <div className="w-1/2 ml-2">
                     <label htmlFor="location"
                       className="block text-sm font-semibold text-black-900">Location:</label>
-                    <select id="location" name="location"
+                    <select
+                      id="location"
+                      name="location"
+                      defaultValue=""
+                      onChange={(e) => handleShopLocation(e.target.value)}
                       className="bg-gray-100 mt-1 p-2 w-full border rounded-md">
-                      <option value="Regular Maintenance">Zhōngnánhǎi Shop</option>
-                      <option value="Component Upgrade">Kremlyovskiy Shop</option>
-                      <option value="Repair">White House Shop</option>
+                      <option value="Zhōngnánhǎi Shop">Zhōngnánhǎi Shop</option>
+                      <option value="Kremlyovskiy Shop">Kremlyovskiy Shop</option>
+                      <option value="White House Shop">White House Shop</option>
                     </select>
                   </div>
                 </div>
               </div>
 
               <div className="submit-container text-center">
-                <input type="submit" value="Submit"
-                  className="mb-1 bg-blue-600 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-blue-700" />
+                <button
+                  type="submit"
+                  className="mb-1 bg-blue-600 text-white px-4 py-2 rounded-md cursor-pointer hover:bg-blue-700" >
+                  Confirm
+                </button>
               </div>
             </form>
           </div>
