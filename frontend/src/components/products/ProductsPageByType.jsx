@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 import ProductCardComponent from "@/components/home/Component.ProductCard";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

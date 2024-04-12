@@ -7,7 +7,6 @@ const CartIcon = () => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    // Hàm để lấy giá trị từ localStorage
     const getValueFromLocalStorage = () => {
       const storedItemList = JSON.parse(localStorage.getItem('itemList'));
       try {

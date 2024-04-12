@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
 import { config, library } from '@fortawesome/fontawesome-svg-core';
 import {
   faCartShopping,

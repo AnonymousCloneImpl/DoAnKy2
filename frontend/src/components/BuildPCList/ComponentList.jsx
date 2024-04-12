@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import CustomErrorPage from "@/pages/error";
 import Link from "next/link";
 
