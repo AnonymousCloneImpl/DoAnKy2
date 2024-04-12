@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.common.ResponseObject;
-import project.dto.order.CheckOrderResponse;
+import project.model.order.CheckOrderResponse;
 import project.dto.order.OrderDto;
-import project.dto.order.OrderResponse;
+import project.model.order.OrderResponse;
 import project.entity.order.Order;
 import project.service.order.OrderService;
 

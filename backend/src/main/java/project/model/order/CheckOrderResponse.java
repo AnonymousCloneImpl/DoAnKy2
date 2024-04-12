@@ -1,8 +1,9 @@
-package project.dto.order;
+package project.model.order;
 
 import lombok.*;
 import project.const_.ORDER_STATUS;
 import project.const_.PAYMENT_METHOD;
+import project.dto.order.OrderItemDto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

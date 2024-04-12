@@ -1,4 +1,4 @@
-package project.dto.cart;
+package project.model.cart;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartItemDto {
+public class CartItem {
   private long productId;
   private Integer quantity;
 }

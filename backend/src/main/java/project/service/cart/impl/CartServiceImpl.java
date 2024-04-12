@@ -2,8 +2,8 @@ package project.service.cart.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.dto.cart.CartDto;
-import project.dto.cart.CartItemDto;
+import project.model.cart.Cart;
+import project.model.cart.CartItem;
 import project.entity.product.Stock;
 import project.service.cart.CartService;
 import project.service.product.StockService;
@@ -16,9 +16,9 @@ public class CartServiceImpl implements CartService {
   StockService stockService;
 
   @Override
-  public void getListProductWithStock(CartDto cartDto) {
-    List<CartItemDto> ls = cartDto.getCartItemDtoList();
-    for (CartItemDto item : ls) {
+  public void getListProductWithStock(Cart cart) {
+    List<CartItem> ls = cart.getCartItemList();
+    for (CartItem item : ls) {
       long id = item.getProductId();
       Stock stock = stockService.findByProductId(id);
       item.setQuantity(stock.getQuantity());

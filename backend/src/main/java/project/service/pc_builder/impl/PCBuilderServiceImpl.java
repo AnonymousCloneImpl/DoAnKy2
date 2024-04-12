@@ -2,10 +2,11 @@ package project.service.pc_builder.impl;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import project.const_.PC_PART_TYPE;
-import project.dto.pc_builder.PCBuilderPart;
-import project.dto.pc_builder.PCBuilderPartResponse;
+import project.model.pc_builder.PCBuilderPart;
+import project.model.pc_builder.PCBuilderPartResponse;
 import project.dto.product.StockDto;
 import project.entity.product.Product;
 import project.entity.product.Stock;
@@ -42,7 +43,8 @@ public class PCBuilderServiceImpl implements PCBuilderService {
       .build();
   }
 
-  private List<PCBuilderPart> getPartListByType(PC_PART_TYPE type) {
+  @Cacheable(value = "PCpartList", key = "#(type.val)")
+  public List<PCBuilderPart> getPartListByType(PC_PART_TYPE type) {
     List<PCBuilderPart> partList = new ArrayList<>();
     PCBuilderPart pcBuilderPart = new PCBuilderPart();
 

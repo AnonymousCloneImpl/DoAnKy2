@@ -3,7 +3,7 @@ package project.controller.cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.dto.cart.CartDto;
+import project.model.cart.Cart;
 import project.service.cart.CartService;
 
 @RestController
@@ -14,8 +14,8 @@ public class CartController {
   private CartService cartService;
 
   @PostMapping("")
-  public ResponseEntity<CartDto> getCartItemQuantity(@RequestBody CartDto cartDto) {
-    cartService.getListProductWithStock(cartDto);
-    return ResponseEntity.ok(cartDto);
+  public ResponseEntity<Cart> getCartItemQuantity(@RequestBody Cart cart) {
+    cartService.getListProductWithStock(cart);
+    return ResponseEntity.ok(cart);
   }
 }

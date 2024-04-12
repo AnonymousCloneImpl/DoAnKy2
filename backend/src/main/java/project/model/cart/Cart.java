@@ -1,4 +1,4 @@
-package project.dto.cart;
+package project.model.cart;
 
 import lombok.*;
 
@@ -9,6 +9,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CartDto {
-  private List<CartItemDto> cartItemDtoList;
+public class Cart {
+  private List<CartItem> cartItemList;
 }

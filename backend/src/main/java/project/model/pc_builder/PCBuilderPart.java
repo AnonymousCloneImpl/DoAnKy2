@@ -1,4 +1,4 @@
-package project.dto.pc_builder;
+package project.model.pc_builder;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;

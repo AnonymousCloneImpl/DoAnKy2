@@ -1,4 +1,4 @@
-package project.dto.order;
+package project.model.order;
 
 import lombok.*;
 

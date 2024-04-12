@@ -29,11 +29,13 @@ public class RedisConfig implements CachingConfigurer {
   public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
     Jackson2JsonRedisSerializer<Object> serializer = new Jackson2JsonRedisSerializer<>(Object.class);
     RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+
     redisTemplate.setConnectionFactory(redisConnectionFactory);
     redisTemplate.setKeySerializer(new StringRedisSerializer());
     redisTemplate.setValueSerializer(serializer);
     redisTemplate.setHashKeySerializer(new StringRedisSerializer());
     redisTemplate.setHashValueSerializer(serializer);
+
     redisTemplate.afterPropertiesSet();
     return redisTemplate;
   }
@@ -42,8 +44,10 @@ public class RedisConfig implements CachingConfigurer {
   public RedisCacheManager redisCacheManager(RedisTemplate<String, Object> redisTemplate) {
     RedisCacheWriter redisCacheWriter = RedisCacheWriter.nonLockingRedisCacheWriter(
       Objects.requireNonNull(redisTemplate.getConnectionFactory()));
+
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-      .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(redisTemplate.getValueSerializer()))
+      .serializeValuesWith(RedisSerializationContext.
+        SerializationPair.fromSerializer(redisTemplate.getValueSerializer()))
       .entryTtl(Duration.ofHours(1));
     return new RedisCacheManager(redisCacheWriter, redisCacheConfiguration);
   }

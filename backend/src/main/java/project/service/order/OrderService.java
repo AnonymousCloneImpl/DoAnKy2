@@ -1,7 +1,7 @@
 package project.service.order;
 
 import org.springframework.stereotype.Service;
-import project.dto.order.CheckOrderResponse;
+import project.model.order.CheckOrderResponse;
 import project.dto.order.OrderDto;
 import project.dto.order.OrderItemDto;
 import project.entity.order.Order;
