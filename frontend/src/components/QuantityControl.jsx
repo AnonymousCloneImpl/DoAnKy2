@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -27,7 +27,8 @@ export default function QuantityControl({ initialQuantity, maxQuantity, onChange
 
   return (
     <div className="quantity-control">
-      <button className="quantity-decrease" onClick={() => adjustQuantity(-1)}><FontAwesomeIcon icon={faMinus} /></button>
+      <button className="quantity-decrease" onClick={() => adjustQuantity(-1)}><FontAwesomeIcon icon={faMinus} />
+      </button>
       <input
         type="number"
         min="1"
@@ -38,7 +39,8 @@ export default function QuantityControl({ initialQuantity, maxQuantity, onChange
         className="quantity-input"
         onInput={(e) => limitQuantity(e.target.value)}
       />
-      <button className="quantity-increase" onClick={() => adjustQuantity(1)}><FontAwesomeIcon icon={faPlus} /></button>
+      <button className="quantity-increase" onClick={() => adjustQuantity(1)}><FontAwesomeIcon icon={faPlus} />
+      </button>
     </div>
   );
 };

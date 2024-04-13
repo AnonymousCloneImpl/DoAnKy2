@@ -918,7 +918,7 @@
   width: 350px;
   height: 450px;
   /* animation: chats 0.1s infinite;
-  transition: box-shadow 0.1s ease-in-out; */
+    transition: box-shadow 0.1s ease-in-out; */
 }
 
 .chat-content {

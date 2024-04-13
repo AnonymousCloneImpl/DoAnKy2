@@ -47,12 +47,12 @@ const Payment = () => {
           "description": "thanh toan don hang"
         }
       })
-          .then((response) => {
-            router.push(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .then((response) => {
+          router.push(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
     if (type === "VNPAY") {
       url = `${process.env.DOMAIN}/api/payment/vnpay/create?amount=${price}&orderCode=${orderCode}`;
@@ -61,12 +61,12 @@ const Payment = () => {
         url: url,
         headers: {}
       })
-          .then((response) => {
-            router.push(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .then((response) => {
+          router.push(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 

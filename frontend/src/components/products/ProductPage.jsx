@@ -1,9 +1,18 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleXmark, faCaretUp, faCaretDown, faStar, faStarHalfStroke, faCartShopping, faCreditCard, faBoxArchive, faShieldCat, faRotate } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBoxArchive,
+  faCaretDown,
+  faCaretUp,
+  faCartShopping,
+  faCircleXmark,
+  faCreditCard,
+  faRotate,
+  faShieldCat,
+  faStar,
+  faStarHalfStroke
+} from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
@@ -43,7 +52,10 @@ const ProductPage = ({ productBE }) => {
   const activeBtn = async (modelName) => {
     const { model, ...query } = route.query;
     await new Promise((resolve) => {
-      route.push({ pathname: route.pathname, query: { ...query, model: modelName } }, undefined, { shallow: true, scroll: false });
+      route.push({ pathname: route.pathname, query: { ...query, model: modelName } }, undefined, {
+        shallow: true,
+        scroll: false
+      });
       resolve();
     });
   };
@@ -279,14 +291,16 @@ const ProductPage = ({ productBE }) => {
                 <div className="service-item-child">
                   <FontAwesomeIcon className="service-icon" icon={faRotate} />
                   <div>
-                    <p>Commitment to 1 for 1 exchange within <b className='service-b'>30 Days</b> for product defects.</p>
+                    <p>Commitment to 1 for 1 exchange within <b className='service-b'>30
+                      Days</b> for product defects.</p>
                     <Link href="#">View details &#187;</Link>
                   </div>
                 </div>
                 <div className="service-item-child">
                   <FontAwesomeIcon className="service-icon" icon={faShieldCat} />
                   <div>
-                    <p><b className='service-b'>12 Month</b> warranty at manufacturer&apos;s warranty centers</p>
+                    <p><b className='service-b'>12 Month</b> warranty at manufacturer&apos;s
+                      warranty centers</p>
                     <Link href="#">See warranty address &#187;</Link>
                   </div>
                 </div>
@@ -361,9 +375,11 @@ const ProductPage = ({ productBE }) => {
                   {Object.entries(product.configurationMap).map(([key, value]) => (
                     <div key={key}>
                       {key === route.query.model ? (
-                        <button className="pmodel active" onClick={(e) => activeBtn(key)}>{value}</button>
+                        <button className="pmodel active"
+                          onClick={(e) => activeBtn(key)}>{value}</button>
                       ) : (
-                        <button className="pmodel" onClick={(e) => activeBtn(key)}>{value}</button>
+                        <button className="pmodel"
+                          onClick={(e) => activeBtn(key)}>{value}</button>
                       )}
                     </div>
                   ))}
@@ -371,18 +387,22 @@ const ProductPage = ({ productBE }) => {
 
                 <div className="quantity">
                   <p>Quantity</p>
-                  <QuantityControl initialQuantity={1} maxQuantity={productBE.stock.quantity} onChange={handleQuantityChange} quantity={quantity} setQuantity={setQuantity} />
+                  <QuantityControl initialQuantity={1} maxQuantity={productBE.stock.quantity}
+                    onChange={handleQuantityChange} quantity={quantity}
+                    setQuantity={setQuantity} />
                 </div>
                 <div className="left-in-stock">{product.stock.quantity} Left In Stock</div>
 
                 <div className="btn-box">
-                  <button className="cart-btn" onClick={() => HandleCartClick({ product, setCartNotifications })}>
+                  <button className="cart-btn"
+                    onClick={() => HandleCartClick({ product, setCartNotifications })}>
                     <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                   </button>
                   <button className={`buy-btn ${isSoldOut ? 'disabled-btn' : ''}`}
                     onClick={openForm}
                     disabled={isSoldOut}>
-                    {isSoldOut ? 'Out of Stock' : <><FontAwesomeIcon icon={faCreditCard} /> Buy Now</>}
+                    {isSoldOut ? 'Out of Stock' : <><FontAwesomeIcon icon={faCreditCard} /> Buy
+                      Now</>}
                   </button>
                 </div>
 
@@ -411,7 +431,8 @@ const ProductPage = ({ productBE }) => {
 
               {/* Recommended Accessories */}
               <div className="recommended-accessories">
-                <h1 className="recommended-accessories-header">ATTRACTIVE PROMOTIONS WHEN BUYING TOGETHER</h1>
+                <h1 className="recommended-accessories-header">ATTRACTIVE PROMOTIONS WHEN BUYING
+                  TOGETHER</h1>
 
                 <div className="recommended-accessories-line"></div>
 
@@ -422,7 +443,8 @@ const ProductPage = ({ productBE }) => {
                   <div className="recommended-main-content">
                     <h1>{product.name} {product.model}</h1>
                     <div className="flex pl-5 w-full">
-                      <div className='mr-2'><FormatPrice price={discountedPrice * quantity} type={"discount"} /></div>
+                      <div className='mr-2'><FormatPrice price={discountedPrice * quantity}
+                        type={"discount"} /></div>
                       <FormatPrice price={product.price * quantity} />
                     </div>
                     <div className="accessories-price-ratio">
@@ -438,7 +460,8 @@ const ProductPage = ({ productBE }) => {
                   {product.purchaseComboItem.productList.map((item, index) => (
                     <li className="recommended-accessories-item" key={index}>
                       <div className="recommended-accessories-checkbox">
-                        <input type="checkbox" className="product mr-5 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
+                        <input type="checkbox"
+                          className="product mr-5 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
                           onChange={() => handleCheckboxChange(item.id)}
                           checked={checkedItems.includes(item.id)} />
                       </div>
@@ -454,7 +477,9 @@ const ProductPage = ({ productBE }) => {
                         </Link>
                         <div className="flex pl-5 w-full">
                           <div className='mr-2'>
-                            <FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} />
+                            <FormatPrice
+                              price={item.price - (item.price * item.discountPercentage / 100)}
+                              type={"discount"} />
                           </div>
                           <FormatPrice price={item.price} />
                         </div>
@@ -510,7 +535,9 @@ const ProductPage = ({ productBE }) => {
                     </Link>
                     <div className="similar-price flex w-full pl-5 items-center">
                       <div className='mr-2'>
-                        <FormatPrice price={item.price - (item.price * item.discountPercentage / 100)} type={"discount"} />
+                        <FormatPrice
+                          price={item.price - (item.price * item.discountPercentage / 100)}
+                          type={"discount"} />
                       </div>
                       <FormatPrice price={item.price} />
                     </div>
@@ -518,7 +545,10 @@ const ProductPage = ({ productBE }) => {
                       <p>{`Down ${item.discountPercentage}%`}</p>
                     </div>
                     <div className="similar-product-btn-box">
-                      <button className="cart-btn" onClick={() => HandleCartClick({ product: item, setCartNotifications })}>
+                      <button className="cart-btn" onClick={() => HandleCartClick({
+                        product: item,
+                        setCartNotifications
+                      })}>
                         <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                       </button>
                     </div>

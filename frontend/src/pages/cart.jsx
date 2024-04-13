@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
@@ -12,7 +12,7 @@ import postMethodFetcher from "@/utils/postMethod";
 const CartPage = () => {
   const [items, setItems] = useState([]);
   const body = useMemo(() => ({
-    "cartItemDtoList": []
+    "cartItemList": []
   }), []);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ const CartPage = () => {
     if (storedItemList) {
       const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item }));
       loadedItems.map((item) => {
-        body.cartItemDtoList.push(
+        body.cartItemList.push(
           {
             "productId": item.id,
             "quantity": null
@@ -31,9 +31,9 @@ const CartPage = () => {
         const quantityApi = `${process.env.DOMAIN}/cart`;
         const result = await postMethodFetcher(quantityApi, body);
         for (let i = 0; i < loadedItems.length; i++) {
-          for (let j = 0; j < result.cartItemDtoList.length; j++) {
-            if (loadedItems[i].id === result.cartItemDtoList[j].productId) {
-              loadedItems[i].stock = result.cartItemDtoList[j].quantity;
+          for (let j = 0; j < result.cartItemList.length; j++) {
+            if (loadedItems[i].id === result.cartItemList[j].productId) {
+              loadedItems[i].stock = result.cartItemList[j].quantity;
               break;
             }
           }
@@ -271,7 +271,8 @@ const CartPage = () => {
               {items.map((item, index) => (
                 <tr key={index} className=" border-t flex items-center hover:bg-gray-100 px-6 py-5">
                   <td className="flex items-center w-1/12">
-                    <input type="checkbox" className="product scale-150 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
+                    <input type="checkbox"
+                      className="product scale-150 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
                       onChange={() => handleCheckboxChange(item.id)}
                       checked={checkedItems.includes(item.id)}
                     />
@@ -281,10 +282,13 @@ const CartPage = () => {
                       <img className="h-20" src={item.image} alt={item.name} />
                     </div>
                     <div className="flex flex-col justify-between ml-4 flex-grow">
-                      <Link href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}?model=${item.model.toLowerCase()}`} className="font-bold text-base">
+                      <Link
+                        href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}?model=${item.model.toLowerCase().replace(/ /g, '-')}`}
+                        className="font-bold text-base">
                         {item.name + " " + item.model}
                       </Link>
-                      <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm" onClick={() => removeItem(index)}>
+                      <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm"
+                        onClick={() => removeItem(index)}>
                         <FontAwesomeIcon icon={faTrashCan} /> REMOVE
                       </b>
                     </div>
@@ -292,7 +296,8 @@ const CartPage = () => {
 
                   <td className="quantity w-3/12 text-center">
                     <div className="quantity-control px-10">
-                      <button className="quantity-decrease" onClick={() => decreaseQuantity(index)}><FontAwesomeIcon icon={faMinus} /></button>
+                      <button className="quantity-decrease" onClick={() => decreaseQuantity(index)}>
+                        <FontAwesomeIcon icon={faMinus} /></button>
                       <input
                         type="number"
                         min="1"
@@ -302,7 +307,8 @@ const CartPage = () => {
                         onBlur={(e) => resetIfEmpty(index, e.target.value)}
                         className="quantity-input"
                       />
-                      <button className="quantity-increase" onClick={() => increaseQuantity(index)}><FontAwesomeIcon icon={faPlus} /></button>
+                      <button className="quantity-increase" onClick={() => increaseQuantity(index)}>
+                        <FontAwesomeIcon icon={faPlus} /></button>
                     </div>
                     <div className="text-center text-red-600 font-semibold text-sm uppercase">
                       {item.stock} Left in Stock
@@ -310,11 +316,14 @@ const CartPage = () => {
                   </td>
 
                   <td className="block text-center font-semibold text-base w-1/12">
-                    <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100} type={"discount"} />
+                    <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100}
+                      type={"discount"} />
                   </td>
 
                   <td className="text-center text-red-600 font-semibold text-base w-2/12 text-center">
-                    <FormatPrice price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity} type={"discount"} />
+                    <FormatPrice
+                      price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity}
+                      type={"discount"} />
                   </td>
                 </tr>
               ))}
@@ -330,7 +339,8 @@ const CartPage = () => {
             </div>
 
             <div className="border-t mt-20">
-              <button className="bg-indigo-600 font-semibold hover:bg-red-700 py-3 text-sm text-white uppercase w-full"
+              <button
+                className="bg-indigo-600 font-semibold hover:bg-red-700 py-3 text-sm text-white uppercase w-full"
                 onClick={openForm}> Submit Order
               </button>
             </div>
@@ -387,7 +397,7 @@ const CartPage = () => {
         </>
       )}
 
-    </div >
+    </div>
   )
 };
 

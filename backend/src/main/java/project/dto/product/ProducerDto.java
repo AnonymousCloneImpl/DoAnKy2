@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProducerDto implements Serializable {
-  private long id;
-  private String name;
-  private String image;
+    private long id;
+    private String name;
+    private String image;
 }

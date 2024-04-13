@@ -2,10 +2,9 @@
 /* eslint-disable @next/next/no-img-element */
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark, faCircleUp, faCommentDots, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import { Stomp } from '@stomp/stompjs';
+import { faCircleUp, faCircleXmark, faCommentDots, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 export default function Layout({ children }) {
 
@@ -121,7 +120,8 @@ export default function Layout({ children }) {
 
             <div className="w-full h-20">
               <form className="flex chat-form w-full h-full" onSubmit={handleSendMessage}>
-                <input type="text" placeholder="Chat here..." className="w-10/12" name="chat" id="chat" required autoComplete="off" />
+                <input type="text" placeholder="Chat here..." className="w-10/12" name="chat" id="chat"
+                  required autoComplete="off" />
                 <button type="submit"><FontAwesomeIcon icon={faPaperPlane} /></button>
               </form>
             </div>

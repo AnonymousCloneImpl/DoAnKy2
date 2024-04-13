@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus, faDisplay, faHardDrive, faLaptop, faMemory, faMicrochip } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faDisplay, faMemory, faMicrochip } from "@fortawesome/free-solid-svg-icons";
 import FormatPrice from "@/components/FormatPrice";
 import Image from "next/image";
 import HandleCartClick from "@/components/HandleCartClick";
@@ -21,8 +21,8 @@ export default function ProductCardComponent({ productData, setCartNotifications
                   </div>
                   <div className="h-52 w-full">
                     <Link
-                        href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
-                        className="flex items-center justify-center w-full h-full"
+                      href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
+                      className="flex items-center justify-center w-full h-full"
                     >
                       <div
                         style={{
@@ -37,8 +37,8 @@ export default function ProductCardComponent({ productData, setCartNotifications
                   </div>
                   <div className="flex items-start pt-3 h-20 w-full">
                     <Link
-                        href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
-                        className="flex items-center justify-center w-full h-full"
+                      href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
+                      className="flex items-center justify-center w-full h-full"
                     >
                       <p className="pl-3 h-full w-full hover:text-blue-600">{p.name + " " + p.model}</p>
                     </Link>
@@ -49,7 +49,10 @@ export default function ProductCardComponent({ productData, setCartNotifications
                     <FormatPrice price={p.price} />
                   </div>
                   <div className="w-full h-16 flex justify-center items-center mb-2">
-                    <button onClick={() => HandleCartClick({ product: p, setCartNotifications: setCartNotifications})}
+                    <button onClick={() => HandleCartClick({
+                      product: p,
+                      setCartNotifications: setCartNotifications
+                    })}
                       className="h-3/4 rounded-md w-4/12 button-style">
                       <FontAwesomeIcon
                         icon={faCartPlus}
@@ -90,8 +93,8 @@ export default function ProductCardComponent({ productData, setCartNotifications
                 </div>
                 <div className="flex items-start pt-3 w-full productNameSize">
                   <Link
-                      href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
-                      className="flex items-center justify-center w-full h-full"
+                    href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
+                    className="flex items-center justify-center w-full h-full"
                   >
                     <p className="pl-3 h-full w-full font-bold hover:text-blue-600">{p.name + " " + p.model}</p>
                   </Link>
@@ -135,7 +138,10 @@ export default function ProductCardComponent({ productData, setCartNotifications
                   </div>
                 </div>
                 <div className="w-full h-16 flex justify-center items-center mb-2 mt-3">
-                  <button onClick={() => HandleCartClick({ product: p, setCartNotifications: setCartNotifications })}
+                  <button onClick={() => HandleCartClick({
+                    product: p,
+                    setCartNotifications: setCartNotifications
+                  })}
                     className="h-3/4 rounded-md w-4/12 button-style">
                     <FontAwesomeIcon
                       icon={faCartPlus}

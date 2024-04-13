@@ -15,25 +15,25 @@ import java.util.stream.Collectors;
 
 @Service
 public class ProducerServiceImpl implements ProducerService {
-  @Autowired
-  private ProducerRepository producerRepository;
-  @Autowired
-  private ProductSpecification productSpecification;
-  @Autowired
-  private ProductRepository productRepository;
+    @Autowired
+    private ProducerRepository producerRepository;
+    @Autowired
+    private ProductSpecification productSpecification;
+    @Autowired
+    private ProductRepository productRepository;
 
-  @Override
-  public List<Producer> getAll() {
-    return producerRepository.findAll();
-  }
+    @Override
+    public List<Producer> getAll() {
+        return producerRepository.findAll();
+    }
 
-  @Override
-  public List<Producer> findProducersByProductType(String type) {
-    Specification<Product> spec = productSpecification.findByType(type);
-    return productRepository.findAll(spec)
-      .stream()
-      .map(Product::getProducer)
-      .distinct()
-      .collect(Collectors.toList());
-  }
+    @Override
+    public List<Producer> findProducersByProductType(String type) {
+        Specification<Product> spec = productSpecification.findByType(type);
+        return productRepository.findAll(spec)
+                .stream()
+                .map(Product::getProducer)
+                .distinct()
+                .collect(Collectors.toList());
+    }
 }

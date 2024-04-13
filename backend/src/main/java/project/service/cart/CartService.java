@@ -1,9 +1,9 @@
 package project.service.cart;
 
 import org.springframework.stereotype.Service;
-import project.dto.cart.CartDto;
+import project.model.cart.Cart;
 
 @Service
 public interface CartService {
-  public void getListProductWithStock(CartDto cartDto);
+    public void getListProductWithStock(Cart cart);
 }

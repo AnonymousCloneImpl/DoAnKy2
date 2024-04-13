@@ -7,16 +7,16 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 public class MomoConfig {
-  @Value("${momo.partnerCode}")
-  private String partnerCode;
-  @Value("${momo.returnUrl}")
-  private String returnUrl;
-  @Value("${momo.paymentUrl}")
-  private String paymentUrl;
-  @Value("${momo.ipnUrl}")
-  private String ipnUrl;
-  @Value("${momo.accessKey}")
-  private String accessKey;
-  @Value("${momo.secretKey}")
-  private String secretKey;
+    @Value("${momo.partnerCode}")
+    private String partnerCode;
+    @Value("${momo.returnUrl}")
+    private String returnUrl;
+    @Value("${momo.paymentUrl}")
+    private String paymentUrl;
+    @Value("${momo.ipnUrl}")
+    private String ipnUrl;
+    @Value("${momo.accessKey}")
+    private String accessKey;
+    @Value("${momo.secretKey}")
+    private String secretKey;
 }

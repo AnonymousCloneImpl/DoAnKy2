@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from "next/link";
 
 const CheckOrder = () => {
@@ -128,7 +128,8 @@ const CheckOrder = () => {
       <div>
         {!otpSent ? (
           <div className="main-search">
-            <h1 className='flex text-xl font-bold justify-center my-10 uppercase'>Search by your phone number</h1>
+            <h1 className='flex text-xl font-bold justify-center my-10 uppercase'>Search by your phone
+              number</h1>
             <div className="flex justify-center">
               <input
                 type="text"
@@ -138,14 +139,16 @@ const CheckOrder = () => {
                 onChange={(e) => setSearchPhone(e.target.value)}
                 onKeyDown={handleKeyDown}
               />
-              <button type="submit" className="px-4 text-white bg-red-600 rounded-md uppercase" onClick={handleSearch}>
+              <button type="submit" className="px-4 text-white bg-red-600 rounded-md uppercase"
+                onClick={handleSearch}>
                 Submit
               </button>
             </div>
           </div>
         ) : (
           <div className="main-search">
-            <h1 className='flex text-xl font-bold justify-center my-10 uppercase'>Enter OTP to Check Order</h1>
+            <h1 className='flex text-xl font-bold justify-center my-10 uppercase'>Enter OTP to Check
+              Order</h1>
             <div className="flex justify-center">
               <input
                 type="text"
@@ -155,7 +158,8 @@ const CheckOrder = () => {
                 onChange={handleOTPChange}
                 onKeyDown={handleKeyDown}
               />
-              <button type="submit" className="px-4 text-white bg-red-600 rounded-md uppercase" onClick={handleOTPSubmit}>
+              <button type="submit" className="px-4 text-white bg-red-600 rounded-md uppercase"
+                onClick={handleOTPSubmit}>
                 Submit OTP
               </button>
             </div>
@@ -206,8 +210,11 @@ const CheckOrder = () => {
                           <td className="px-4 py-3 text-ms font-semibold border">
                             {item.orderItemDtoList.map((p, index) => (
                               <p key={index}>
-                                <Link href={`/${p.productType.toLowerCase()}/${p.productName.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
-                                  <FontAwesomeIcon icon={faCircle} /> {p.productName}
+                                <Link
+                                  href={`/${p.productType.toLowerCase()}/${p.productName.toLowerCase().replace(/ /g, '-')}?model=${p.productModel.toLowerCase().replace(/ /g, '-')}`}
+                                  className="font-bold text-base">
+                                  <FontAwesomeIcon
+                                    icon={faCircle} /> {p.productModel + " " + p.productModel}
                                 </Link>
                               </p>
                             ))}
@@ -228,7 +235,8 @@ const CheckOrder = () => {
                           </td>
 
                           <td className="px-4 py-3 text-ms border">
-                            <span className={`px-2 py-1 font-semibold leading-tight ${getStatusColor(item.status)} bg-gray-100 rounded-sm`}>
+                            <span
+                              className={`px-2 py-1 font-semibold leading-tight ${getStatusColor(item.status)} bg-gray-100 rounded-sm`}>
                               {item.status}
                             </span>
                           </td>

@@ -1,7 +1,5 @@
-/* eslint-disable jsx-a11y/alt-text */
-/* eslint-disable @next/next/no-img-element */
+import { faEnvelope, faLocationDot, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faEnvelope, faLocationDot, faPhone } from '@fortawesome/free-solid-svg-icons';
 
 const OrderForm = ({
   provinces,
@@ -148,7 +146,8 @@ const OrderForm = ({
                 onChange={handleCheckedPayment}
               />
               <label htmlFor="COD">
-                <img src='https://thanhthinhbui.cdn.vccloud.vn/wp-content/uploads/2020/07/giao-hang-COD-1.png'></img>
+                <img
+                  src='https://thanhthinhbui.cdn.vccloud.vn/wp-content/uploads/2020/07/giao-hang-COD-1.png'></img>
               </label>
               <h2 className='text-base font-semibold mt-5 ml-5'>COD (Cash On Delivery)</h2>
             </div>
@@ -163,7 +162,8 @@ const OrderForm = ({
                 onChange={handleCheckedPayment}
               />
               <label htmlFor="PAYPAL">
-                <img src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png'></img>
+                <img
+                  src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png'></img>
               </label>
               <h2 className='text-base font-semibold mt-5 ml-5'>PayPal</h2>
             </div>
@@ -179,7 +179,8 @@ const OrderForm = ({
                 onChange={handleCheckedPayment}
               />
               <label htmlFor="VNPAY">
-                <img src='https://cdn.bio.link/uploads/profile_pictures/2023-08-09/ZCXnagobVPlSSCAOrumGbLsEQI1KPYsq.png'></img>
+                <img
+                  src='https://cdn.bio.link/uploads/profile_pictures/2023-08-09/ZCXnagobVPlSSCAOrumGbLsEQI1KPYsq.png'></img>
               </label>
               <h2 className='text-base font-semibold mt-5 ml-5'>VN Pay</h2>
             </div>
@@ -225,7 +226,7 @@ const OrderForm = ({
 
       <button className='form-btn' type="submit">Confirm Order</button>
 
-    </form >
+    </form>
   );
 };
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import CustomErrorPage from "@/pages/error";
 import ComponentList from "@/components/BuildPCList/ComponentList";
@@ -782,7 +782,8 @@ function BuildPcComponents(data) {
                   {selectedProducts.motherboard ? (
                     <span>
                       <FormatPrice price={motherBoardPrice} />
-                      <FormatPrice price={motherBoardPrice - motherBoardPrice * motherBoardDiscount / 100} type={"discount"} />
+                      <FormatPrice price={motherBoardPrice - motherBoardPrice * motherBoardDiscount / 100}
+                        type={"discount"} />
                     </span>
                   ) : (
                     <span>

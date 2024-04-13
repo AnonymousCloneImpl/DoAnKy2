@@ -8,21 +8,21 @@ import project.service.product.StockService;
 
 @Service
 public class StockServiceImpl implements StockService {
-	@Autowired
-	private StockRepository stockRepo;
+    @Autowired
+    private StockRepository stockRepo;
 
-	@Override
-	public Stock findByProductId(long id) {
-		return stockRepo.findByProductId(id);
-	}
+    @Override
+    public Stock findByProductId(long id) {
+        return stockRepo.findByProductId(id);
+    }
 
-	@Override
-	public Stock getById(long id) {
-		return stockRepo.findByProductId(id);
-	}
+    @Override
+    public Stock getById(long id) {
+        return stockRepo.findByProductId(id);
+    }
 
-	@Override
-	public Stock save(Stock stock) {
-		return stockRepo.save(stock);
-	}
+    @Override
+    public Stock save(Stock stock) {
+        return stockRepo.save(stock);
+    }
 }

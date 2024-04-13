@@ -14,10 +14,10 @@ import lombok.*;
 @Entity
 @Table(name = "shipping_method")
 public class ShippingMethod {
-  @Id
-  private Long id;
-  @Column(nullable = false, length = 100)
-  private String name;
-  @Column(nullable = false)
-  private Long price;
+    @Id
+    private Long id;
+    @Column(nullable = false, length = 100)
+    private String name;
+    @Column(nullable = false)
+    private Long price;
 }
