@@ -110,16 +110,16 @@ const CheckOrder = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "WAITING":
-        return "text-orange-700";
-      case "PREPARING":
-        return "text-amber-700";
-      case "DELIVERY":
-        return "text-cyan-700";
-      case "COMPLETE":
-        return "text-green-700";
-      default:
-        return "";
+    case "WAITING":
+      return "text-orange-700";
+    case "PREPARING":
+      return "text-amber-700";
+    case "DELIVERY":
+      return "text-cyan-700";
+    case "COMPLETE":
+      return "text-green-700";
+    default:
+      return "";
     }
   }
 
