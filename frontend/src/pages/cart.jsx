@@ -1,40 +1,46 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import Link from "next/link";
 import { useRouter } from "next/router";
 import OrderForm from '@/components/OrderForm';
-import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
+import { validEmail, validName, validPhoneNumber } from '@/utils/Validate';
 
 import FormatPrice from "@/components/FormatPrice";
-
-const postMethodFetcher = async (url, body) => {
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch data');
-  }
-
-  return response.json();
-};
+import postMethodFetcher from "@/utils/postMethod";
 
 const CartPage = () => {
   const [items, setItems] = useState([]);
-  let body = {
-    "cartItemDtoList": []
-  }
+  const body = useMemo(() => ({
+    "cartItemList": []
+  }), []);
 
   useEffect(() => {
     const storedItemList = localStorage.getItem('itemList');
     if (storedItemList) {
       const loadedItems = JSON.parse(storedItemList).map(item => ({ ...item }));
-      setItems(loadedItems);
+      loadedItems.map((item) => {
+        body.cartItemList.push(
+          {
+            "productId": item.id,
+            "quantity": null
+          }
+        );
+      });
+      const getStock = async () => {
+        const quantityApi = `${process.env.DOMAIN}/cart`;
+        const result = await postMethodFetcher(quantityApi, body);
+        for (let i = 0; i < loadedItems.length; i++) {
+          for (let j = 0; j < result.cartItemList.length; j++) {
+            if (loadedItems[i].id === result.cartItemList[j].productId) {
+              loadedItems[i].stock = result.cartItemList[j].quantity;
+              break;
+            }
+          }
+        }
+        setItems(loadedItems);
+      }
+      getStock();
     } else {
       console.log('Undefined itemList');
     }
@@ -52,35 +58,7 @@ const CartPage = () => {
     };
     fetchData();
 
-  }, []);
-
-  const quantityApi = `${process.env.DOMAIN}/cart`;
-
-  const sendPostRequest = async () => {
-    const result = await postMethodFetcher(quantityApi, body);
-
-    for (let i = 0; i < items.length; i++) {
-      for (let j = 0; j < result.cartItemDtoList.length; j++) {
-        if (items[i].id === result.cartItemDtoList[j].productId) {
-          items[i].stock = result.cartItemDtoList[j].quantity;
-          break;
-        }
-      }
-    }
-  }
-
-  if (items !== undefined) {
-    let arr = items.map(item => item.id);
-    arr.map((item) => {
-      body.cartItemDtoList.push(
-        {
-          "productId": item,
-          "quantity": null
-        }
-      );
-    });
-    sendPostRequest();
-  }
+  }, [body]);
 
   const removeItem = (index) => {
     const updatedItems = [...items];
@@ -120,12 +98,6 @@ const CartPage = () => {
     }
   };
 
-  // Open/Close order form----------------------------------------------------------------------------------------------
-  const [isFormVisible, setFormVisible] = useState(false);
-  const formRef = useRef(null);
-  const openForm = () => setFormVisible(true);
-  const closeForm = () => setFormVisible(false);
-
   // Select option address----------------------------------------------------------------------------------------------
   const [provinces, setProvinces] = useState([]);
   const [districts, setDistricts] = useState([]);
@@ -162,29 +134,41 @@ const CartPage = () => {
     });
   };
 
+  // Open/Close order form----------------------------------------------------------------------------------------------
+  const [isFormVisible, setFormVisible] = useState(false);
+  const formRef = useRef(null);
+  const [hasSelectedItems, setHasSelectedItems] = useState(false);
   useEffect(() => {
-    const isItemChecked = checkedItems.length > 0;
+    setHasSelectedItems(checkedItems.length > 0);
+  }, [checkedItems]);
+
+  const openForm = () => {
+    if (!hasSelectedItems) {
+      alert('Please select at least one item before submitting the order.');
+    } else {
+      setFormVisible(true);
+    }
+  };
+
+  const closeForm = () => setFormVisible(false);
+
+  // get checked item------------------------------------------------------------------------------------------------
+  useEffect(() => {
     const calculatedTotalPrice = items.reduce((accumulator, item) => {
-      if (isItemChecked && checkedItems.includes(item.id)) {
+      if (hasSelectedItems && checkedItems.includes(item.id)) {
         return accumulator + (item.price - (item.price * item.discountPercentage) / 100) * item.quantity;
       }
       return accumulator;
     }, 0);
 
-    const finalTotalPrice = isItemChecked ? calculatedTotalPrice : calculatedTotalPrice;
+    const finalTotalPrice = hasSelectedItems ? calculatedTotalPrice : calculatedTotalPrice;
     setTotalPrice(finalTotalPrice);
-  }, [items, checkedItems]);
+  }, [checkedItems, hasSelectedItems, items]);
 
-
-  // get shipping method
-  const [shippingMethod, setShippingMethod] = useState('STANDARD');
-  const handleShippingChange = (e) => {
-    const selectedShipping = e.target.value;
-    const shipMapping = {
-      'STANDARD': 'STANDARD_SHIPPING',
-      'FAST': 'FAST_SHIPPING',
-    };
-    setShippingMethod(shipMapping[selectedShipping]);
+  // get shipping method---------------------------------------------------------------------------------------------
+  const [shippingMethod, setShippingMethod] = useState('STANDARD_SHIPPING');
+  const handleShippingChange = (selectedShipping) => {
+    setShippingMethod(selectedShipping);
   };
 
   // get payment method----------------------------------------------------------------------------------------------
@@ -223,7 +207,7 @@ const CartPage = () => {
       return;
     }
 
-    // get cart items
+    // get cart items--------------------------------------------------------------------------------------------------
     const selectedCartItems = items.filter((item) =>
       checkedItems.includes(item.id)
     );
@@ -248,7 +232,7 @@ const CartPage = () => {
     try {
       const data = await postMethodFetcher(orderUrl, orderData)
       if (data !== undefined) {
-        const filteredItems = items.filter((item, index) => !checkedItems.includes(index));
+        const filteredItems = items.filter(item => !checkedItems.includes(item.id));
         localStorage.setItem('itemList', JSON.stringify(filteredItems));
 
         if (paymentMethod === "COD") {
@@ -287,7 +271,8 @@ const CartPage = () => {
               {items.map((item, index) => (
                 <tr key={index} className=" border-t flex items-center hover:bg-gray-100 px-6 py-5">
                   <td className="flex items-center w-1/12">
-                    <input type="checkbox" className="product scale-150 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
+                    <input type="checkbox"
+                      className="product scale-150 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
                       onChange={() => handleCheckboxChange(item.id)}
                       checked={checkedItems.includes(item.id)}
                     />
@@ -297,10 +282,13 @@ const CartPage = () => {
                       <img className="h-20" src={item.image} alt={item.name} />
                     </div>
                     <div className="flex flex-col justify-between ml-4 flex-grow">
-                      <Link href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}`} className="font-bold text-base">
-                        {item.name}
+                      <Link
+                        href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}?model=${item.model.toLowerCase().replace(/ /g, '-')}`}
+                        className="font-bold text-base">
+                        {item.name + " " + item.model}
                       </Link>
-                      <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm" onClick={() => removeItem(index)}>
+                      <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm"
+                        onClick={() => removeItem(index)}>
                         <FontAwesomeIcon icon={faTrashCan} /> REMOVE
                       </b>
                     </div>
@@ -308,7 +296,8 @@ const CartPage = () => {
 
                   <td className="quantity w-3/12 text-center">
                     <div className="quantity-control px-10">
-                      <button className="quantity-decrease" onClick={() => decreaseQuantity(index)}><FontAwesomeIcon icon={faMinus} /></button>
+                      <button className="quantity-decrease" onClick={() => decreaseQuantity(index)}>
+                        <FontAwesomeIcon icon={faMinus} /></button>
                       <input
                         type="number"
                         min="1"
@@ -318,7 +307,8 @@ const CartPage = () => {
                         onBlur={(e) => resetIfEmpty(index, e.target.value)}
                         className="quantity-input"
                       />
-                      <button className="quantity-increase" onClick={() => increaseQuantity(index)}><FontAwesomeIcon icon={faPlus} /></button>
+                      <button className="quantity-increase" onClick={() => increaseQuantity(index)}>
+                        <FontAwesomeIcon icon={faPlus} /></button>
                     </div>
                     <div className="text-center text-red-600 font-semibold text-sm uppercase">
                       {item.stock} Left in Stock
@@ -326,11 +316,14 @@ const CartPage = () => {
                   </td>
 
                   <td className="block text-center font-semibold text-base w-1/12">
-                    <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100} type={"discount"} />
+                    <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100}
+                      type={"discount"} />
                   </td>
 
-                  <td className="text-center text-red-600 font-semibold text-base w-2/12 text-center">
-                    <FormatPrice price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity} type={"discount"} />
+                  <td className="text-center text-red-600 font-semibold text-base w-2/12">
+                    <FormatPrice
+                      price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity}
+                      type={"discount"} />
                   </td>
                 </tr>
               ))}
@@ -346,7 +339,8 @@ const CartPage = () => {
             </div>
 
             <div className="border-t mt-20">
-              <button className="bg-indigo-600 font-semibold hover:bg-red-700 py-3 text-sm text-white uppercase w-full"
+              <button
+                className="bg-indigo-600 font-semibold hover:bg-red-700 py-3 text-sm text-white uppercase w-full"
                 onClick={openForm}> Submit Order
               </button>
             </div>
@@ -374,7 +368,7 @@ const CartPage = () => {
               <span className="close-form-btn" onClick={closeForm}>
                 <FontAwesomeIcon icon={faCircleXmark} />
               </span>
-              <img className='order-logo' src='/favico.png'></img>
+              <img className='order-logo' src='/favico.png' alt=""></img>
               <h1>Order Form</h1>
               <OrderForm
                 provinces={provinces}
@@ -383,6 +377,7 @@ const CartPage = () => {
                 handleProvinceChange={handleProvinceChange}
                 handleDistrictChange={handleDistrictChange}
                 setSelectedWardId={setSelectedWardId}
+                shippingMethod={shippingMethod}
                 handleShippingChange={handleShippingChange}
                 paymentMethod={paymentMethod}
                 handleCheckedPayment={handleCheckedPayment}
@@ -395,13 +390,14 @@ const CartPage = () => {
                 setHouseAddress={setHouseAddress}
                 customerPhone={customerPhone}
                 setCustomerPhone={setCustomerPhone}
+                totalPrice={totalPrice}
               />
             </div>
           </div>
         </>
       )}
 
-    </div >
+    </div>
   )
 };
 

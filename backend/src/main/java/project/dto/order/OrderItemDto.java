@@ -8,10 +8,13 @@ import java.io.Serializable;
 @Setter
 @Builder
 @NoArgsConstructor
+@ToString
 @AllArgsConstructor
 public class OrderItemDto implements Serializable {
-	private Long productId;
-	private short quantity;
-	private String productType;
-	private String productName;
+    private Long productId;
+    private short quantity;
+    private double price;
+    private String productType;
+    private String productName;
+    private String productModel;
 }

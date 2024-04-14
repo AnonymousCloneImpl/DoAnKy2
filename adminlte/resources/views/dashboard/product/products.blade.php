@@ -56,12 +56,12 @@
                                         <tr>
                                             <td>{{$p->id}}</td>
                                             <td>{{$p->model}}</td>
-                                            <td>{{$p->name}}</td>
-                                            <td>{{$p->discount_percentage}}</td>
+                                            <td>{{$p->product_name}}</td>
+                                            <td><strong>{{$p->discount}} %</strong></td>
                                             <td>{{$p->price}}</td>
                                             <td>{{$p->producer}}</td>
-                                            <td>{{$p->type}}</td>
-                                            <td>{{$p->quantity}}</td>
+                                            <td>{{$p->product_type}}</td>
+                                            <td>{{$p->stock}}</td>
                                             <td>{{$p->sold}}</td>
                                             <td>{{ \Carbon\Carbon::parse($p->inserted_time)->format('Y-m-d H:i:s') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($p->updated_time)->format('Y-m-d H:i:s') }}</td>

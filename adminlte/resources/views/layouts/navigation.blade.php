@@ -39,6 +39,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="{{route('products.create')}}" class="nav-link {{ request()->routeIs('manage.orders') ? 'active' : '' }}">
+                            <i class="fas fa-plus-square nav-icon"></i>
+                            <p>Add Products</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a href="{{route('orderList')}}" class="nav-link {{ request()->routeIs('manage.orders') ? 'active' : '' }}">
                             <i class="far fa-sticky-note nav-icon"></i>
                             <p>Manage Orders</p>

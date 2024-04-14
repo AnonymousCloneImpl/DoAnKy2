@@ -1,7 +1,20 @@
 import { config, library } from '@fortawesome/fontawesome-svg-core';
-import { faGears, faLaptop, faKeyboard, faScrewdriverWrench, faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCartShopping,
+  faCircleUser,
+  faComputer,
+  faEnvelope,
+  faFileSignature,
+  faGears,
+  faKeyboard,
+  faLaptop,
+  faLocationDot,
+  faMagnifyingGlass,
+  faPhone,
+  faScrewdriverWrench
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import fetcher from "@/utils/fetchAPI";
 import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
@@ -134,7 +147,7 @@ export default function Header() {
           <div className="logo-wrapper">
             <Link href="/" id="logo" className="flex">
               <Image src="/favico.png" alt="logo" width="50" height="50" />
-              <p>Thế Giới Manh Động</p>
+              <p>QuantumTECH</p>
               <b>.com</b>
             </Link>
           </div>
@@ -246,9 +259,17 @@ export default function Header() {
             </ul>
           </li>
           <li>
+            <Link href="/service" className="flex justify-center items-center m-1">
+              <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
+              <p className="sub-menu-item text-xl pl-2">
+                Service
+              </p>
+            </Link>
+          </li>
+          <li>
             <div className="">
               <Link href="/build-pc" className="flex justify-center items-center m-1">
-                <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
+                <FontAwesomeIcon icon={faComputer} className="sub-menu-i" />
                 <p className="sub-menu-item text-xl pl-2">Build PC</p>
               </Link>
             </div>
@@ -264,7 +285,8 @@ export default function Header() {
           {
             results.length > 0 ? (
               results.map((result) => (
-                <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id} href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
+                <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id}
+                  href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
                   <div className="flex">
                     <div className="result_image">
                       <img className="result_image_item" src={result.image} />
@@ -278,7 +300,9 @@ export default function Header() {
                       </div>
                       <div className="bottom_result pt-npm8">
                         <div className='mr-2'>
-                          <FormatPrice price={result.price - (result.price * result.discountPercentage / 100)} type={"discount"} />
+                          <FormatPrice
+                            price={result.price - (result.price * result.discountPercentage / 100)}
+                            type={"discount"} />
                         </div>
                         <FormatPrice price={result.price} />
                       </div>

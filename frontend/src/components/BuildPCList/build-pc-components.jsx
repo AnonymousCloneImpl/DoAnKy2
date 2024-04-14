@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useRef, useState } from "react";
+import { faCircleCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 import CustomErrorPage from "@/pages/error";
 import ComponentList from "@/components/BuildPCList/ComponentList";
 import FormatPrice from "@/components/FormatPrice";
@@ -11,7 +11,7 @@ function BuildPcComponents(data) {
   const [ProductList, setProductList] = useState([]);
   const [cpu, setCpu] = useState([]);
   const [cpuCooler, setCpuCooler] = useState([]);
-  const [mobo, setMobo] = useState([]);
+  const [motherBoard, setMotherBoard] = useState([]);
   const [memory, setMemory] = useState([]);
   const [storage, setStorage] = useState([]);
   const [gpu, setGpu] = useState([]);
@@ -23,7 +23,6 @@ function BuildPcComponents(data) {
   const [mouse, setMouse] = useState([]);
   const [searchQuery, setSearchQuery] = useState([]);
   const [isFormVisible, setFormVisible] = useState(false);
-  const formRef = useRef(null);
 
   const [selectedProducts, setSelectedProducts] = useState({
     cpu: '',
@@ -58,7 +57,7 @@ function BuildPcComponents(data) {
   //define prices
   const [cpuPrice, setCpuPrice] = useState(0);
   const [cpuCoolerPrice, setCpuCoolerPrice] = useState(0);
-  const [moboPrice, setMoboPrice] = useState(0);
+  const [motherBoardPrice, setMotherBoardPrice] = useState(0);
   const [memoryPrice, setMemoryPrice] = useState(0);
   const [storagePrice, setStoragePrice] = useState(0);
   const [gpuPrice, setGpuPrice] = useState(0);
@@ -71,7 +70,7 @@ function BuildPcComponents(data) {
   //define image paths
   const [cpuImage, setCpuImage] = useState('');
   const [cpuCoolerImage, setCpuCoolerImage] = useState('');
-  const [moboImage, setMoboImage] = useState('');
+  const [motherBoardImage, setMotherBoardImage] = useState('');
   const [memoryImage, setMemoryImage] = useState('');
   const [storageImage, setStorageImage] = useState('');
   const [gpuImage, setGpuImage] = useState('');
@@ -84,7 +83,7 @@ function BuildPcComponents(data) {
   //define stock number
   const [cpuStock, setCpuStock] = useState(0);
   const [cpuCoolerStock, setCpuCoolerStock] = useState(0);
-  const [moboStock, setMoboStock] = useState(0);
+  const [motherBoardStock, setMotherBoardStock] = useState(0);
   const [memoryStock, setMemoryStock] = useState(0);
   const [storageStock, setStorageStock] = useState(0);
   const [gpuStock, setGpuStock] = useState(0);
@@ -97,7 +96,7 @@ function BuildPcComponents(data) {
   //define link
   const [cpuLink, setCpuLink] = useState('');
   const [cpuCoolerLink, setCpuCoolerLink] = useState('');
-  const [moboLink, setMoboLink] = useState('');
+  const [motherBoardLink, setMotherBoardLink] = useState('');
   const [memoryLink, setMemoryLink] = useState('');
   const [storageLink, setStorageLink] = useState('');
   const [gpuLink, setGpuLink] = useState('');
@@ -110,7 +109,7 @@ function BuildPcComponents(data) {
   //define discount
   const [cpuDiscount, setCpuDiscount] = useState(0);
   const [cpuCoolerDiscount, setCpuCoolerDiscount] = useState(0);
-  const [moboDiscount, setMoboDiscount] = useState(0);
+  const [motherBoardDiscount, setMotherBoardDiscount] = useState(0);
   const [memoryDiscount, setMemoryDiscount] = useState(0);
   const [storageDiscount, setStorageDiscount] = useState(0);
   const [gpuDiscount, setGpuDiscount] = useState(0);
@@ -128,14 +127,14 @@ function BuildPcComponents(data) {
     }
     setCpu(data.data.cpuList);
     setCpuCooler(data.data.cpuCoolerList)
-    setMobo(data.data.motherBoardList)
+    setMotherBoard(data.data.motherBoardList)
     setMemory(data.data.memoryList)
     setStorage(data.data.storageList)
     setGpu(data.data.gpuList)
     setPcCase(data.data.caseList)
     setCaseFan(data.data.caseFanList)
     setPsu(data.data.psuList)
-    setMonitor(data.data.moniterList)
+    setMonitor(data.data.monitorList)
     setKeyboard(data.data.keyboardList);
     setMouse(data.data.mouseList);
   }, [data]);
@@ -151,7 +150,7 @@ function BuildPcComponents(data) {
         setProductList(cpuCooler);
         break;
       case 'motherboard':
-        setProductList(mobo);
+        setProductList(motherBoard);
         break;
       case 'memory':
         setProductList(memory);
@@ -197,7 +196,7 @@ function BuildPcComponents(data) {
   const totalPrice =
     ((cpuPrice - (cpuPrice * cpuDiscount / 100)) * quantities.cpu) +
     ((cpuCoolerPrice - (cpuCoolerPrice * cpuCoolerDiscount / 100)) * quantities.cpuCooler) +
-    ((moboPrice - (moboPrice * moboDiscount / 100)) * quantities.motherboard) +
+    ((motherBoardPrice - (motherBoardPrice * motherBoardDiscount / 100)) * quantities.motherboard) +
     ((memoryPrice - (memoryPrice * memoryDiscount / 100)) * quantities.memory) +
     ((storagePrice - (storagePrice * storageDiscount / 100)) * quantities.storage) +
     ((gpuPrice - (gpuPrice * gpuDiscount / 100)) * quantities.gpu) +
@@ -213,6 +212,8 @@ function BuildPcComponents(data) {
     setSelectedProducts({ ...selectedProducts, [partType]: product.name });
     setQuantities({ ...quantities, [partType]: 1 });
     setFormVisible(false);
+    productLink = `/${product.type}/${product.name.replace(" ", "-").toLowerCase()}`
+
     switch (partType) {
       case 'cpu':
         setCpuLink(productLink);
@@ -228,12 +229,12 @@ function BuildPcComponents(data) {
         setCpuCoolerStock(product.stock.quantity);
         setCpuCoolerDiscount(product.discountPercentage);
         break;
-      case 'mobo':
-        setMoboLink(productLink);
-        setMoboPrice(product.price);
-        setMoboImage(product.image);
-        setMoboStock(product.stock.quantity);
-        setMoboDiscount(product.discountPercentage);
+      case 'motherBoard':
+        setMotherBoardLink(productLink);
+        setMotherBoardPrice(product.price);
+        setMotherBoardImage(product.image);
+        setMotherBoardStock(product.stock.quantity);
+        setMotherBoardDiscount(product.discountPercentage);
         break;
       case 'memory':
         setMemoryLink(productLink);
@@ -320,10 +321,10 @@ function BuildPcComponents(data) {
           setCpuCoolerImage('');
           setCpuCoolerStock(0);
           break;
-        case 'mobo':
-          setMoboPrice(0);
-          setMoboImage('');
-          setMoboStock(0);
+        case 'motherBoard':
+          setMotherBoardPrice(0);
+          setMotherBoardImage('');
+          setMotherBoardStock(0);
           break;
         case 'memory':
           setMemoryPrice(0);
@@ -393,6 +394,7 @@ function BuildPcComponents(data) {
         keyboard: '',
         mouse: ''
       });
+
       setQuantities({
         cpu: '',
         cpuCooler: '',
@@ -413,9 +415,9 @@ function BuildPcComponents(data) {
       setCpuCoolerPrice(0);
       setCpuCoolerImage('');
       setCpuCoolerStock(0);
-      setMoboPrice(0);
-      setMoboImage('');
-      setMoboStock(0);
+      setMotherBoardPrice(0);
+      setMotherBoardImage('');
+      setMotherBoardStock(0);
       setMemoryPrice(0);
       setMemoryImage('');
       setMemoryStock(0);
@@ -450,54 +452,42 @@ function BuildPcComponents(data) {
     setQuantities({ ...quantities, [partType]: value });
   };
 
+  const [cartNotifications, setCartNotifications] = useState([]);
   // Add To cart
-  const addToCart = (selectedProducts) => {
-    if (!Array.isArray(selectedProducts)) {
-      console.error('selectedProducts is not array');
-      console.error(selectedProducts);
-      return;
-    }
+  const addToCart = (selectedProducts, quantities, data) => {
+    let cartItems = JSON.parse(localStorage.getItem('itemList')) || [];
+    Object.entries(selectedProducts).forEach(([type, name]) => {
+      if (name !== '') {
+        const quantity = quantities[type] || 0;
+        if (data.data[type + 'List'].length > 0) {
+          let productList = data.data[type + 'List'];
+          let productIndex = cartItems.findIndex(item => item.name === name && item.type === type);
 
-    const storedItemList = localStorage.getItem('itemList');
-    let cartItemList = [];
-
-    if (storedItemList) {
-      cartItemList = JSON.parse(storedItemList);
-    }
-
-    selectedProducts.forEach(product => {
-      const existingProductIndex = cartItemList.findIndex(item => item.name === product.name);
-      if (existingProductIndex !== -1) {
-        const updatedCartItemList = [...cartItemList];
-        let quantity;
-        updatedCartItemList.forEach((item, index) => {
-          if (item.id === product.id) {
-            quantity = 1 + parseInt(item.quantity, 10);
-            updatedCartItemList[index] = {
-              ...item,
-              quantity: quantity
-            };
+          if (productIndex !== -1) {
+            cartItems[productIndex].quantity = parseInt(quantity);
+          } else {
+            let product = productList.find(item => item.name === name);
+            if (product) {
+              const cartProduct = {
+                id: product.id,
+                image: product.image,
+                name: product.name,
+                price: product.price,
+                discountPercentage: product.discountPercentage,
+                type: type,
+                quantity: parseInt(quantity),
+                stock: null
+              };
+              cartItems.push(cartProduct);
+            }
           }
-        });
-        cartItemList = updatedCartItemList;
-      } else {
-        cartItemList.push({
-          "id": product.id,
-          "image": product.image,
-          "name": product.name,
-          "price": product.price,
-          "discountPercentage": product.discountPercentage,
-          "type": product.type,
-          "quantity": 1,
-          "stock": null
-        });
+        }
       }
     });
-
-    localStorage.setItem('itemList', JSON.stringify(cartItemList));
+    localStorage.setItem('itemList', JSON.stringify(cartItems));
 
     const newNotification = {
-      message: 'The product has been added to Cart !',
+      message: 'All components have been added to the cart !',
     };
 
     setCartNotifications((prevNotifications) => [...prevNotifications, newNotification]);
@@ -505,6 +495,8 @@ function BuildPcComponents(data) {
     setTimeout(() => {
       setCartNotifications((prevNotifications) => prevNotifications.filter((n) => n !== newNotification));
     }, 3000);
+
+    return null;
   };
 
   return (
@@ -621,9 +613,8 @@ function BuildPcComponents(data) {
                 <td className="border text-center px-6 py-3" style={{ width: '5%' }}>
                   {selectedProducts.cpu ? (
                     <span>
-                      <FormatPrice price={cpuPrice} />
-                      <FormatPrice price={cpuPrice - (cpuPrice * cpuDiscount / 100)}
-                        type={"discount"} />
+                      <FormatPrice price={cpuPrice} type={"discount"} />
+                      <FormatPrice price={cpuPrice - (cpuPrice * cpuDiscount / 100)} type={"discount"} />
                     </span>
                   ) : (
                     <span>
@@ -658,7 +649,6 @@ function BuildPcComponents(data) {
                         <span className="fill"></span>
                         <span className="relative z-10">Remove</span>
                       </button>
-
                     </div>
                   )}
                 </td>
@@ -756,11 +746,11 @@ function BuildPcComponents(data) {
                     <div className="flex items-center">
                       <div className="product-info">
                         <img className="product-image"
-                          src={moboImage}
+                          src={motherBoardImage}
                           alt="no image" />
                         <p>
                           <span className="ml-1 font-bold">
-                            <Link target="_blank" href={moboLink}>
+                            <Link target="_blank" href={motherBoardLink}>
                               {selectedProducts.motherboard}
                             </Link>
                           </span>
@@ -768,10 +758,10 @@ function BuildPcComponents(data) {
                           <span className="ml-1 font-semibold">
                             {selectedProducts.motherboard ? (
                               <span>
-                                {moboStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {moboStock > 0 && moboStock < 10 &&
+                                {motherBoardStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
+                                {motherBoardStock > 0 && motherBoardStock < 10 &&
                                   <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {moboStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {motherBoardStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
                               </span>
                             ) : null}
                           </span>
@@ -781,7 +771,7 @@ function BuildPcComponents(data) {
                       </div>
                     </div>
                   ) : (
-                    <button onClick={() => openForm('mobo')}
+                    <button onClick={() => openForm('motherBoard')}
                       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select
                       Motherboard
@@ -791,12 +781,13 @@ function BuildPcComponents(data) {
                 <td className="border text-center px-6 py-3">
                   {selectedProducts.motherboard ? (
                     <span>
-                      <FormatPrice price={moboPrice} />
-                      <FormatPrice price={moboPrice - moboPrice * moboDiscount / 100} type={"discount"} />
+                      <FormatPrice price={motherBoardPrice} />
+                      <FormatPrice price={motherBoardPrice - motherBoardPrice * motherBoardDiscount / 100}
+                        type={"discount"} />
                     </span>
                   ) : (
                     <span>
-                      <FormatPrice price={moboPrice} type={"normal"} />
+                      <FormatPrice price={motherBoardPrice} type={"normal"} />
                     </span>
                   )}
                 </td>
@@ -804,25 +795,25 @@ function BuildPcComponents(data) {
                   <input type="number" min="1" value={quantities.motherboard}
                     onChange={(e) => {
                       if (e.target.value < 1) {
-                        handleQuantityChange('mobo', 1);
-                      } else if (e.target.value > moboStock) {
-                        handleQuantityChange('mobo', moboStock);
+                        handleQuantityChange('motherBoard', 1);
+                      } else if (e.target.value > motherBoardStock) {
+                        handleQuantityChange('motherBoard', motherBoardStock);
                       } else {
-                        handleQuantityChange('mobo', e.target.value);
+                        handleQuantityChange('motherBoard', e.target.value);
                       }
                     }}
                     className="w-16 px-2 py-1 border rounded" />
                 </td>
                 <td className="border-b border-t text-center py-3 w-full">
                   <FormatPrice
-                    price={(moboPrice - moboPrice * moboDiscount / 100) * quantities.motherboard}
+                    price={(motherBoardPrice - motherBoardPrice * motherBoardDiscount / 100) * quantities.motherboard}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.motherboard && (
                     <div className="flex justify-center w-full">
                       <button
-                        onClick={() => handleRemoveProduct('mobo')}
+                        onClick={() => handleRemoveProduct('motherBoard')}
                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
                         style={{ transition: "background-color 0.15s" }}
                       >
@@ -1086,7 +1077,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
               </tr>
-
 
               <tr>
                 <td className="border px-6 py-3 font-bold">PC Case</td>
@@ -1624,7 +1614,7 @@ function BuildPcComponents(data) {
             )}
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-1 my-2 rounded"
-              onClick={() => addToCart(selectedProducts)}> Add all parts to cart
+              onClick={() => addToCart(selectedProducts, quantities, data)}> Add all parts to cart
             </button>
           </div>
         </div>
@@ -1656,6 +1646,18 @@ function BuildPcComponents(data) {
           </div>
         )}
 
+        {/* CartNotifi */}
+        {cartNotifications.map((item, index) => (
+          <div key={index}>
+            <div
+              className="cart-notification"
+              style={{ bottom: `${10 + index * 40}px`, display: 'block' }}
+            >
+              <FontAwesomeIcon className="cart-check" icon={faCircleCheck} />
+              {item.message}
+            </div>
+          </div>
+        ))}
 
       </div>
     </div>

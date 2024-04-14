@@ -15,20 +15,20 @@ import java.util.List;
 @RequestMapping("/search")
 @CrossOrigin(origins = "*")
 public class SearchController {
-	@Autowired
-	private SearchService searchService;
+    @Autowired
+    private SearchService searchService;
 
-	@GetMapping("")
-	ResponseEntity<List<ProductSummaryDto>> search(@RequestParam String q, @Param(value = "limit") Integer limit) {
-		if (limit == null) {
-			limit = 5;
-		}
-		List<ProductSummaryDto> productSummaryDtoList = searchService.findByName(q, limit);
-		return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
-	}
+    @GetMapping("")
+    ResponseEntity<List<ProductSummaryDto>> search(@RequestParam String q, @Param(value = "limit") Integer limit) {
+        if (limit == null) {
+            limit = 5;
+        }
+        List<ProductSummaryDto> productSummaryDtoList = searchService.findByName(q, limit);
+        return ResponseEntity.status(HttpStatus.OK).body(productSummaryDtoList);
+    }
 
-	@PostMapping("/searchByCondition")
-	public Object getProductByType(@RequestBody RequestDto requestDto) {
-		return searchService.findProductsByTypeWithPaging(requestDto);
-	}
+    @PostMapping("/searchByCondition")
+    public Object getProductByType(@RequestBody RequestDto requestDto) {
+        return searchService.findProductsByTypeWithPaging(requestDto);
+    }
 }

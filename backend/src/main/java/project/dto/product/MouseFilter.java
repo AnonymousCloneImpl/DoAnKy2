@@ -11,5 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MouseFilter implements Serializable {
-	private List<String> connection;
+    private List<String> connection;
 }

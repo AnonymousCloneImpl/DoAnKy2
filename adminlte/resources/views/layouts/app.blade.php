@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="{{ asset('css/adminlte.min.css') }}">
     <!-- Custom style -->
     <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
+
     @yield('styles')
 </head>
 <body class="hold-transition sidebar-mini sidebar-collapse">
@@ -147,6 +150,7 @@
 <script src="{{asset('js/buttons.html5.min.js')}}"></script>
 <script src="{{asset('js/buttons.print.min.js')}}"></script>
 <script src="{{asset('js/buttons.colVis.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!-- AdminLTE App -->
 <script src="{{ asset('js/adminlte.min.js') }}"></script>

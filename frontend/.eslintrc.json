@@ -1,5 +1,14 @@
 {
   "extends": [
     "next/core-web-vitals"
-  ]
+  ],
+  "rules": {
+    "@next/next/no-img-element": "off",
+    "prefer-const": "error",
+    "indent": [
+      "error",
+      2
+    ],
+    "jsx-a11y/img-has-alt": "off"
+  }
 }

@@ -16,52 +16,52 @@ import java.util.List;
 @Service
 @Slf4j(topic = "PAYPAL-SERVICE")
 public class PaypalService {
-	@Autowired
-	private APIContext apiContext;
+    @Autowired
+    private APIContext apiContext;
 
-	public Payment createPaypalPayment(PaypalRequestDto paypalRequestDto) {
-		Double total = BigDecimal.valueOf(paypalRequestDto.getTotal()).setScale(2, RoundingMode.HALF_UP).doubleValue();
-		Amount amount = new Amount();
-		amount.setCurrency(paypalRequestDto.getCurrency());
-		amount.setTotal(String.valueOf(total));
+    public Payment createPaypalPayment(PaypalRequestDto paypalRequestDto) {
+        Double total = BigDecimal.valueOf(paypalRequestDto.getTotal()).setScale(2, RoundingMode.HALF_UP).doubleValue();
+        Amount amount = new Amount();
+        amount.setCurrency(paypalRequestDto.getCurrency());
+        amount.setTotal(String.valueOf(total));
 
-		Transaction transaction = new Transaction();
-		transaction.setDescription(paypalRequestDto.getDescription());
-		transaction.setAmount(amount);
+        Transaction transaction = new Transaction();
+        transaction.setDescription(paypalRequestDto.getDescription());
+        transaction.setAmount(amount);
 
-		List<Transaction> transactions = new ArrayList<>();
-		transactions.add(transaction);
+        List<Transaction> transactions = new ArrayList<>();
+        transactions.add(transaction);
 
-		Payer payer = new Payer();
-		payer.setPaymentMethod(paypalRequestDto.getMethod());
+        Payer payer = new Payer();
+        payer.setPaymentMethod(paypalRequestDto.getMethod());
 
-		Payment payment = new Payment();
-		payment.setIntent(paypalRequestDto.getIntent());
-		payment.setPayer(payer);
-		payment.setTransactions(transactions);
-		RedirectUrls redirectUrls = new RedirectUrls();
-		redirectUrls.setCancelUrl(paypalRequestDto.getCancelUrl());
-		redirectUrls.setReturnUrl(paypalRequestDto.getSuccessUrl());
-		payment.setRedirectUrls(redirectUrls);
+        Payment payment = new Payment();
+        payment.setIntent(paypalRequestDto.getIntent());
+        payment.setPayer(payer);
+        payment.setTransactions(transactions);
+        RedirectUrls redirectUrls = new RedirectUrls();
+        redirectUrls.setCancelUrl(paypalRequestDto.getCancelUrl());
+        redirectUrls.setReturnUrl(paypalRequestDto.getSuccessUrl());
+        payment.setRedirectUrls(redirectUrls);
 
-		try {
-			return payment.create(apiContext);
-		} catch (PayPalRESTException e) {
-			throw new RuntimeException(e);
-		}
-	}
+        try {
+            return payment.create(apiContext);
+        } catch (PayPalRESTException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public Payment executePayment(String paymentId, String payerId) {
-		Payment payment = new Payment();
-		try {
-			payment.setId(paymentId);
-			PaymentExecution paymentExecute = new PaymentExecution();
-			paymentExecute.setPayerId(payerId);
-			return payment.execute(apiContext, paymentExecute);
-		} catch (PayPalRESTException e) {
-			payment.setState("PAYMENT_ALREADY_DONE");
-			log.warn("Payment failed : " + e.getMessage());
-		}
-		return payment;
-	}
+    public Payment executePayment(String paymentId, String payerId) {
+        Payment payment = new Payment();
+        try {
+            payment.setId(paymentId);
+            PaymentExecution paymentExecute = new PaymentExecution();
+            paymentExecute.setPayerId(payerId);
+            return payment.execute(apiContext, paymentExecute);
+        } catch (PayPalRESTException e) {
+            payment.setState("PAYMENT_ALREADY_DONE");
+            log.warn("Payment failed : " + e.getMessage());
+        }
+        return payment;
+    }
 }
