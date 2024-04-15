@@ -20,7 +20,7 @@ import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
 import Image from "next/image";
 import CartIcon from "@/components/CartNumber";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 
 library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
 
@@ -282,7 +282,7 @@ export default function Header() {
           </li>
           <li>
             <Link href="/service" className="flex justify-center items-center h-full w-full">
-              <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
+            <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
               <p className="sub-menu-item text-xl">
                 Service
               </p>
@@ -290,7 +290,7 @@ export default function Header() {
           </li>
           <li>
             <Link href="/build-pc" className="flex justify-center items-center h-full w-full">
-              <FontAwesomeIcon icon={faComputer} className="sub-menu-i" />
+              <FontAwesomeIcon icon={faComputer} className="sub-menu-i"/>
               <p className="sub-menu-item text-xl">Build PC</p>
             </Link>
           </li>
@@ -299,17 +299,17 @@ export default function Header() {
 
       {showResults && (
         <div className="search_result"
-          onMouseEnter={handleSearchResultHover}
-          onMouseLeave={handleSearchResultLeave}
+             onMouseEnter={handleSearchResultHover}
+             onMouseLeave={handleSearchResultLeave}
         >
           {
             results.length > 0 ? (
               results.map((result) => (
                 <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id}
-                  href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}?model=${result.model.toLowerCase().replaceAll(" ", "-")}`}>
+                    href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}?model=${result.model.toLowerCase().replaceAll(" ", "-")}`}>
                   <div className="flex">
                     <div className="result_image">
-                      <img className="result_image_item" src={result.image} />
+                      <img className="result_image_item" src={result.image}/>
                     </div>
                     <div className="result_info">
                       <div className="top_result">
