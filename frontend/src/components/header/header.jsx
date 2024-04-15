@@ -20,11 +20,7 @@ import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
 import Image from "next/image";
 import CartIcon from "@/components/CartNumber";
-<<<<<<< HEAD
 import { useRouter } from "next/router";
-=======
-import {useRouter} from "next/router";
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
 
 library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
 
@@ -203,11 +199,7 @@ export default function Header() {
 
       {/*SUB MENU*/}
       <nav id="sub-menu-nav">
-<<<<<<< HEAD
         <ul id="sub-menu" className="h-12 font-semibold uppercase max-sm:h-10">
-=======
-        <ul id="sub-menu" className="font-semibold uppercase max-sm:h-10">
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
           <li>
             <Link href="/laptop" className="flex justify-center items-center h-full w-full">
               <FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />
@@ -224,7 +216,6 @@ export default function Header() {
             {showGear && (
               <ul id="sub-drop">
                 <li><img src="/header_img/drop-menu-mouse.webp" alt="" />
-<<<<<<< HEAD
                   <Link href="/mouse">Mouse</Link>
                 </li>
                 <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt="" />
@@ -236,19 +227,6 @@ export default function Header() {
                 </li>
               </ul>
             )}
-=======
-                <Link href="/mouse">Mouse</Link>
-                </li>
-                <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt="" />
-                <Link href="/keyboard">Keyboard</Link>
-                </li>
-                <li>
-                <img id="fix" src="/header_img/drop-menu-headphone.webp" alt="" />
-                <Link href="/headphone">Headphone</Link>
-                </li>
-              </ul>
-              )}
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
           </li>
           <li>
             <button className="flex justify-center items-center h-full w-full" onClick={handlePcPartClick}>
@@ -259,7 +237,6 @@ export default function Header() {
             </button>
             {showPart === true ? (
               <ul id="sub-drop">
-<<<<<<< HEAD
                 <li><img id='fix' src="/header_img/drop-menu-cpu.jfif" alt="" />
                   <Link href="/cpu">CPU</Link>
                 </li>
@@ -296,44 +273,6 @@ export default function Header() {
                 </li>
                 <li>
                   <img id="fix" src="/header_img/drop-menu-monitor.webp" alt="" />
-=======
-                <li><img id='fix' src="/header_img/drop-menu-cpu.jfif" alt=""/>
-                  <Link href="/cpu">CPU</Link>
-                </li>
-                <li><img id="fix" src="/header_img/drop-menu-cpu-cooler.jfif" alt=""/>
-                  <Link href="/cpu-cooler">CPU COOLER</Link>
-                </li>
-                <li>
-                  <img id="fix" src="/header_img/drop-menu-motherboard.jfif" alt=""/>
-                  <Link href="/motherboard">MOTHERBOARD</Link>
-                </li>
-                <li>
-                  <img id="fix" src="/header_img/drop-menu-memory.jfif" alt=""/>
-                  <Link href="/memory">MEMORY</Link>
-                </li>
-                <li>
-                  <img id="fix" src="/header_img/drop-menu-storage.jfif" alt=""/>
-                  <Link href="/storage">STORAGE</Link>
-                </li>
-                <li>
-                  <img id="fix" src="/header_img/drop-menu-gpu.jfif" alt=""/>
-                  <Link href="/gpu">GPU</Link>
-                </li>
-                <li>
-                  <img id="fix" src="/header_img/drop-menu-case.jpg" alt=""/>
-                  <Link href="/case">CASE</Link>
-                </li>
-                <li>
-                  <img id="fix" src="/header_img/drop-menu-case-fan.jpg" alt=""/>
-                  <Link href="/case-fan">CASE FAN</Link>
-                </li>
-                <li>
-                  <img id="fix" src="/header_img/drop-menu-power.jfif" alt=""/>
-                  <Link href="/power-supply-unit">POWER SUPPLY UNIT</Link>
-                </li>
-                <li>
-                  <img id="fix" src="/header_img/drop-menu-monitor.webp" alt=""/>
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <Link href="/monitor">MONITOR</Link>
                 </li>
               </ul>
@@ -343,11 +282,7 @@ export default function Header() {
           </li>
           <li>
             <Link href="/service" className="flex justify-center items-center h-full w-full">
-<<<<<<< HEAD
               <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
-=======
-              <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i"/>
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
               <p className="sub-menu-item text-xl">
                 Service
               </p>
@@ -355,11 +290,7 @@ export default function Header() {
           </li>
           <li>
             <Link href="/build-pc" className="flex justify-center items-center h-full w-full">
-<<<<<<< HEAD
               <FontAwesomeIcon icon={faComputer} className="sub-menu-i" />
-=======
-              <FontAwesomeIcon icon={faComputer} className="sub-menu-i"/>
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
               <p className="sub-menu-item text-xl">Build PC</p>
             </Link>
           </li>
@@ -368,21 +299,17 @@ export default function Header() {
 
       {showResults && (
         <div className="search_result"
-             onMouseEnter={handleSearchResultHover}
-             onMouseLeave={handleSearchResultLeave}
+          onMouseEnter={handleSearchResultHover}
+          onMouseLeave={handleSearchResultLeave}
         >
           {
             results.length > 0 ? (
               results.map((result) => (
                 <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id}
-<<<<<<< HEAD
                   href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}?model=${result.model.toLowerCase().replaceAll(" ", "-")}`}>
-=======
-                      href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}?model=${result.model.toLowerCase().replaceAll(" ", "-")}`}>
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <div className="flex">
                     <div className="result_image">
-                      <img className="result_image_item" src={result.image}/>
+                      <img className="result_image_item" src={result.image} />
                     </div>
                     <div className="result_info">
                       <div className="top_result">
