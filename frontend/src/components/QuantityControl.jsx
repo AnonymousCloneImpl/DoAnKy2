@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
-export default function QuantityControl({ initialQuantity, maxQuantity, onChange, setQuantity, quantity }) {
+export default function QuantityControl({ maxQuantity, onChange, setQuantity, quantity }) {
 
   const adjustQuantity = (amount) => {
     setQuantity((prevQuantity) => {

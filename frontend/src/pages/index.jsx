@@ -77,7 +77,7 @@ export default function Home() {
                 height: '80%'
               }}
               loading={"lazy"}
-            />
+              alt=""/>
           </Link>
           <Link href="" className="h-full ml-1 mr-1">
             <img
@@ -87,7 +87,7 @@ export default function Home() {
                 height: '80%'
               }}
               loading={"lazy"}
-            />
+              alt={""}/>
           </Link>
           <Link href="" className="h-full ml-1 mr-1">
             <img
@@ -97,7 +97,7 @@ export default function Home() {
                 height: '80%'
               }}
               loading={"lazy"}
-            />
+              alt={""}/>
           </Link>
         </div>
       </div>
@@ -154,7 +154,7 @@ export default function Home() {
             className="rounded-2xl h-3/4 max-md:h-40"
             src={'https://file.hstatic.net/200000722513/file/1580x510_man_hinh_thang_03_435810e7223043ec866bd0ed8dc1cf09.png'}
             loading={"lazy"}
-          />
+            alt={""}/>
         </Link>
         <div className="ml-8 h-3/4 w-4/12 max-md:ml-0 max-md:mt-3 max-lg:w-8/12 max-lg:ml-0">
           <Link href={'/'} className="h-full">
@@ -162,14 +162,14 @@ export default function Home() {
               className="rounded-2xl h-1/2 max-lg:w-full"
               src={'https://file.hstatic.net/200000722513/file/banner_790x250_tai_nghe_6f6dcb17d3a54fcc88b3de96762d2d41.jpg'}
               loading={"lazy"}
-            />
+              alt={""}/>
           </Link>
           <Link href={'/'}>
             <img
               className="rounded-2xl mt-1 h-1/2"
               src={'https://file.hstatic.net/200000722513/file/bot_promotion_banner_small_2_2ad55c2345c64fbfb87dab4957b33914.png'}
               loading={"lazy"}
-            />
+              alt={""}/>
           </Link>
         </div>
       </div>

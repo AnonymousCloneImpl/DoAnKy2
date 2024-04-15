@@ -4,7 +4,7 @@ import { faCircleXmark, faMinus, faPlus, faTrashCan } from '@fortawesome/free-so
 import Link from "next/link";
 import { useRouter } from "next/router";
 import OrderForm from '@/components/OrderForm';
-import { validEmail, validName, validPhoneNumber } from '@/components/Validate';
+import { validEmail, validName, validPhoneNumber } from '@/utils/Validate';
 
 import FormatPrice from "@/components/FormatPrice";
 import postMethodFetcher from "@/utils/postMethod";
@@ -320,7 +320,7 @@ const CartPage = () => {
                       type={"discount"} />
                   </td>
 
-                  <td className="text-center text-red-600 font-semibold text-base w-2/12 text-center">
+                  <td className="text-center text-red-600 font-semibold text-base w-2/12">
                     <FormatPrice
                       price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity}
                       type={"discount"} />
@@ -368,7 +368,7 @@ const CartPage = () => {
               <span className="close-form-btn" onClick={closeForm}>
                 <FontAwesomeIcon icon={faCircleXmark} />
               </span>
-              <img className='order-logo' src='/favico.png'></img>
+              <img className='order-logo' src='/favico.png' alt=""></img>
               <h1>Order Form</h1>
               <OrderForm
                 provinces={provinces}

@@ -53,10 +53,10 @@ const ProductsPageByType = ({ type }) => {
 
   const { data, loading, error } = useSWR([ProductPageCategoryDataApi, body],
     () => fetchAPIPost(ProductPageCategoryDataApi, body), {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false
-  }
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
   );
 
   useEffect(() => {
@@ -170,10 +170,11 @@ const ProductsPageByType = ({ type }) => {
   };
 
   return (
-    <div style={{
-      margin: "auto",
-      width: '95%'
-    }}
+    <div 
+      style={{
+        margin: "auto",
+        width: '95%'
+      }}
       className="h-full"
     >
       <Head>
@@ -220,6 +221,7 @@ const ProductsPageByType = ({ type }) => {
                       src={`${producer.image}`}
                       className="h-4/6 w-11/12"
                       loading={"lazy"}
+                      alt=""
                     />
                   </button>
                 </div>
