@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { faEnvelope, faLocationDot, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -25,8 +26,8 @@ const OrderForm = ({
 }) => {
   return (
     <form className="order-form" onSubmit={handleFormSubmit}>
-      <div className="flex">
-        <div className='w-1/2 px-20'>
+      <div className="flex max-md:flex-wrap">
+        <div className='w-1/2 px-20 max-md:w-full max-md:px-2'>
           <label htmlFor="user">Customer Info</label>
           <div className='user flex justify-between w-full'>
             <span className='input-icon'><FontAwesomeIcon icon={faUser} /></span>
@@ -41,7 +42,7 @@ const OrderForm = ({
           </div>
 
           <label htmlFor="address-selects">Address</label>
-          <div className="address-selects">
+          <div className="address-selects ma">
             <select
               className="province"
               name="province"
@@ -132,7 +133,7 @@ const OrderForm = ({
 
         <div className='order-line'></div>
 
-        <div className='w-1/2 px-10'>
+        <div className='w-1/2 px-10 max-md:w-full max-md:px-2'>
           <label htmlFor="payment-option">Payment Method</label>
           <div className="payment-option pb-5">
             <div className="payment-item w-full">

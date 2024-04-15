@@ -1198,21 +1198,15 @@
     display: none;
   }
 
-  .payment-option div {
-    position: relative;
-    height: 40px;
-    width: 50px;
-  }
-
   .payment-option img {
     height: 100%;
     margin: 0 auto;
   }
 
-
   .chat-popup {
-    right: -40%;
-    bottom: -20%;
+    right: -36%;
+    bottom: -21%;
+    width: 320px;
   }
 
   .order-form input {
@@ -1238,5 +1232,18 @@
   #myTabContent,
   #myTableContent {
     height: auto;
+  }
+
+  .order-line {
+    display: none;
+  }
+
+  .order-popup {
+    overflow-y: auto;
+  }
+
+  .close-form-btn .svg-inline--fa,
+  .close-chat-btn .svg-inline--fa {
+    height: 2em !important;
   }
 }

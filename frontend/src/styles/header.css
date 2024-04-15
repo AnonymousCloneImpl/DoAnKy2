@@ -35,8 +35,8 @@ header.sticky {
 }
 
 .logo-wrapper p {
-  margin: 5px 0 auto 10px;
-  font-size: 25px;
+  margin: 0 0 auto 10px;
+  font-size: 30px;
   font-weight: 900;
   font-style: italic;
 }
@@ -103,6 +103,10 @@ header.sticky {
 ul#main-menu li:hover a,
 ul#main-menu li:hover i {
   color: red;
+}
+
+.sub-menu-item {
+  padding-left: 10px;
 }
 
 ul#sub-menu {
@@ -427,5 +431,9 @@ ul#sub-menu li:hover {
 
   #sub-drop li a {
     font-size: 13px;
+  }
+
+  .sub-menu-item {
+    padding-left: 0;
   }
 }

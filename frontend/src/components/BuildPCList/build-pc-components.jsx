@@ -623,18 +623,6 @@ function BuildPcComponents(data) {
                     className="w-16 px-2 py-1 border rounded max-md:w-8" />
                 </td>
                 <td className="border-b border-t text-center py-3" style={{width: '5%'}}>
-                  {selectedProducts.cpu ? (
-                    <span>
-                      <FormatPrice price={cpuPrice} type={"discount"} />
-                      <FormatPrice price={cpuPrice - (cpuPrice * cpuDiscount / 100)} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={cpuPrice} type={"normal"} />
-                    </span>)}
-                  <b>
-                    Total:
-                  </b>
                   <FormatPrice price={(cpuPrice - cpuPrice * cpuDiscount / 100) * quantities.cpu}
                     type={"discount"} />
                 </td>
