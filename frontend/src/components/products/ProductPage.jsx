@@ -52,7 +52,7 @@ const ProductPage = ({productBE}) => {
   const activeBtn = async (modelName) => {
     const {model, ...query} = route.query;
     await new Promise((resolve) => {
-      route.push({pathname: route.pathname, query: {...query, model: modelName}}, undefined, {
+      route.push({pathname: route.pathname, query: {...query, model: modelName.toLowerCase().replaceAll(" ", "-")}}, undefined, {
         shallow: true,
         scroll: false
       });
@@ -374,7 +374,7 @@ const ProductPage = ({productBE}) => {
                 <div className="product-model">
                   {Object.entries(product.configurationMap).map(([key, value]) => (
                     <div key={key}>
-                      {key === route.query.model ? (
+                      {key.toLowerCase().replaceAll(" ", "-") === route.query.model ? (
                         <button
                           className="pmodel active"
                           onClick={(e) => activeBtn(key)}>{value}</button>
