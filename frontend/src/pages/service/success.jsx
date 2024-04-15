@@ -25,9 +25,9 @@ const SuccessSchedule = () => {
         <thead>
           <tr className="bg-gray-100">
             <th className="border border-gray-200 py-2 px-4">Customer Name</th>
-            <th className="border border-gray-200 py-2 px-4">Customer Email</th>
-            <th className="border border-gray-200 py-2 px-4">Customer Phone</th>
-            <th className="border border-gray-200 py-2 px-4">Device Name</th>
+            <th className="border border-gray-200 py-2 px-4">Email</th>
+            <th className="border border-gray-200 py-2 px-4">Phone</th>
+            <th className="border border-gray-200 py-2 px-4">Device</th>
             <th className="border border-gray-200 py-2 px-4">Schedule Time</th>
             <th className="border border-gray-200 py-2 px-4">Service Type</th>
             <th className="border border-gray-200 py-2 px-4">Shop Location</th>
