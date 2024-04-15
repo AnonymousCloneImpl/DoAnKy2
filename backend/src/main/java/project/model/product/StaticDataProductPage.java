@@ -1,4 +1,4 @@
-package project.dto;
+package project.model.product;
 
 
 import lombok.*;
@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StaticDataProductPage implements Serializable {
-    private List<ProductSummaryDto> productSummaryDtoList;
-    private List<ProducerDto> producerList;
-    private Object filter;
+	private List<ProductSummaryDto> productSummaryDtoList;
+	private List<ProducerDto> producerList;
+	private Object filter;
 }

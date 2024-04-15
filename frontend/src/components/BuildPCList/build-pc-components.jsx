@@ -558,20 +558,20 @@ function BuildPcComponents(data) {
           <table className="w-full table-auto">
             <thead>
               <tr>
-                <th className="px-6 py-3">Component</th>
-                <th className="px-6 py-3">Product</th>
-                <th className="px-6 py-3">Price</th>
-                <th className="px-6 py-3">Quantity</th>
-                <th className="px-6 py-3 w-2/12">Total</th>
-                <th className="px-6 py-3"></th>
+                <th className="">Component</th>
+                <th className="">Product</th>
+                <th className="">Price</th>
+                <th className="">Quantity</th>
+                <th className=" w-2/12">Total</th>
+                <th className=""></th>
               </tr>
             </thead>
 
             {/* // shitttt */}
             <tbody>
               <tr>
-                <td className="border px-6 py-3 font-bold" style={{ width: '5%' }}>CPU</td>
-                <td className="border px-6 py-3" style={{ width: '65%' }}>
+                <td className="border  font-bold" style={{ width: '5%' }}>CPU</td>
+                <td className="border " style={{ width: '65%' }}>
                   {selectedProducts.cpu ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -610,7 +610,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3" style={{ width: '5%' }}>
+                <td className="border text-center " style={{ width: '5%' }}>
                   {selectedProducts.cpu ? (
                     <span>
                       <FormatPrice price={cpuPrice} type={"discount"} />
@@ -621,7 +621,7 @@ function BuildPcComponents(data) {
                       <FormatPrice price={cpuPrice} type={"normal"} />
                     </span>)}
                 </td>
-                <td className="border text-center px-6 py-3" style={{ width: '5%' }}>
+                <td className="border text-center " style={{ width: '5%' }}>
                   <input type="number" min="1" value={quantities.cpu}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -634,7 +634,7 @@ function BuildPcComponents(data) {
                     }}
                     className="w-16 px-2 py-1 border rounded" />
                 </td>
-                <td className="border-b border-t text-center py-3">
+                <td className="border-b border-t text-center py-3" style={{width: '5%'}}>
                   <FormatPrice price={(cpuPrice - cpuPrice * cpuDiscount / 100) * quantities.cpu}
                     type={"discount"} />
                 </td>
@@ -655,8 +655,8 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border px-6 py-3 font-bold">CPU Cooler</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">CPU Cooler</td>
+                <td className="border ">
                   {selectedProducts.cpuCooler ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -693,7 +693,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.cpuCooler ? (
                     <span>
                       <FormatPrice price={cpuCoolerPrice} />
@@ -705,7 +705,7 @@ function BuildPcComponents(data) {
                     </span>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.cpuCooler}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -740,8 +740,8 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border px-6 py-3 font-bold">Motherboard</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">Motherboard</td>
+                <td className="border ">
                   {selectedProducts.motherboard ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -778,7 +778,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.motherboard ? (
                     <span>
                       <FormatPrice price={motherBoardPrice} />
@@ -791,7 +791,7 @@ function BuildPcComponents(data) {
                     </span>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.motherboard}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -826,8 +826,8 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border px-6 py-3 font-bold">Memory</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">Memory</td>
+                <td className="border ">
                   {selectedProducts.memory ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -863,7 +863,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.memory ? (
                     <span>
                       <FormatPrice price={memoryPrice} />
@@ -875,7 +875,7 @@ function BuildPcComponents(data) {
                     </span>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.memory}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -911,8 +911,8 @@ function BuildPcComponents(data) {
 
 
               <tr>
-                <td className="border px-6 py-3 font-bold">Storage</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">Storage</td>
+                <td className="border ">
                   {selectedProducts.storage ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -949,7 +949,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.storage ? (
                     <span>
                       <FormatPrice price={storagePrice} />
@@ -961,7 +961,7 @@ function BuildPcComponents(data) {
                     </span>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.storage}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -996,8 +996,8 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border px-6 py-3 font-bold">GPU</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">GPU</td>
+                <td className="border ">
                   {selectedProducts.gpu ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -1033,7 +1033,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.gpu ? (
                     <span>
                       <FormatPrice price={gpuPrice} />
@@ -1045,7 +1045,7 @@ function BuildPcComponents(data) {
                     </span>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.gpu}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1079,8 +1079,8 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border px-6 py-3 font-bold">PC Case</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">PC Case</td>
+                <td className="border ">
                   {selectedProducts.pcCase ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -1117,7 +1117,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.pcCase ? (
                     <span>
                       <FormatPrice price={pcCasePrice} />
@@ -1129,7 +1129,7 @@ function BuildPcComponents(data) {
                     </span>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.pcCase}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1165,8 +1165,8 @@ function BuildPcComponents(data) {
 
 
               <tr>
-                <td className="border px-6 py-3 font-bold">Case Fan</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">Case Fan</td>
+                <td className="border ">
                   {selectedProducts.caseFan ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -1203,7 +1203,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.caseFan ? (
                     <span>
                       <FormatPrice price={caseFanPrice} />
@@ -1215,7 +1215,7 @@ function BuildPcComponents(data) {
                     </span>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.caseFan}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1250,8 +1250,8 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border px-6 py-3 font-bold">Power Supply Unit</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">Power Supply Unit</td>
+                <td className="border ">
                   {selectedProducts.psu ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -1287,7 +1287,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.psu ? (
                     <span>
                       <FormatPrice price={psuPrice} />
@@ -1299,7 +1299,7 @@ function BuildPcComponents(data) {
                     </span>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.psu}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1333,8 +1333,8 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border px-6 py-3 font-bold">Monitor</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">Monitor</td>
+                <td className="border ">
                   {selectedProducts.monitor ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -1371,7 +1371,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.monitor ? (
                     <span>
                       <FormatPrice price={monitorPrice} />
@@ -1383,7 +1383,7 @@ function BuildPcComponents(data) {
                     </span>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.monitor}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1418,15 +1418,15 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border px-6 py-3 font-bold">Keyboard</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">Keyboard</td>
+                <td className="border ">
                   {selectedProducts.keyboard ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={kbImage}
                           alt="no image" />
-                        <p>
+                        <p className="text-center">
                           <span className="ml-1 font-bold">
                             <Link target="_blank" href={kbLink}>
                               {selectedProducts.keyboard}
@@ -1445,8 +1445,6 @@ function BuildPcComponents(data) {
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
@@ -1458,7 +1456,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.keyboard ? (
                     <span>
                       <FormatPrice price={kbPrice} />
@@ -1471,7 +1469,7 @@ function BuildPcComponents(data) {
                   )}
 
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.keyboard}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1505,8 +1503,8 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border px-6 py-3 font-bold">Mouse</td>
-                <td className="border px-6 py-3">
+                <td className="border  font-bold">Mouse</td>
+                <td className="border ">
                   {selectedProducts.mouse ? (
                     <div className="flex items-center">
                       <div className="product-info">
@@ -1542,7 +1540,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   {selectedProducts.mouse ? (
                     <span>
                       <FormatPrice price={mousePrice} />
@@ -1554,7 +1552,7 @@ function BuildPcComponents(data) {
                     </span>
                   )}
                 </td>
-                <td className="border text-center px-6 py-3">
+                <td className="border text-center ">
                   <input type="number" min="1" value={quantities.mouse}
                     onChange={(e) => {
                       if (e.target.value < 1) {

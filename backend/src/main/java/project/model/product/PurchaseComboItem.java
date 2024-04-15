@@ -1,9 +1,10 @@
-package project.dto.product;
+package project.model.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import project.dto.product.SimilarProductDto;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,6 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PurchaseComboItem implements Serializable {
-    private long id;
-    private List<SimilarProductDto> productList;
+	private long id;
+	private List<SimilarProductDto> productList;
 }

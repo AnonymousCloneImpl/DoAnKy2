@@ -115,8 +115,8 @@
 
 .active-shipping {
   border-color: rgb(255, 162, 0);
-  animation: chats 0.1s infinite;
-  transition: box-shadow 0.1s ease-in-out;
+  /* animation: chats 0.1s infinite;
+  transition: box-shadow 0.1s ease-in-out; */
 }
 
 .phone-wrapper {

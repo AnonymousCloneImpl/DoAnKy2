@@ -309,15 +309,15 @@ export default function FilterButton({ filterValue, filter, setFilter, pageType 
               <FontAwesomeIcon className="mr-3" icon={faChevronDown} />
             </button>
 
-            <div className="rounded-2xl bg-white mt-3"
+            <div className="rounded-lg bg-white mt-3 relative z-20"
               style={{
-                width: '400px',
+                width: '350px',
                 boxShadow: ' rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
               }}
             >
               <div
-                className="flex items-center justify-around overflow-hidden h-20 w-full">
-                <div className="w-5/6 ml-6">
+                className="flex items-center justify-around flex-wrap overflow-hidden w-full">
+                <div className="w-full m-6">
                   <PriceRangeSlider
                     minPrice={minPrice}
                     maxPrice={maxPrice}
@@ -325,8 +325,11 @@ export default function FilterButton({ filterValue, filter, setFilter, pageType 
                     setMaxPrice={setMaxPrice}
                   />
                 </div>
-                <button onClick={handleApplyPriceFilter}
-                  className="ml-6 mr-6 text-white bg-red-500 w-1/6 h-8 rounded-sm">Apply
+                <button
+                  onClick={handleApplyPriceFilter}
+                  className="mx-6 mb-3 text-white bg-green-600 w-3/12 h-8 rounded-lg"
+                >
+                  Apply
                 </button>
               </div>
             </div>
