@@ -77,7 +77,7 @@ export default function ProductCardComponent({productData, setCartNotifications}
                 <div className="h-6 relative">
                   <p className="bg-red-600 w-16 text-white text-center rounded-br-lg">-{p.discountPercentage}%</p>
                 </div>
-                <div className="h-52 w-full">
+                <div className="h-52 w-full max-lg:h-40">
                   <Link
                     href={`/${p.type.toLowerCase()}/${p.name.toLowerCase().replace(/\s/g, "-")}?model=${p.model.toLowerCase().replace(/\s/g, "-")}`}
                     className="flex items-center justify-center w-full h-full"
@@ -124,7 +124,7 @@ export default function ProductCardComponent({productData, setCartNotifications}
                     </div>
                     <div className="inline-grid justify-items-center">
                       <FontAwesomeIcon icon={faDisplay}/>
-                      <p>{p?.productDetails?.screenSize}</p>
+                      <p>{p?.productDetails?.screenSize.replace(" inches", "\"")}</p>
                     </div>
                   </div>
                   <div

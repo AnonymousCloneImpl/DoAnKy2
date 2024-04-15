@@ -1,4 +1,4 @@
-package project.dto.search;
+package project.model.filter;
 
 public class FilterLaptop {
 
