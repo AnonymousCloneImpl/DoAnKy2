@@ -1,10 +1,7 @@
-import React from 'react';
-
 const CustomErrorPage = ({ statusCode }) => {
   return (
     <div>
-      <p className="text-9xl text-center mt-28">Lỗi {statusCode} rồi bạn ơi...</p>
-      <img src='frontend/public/panel/404.png'></img>
+      <img src='/panel/pngwing.com.png' alt=""></img>
     </div>
   );
 };

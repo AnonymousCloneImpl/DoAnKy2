@@ -3,13 +3,22 @@ package project.controller.payment;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
+import project.dto.order.OrderDto;
 import project.dto.payment.CheckoutDto;
 import project.dto.payment.PaypalRequestDto;
+import project.entity.order.Order;
+import project.service.order.OrderService;
 import project.service.payment.PaymentService;
 import project.service.payment.PaypalService;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/api/payment/paypal")
@@ -19,6 +28,8 @@ public class PaypalController {
 	private PaymentService paymentService;
 	@Autowired
 	private PaypalService paypalService;
+	@Autowired
+	private OrderService orderService;
 
 	@PostMapping("/create")
 	public String createPayment(@RequestBody PaypalRequestDto paymentRequest) {
@@ -48,12 +59,26 @@ public class PaypalController {
 				return ResponseEntity.ok("Success");
 			}
 		}
-		return ResponseEntity.ok("Body null!");
+		return ResponseEntity.ok("Failed");
 	}
 
-	@GetMapping("/cancel")
-	public RedirectView cancelPay() {
-		return new RedirectView("http://localhost:3000/payment/cancel");
+	@PostMapping("/createQrcode")
+	public ResponseEntity<byte[]> createQrCode(@RequestBody OrderDto orderDto) {
+		Order order = orderService.createOrder(orderDto);
+		orderService.sendEmail(order);
+		String idInvoice = paypalService.createInvoice(orderDto);
+		boolean resultOfSend = paypalService.sendInvoice(idInvoice);
+		if (resultOfSend) {
+			try {
+				String urlFile = paypalService.createQrCode(idInvoice, order.getOrderCode());
+				Resource resource = new ClassPathResource(urlFile);
+				byte[] imageBytes = Files.readAllBytes(Path.of(resource.getURI()));
+				return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imageBytes);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		}
+		return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(null);
 	}
 
 }

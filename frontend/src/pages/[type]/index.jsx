@@ -1,34 +1,35 @@
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import ProductsPageByType from "@/components/products/ProductsPageByType";
 
 const productType = [
-    "laptop",
-    "cpu",
-    "cpuCooler",
-    "motherboard",
-    "memory",
-    "storage",
-    "gpu",
-    "pcCase",
-    "caseFan",
-    "psu",
-    "monitor",
-    "keyboard",
-    "mouse",
+  "laptop",
+  "cpu",
+  "cpuCooler",
+  "motherboard",
+  "memory",
+  "storage",
+  "gpu",
+  "pcCase",
+  "caseFan",
+  "psu",
+  "monitor",
+  "keyboard",
+  "mouse",
 ];
 
 const ProductsPageRoute = () => {
-    const router = useRouter();
+  const router = useRouter();
 
-    let type = router.query.type?.replace("-", " ") || null;
-
+  const type = router.query.type?.replace("-", "") || null;
+  if (type !== null) {
     for (let i = 0; i < productType.length; i++) {
-        if (productType[i] === type) {
-            return  (
-                <ProductsPageByType type={type} />
-            )
-        }
+      if (productType[i].toLowerCase() === type.toLowerCase()) {
+        return (
+          <ProductsPageByType type={type} />
+        )
+      }
     }
+  }
 
 };
 

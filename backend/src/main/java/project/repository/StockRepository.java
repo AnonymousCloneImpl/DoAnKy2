@@ -6,10 +6,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import project.entity.product.Stock;
 
-import java.util.Optional;
-
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Long> {
-	@Query("SELECT s FROM Stock s WHERE s.product.id = :id")
-	Stock findByProductId(@Param("id") long id);
+    @Query("SELECT s FROM Stock s WHERE s.product.id = :id")
+    Stock findByProductId(@Param("id") long id);
 }

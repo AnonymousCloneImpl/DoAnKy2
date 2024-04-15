@@ -10,11 +10,12 @@ import java.io.Serializable;
 @Getter
 @Setter
 public class ProductSummaryDto implements Serializable {
-	private long id;
-	private String name;
-	private Double price;
-	private byte discountPercentage;
-	private String image;
-	private String type;
-	private Object productDetails;
+    private long id;
+    private String name;
+    private String model;
+    private Double price;
+    private byte discountPercentage;
+    private String image;
+    private String type;
+    private Object productDetails;
 }

@@ -1,5 +1,6 @@
 package project.service.search;
 
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,15 +10,16 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import project.common.ProductSpecification;
 import project.common.ProductUtils;
-import project.dto.Pagination;
 import project.dto.product.ProductSummaryDto;
 import project.dto.search.RequestDto;
 import project.entity.product.Product;
+import project.model.Pagination;
 import project.service.product.ProductService;
 
 import java.util.List;
 
 @Service
+@Slf4j(topic = "SEARCH_SERVICE")
 public class SearchServiceImpl implements SearchService {
 	@Autowired
 	private ProductService productService;
@@ -42,7 +44,7 @@ public class SearchServiceImpl implements SearchService {
 			}
 			return productSummaryDtoList;
 		} else {
-			System.err.println("Error in getByName findByName : productList is null");
+			log.error("Error in getByName findByName : productList is null");
 			return null;
 		}
 	}
@@ -56,7 +58,6 @@ public class SearchServiceImpl implements SearchService {
 		try {
 			Page<Product> productList = productService.getAllBySpecification(spec, pageable);
 			Pagination pagination = productUtils.convertPageProductToPaginationObject(productList);
-//			productUtils.getConfigurationForDto(pagination.getProductSummaryDtoList());
 			pagination.setElementPerPage(productList.getNumberOfElements());
 			return pagination;
 		} catch (Exception e) {

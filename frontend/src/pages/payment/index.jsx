@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import CustomErrorPage from "@/pages/error";
+import Loading from "@/components/Loading";
 
 /*
 Tên param: vnp_Amount, Giá trị: 1000000
@@ -46,12 +47,12 @@ const Payment = () => {
           "description": "thanh toan don hang"
         }
       })
-          .then((response) => {
-            router.push(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .then((response) => {
+          router.push(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
     if (type === "VNPAY") {
       url = `${process.env.DOMAIN}/api/payment/vnpay/create?amount=${price}&orderCode=${orderCode}`;
@@ -60,19 +61,17 @@ const Payment = () => {
         url: url,
         headers: {}
       })
-          .then((response) => {
-            router.push(response.data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .then((response) => {
+          router.push(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 
   return (
-    <div>
-      <h1 className='text-3xl'>Redirecting...</h1>
-    </div>
+    <Loading />
   );
 };
 

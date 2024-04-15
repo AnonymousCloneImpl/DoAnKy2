@@ -1,12 +1,26 @@
 import { config, library } from '@fortawesome/fontawesome-svg-core';
-import { faGears, faLaptop, faKeyboard, faScrewdriverWrench, faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCartShopping,
+  faCircleUser,
+  faComputer,
+  faEnvelope,
+  faFileSignature,
+  faGears,
+  faKeyboard,
+  faLaptop,
+  faLocationDot,
+  faMagnifyingGlass,
+  faPhone,
+  faScrewdriverWrench
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import fetcher from "@/utils/fetchAPI";
 import Link from "next/link";
 import FormatPrice from "@/components/FormatPrice";
 import Image from "next/image";
 import CartIcon from "@/components/CartNumber";
+import { useRouter } from "next/router";
 
 library.add(faLocationDot, faEnvelope, faPhone, faFileSignature, faCircleUser, faCartShopping, faMagnifyingGlass);
 
@@ -16,6 +30,9 @@ export default function Header() {
   const [showResults, setShowResults] = useState(false);
   const [isHoveringOnSearchResult, setIsHoveringOnSearchResult] = useState(false);
   const [results, setResults] = useState({});
+  const [showPart, setShowPart] = useState(false);
+  const [showGear, setShowGear] = useState(false);
+  const router = useRouter();
 
   const handleSearchChange = async (e) => {
     const inputValue = e.target.value;
@@ -87,7 +104,21 @@ export default function Header() {
     } else {
       setCartNumber(0);
     }
-  }, []);
+
+    setShowPart(false);
+    setShowGear(false);
+    setShowResults(false);
+  }, [router.pathname]);
+
+  const handlePcPartClick = () => {
+    setShowPart(!showPart);
+    setShowGear(false);
+  }
+
+  const handleGearClick = () => {
+    setShowGear(!showGear);
+    setShowPart(false);
+  }
 
   return (
     <header className="header_">
@@ -134,7 +165,7 @@ export default function Header() {
           <div className="logo-wrapper">
             <Link href="/" id="logo" className="flex">
               <Image src="/favico.png" alt="logo" width="50" height="50" />
-              <p>Thế Giới Manh Động</p>
+              <p>QuantumTECH</p>
               <b>.com</b>
             </Link>
           </div>
@@ -168,90 +199,100 @@ export default function Header() {
 
       {/*SUB MENU*/}
       <nav id="sub-menu-nav">
-        <ul id="sub-menu" className="font-semibold uppercase">
+        <ul id="sub-menu" className="h-12 font-semibold uppercase max-sm:h-10">
           <li>
-            <Link href="/laptop" className="flex justify-center items-center m-1">
+            <Link href="/laptop" className="flex justify-center items-center h-full w-full">
               <FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />
-              <p className="sub-menu-item text-xl pl-2">
+              <p className="sub-menu-item text-xl">
                 Laptop
               </p>
             </Link>
           </li>
           <li>
-            <div className="">
-              <div className="flex justify-center items-center m-1">
-                <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i" />
-                <p className="sub-menu-item text-xl pl-2">Gear</p>
-              </div>
-            </div>
-            <ul id="sub-drop">
-              <li><img src="/header_img/drop-menu-mouse.webp" alt="" />
-                <Link href="/mouse">Mouse</Link>
-              </li>
-              <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt="" />
-                <Link href="/keyboard">Keyboard</Link>
-              </li>
-              <li>
-                <img id="fix" src="/header_img/drop-menu-headphone.webp" alt="" />
-                <Link href="/headphone">Headphone</Link>
-              </li>
-            </ul>
+            <button className="flex justify-center items-center w-full h-full" onClick={handleGearClick}>
+              <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i" />
+              <p className="sub-menu-item text-xl uppercase">Gear</p>
+            </button>
+            {showGear && (
+              <ul id="sub-drop">
+                <li><img src="/header_img/drop-menu-mouse.webp" alt="" />
+                  <Link href="/mouse">Mouse</Link>
+                </li>
+                <li><img id="fix" src="/header_img/drop-menu-keyboard.webp" alt="" />
+                  <Link href="/keyboard">Keyboard</Link>
+                </li>
+                <li>
+                  <img id="fix" src="/header_img/drop-menu-headphone.webp" alt="" />
+                  <Link href="/headphone">Headphone</Link>
+                </li>
+              </ul>
+            )}
           </li>
           <li>
-            <Link href="/pc-component" className="flex justify-center items-center m-1">
+            <button className="flex justify-center items-center h-full w-full" onClick={handlePcPartClick}>
               <FontAwesomeIcon icon={faGears} className="sub-menu-i" />
-              <p className="sub-menu-item text-xl pl-2">
+              <p className="sub-menu-item text-xl uppercase">
                 PC Parts
               </p>
-            </Link>
-            <ul id="sub-drop">
-              <li><img id='fix' src="/header_img/drop-menu-cpu.jfif" alt="" />
-                <Link href="/cpu">CPU</Link>
-              </li>
-              <li><img id="fix" src="/header_img/drop-menu-cpu-cooler.jfif" alt="" />
-                <Link href="/cpu-cooler">CPU COOLER</Link>
-              </li>
-              <li>
-                <img id="fix" src="/header_img/drop-menu-motherboard.jfif" alt="" />
-                <Link href="/motherboard">MOTHERBOARD</Link>
-              </li>
-              <li>
-                <img id="fix" src="/header_img/drop-menu-memory.jfif" alt="" />
-                <Link href="/memory">MEMORY</Link>
-              </li>
-              <li>
-                <img id="fix" src="/header_img/drop-menu-storage.jfif" alt="" />
-                <Link href="/storage">STORAGE</Link>
-              </li>
-              <li>
-                <img id="fix" src="/header_img/drop-menu-gpu.jfif" alt="" />
-                <Link href="/gpu">GPU</Link>
-              </li>
-              <li>
-                <img id="fix" src="/header_img/drop-menu-case.jpg" alt="" />
-                <Link href="/case">CASE</Link>
-              </li>
-              <li>
-                <img id="fix" src="/header_img/drop-menu-case-fan.jpg" alt="" />
-                <Link href="/case-fan">CASE FAN</Link>
-              </li>
-              <li>
-                <img id="fix" src="/header_img/drop-menu-power.jfif" alt="" />
-                <Link href="/power-supply-unit">POWER SUPPLY UNIT</Link>
-              </li>
-              <li>
-                <img id="fix" src="/header_img/drop-menu-monitor.webp" alt="" />
-                <Link href="/monitor">MONITOR</Link>
-              </li>
-            </ul>
+            </button>
+            {showPart === true ? (
+              <ul id="sub-drop">
+                <li><img id='fix' src="/header_img/drop-menu-cpu.jfif" alt="" />
+                  <Link href="/cpu">CPU</Link>
+                </li>
+                <li><img id="fix" src="/header_img/drop-menu-cpu-cooler.jfif" alt="" />
+                  <Link href="/cpu-cooler">CPU COOLER</Link>
+                </li>
+                <li>
+                  <img id="fix" src="/header_img/drop-menu-motherboard.jfif" alt="" />
+                  <Link href="/motherboard">MOTHERBOARD</Link>
+                </li>
+                <li>
+                  <img id="fix" src="/header_img/drop-menu-memory.jfif" alt="" />
+                  <Link href="/memory">MEMORY</Link>
+                </li>
+                <li>
+                  <img id="fix" src="/header_img/drop-menu-storage.jfif" alt="" />
+                  <Link href="/storage">STORAGE</Link>
+                </li>
+                <li>
+                  <img id="fix" src="/header_img/drop-menu-gpu.jfif" alt="" />
+                  <Link href="/gpu">GPU</Link>
+                </li>
+                <li>
+                  <img id="fix" src="/header_img/drop-menu-case.jpg" alt="" />
+                  <Link href="/case">CASE</Link>
+                </li>
+                <li>
+                  <img id="fix" src="/header_img/drop-menu-case-fan.jpg" alt="" />
+                  <Link href="/case-fan">CASE FAN</Link>
+                </li>
+                <li>
+                  <img id="fix" src="/header_img/drop-menu-power.jfif" alt="" />
+                  <Link href="/power-supply-unit">POWER SUPPLY UNIT</Link>
+                </li>
+                <li>
+                  <img id="fix" src="/header_img/drop-menu-monitor.webp" alt="" />
+                  <Link href="/monitor">MONITOR</Link>
+                </li>
+              </ul>
+            ) : (
+              <></>
+            )}
           </li>
           <li>
-            <div className="">
-              <Link href="/build-pc" className="flex justify-center items-center m-1">
-                <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
-                <p className="sub-menu-item text-xl pl-2">Build PC</p>
-              </Link>
-            </div>
+            <Link href="/service" className="flex justify-center items-center h-full w-full">
+              <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
+              <p className="sub-menu-item text-xl">
+                Service
+              </p>
+            </Link>
+          </li>
+          <li>
+            <Link href="/build-pc" className="flex justify-center items-center h-full w-full">
+              <FontAwesomeIcon icon={faComputer} className="sub-menu-i" />
+              <p className="sub-menu-item text-xl">Build PC</p>
+            </Link>
           </li>
         </ul>
       </nav>
@@ -264,7 +305,8 @@ export default function Header() {
           {
             results.length > 0 ? (
               results.map((result) => (
-                <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id} href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}`}>
+                <Link className="search_result_item" onClick={handleResultLinkClick} key={result.id}
+                  href={`/${result.type.toLowerCase()}/${result.name.toLowerCase().replace(/\s/g, "-")}?model=${result.model.toLowerCase().replaceAll(" ", "-")}`}>
                   <div className="flex">
                     <div className="result_image">
                       <img className="result_image_item" src={result.image} />
@@ -278,7 +320,9 @@ export default function Header() {
                       </div>
                       <div className="bottom_result pt-npm8">
                         <div className='mr-2'>
-                          <FormatPrice price={result.price - (result.price * result.discountPercentage / 100)} type={"discount"} />
+                          <FormatPrice
+                            price={result.price - (result.price * result.discountPercentage / 100)}
+                            type={"discount"} />
                         </div>
                         <FormatPrice price={result.price} />
                       </div>

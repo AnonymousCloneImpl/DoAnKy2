@@ -2,14 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-ul {
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-}
-
 .border-box {
   box-sizing: border-box;
 }
@@ -43,8 +35,8 @@ header.sticky {
 }
 
 .logo-wrapper p {
-  margin: 5px 0 auto 10px;
-  font-size: 25px;
+  margin: 0 0 auto 10px;
+  font-size: 30px;
   font-weight: 900;
   font-style: italic;
 }
@@ -113,6 +105,10 @@ ul#main-menu li:hover i {
   color: red;
 }
 
+.sub-menu-item {
+  padding-left: 10px;
+}
+
 ul#sub-menu {
   display: flex;
   justify-content: space-around;
@@ -170,7 +166,7 @@ ul#sub-menu li:hover {
   margin-right: 30px;
 }
 
-ul#sub-menu li:hover ul#sub-drop {
+#sub-drop {
   opacity: 1;
   visibility: visible;
   width: 100%;
@@ -426,5 +422,18 @@ ul#sub-menu li:hover ul#sub-drop {
   .search_result {
     width: 90%;
     left: 20px;
+  }
+
+  #sub-drop li {
+    height: 40px;
+    width: 220px !important;
+  }
+
+  #sub-drop li a {
+    font-size: 13px;
+  }
+
+  .sub-menu-item {
+    padding-left: 0;
   }
 }

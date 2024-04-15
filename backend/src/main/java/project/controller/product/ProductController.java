@@ -5,9 +5,9 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.dto.Pagination;
-import project.dto.StaticDataProductPage;
 import project.entity.product.Producer;
+import project.model.Pagination;
+import project.model.product.StaticDataProductPage;
 import project.service.product.ProducerService;
 import project.service.product.ProductService;
 
@@ -53,11 +53,10 @@ public class ProductController {
 	}
 
 	@GetMapping("/{type}/{name}")
-	ResponseEntity<Optional<Object>> getProductByTypeAndName(@PathVariable String type, @PathVariable String name) {
+	ResponseEntity<Optional<Object>> getProductByTypeAndName(@PathVariable String type, @PathVariable String name, @RequestParam String model) {
+		Optional<Object> product = productService.getByProductNameAndModel(type, name, model);
 
-		Optional<Object> list = productService.getByProductTypeAndByName(type, name);
-
-		return ResponseEntity.ok().body(list);
+		return ResponseEntity.ok().body(product);
 	}
 
 	@GetMapping("/staticData")

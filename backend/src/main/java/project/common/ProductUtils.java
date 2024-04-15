@@ -12,13 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import project.dto.Pagination;
 import project.dto.detail.LaptopDetailSummaryDto;
 import project.dto.product.*;
 import project.entity.product.Blog;
 import project.entity.product.Producer;
 import project.entity.product.Product;
 import project.entity.product.Stock;
+import project.model.Pagination;
+import project.model.filter.LaptopFilter;
+import project.model.filter.MouseFilter;
+import project.model.product.PurchaseComboItem;
 import project.repository.ProductRepository;
 import project.service.product.StockService;
 
@@ -97,7 +100,7 @@ public class ProductUtils {
 
 		if (type.equalsIgnoreCase("mouse")) {
 			filter = MouseFilter.builder()
-//					.connection(productDetailService.getConnectionList())
+					.connection(productRepo.findConfigurationType("connection"))
 					.build();
 		}
 		return filter;
@@ -172,27 +175,23 @@ public class ProductUtils {
 		return list;
 	}
 
-	public List<String> getConfigurationsByProductName(String name) {
-		List<String> productDetails = productRepo.getProductDetailsByName(name);
-		List<String> configurations = new ArrayList<>();
-		for (String pDetail : productDetails) {
-			try {
-				JsonNode rootNode = new ObjectMapper().readTree(pDetail);
-				String ram = getNodeValueIgnoreCase(rootNode, "ram");
-				String hardDrive = getNodeValueIgnoreCase(rootNode, "hardDrive");
-				String cpu = getNodeValueIgnoreCase(rootNode, "cpu");
-				String graphicsCard = getNodeValueIgnoreCase(rootNode, "graphicsCard");
-				StringBuilder config = new StringBuilder();
-				config.append(ram).append(" | ")
-						.append(hardDrive).append(" | ")
-						.append(cpu).append(" | ")
-						.append(graphicsCard);
-				configurations.add(config.toString());
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+	public String getConfigurationsByProductConfig(String config) {
+		StringBuilder detailTab;
+		try {
+			JsonNode rootNode = new ObjectMapper().readTree(config);
+			String ram = getNodeValueIgnoreCase(rootNode, "ram");
+			String hardDrive = getNodeValueIgnoreCase(rootNode, "storage");
+			String cpu = getNodeValueIgnoreCase(rootNode, "cpu");
+			String graphicsCard = getNodeValueIgnoreCase(rootNode, "gpu");
+			detailTab = new StringBuilder();
+			detailTab.append(ram).append(" | ")
+					.append(hardDrive).append(" | ")
+					.append(cpu).append(" | ")
+					.append(graphicsCard);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		}
-		return configurations;
+		return detailTab.toString();
 	}
 
 	private String getNodeValueIgnoreCase(JsonNode node, String key) {

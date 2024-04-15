@@ -1,8 +1,8 @@
 package project.service.search;
 
-import project.dto.Pagination;
 import project.dto.product.ProductSummaryDto;
 import project.dto.search.RequestDto;
+import project.model.Pagination;
 
 import java.util.List;
 

@@ -1,5 +1,5 @@
 package project.const_;
 
 public enum PAYMENT_STATUS {
-	SUCCESS, FAILED, CANCEL
+    SUCCESS, FAILED, CANCEL
 }
