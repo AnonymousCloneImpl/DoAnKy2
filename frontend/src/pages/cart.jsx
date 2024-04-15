@@ -256,8 +256,8 @@ const CartPage = () => {
           <h2 className="font-semibold text-2xl uppercase">{items.length} Items</h2>
         </div>
         <div className="flex shadow-md flex-col md:flex-row">
-          <table className="w-3/4 bg-white px-10 py-5">
-            <thead className="flex text-xl text-700 pb-5 font-semibold uppercase text-center">
+          <table className="w-3/4 bg-white px-10 py-5 max-lg:w-full">
+            <thead className="cart-thead flex text-xl text-700 pb-5 font-semibold uppercase text-center">
               <tr className="w-full flex">
                 <th className="w-1/12"></th>
                 <th className="w-5/12 flex flex-start">Product Details</th>
@@ -269,7 +269,7 @@ const CartPage = () => {
 
             <tbody>
               {items.map((item, index) => (
-                <tr key={index} className=" border-t flex items-center hover:bg-gray-100 px-6 py-5">
+                <tr key={index} className="flex flex-wrap border-t flex items-center hover:bg-gray-100 px-6 py-5">
                   <td className="flex items-center w-1/12">
                     <input type="checkbox"
                       className="product scale-150 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
@@ -277,7 +277,7 @@ const CartPage = () => {
                       checked={checkedItems.includes(item.id)}
                     />
                   </td>
-                  <td className="flex w-5/12">
+                  <td className="flex w-5/12 max-lg:w-11/12">
                     <div className="w-28">
                       <img className="h-20" src={item.image} alt={item.name} />
                     </div>
@@ -294,7 +294,7 @@ const CartPage = () => {
                     </div>
                   </td>
 
-                  <td className="quantity w-3/12 text-center">
+                  <td className="quantity w-3/12 text-center max-lg:w-full">
                     <div className="quantity-control px-10">
                       <button className="quantity-decrease" onClick={() => decreaseQuantity(index)}>
                         <FontAwesomeIcon icon={faMinus} /></button>
@@ -315,12 +315,14 @@ const CartPage = () => {
                     </div>
                   </td>
 
-                  <td className="block text-center font-semibold text-base w-1/12">
+                  <td className="flex text-center font-semibold text-base w-1/12 max-lg:w-6/12">
+                    <h1 className='cart-hidden-price'>Price:</h1>
                     <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100}
                       type={"discount"} />
                   </td>
 
-                  <td className="text-center text-red-600 font-semibold text-base w-2/12">
+                  <td className="flex text-center font-semibold text-base w-2/12 max-lg:w-6/12">
+                    <h1 className='cart-hidden-price'>Total:</h1>
                     <FormatPrice
                       price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity}
                       type={"discount"} />
