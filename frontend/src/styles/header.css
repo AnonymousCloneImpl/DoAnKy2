@@ -419,4 +419,13 @@ ul#sub-menu li:hover {
     width: 90%;
     left: 20px;
   }
+
+  #sub-drop li {
+    height: 40px;
+    width: 220px !important;
+  }
+
+  #sub-drop li a {
+    font-size: 13px;
+  }
 }

@@ -12,9 +12,9 @@ public class ScheduleARepairService {
     @Autowired
     ScheduleARepairRepository repo;
 
-    public ScheduleRepair createSchedule(ScheduleRepairDto obj) {
+    public void createSchedule(ScheduleRepairDto obj) {
         ScheduleRepair scheduleRepair = new ScheduleRepair();
         BeanUtils.copyProperties(obj, scheduleRepair);
-        return repo.save(scheduleRepair);
+        repo.save(scheduleRepair);
     }
 }
