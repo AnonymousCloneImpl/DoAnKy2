@@ -269,7 +269,7 @@ const CartPage = () => {
 
             <tbody>
               {items.map((item, index) => (
-                <tr key={index} className="flex flex-wrap border-t flex items-center hover:bg-gray-100 px-6 py-5">
+                <tr key={index} className="flex flex-wrap border-t items-center hover:bg-gray-100 px-6 py-5">
                   <td className="flex items-center w-1/12">
                     <input type="checkbox"
                       className="product scale-150 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
@@ -279,25 +279,25 @@ const CartPage = () => {
                   </td>
                   <td className="flex w-5/12 max-lg:w-11/12">
                     <div className="w-28">
-                      <img className="h-20" src={item.image} alt={item.name} />
+                      <img className="h-20" src={item.image} alt={item.name}/>
                     </div>
-                    <div className="flex flex-col justify-between ml-4 flex-grow">
+                    <div className="grid grid-rows-3 ml-4 max-md:grid-rows-1 max-md:grid-cols-3">
                       <Link
                         href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}?model=${item.model.toLowerCase().replace(/ /g, '-')}`}
-                        className="font-bold text-base">
+                        className="font-bold text-base row-span-2 max-md:col-span-2 max-md:w-full">
                         {item.name + " " + item.model}
                       </Link>
-                      <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm"
-                        onClick={() => removeItem(index)}>
-                        <FontAwesomeIcon icon={faTrashCan} /> REMOVE
+                      <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-md text-center"
+                         onClick={() => removeItem(index)}>
+                        <FontAwesomeIcon icon={faTrashCan}/> REMOVE
                       </b>
                     </div>
                   </td>
 
-                  <td className="quantity w-3/12 text-center max-lg:w-full">
+                  <td className="quantity w-3/12 text-center flex justify-center flex-wrap max-lg:w-full">
                     <div className="quantity-control px-10">
                       <button className="quantity-decrease" onClick={() => decreaseQuantity(index)}>
-                        <FontAwesomeIcon icon={faMinus} /></button>
+                      <FontAwesomeIcon icon={faMinus} /></button>
                       <input
                         type="number"
                         min="1"
@@ -317,15 +317,19 @@ const CartPage = () => {
 
                   <td className="flex text-center font-semibold text-base w-1/12 max-lg:w-6/12">
                     <h1 className='cart-hidden-price'>Price:</h1>
-                    <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100}
-                      type={"discount"} />
+                    <div className="w-full flex justify-center">
+                      <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100}
+                                   type={"discount"}/>
+                    </div>
                   </td>
 
                   <td className="flex text-center font-semibold text-base w-2/12 max-lg:w-6/12">
                     <h1 className='cart-hidden-price'>Total:</h1>
-                    <FormatPrice
-                      price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity}
-                      type={"discount"} />
+                    <div className="w-full flex justify-center">
+                      <FormatPrice
+                        price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity}
+                        type={"discount"} />
+                    </div>
                   </td>
                 </tr>
               ))}
