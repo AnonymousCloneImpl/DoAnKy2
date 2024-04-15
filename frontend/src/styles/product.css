@@ -879,6 +879,10 @@
   pointer-events: none;
 }
 
+.cart-hidden-price {
+  display: none;
+}
+
 @keyframes chats {
   0% {
     box-shadow: 0 0 0 0 red, 0 0 0 0 orange, 0 0 0 0 yellow, 0 0 0 0 green, 0 0 0 0 blue, 0 0 0 0 indigo, 0 0 0 0 violet;
@@ -1221,4 +1225,18 @@
     height: 40px;
   }
 
+  .cart-thead {
+    display: none;
+  }
+
+  .cart-hidden-price {
+    display: block;
+    font-size: 17px;
+    margin: 0 10px 0 25px;
+  }
+
+  #myTabContent,
+  #myTableContent {
+    height: auto;
+  }
 }

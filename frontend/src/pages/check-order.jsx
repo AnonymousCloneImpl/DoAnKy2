@@ -110,16 +110,16 @@ const CheckOrder = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-    case "WAITING":
-      return "text-orange-700";
-    case "PREPARING":
-      return "text-amber-700";
-    case "DELIVERY":
-      return "text-cyan-700";
-    case "COMPLETE":
-      return "text-green-700";
-    default:
-      return "";
+      case "WAITING":
+        return "text-orange-700";
+      case "PREPARING":
+        return "text-amber-700";
+      case "DELIVERY":
+        return "text-cyan-700";
+      case "COMPLETE":
+        return "text-green-700";
+      default:
+        return "";
     }
   }
 
@@ -133,7 +133,7 @@ const CheckOrder = () => {
             <div className="flex justify-center">
               <input
                 type="text"
-                className="block w-1/5 px-4 py-2 bg-white border rounded-md focus:outline-none"
+                className="block w-1/5 px-4 py-2 bg-white border rounded-md focus:outline-none max-lg:w-3/5"
                 placeholder="Enter your phone number..."
                 value={searchPhone}
                 onChange={(e) => setSearchPhone(e.target.value)}
@@ -152,7 +152,7 @@ const CheckOrder = () => {
             <div className="flex justify-center">
               <input
                 type="text"
-                className="block w-1/5 px-4 py-2 bg-white border rounded-md focus:outline-none"
+                className="block w-1/5 px-4 py-2 bg-white border rounded-md focus:outline-none max-lg:w-2/5"
                 placeholder="Enter OTP..."
                 value={otp}
                 onChange={handleOTPChange}
