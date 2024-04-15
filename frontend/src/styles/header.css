@@ -162,7 +162,7 @@ ul#sub-menu li:hover {
   margin-right: 30px;
 }
 
-ul#sub-menu li:hover ul#sub-drop {
+#sub-drop {
   opacity: 1;
   visibility: visible;
   width: 100%;

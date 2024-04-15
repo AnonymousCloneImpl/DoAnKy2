@@ -261,31 +261,16 @@ const ProductsPageByType = ({ type }) => {
 
       <div className="mb-96 flex justify-center mt-9">
         <div className="flex">
-          {Array.from({ length: totalPage }, (_, i) => {
-            if (i === currentPage - 1) {
-              return (
-                <button key={i}
-                  onClick={
-                    () => handlePageButtonClick(i + 1)
-                  }
-                  className="m-5 w-8 h-8 rounded-3xl font-bold text-white bg-gradient-to-br from-indigo-500 to-pink-500"
-                >
-                  {i + 1}
-                </button>
-              )
-            } else {
-              return (
-                <button key={i}
-                  onClick={
-                    () => handlePageButtonClick(i + 1)
-                  }
-                  className="m-5 w-8 h-8 rounded-lg font-bold"
-                >
-                  {i + 1}
-                </button>
-              )
-            }
-          })}
+          {Array.from({ length: 6 }, (_, i) => (
+            <button key={i}
+              onClick={
+                () => handlePageButtonClick(i + 1)
+              }
+              className={`m-5 w-8 h-8 rounded-3xl font-bold text-xl ${i === currentPage - 1 ? "text-white bg-gradient-to-br from-indigo-500 to-pink-500" : ""}`}
+            >
+              {i + 1}
+            </button>
+          ))}
         </div>
       </div>
 

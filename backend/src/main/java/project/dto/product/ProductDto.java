@@ -2,6 +2,7 @@ package project.dto.product;
 
 import lombok.*;
 import org.springframework.data.redis.core.RedisHash;
+import project.model.product.PurchaseComboItem;
 
 import java.io.Serializable;
 import java.util.List;

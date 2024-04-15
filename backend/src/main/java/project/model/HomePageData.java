@@ -1,4 +1,4 @@
-package project.dto.search;
+package project.model;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Builder
 public class HomePageData implements Serializable {
-    private String type;
-    private Integer page;
-    private Integer limit;
+	private String type;
+	private Integer page;
+	private Integer limit;
 }

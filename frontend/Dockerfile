@@ -1,5 +1,5 @@
 FROM node:21
-WORKDIR /usr/src/pages
+WORKDIR /app
 
 COPY . .
 RUN npm install
