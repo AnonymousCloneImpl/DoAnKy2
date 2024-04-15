@@ -503,10 +503,8 @@ function BuildPcComponents(data) {
     <div className="w-full">
       <div className="build-pc-wrapper flex justify-center pt-8 bg-white max-md:w-full" style={{width: '95%'}}>
         <div className="w-full">
-          <div className="banner w-full h-96 bg-cover bg-center mb-2"
+          <div className="banner w-full h-96 bg-cover bg-center mb-2 max-md:h-60 max-lg:h-48 max-sm:h-32"
             style={{ backgroundImage: "url('https://smcinternational.in/extra/images/SMC%20Banner.jpg')" }}>
-            <div className="h-16 w-64 bg-black"
-              style={{ top: "59%", left: "24%", position: "absolute" }}></div>
           </div>
           <div className="build-pc-header text-left mb-4">
             <h2 className="text-2xl font-bold">
