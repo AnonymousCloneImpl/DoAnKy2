@@ -33,4 +33,8 @@ public class Encode_Decode {
         Base64 base64 = new Base64();
         return base64.decode(str);
     }
+
+    public static String encode64(String str) {
+        return java.util.Base64.getEncoder().encodeToString(str.getBytes());
+    }
 }

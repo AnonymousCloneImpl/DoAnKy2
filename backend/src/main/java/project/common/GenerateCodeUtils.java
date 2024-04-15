@@ -20,6 +20,6 @@ public class GenerateCodeUtils {
     public static String getRandomId() {
         long nanoTime = System.nanoTime() % 10000;
         long randomPart = ThreadLocalRandom.current().nextLong(10000);
-        return String.valueOf(nanoTime) + String.valueOf(randomPart);
+        return String.valueOf(nanoTime) + randomPart;
     }
 }

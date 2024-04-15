@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 public class MomoConfig {
     @Value("${momo.partnerCode}")
     private String partnerCode;
-    @Value("${momo.returnUrl}")
-    private String returnUrl;
+    @Value("${momo.redirectUrl}")
+    private String redirectUrl;
     @Value("${momo.paymentUrl}")
     private String paymentUrl;
     @Value("${momo.ipnUrl}")

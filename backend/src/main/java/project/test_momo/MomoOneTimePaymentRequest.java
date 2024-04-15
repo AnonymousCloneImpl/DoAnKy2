@@ -9,7 +9,8 @@ import project.common.Encode_Decode;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Slf4j
+@Slf4j(topic = "MOMO_REQUEST")
+@ToString
 public class MomoOneTimePaymentRequest {
     private String partnerCode;
     private String requestType;
@@ -37,9 +38,9 @@ public class MomoOneTimePaymentRequest {
                 .append("&requestId=").append(this.requestId)
                 .append("&requestType=").append(this.requestType);
         String hash = rawHash.toString();
-        System.err.println(hash);
         try {
             this.signature = Encode_Decode.hmacSHA256(hash, secretKey);
+            System.err.println("signature: " + this.signature);
         } catch (Exception e) {
             log.error(e.getMessage());
         }
