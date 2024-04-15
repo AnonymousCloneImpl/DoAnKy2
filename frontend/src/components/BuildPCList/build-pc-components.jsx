@@ -560,14 +560,8 @@ function BuildPcComponents(data) {
               <tr>
                 <th className="">Component</th>
                 <th className="">Product</th>
-<<<<<<< HEAD
-                <th className="">Price</th>
-                <th className="">Quantity</th>
-                <th className=" w-2/12">Total</th>
-=======
                 <th className="">Quantity</th>
                 <th className="">Price</th>
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                 <th className=""></th>
               </tr>
             </thead>
@@ -576,11 +570,7 @@ function BuildPcComponents(data) {
             <tbody>
               <tr>
                 <td className="border  font-bold" style={{ width: '5%' }}>CPU</td>
-<<<<<<< HEAD
-                <td className="border " style={{ width: '65%' }}>
-=======
                 <td className="border w-8/12 max-md:w-10 ">
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   {selectedProducts.cpu ? (
                     <div className="flex items-center">
                       <div className="product-info max-lg:flex max-lg:flex-wrap max-lg:justify-center">
@@ -620,20 +610,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center " style={{ width: '5%' }}>
-<<<<<<< HEAD
-                  {selectedProducts.cpu ? (
-                    <span>
-                      <FormatPrice price={cpuPrice} type={"discount"} />
-                      <FormatPrice price={cpuPrice - (cpuPrice * cpuDiscount / 100)} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={cpuPrice} type={"normal"} />
-                    </span>)}
-                </td>
-                <td className="border text-center " style={{ width: '5%' }}>
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.cpu}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -647,21 +623,6 @@ function BuildPcComponents(data) {
                     className="w-16 px-2 py-1 border rounded max-md:w-8" />
                 </td>
                 <td className="border-b border-t text-center py-3" style={{width: '5%'}}>
-<<<<<<< HEAD
-=======
-                  {selectedProducts.cpu ? (
-                    <span>
-                      <FormatPrice price={cpuPrice} type={"discount"} />
-                      <FormatPrice price={cpuPrice - (cpuPrice * cpuDiscount / 100)} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={cpuPrice} type={"normal"} />
-                    </span>)}
-                  <b>
-                    Total:
-                  </b>
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <FormatPrice price={(cpuPrice - cpuPrice * cpuDiscount / 100) * quantities.cpu}
                     type={"discount"} />
                 </td>
@@ -722,21 +683,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center ">
-<<<<<<< HEAD
-                  {selectedProducts.cpuCooler ? (
-                    <span>
-                      <FormatPrice price={cpuCoolerPrice} />
-                      <FormatPrice price={cpuCoolerPrice - cpuCoolerPrice * cpuCoolerDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={cpuCoolerPrice} type={"normal"} />
-                    </span>
-                  )}
-                </td>
-                <td className="border text-center ">
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.cpuCooler}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -824,22 +770,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center ">
-<<<<<<< HEAD
-                  {selectedProducts.motherboard ? (
-                    <span>
-                      <FormatPrice price={motherBoardPrice} />
-                      <FormatPrice price={motherBoardPrice - motherBoardPrice * motherBoardDiscount / 100}
-                        type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={motherBoardPrice} type={"normal"} />
-                    </span>
-                  )}
-                </td>
-                <td className="border text-center ">
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.motherboard}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -927,21 +857,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center ">
-<<<<<<< HEAD
-                  {selectedProducts.memory ? (
-                    <span>
-                      <FormatPrice price={memoryPrice} />
-                      <FormatPrice price={memoryPrice - memoryPrice * memoryDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={memoryPrice} type={"normal"} />
-                    </span>
-                  )}
-                </td>
-                <td className="border text-center ">
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.memory}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1030,21 +945,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center ">
-<<<<<<< HEAD
-                  {selectedProducts.storage ? (
-                    <span>
-                      <FormatPrice price={storagePrice} />
-                      <FormatPrice price={storagePrice - storagePrice * storageDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={storagePrice} type={"normal"} />
-                    </span>
-                  )}
-                </td>
-                <td className="border text-center ">
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.storage}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1131,21 +1031,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center ">
-<<<<<<< HEAD
-                  {selectedProducts.gpu ? (
-                    <span>
-                      <FormatPrice price={gpuPrice} />
-                      <FormatPrice price={gpuPrice - gpuPrice * gpuDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={gpuPrice} type={"normal"} />
-                    </span>
-                  )}
-                </td>
-                <td className="border text-center ">
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.gpu}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1232,21 +1117,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center ">
-<<<<<<< HEAD
-                  {selectedProducts.pcCase ? (
-                    <span>
-                      <FormatPrice price={pcCasePrice} />
-                      <FormatPrice price={pcCasePrice - pcCasePrice * pcCaseDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={pcCasePrice} type={"normal"} />
-                    </span>
-                  )}
-                </td>
-                <td className="border text-center ">
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.pcCase}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1335,21 +1205,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center ">
-<<<<<<< HEAD
-                  {selectedProducts.caseFan ? (
-                    <span>
-                      <FormatPrice price={caseFanPrice} />
-                      <FormatPrice price={caseFanPrice - caseFanPrice * caseFanDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={caseFanPrice} type={"normal"} />
-                    </span>
-                  )}
-                </td>
-                <td className="border text-center ">
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.caseFan}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1436,21 +1291,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center ">
-<<<<<<< HEAD
-                  {selectedProducts.psu ? (
-                    <span>
-                      <FormatPrice price={psuPrice} />
-                      <FormatPrice price={psuPrice - psuPrice * psuDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={psuPrice} type={"normal"} />
-                    </span>
-                  )}
-                </td>
-                <td className="border text-center ">
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.psu}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1537,21 +1377,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center ">
-<<<<<<< HEAD
-                  {selectedProducts.monitor ? (
-                    <span>
-                      <FormatPrice price={monitorPrice} />
-                      <FormatPrice price={monitorPrice - monitorPrice * monitorDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={monitorPrice} type={"normal"} />
-                    </span>
-                  )}
-                </td>
-                <td className="border text-center ">
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.monitor}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1601,22 +1426,13 @@ function BuildPcComponents(data) {
 
               <tr>
                 <td className="border  font-bold">Keyboard</td>
-<<<<<<< HEAD
-                <td className="border ">
-=======
                 <td className="border">
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   {selectedProducts.keyboard ? (
                     <div className="flex items-center">
                       <div className="product-info max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
-<<<<<<< HEAD
-                          src={kbImage}
-                          alt="no image" />
-=======
                              src={kbImage}
                              alt="no image"/>
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                         <p className="text-center">
                           <span className="ml-1 font-bold">
                             <Link target="_blank" href={kbLink}>
@@ -1647,24 +1463,7 @@ function BuildPcComponents(data) {
                     </button>
                   )}
                 </td>
-<<<<<<< HEAD
-                <td className="border text-center ">
-                  {selectedProducts.keyboard ? (
-                    <span>
-                      <FormatPrice price={kbPrice} />
-                      <FormatPrice price={kbPrice - kbPrice * kbDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={kbPrice} type={"normal"} />
-                    </span>
-                  )}
-
-                </td>
-                <td className="border text-center ">
-=======
                 <td className="border text-center">
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.keyboard}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1750,21 +1549,6 @@ function BuildPcComponents(data) {
                   )}
                 </td>
                 <td className="border text-center ">
-<<<<<<< HEAD
-                  {selectedProducts.mouse ? (
-                    <span>
-                      <FormatPrice price={mousePrice} />
-                      <FormatPrice price={mousePrice - mousePrice * mouseDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={mousePrice} type={"normal"} />
-                    </span>
-                  )}
-                </td>
-                <td className="border text-center ">
-=======
->>>>>>> e7881682b0f57f15836be387ad666da4c9da13ef
                   <input type="number" min="1" value={quantities.mouse}
                     onChange={(e) => {
                       if (e.target.value < 1) {
