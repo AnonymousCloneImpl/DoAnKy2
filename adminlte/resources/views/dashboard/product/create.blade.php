@@ -15,24 +15,6 @@
                     @csrf
                     <div class="form-row">
                         <div class="col-4 form-group mb-3">
-                            <label for="model">Model</label>
-                            <input id="model"
-                                   name="model"
-                                   type="text"
-                                   placeholder="Insert Product Model here"
-                                   value=""
-                                   class="form-control validate"
-                                   required
-                                   oninput="validateInput('model')"/>
-                            <div id="model-error" class="text-danger"></div>
-                            <div id="model-server-error" class="text-danger-server">
-                                @error('model')
-                                {{ $message }}
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="col form-group mb-3">
                             <label
                                 for="name"
                             >Product Name
@@ -52,6 +34,25 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="col form-group mb-3">
+                            <label for="model">Model</label>
+                            <input id="model"
+                                   name="model"
+                                   type="text"
+                                   placeholder="Insert Product Model here"
+                                   value=""
+                                   class="form-control validate"
+                                   required
+                                   oninput="validateInput('model')"/>
+                            <div id="model-error" class="text-danger"></div>
+                            <div id="model-server-error" class="text-danger-server">
+                                @error('model')
+                                {{ $message }}
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="col-1 form-group mb-3">
                             <label
                                 for="discount_percentage"
