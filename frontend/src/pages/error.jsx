@@ -1,7 +1,7 @@
 const CustomErrorPage = ({ statusCode }) => {
   return (
     <div>
-      <img src='/panel/pngwing.com.png' alt=""></img>
+      <img className="mx-auto" src='/panel/pngwing.com.png' alt=""></img>
     </div>
   );
 };
