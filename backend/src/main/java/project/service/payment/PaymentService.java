@@ -55,4 +55,8 @@ public class PaymentService {
 		paymentRepo.updatePaymentCodeById(paymentCode, status, detail, LocalDateTime.now());
 	}
 
+	public void updatePaymentQrCode(String paymentCode, String status, String qrCode) {
+		paymentRepo.updatePaymentLink(paymentCode, status, qrCode, LocalDateTime.now());
+	}
+
 }

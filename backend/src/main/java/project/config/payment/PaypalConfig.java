@@ -1,23 +1,15 @@
 package project.config.payment;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.IOException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -35,40 +27,15 @@ public class PaypalConfig {
 	@Value("${paypal.url.invoice}")
 	public String invoiceUrl;
 	public String accessToken;
-	private long expirationTime;
 
 	public String getAccessToken() {
-		if (accessToken == null || System.currentTimeMillis() >= expirationTime - 10000) {
-			refreshToken();
-		}
-		return accessToken;
+		String authString = clientId + ":" + clientSecret;
+		return Base64.getEncoder().encodeToString(authString.getBytes());
 	}
 
 	public String getRequestId() {
 		UUID uuid = UUID.randomUUID();
 		return uuid.toString();
-	}
-
-	private void refreshToken() {
-		HttpClient httpClient = HttpClients.createDefault();
-		HttpPost httpPost = new HttpPost("https://api.paypal.com/v1/oauth2/token");
-
-		JsonObject requestBody = new JsonObject();
-		requestBody.addProperty("grant_type", "client_credentials");
-
-		try {
-			StringEntity entity = new StringEntity(new Gson().toJson(requestBody));
-			httpPost.setEntity(entity);
-			httpPost.setHeader("Content-Type", "application/json");
-
-			HttpResponse response = httpClient.execute(httpPost);
-			JsonObject jsonResponse = new Gson().fromJson(EntityUtils.toString(response.getEntity()), JsonObject.class);
-
-			accessToken = jsonResponse.get("access_token").getAsString();
-			expirationTime = System.currentTimeMillis() + jsonResponse.get("expires_in").getAsLong() * 1000;
-		} catch (IOException e) {
-			log.error("Refresh token failed!");
-		}
 	}
 
 	@Bean

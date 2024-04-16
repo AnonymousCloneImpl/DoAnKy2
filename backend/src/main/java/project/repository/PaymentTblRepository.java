@@ -28,6 +28,11 @@ public interface PaymentTblRepository extends JpaRepository<PaymentTbl, Long> {
 	@Query("UPDATE PaymentTbl p SET p.state = :state, p.detail = :detail, p.updatedAt = :updatedAt WHERE p.paymentCode = :paymentCode")
 	void updatePaymentCodeById(@Param("paymentCode") String paymentCode, @Param("state") String state, @Param("detail") String detail, @Param("updatedAt") LocalDateTime updatedAt);
 
+	@Modifying
+	@Transactional
+	@Query("UPDATE PaymentTbl p SET p.paymentLink = :paymentLink, p.state = :status, p.updatedAt = :updatedAt WHERE p.paymentCode = :paymentCode")
+	void updatePaymentLink(@Param("paymentCode") String paymentCode, @Param("status") String status, @Param("paymentLink") String paymentLink, @Param("updatedAt") LocalDateTime updatedAt);
+
 	PaymentTbl findByOrderCode(@Param("orderCode") String orderCode);
 
 	@Query("Select p.paymentMethod from PaymentTbl p " +
