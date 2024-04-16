@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
-export default function qrCode() {
+import Image from "next/image";
+
+export default function QrCode({image}) {
   return (
     <div>
       <div className="w-9/12 mx-auto my-10 max-lg:w-11/12">
@@ -31,8 +33,8 @@ export default function qrCode() {
           <div className="h-96 w-1/3 mx-auto max-lg:w-full">
             <img
               className="h-96"
-              src="https://qrcode-gen.com/images/qrcode-default.png">
-            </img>
+              src={image}
+            />
           </div>
           <div className="w-2/3 max-lg:w-full">
             <h1 className="mt-20 mb-5 text-lg font-semibold">Follow the instructions below to pay :</h1>
@@ -41,7 +43,7 @@ export default function qrCode() {
               <li className="flex font-semibold">Step 2: <p className="ml-2 font-normal">hello</p></li>
               <li className="flex font-semibold">Step 3: <p className="ml-2 font-normal">hello</p></li>
             </ul>
-            <button className="my-5 px-8 py-3 rounded-md bg-blue-500 hover:bg-blue-800 text-white">Paid</button>
+            <button className="my-5 px-8 py-3 rounded-md bg-blue-500 hover:bg-blue-800 text-white">I have sent money</button>
           </div>
         </div>
       </div>

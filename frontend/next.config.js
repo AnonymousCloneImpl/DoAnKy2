@@ -12,7 +12,9 @@ const nextConfig = {
       { hostname: 'asus.com' },
       { hostname: 'img.freepik.com' },
       { hostname: 'dlcdnwebimgs.asus.com' },
-      { hostname: 'product.hstatic.net' }
+      { hostname: 'product.hstatic.net' },
+      { hostname: '192.168.31.69'},
+      { hostname: 'localhost'}
     ]
   },
   experimental: {
