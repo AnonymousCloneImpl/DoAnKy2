@@ -16,14 +16,14 @@
                     @method('PUT')
                     <div class="form-row">
                         <div class="col-4 form-group mb-3">
-                            <label for="model">Model</label>
-                            <input id="model" name="model" type="text" value="{{$editItem->model}}"
-                                   class="form-control validate">
-                        </div>
-                        <div class="col form-group mb-3">
                             <label for="product_name">Product Name</label>
                             <input id="product_name" name="name" type="text" value="{{$editItem->product_name}}"
                                    class="form-control validate" required maxlength="255"/>
+                        </div>
+                        <div class="col form-group mb-3">
+                            <label for="model">Model</label>
+                            <input id="model" name="model" type="text" value="{{$editItem->model}}"
+                                   class="form-control validate">
                         </div>
                         <div class="col-1 form-group mb-3">
                             <label for="discount">Discount %</label>
