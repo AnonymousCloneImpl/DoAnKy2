@@ -161,7 +161,7 @@
                     <div id="ProductDetails" class="form-group mb-3">
                         <div id="dynamic-fields"></div>
 
-                        <input type="text" id="product_detail" name="product_detail"
+                        <input type="hidden" id="product_detail" name="product_detail"
                                placeholder="productDetailJson" value="">
                     </div>
 
