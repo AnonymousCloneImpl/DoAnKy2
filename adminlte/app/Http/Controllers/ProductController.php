@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class ProductController extends Controller
 {
@@ -41,7 +42,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('dashboard.product.create');
+        $producerList = DB::table('producer AS pr')
+            ->select('pr.id AS producer_id', 'pr.name AS producer_name')
+            ->get();
+
+        return view('dashboard.product.create', compact('producerList'));
     }
 
     /**
@@ -49,7 +54,61 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'model' => 'sometimes|required|string|max:255',
+            'name' => 'required|string|max:255|unique:product,name',
+            'discount_percentage' => 'sometimes|required|numeric|min:0|max:100',
+            'price' => 'sometimes|required|numeric|min:0|max:1000000000000',
+            'type' => 'sometimes|required|string|max:255',
+            'quantity' => 'sometimes|required|integer|min:0|max:1000000000000',
+            'sold' => 'sometimes|required|integer|min:0|max:1000000000000',
+            'image' => 'sometimes|required|string',
+            'content' => 'sometimes|required|string',
+            'header' => 'sometimes|required|string',
+            'producer' => 'sometimes|required|integer|min:0',
+            'product_detail' => 'sometimes|nullable|json',
+        ]);
 
+        try {
+
+            DB::beginTransaction();
+            $insertedId = DB::table('product')->insertGetId([
+                'name' => $request->input('name'),
+                'model' => $request->input('model'),
+                'price' => $request->input('price'),
+                'discount_percentage' => $request->input('discount_percentage'),
+                'image' => $request->input('image'),
+                'status' => 1,
+                'type' => $request->input('type'),
+                'producer_id' => $request->input('producer_id'),
+                'detail' => $request->input('product_detail')
+            ]);
+
+            DB::table('blog')->insert([
+                'header' => $request->input('blog_header'),
+                'content' => $request->input('blog_content'),
+                'image' => $request->input('blog_image'),
+                'product_id' => $insertedId,
+            ]);
+
+            DB::table('stock')->insert([
+                'inserted_time' => now(),
+                'quantity' => $request->input('quantity'),
+                'sold' => 0,
+                'updated_time' => now(),
+                'product_id' => $insertedId,
+            ]);
+
+            DB::commit();
+            toastr()->success('Product created successfully', 'Success');
+            return redirect()->route('productList');
+
+        } catch (ValidationException  $e) {
+            // Roll back if something went wrong
+            DB::rollBack();
+            toastr()->error('Product was not created', 'Oops! Something went wrong!');
+            return redirect()->back();
+        }
     }
 
     /**
@@ -118,11 +177,12 @@ class ProductController extends Controller
             'inserted_time' => 'sometimes|required|date',
             'updated_time' => 'sometimes|required|date',
             'status' => 'sometimes|required|integer|in:0,1',
-            'image' => 'sometimes|string',
-            'content' => 'sometimes|string',
-            'header' => 'sometimes|string',
-            'producer' => 'sometimes|required|integer|min:0|max:255',
+            'image' => 'sometimes|nullable|string',
+            'content' => 'sometimes|nullable|string',
+            'header' => 'sometimes|nullable|string',
+            'producer' => 'sometimes|required|integer|min:0',
             'product_detail' => 'sometimes|nullable|json',
+
         ]);
 
         try {
@@ -167,7 +227,7 @@ class ProductController extends Controller
             // Roll back if something went wrong
             DB::rollBack();
             echo($e);
-            toastr()->error('Product is not updated', 'Oops! Something went wrong!');
+            toastr()->error('Product was not updated', 'Oops! Something went wrong!');
             return redirect()->back();
         }
     }
@@ -186,7 +246,7 @@ class ProductController extends Controller
         } catch (\Exception $e) {
             // Something went wrong, rollback the transaction
             DB::rollBack();
-            toastr()->error('Product is not removed', 'Oops! Something went wrong!');
+            toastr()->error('Product was not removed', 'Oops! Something went wrong!');
             return redirect()->back();
         }
     }
