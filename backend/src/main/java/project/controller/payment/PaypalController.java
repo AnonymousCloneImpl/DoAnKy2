@@ -3,22 +3,13 @@ package project.controller.payment;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.dto.order.OrderDto;
 import project.dto.payment.CheckoutDto;
 import project.dto.payment.PaypalRequestDto;
-import project.entity.order.Order;
 import project.service.order.OrderService;
 import project.service.payment.PaymentService;
 import project.service.payment.PaypalService;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 @RestController
 @RequestMapping("/api/payment/paypal")
@@ -62,23 +53,14 @@ public class PaypalController {
 		return ResponseEntity.ok("Failed");
 	}
 
-	@PostMapping("/createQrcode")
-	public ResponseEntity<byte[]> createQrCode(@RequestBody OrderDto orderDto) {
-		Order order = orderService.createOrder(orderDto);
-		orderService.sendEmail(order);
-		String idInvoice = paypalService.createInvoice(orderDto);
-		boolean resultOfSend = paypalService.sendInvoice(idInvoice);
+	@PostMapping("/get-qrcode")
+	public ResponseEntity<String> getQrCode(@RequestBody PaypalRequestDto paypalRequestDto) {
+		boolean resultOfSend = paypalService.sendInvoice(paypalRequestDto.getPaymentCode());
 		if (resultOfSend) {
-			try {
-				String urlFile = paypalService.createQrCode(idInvoice, order.getOrderCode());
-				Resource resource = new ClassPathResource(urlFile);
-				byte[] imageBytes = Files.readAllBytes(Path.of(resource.getURI()));
-				return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(imageBytes);
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
+			String image = paypalService.createQrCode(paypalRequestDto.getPaymentCode());
+			return ResponseEntity.ok(image);
 		}
-		return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(null);
+		return ResponseEntity.ok(null);
 	}
 
 }

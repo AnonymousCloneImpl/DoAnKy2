@@ -24,6 +24,7 @@ import HandleCartClick from "@/components/HandleCartClick";
 import {validEmail, validName, validPhoneNumber} from '@/utils/Validate';
 import NotificationRender from "@/components/CartNotification";
 import AddSpaceBeforeUpperCase from "@/utils/textUtils";
+import QrCode from "@/components/qr-code";
 
 const ProductPage = ({productBE}) => {
   const [cartNotifications, setCartNotifications] = useState([]);
@@ -196,7 +197,8 @@ const ProductPage = ({productBE}) => {
       orderItemDtoList: [
         {
           "productId": product.id,
-          "quantity": quantity
+          "quantity": quantity,
+          "price": product.price - product.price * product.discountPercentage / 100
         },
         ...selectedCombo.map((item) => ({
           productId: item.id,
@@ -207,10 +209,10 @@ const ProductPage = ({productBE}) => {
       shippingMethod,
       paymentMethod
     };
-
+    console.log(paymentMethod)
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
     try {
-      const data = await postMethodFetcher(orderUrl, orderData)
+      const data = await postMethodFetcher(orderUrl, orderData);
       if (data !== undefined) {
         console.log(paymentMethod)
         if (paymentMethod === "COD") {
@@ -218,7 +220,11 @@ const ProductPage = ({productBE}) => {
         }
 
         if (paymentMethod === "PAYPAL") {
-          await route.push(`/payment?type=PAYPAL&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
+          await route.push(`/payment?type=PAYPAL&price=${orderData.totalPrice}&orderCode=${data.orderCode}`);
+        }
+
+        if (paymentMethod === "QRCODE_PAYPAL") {
+          await route.push(`/payment?type=QRCODE_PAYPAL&orderCode=${data.orderCode}&paymentCode=${data.paymentCode}`);
         }
 
         if (paymentMethod === "VNPAY") {

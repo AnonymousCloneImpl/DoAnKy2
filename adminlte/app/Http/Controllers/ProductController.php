@@ -55,8 +55,8 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'model' => 'sometimes|required|string|max:255',
-            'name' => 'required|string|max:255|unique:product,name',
+            'name' => 'sometimes|required|string|max:255',
+            'model' => 'required|string|max:255|unique:product,name',
             'discount_percentage' => 'sometimes|required|numeric|min:0|max:100',
             'price' => 'sometimes|required|numeric|min:0|max:1000000000000',
             'type' => 'sometimes|required|string|max:255',
@@ -167,8 +167,8 @@ class ProductController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'model' => 'sometimes|required|string|max:255',
-            'name' => 'required|string|max:255|unique:product,name,' . $id . ',id',
+            'name' => 'sometimes|required|string|max:255',
+            'model' => 'required|string|max:255|unique:product,model,' . $id . ',id',
             'discount_percentage' => 'sometimes|required|numeric|min:0|max:100',
             'price' => 'sometimes|required|numeric|min:0|max:1000000000000',
             'type' => 'sometimes|required|string|max:255',

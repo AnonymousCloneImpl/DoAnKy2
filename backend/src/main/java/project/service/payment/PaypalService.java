@@ -8,21 +8,20 @@ import com.paypal.base.rest.PayPalRESTException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.common.Encode_Decode;
 import project.common.PaymentUtils;
 import project.config.payment.PaypalConfig;
+import project.const_.PAYMENT_METHOD;
 import project.dto.order.OrderDto;
 import project.dto.payment.PaypalRequestDto;
+import project.entity.payment.PaymentTbl;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -32,6 +31,9 @@ import java.util.Scanner;
 public class PaypalService {
 	@Autowired
 	private APIContext apiContext;
+	@Autowired
+	private PaymentService paymentService;
+	@Autowired
 	private PaypalConfig paypalConfig;
 
 	public Payment createPaypalPayment(PaypalRequestDto paypalRequestDto) {
@@ -66,111 +68,6 @@ public class PaypalService {
 		}
 	}
 
-	// TẠO HÓA ĐƠN
-	public String createInvoice(OrderDto orderDto) {
-		String id;
-
-		try {
-			URL url = new URL(paypalConfig.getInvoiceUrl());
-			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
-			httpConn.setRequestMethod("POST");
-
-			httpConn.setRequestProperty("Authorization", "Bearer " + paypalConfig.getAccessToken());
-			httpConn.setRequestProperty("Content-Type", "application/json");
-			httpConn.setRequestProperty("Prefer", "return=representation");
-
-			httpConn.setDoOutput(true);
-			OutputStreamWriter writer = new OutputStreamWriter(httpConn.getOutputStream());
-			String str = PaymentUtils.paypalQrRequestBuilder(orderDto);
-
-			writer.write(str);
-			writer.flush();
-			writer.close();
-			httpConn.getOutputStream().close();
-
-			InputStream responseStream = httpConn.getResponseCode() / 100 == 2
-					? httpConn.getInputStream()
-					: httpConn.getErrorStream();
-			Scanner s = new Scanner(responseStream).useDelimiter("\\A");
-			String response = s.hasNext() ? s.next() : "";
-			System.out.println(response);
-			Gson gson = new Gson();
-
-			JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
-
-			id = jsonObject.get("id").getAsString();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-		return id;
-	}
-
-	public boolean sendInvoice(String id) {
-		try {
-			URL urlSend = new URL(paypalConfig.getInvoiceUrl() + id + "/send");
-			HttpURLConnection httpConnSend = (HttpURLConnection) urlSend.openConnection();
-			httpConnSend.setRequestMethod("POST");
-
-			httpConnSend.setRequestProperty("Authorization", "Bearer " + paypalConfig.getAccessToken());
-			httpConnSend.setRequestProperty("Content-Type", "application/json");
-			httpConnSend.setRequestProperty("PayPal-Request-Id", paypalConfig.getRequestId());
-
-			httpConnSend.setDoOutput(true);
-			OutputStreamWriter writerSend = new OutputStreamWriter(httpConnSend.getOutputStream());
-			writerSend.write("{ \"send_to_invoicer\": true }");
-			writerSend.flush();
-			writerSend.close();
-			httpConnSend.getOutputStream().close();
-
-			InputStream responseStreamSend = httpConnSend.getResponseCode() / 100 == 2
-					? httpConnSend.getInputStream()
-					: httpConnSend.getErrorStream();
-			Scanner sSend = new Scanner(responseStreamSend).useDelimiter("\\A");
-			String responseSend = sSend.hasNext() ? sSend.next() : "";
-			log.info(responseSend);
-			return true;
-		} catch (IOException e) {
-			log.error("Error while send Invoice!");
-		}
-		return false;
-	}
-
-	public String createQrCode(String id, String orderCode) {
-		try {
-			URL urlQR = new URL(paypalConfig.getInvoiceUrl() + id + "/generate-qr-code");
-			HttpURLConnection httpConnQR = (HttpURLConnection) urlQR.openConnection();
-			httpConnQR.setRequestMethod("POST");
-
-			httpConnQR.setRequestProperty("Authorization", "Bearer " + paypalConfig.getAccessToken());
-			httpConnQR.setRequestProperty("Content-Type", "application/json");
-
-			httpConnQR.setDoOutput(true);
-			OutputStreamWriter writerQr = new OutputStreamWriter(httpConnQR.getOutputStream());
-			writerQr.write("{ \"width\": 400, \"height\": 400}");
-			writerQr.flush();
-			writerQr.close();
-			httpConnQR.getOutputStream().close();
-			InputStream responseStreamQr = httpConnQR.getResponseCode() / 100 == 2
-					? httpConnQR.getInputStream()
-					: httpConnQR.getErrorStream();
-			Scanner sQr = new Scanner(responseStreamQr).useDelimiter("\\A");
-			String responseQr = sQr.hasNext() ? sQr.next() : "";
-			System.out.println(responseQr);
-
-			byte[] data = Encode_Decode.decodeBase64(responseQr.split("\n")[4]);
-			BufferedImage img = ImageIO.read(new ByteArrayInputStream(data));
-			LocalDate currentDate = LocalDate.now();
-			String formattedDate = currentDate.format(DateTimeFormatter.ofPattern("ddMMyy"));
-			String urlFile = "src/main/resources/images/" + orderCode + "_" + formattedDate + ".png";
-			File outputfile = new File(urlFile);
-			ImageIO.write(img, "png", outputfile);
-			return urlFile;
-		} catch (IOException e) {
-			log.error("Error while create QR Code!");
-		}
-		return null;
-	}
-
 	public Payment executePayment(String paymentId, String payerId) {
 		Payment payment = new Payment();
 		try {
@@ -183,5 +80,126 @@ public class PaypalService {
 			log.warn("Payment failed : " + e.getMessage());
 		}
 		return payment;
+	}
+
+	// TẠO HÓA ĐƠN
+	public String createInvoice(OrderDto orderDto, String orderCode) {
+		String id;
+		try {
+			String url = paypalConfig.getInvoiceUrl();
+			HttpURLConnection httpConn = createInvoiceHttp(url, true);
+			String str = PaymentUtils.paypalQrRequestBuilder(orderDto);
+			outputStreamWriterProcess(httpConn, str);
+			outputStreamClose(httpConn);
+			InputStream responseStream = getInputStream(httpConn);
+			Scanner s = new Scanner(responseStream).useDelimiter("\\A");
+			String response = s.hasNext() ? s.next() : "";
+			Gson gson = new Gson();
+			JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
+			id = jsonObject.get("id").getAsString();
+			PaymentTbl paymentTbl = PaymentTbl.builder()
+					.state("Create Invoice")
+					.paymentCode(id)
+					.orderCode(orderCode)
+					.paymentMethod(PAYMENT_METHOD.QRCODE_PAYPAL)
+					.detail(jsonObject.toString())
+					.build();
+			paymentService.save(paymentTbl);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return id;
+	}
+
+	public boolean sendInvoice(String id) {
+		try {
+			String urlSend = paypalConfig.getInvoiceUrl() + id + "/send";
+			HttpURLConnection httpConnSend = createInvoiceHttp(urlSend, false);
+			outputStreamWriterProcess(httpConnSend, "{ \"send_to_invoicer\": true }");
+			outputStreamClose(httpConnSend);
+			InputStream responseStream = getInputStream(httpConnSend);
+			Scanner sSend = new Scanner(responseStream).useDelimiter("\\A");
+			String responseSend = sSend.hasNext() ? sSend.next() : "";
+			log.info(responseSend);
+			paymentService.updatePayment(id, "Send Invoice");
+			return true;
+		} catch (Exception e) {
+			log.error("Error while send Invoice!");
+		}
+		return false;
+	}
+
+	public String createQrCode(String id) {
+		try {
+			String urlQR = paypalConfig.getInvoiceUrl() + id + "/generate-qr-code";
+			HttpURLConnection httpConnQR = createInvoiceHttp(urlQR, null);
+			outputStreamWriterProcess(httpConnQR, "{ \"width\": 400, \"height\": 400}");
+
+			outputStreamClose(httpConnQR);
+
+			InputStream responseStream = getInputStream(httpConnQR);
+			Scanner sQr = new Scanner(responseStream).useDelimiter("\\A");
+			String responseQr = sQr.hasNext() ? sQr.next() : "";
+			System.out.println(responseQr);
+
+			String data = responseQr.split("\n")[4];
+
+			paymentService.updatePaymentQrCode(id, "Create Qr Code", data);
+			System.out.println(data);
+			return data;
+		} catch (Exception e) {
+			log.error("Error while create QR Code!");
+		}
+		return null;
+	}
+
+	private HttpURLConnection createInvoiceHttp(String urlStr, Boolean isCreate) {
+		try {
+			URL url = new URL(urlStr);
+			HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+			httpConn.setRequestMethod("POST");
+			httpConn.setRequestProperty("Authorization", "Basic " + paypalConfig.getAccessToken());
+			httpConn.setRequestProperty("Content-Type", "application/json");
+			if (isCreate != null) {
+				if (isCreate) {
+					httpConn.setRequestProperty("Prefer", "return=representation");
+				} else {
+					httpConn.setRequestProperty("PayPal-Request-Id", paypalConfig.getRequestId());
+				}
+			}
+			httpConn.setDoOutput(true);
+			return httpConn;
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void outputStreamWriterProcess(HttpURLConnection httpURLConnection, String data) {
+		try {
+			OutputStreamWriter writerSend = new OutputStreamWriter(httpURLConnection.getOutputStream());
+			writerSend.write(data);
+			writerSend.flush();
+			writerSend.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void outputStreamClose(HttpURLConnection httpConn) {
+		try {
+			httpConn.getOutputStream().close();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private InputStream getInputStream(HttpURLConnection httpURLConnection) {
+		try {
+			return httpURLConnection.getResponseCode() / 100 == 2
+					? httpURLConnection.getInputStream()
+					: httpURLConnection.getErrorStream();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
