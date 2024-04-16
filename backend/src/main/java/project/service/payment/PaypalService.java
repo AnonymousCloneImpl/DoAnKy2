@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import project.common.Encode_Decode;
 import project.common.PaymentUtils;
 import project.config.payment.PaypalConfig;
+import project.const_.PAYMENT_METHOD;
 import project.dto.order.OrderDto;
 import project.dto.payment.PaypalRequestDto;
+import project.entity.payment.PaymentTbl;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -32,6 +34,9 @@ import java.util.Scanner;
 public class PaypalService {
 	@Autowired
 	private APIContext apiContext;
+	@Autowired
+	private PaymentService paymentService;
+	@Autowired
 	private PaypalConfig paypalConfig;
 
 	public Payment createPaypalPayment(PaypalRequestDto paypalRequestDto) {
@@ -67,7 +72,7 @@ public class PaypalService {
 	}
 
 	// TẠO HÓA ĐƠN
-	public String createInvoice(OrderDto orderDto) {
+	public String createInvoice(OrderDto orderDto, String orderCode) {
 		String id;
 
 		try {
@@ -99,6 +104,14 @@ public class PaypalService {
 			JsonObject jsonObject = gson.fromJson(response, JsonObject.class);
 
 			id = jsonObject.get("id").getAsString();
+			PaymentTbl paymentTbl = PaymentTbl.builder()
+					.state("Create Invoice")
+					.paymentCode(id)
+					.orderCode(orderCode)
+					.paymentMethod(PAYMENT_METHOD.QRCODE_PAYPAL)
+					.detail(jsonObject.getAsString())
+					.build();
+			paymentService.save(paymentTbl);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -128,6 +141,7 @@ public class PaypalService {
 			Scanner sSend = new Scanner(responseStreamSend).useDelimiter("\\A");
 			String responseSend = sSend.hasNext() ? sSend.next() : "";
 			log.info(responseSend);
+			paymentService.updatePayment(id, "Send Invoice");
 			return true;
 		} catch (IOException e) {
 			log.error("Error while send Invoice!");
@@ -164,6 +178,7 @@ public class PaypalService {
 			String urlFile = "src/main/resources/images/" + orderCode + "_" + formattedDate + ".png";
 			File outputfile = new File(urlFile);
 			ImageIO.write(img, "png", outputfile);
+			paymentService.updatePayment(id, "Create Qr Code");
 			return urlFile;
 		} catch (IOException e) {
 			log.error("Error while create QR Code!");

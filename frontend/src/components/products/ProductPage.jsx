@@ -208,29 +208,53 @@ const ProductPage = ({productBE}) => {
       paymentMethod
     };
 
-    const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
-    try {
-      const data = await postMethodFetcher(orderUrl, orderData)
+    if (paymentMethod === "PAYPAL_QRCODE") {
+      const url = `${process.env.DOMAIN}/api/payment/paypal/createQrcode`;
+      const fetchQRCode = async () => {
+        try {
+          const response = await fetch('/api/payment/paypal/create-qrcode', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: orderData
+          });
+          if (response.ok) {
+            const blob = await response.blob();
+            setImageUrl(URL.createObjectURL(blob));
+          }
+        } catch (error) {
+          console.error('Error fetching QR code:', error);
+        }
+      };
       if (data !== undefined) {
-        console.log(paymentMethod)
-        if (paymentMethod === "COD") {
-          await route.push("/order/success");
-        }
 
-        if (paymentMethod === "PAYPAL") {
-          await route.push(`/payment?type=PAYPAL&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
-        }
+      }
+    } else {
+      const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
+      try {
+        const data = await postMethodFetcher(orderUrl, orderData);
+        if (data !== undefined) {
+          console.log(paymentMethod)
+          if (paymentMethod === "COD") {
+            await route.push("/order/success");
+          }
 
-        if (paymentMethod === "VNPAY") {
-          await route.push(`/payment?type=VNPAY&price=${orderData.totalPrice}&orderCode=${data.orderCode}`);
-        }
+          if (paymentMethod === "PAYPAL") {
+            await route.push(`/payment?type=PAYPAL&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
+          }
 
-        if (paymentMethod === "MOMO") {
-          await route.push(`/payment?type=MOMO&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
-        }
-      } else alert('Failed to place order');
-    } catch (error) {
-      console.error('Error sending order request', error);
+          if (paymentMethod === "VNPAY") {
+            await route.push(`/payment?type=VNPAY&price=${orderData.totalPrice}&orderCode=${data.orderCode}`);
+          }
+
+          if (paymentMethod === "MOMO") {
+            await route.push(`/payment?type=MOMO&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
+          }
+        } else alert('Failed to place order');
+      } catch (error) {
+        console.error('Error sending order request', error);
+      }
     }
   };
 

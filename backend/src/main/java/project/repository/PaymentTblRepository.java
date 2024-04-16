@@ -13,25 +13,25 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface PaymentTblRepository extends JpaRepository<PaymentTbl, Long> {
-    @Modifying
-    @Transactional
-    @Query(nativeQuery = true, value = "UPDATE payment p SET p.payment_id  = :paymentCode, p.updated_at = :updatedAt WHERE p.id = :id")
-    void updatePaymentCodeById(@Param("id") Long id, @Param("paymentCode") String paymentCode, @Param("updatedAt") LocalDateTime updatedAt);
+	@Modifying
+	@Transactional
+	@Query(nativeQuery = true, value = "UPDATE payment p SET p.payment_id  = :paymentCode, p.updated_at = :updatedAt WHERE p.id = :id")
+	void updatePaymentCodeById(@Param("id") Long id, @Param("paymentCode") String paymentCode, @Param("updatedAt") LocalDateTime updatedAt);
 
-    @Modifying
-    @Transactional
-    @Query("UPDATE PaymentTbl p SET p.state = :state, p.updatedAt = :updatedAt WHERE p.paymentId = :paymentCode")
-    void updatePaymentCodeById(@Param("paymentCode") String paymentCode, @Param("state") String state, @Param("updatedAt") LocalDateTime updatedAt);
+	@Modifying
+	@Transactional
+	@Query("UPDATE PaymentTbl p SET p.state = :state, p.updatedAt = :updatedAt WHERE p.paymentCode = :paymentCode")
+	void updatePaymentCodeById(@Param("paymentCode") String paymentCode, @Param("state") String state, @Param("updatedAt") LocalDateTime updatedAt);
 
-    @Modifying
-    @Transactional
-    @Query("UPDATE PaymentTbl p SET p.state = :state, p.detail = :detail, p.updatedAt = :updatedAt WHERE p.paymentId = :paymentCode")
-    void updatePaymentCodeById(@Param("paymentCode") String paymentCode, @Param("state") String state, @Param("detail") String detail, @Param("updatedAt") LocalDateTime updatedAt);
+	@Modifying
+	@Transactional
+	@Query("UPDATE PaymentTbl p SET p.state = :state, p.detail = :detail, p.updatedAt = :updatedAt WHERE p.paymentCode = :paymentCode")
+	void updatePaymentCodeById(@Param("paymentCode") String paymentCode, @Param("state") String state, @Param("detail") String detail, @Param("updatedAt") LocalDateTime updatedAt);
 
-    PaymentTbl findByOrderCode(@Param("orderCode") String orderCode);
+	PaymentTbl findByOrderCode(@Param("orderCode") String orderCode);
 
-    @Query("Select p.paymentMethod from PaymentTbl p " +
-            "join Order o on p.orderCode = o.orderCode " +
-            "where o.orderCode = :code")
-    PAYMENT_METHOD getPaymentMethodByOrderCode(@Param("code") String code);
+	@Query("Select p.paymentMethod from PaymentTbl p " +
+			"join Order o on p.orderCode = o.orderCode " +
+			"where o.orderCode = :code")
+	PAYMENT_METHOD getPaymentMethodByOrderCode(@Param("code") String code);
 }

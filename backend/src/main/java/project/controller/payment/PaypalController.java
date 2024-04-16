@@ -62,11 +62,11 @@ public class PaypalController {
 		return ResponseEntity.ok("Failed");
 	}
 
-	@PostMapping("/createQrcode")
+	@PostMapping("/create-qrcode")
 	public ResponseEntity<byte[]> createQrCode(@RequestBody OrderDto orderDto) {
 		Order order = orderService.createOrder(orderDto);
 		orderService.sendEmail(order);
-		String idInvoice = paypalService.createInvoice(orderDto);
+		String idInvoice = paypalService.createInvoice(orderDto, order.getOrderCode());
 		boolean resultOfSend = paypalService.sendInvoice(idInvoice);
 		if (resultOfSend) {
 			try {

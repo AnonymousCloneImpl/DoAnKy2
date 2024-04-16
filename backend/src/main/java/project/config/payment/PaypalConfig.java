@@ -6,6 +6,7 @@ import com.paypal.base.rest.APIContext;
 import com.paypal.base.rest.OAuthTokenCredential;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -23,6 +24,7 @@ import java.util.UUID;
 
 @Configuration
 @Getter
+@Slf4j(topic = "PAYPAL-CONFIG")
 public class PaypalConfig {
 	@Value("${paypal.mode}")
 	private String mode;
@@ -65,7 +67,7 @@ public class PaypalConfig {
 			accessToken = jsonResponse.get("access_token").getAsString();
 			expirationTime = System.currentTimeMillis() + jsonResponse.get("expires_in").getAsLong() * 1000;
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("Refresh token failed!");
 		}
 	}
 
