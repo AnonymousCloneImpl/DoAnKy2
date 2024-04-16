@@ -183,7 +183,7 @@ const OrderForm = ({
                 <img
                   src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png'></img>
               </label>
-              <h2 className='text-base font-semibold mt-5 ml-5'>PayPal</h2>
+              <h2 className='text-base font-semibold mt-5 ml-5'>PayPal Qr Code</h2>
             </div>
 
             <div className="payment-item w-full">

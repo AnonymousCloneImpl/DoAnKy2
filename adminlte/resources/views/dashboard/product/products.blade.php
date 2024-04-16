@@ -37,8 +37,8 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Model</th>
                                         <th>Name</th>
+                                        <th>Model</th>
                                         <th>Discount</th>
                                         <th>Price</th>
                                         <th>Producer</th>
@@ -55,8 +55,10 @@
                                     @forelse($productList as $p)
                                         <tr>
                                             <td>{{$p->id}}</td>
+                                            <td class="editable">
+                                                {{$p->product_name}}
+                                            </td>
                                             <td>{{$p->model}}</td>
-                                            <td>{{$p->product_name}}</td>
                                             <td><strong>{{$p->discount}} %</strong></td>
                                             <td>{{$p->price}}</td>
                                             <td>{{$p->producer}}</td>
@@ -91,8 +93,8 @@
                                     <tfoot>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Model</th>
                                         <th>Name</th>
+                                        <th>Model</th>
                                         <th>Discount</th>
                                         <th>Price</th>
                                         <th>Producer</th>
@@ -120,5 +122,40 @@
                 document.getElementById('deleteForm'+id).submit();
             }
         }
+
+        const cells = document.querySelectorAll('.editable');
+        let isInputExist = false;
+        cells.forEach(cell => {
+            cell.addEventListener('click', function() {
+                if (isInputExist) {
+                    const text = this.querySelector('input').value;
+                    const p = document.createElement('p');
+                    p.value = text;
+                    this.appendChild(p);
+                    isInputExist = false;
+                } else {
+                    const text = this.textContent.trim();
+                    this.innerHTML = '';
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = text;
+                    input.style.width = '100%';
+                    this.appendChild(input);
+                    isInputExist = true;
+                    input.focus();
+
+                    input.addEventListener('blur', function() {
+                        const newText = this.value;
+                        const parentCell = this.parentElement;
+                        parentCell.removeChild(this);
+                        const p = document.createElement('p');
+                        p.setAttribute('data-field', 'customer_phone');
+                        p.innerHTML = newText;
+                        parentCell.append(p);
+                        isInputExist = false;
+                    });
+                }
+            });
+        });
     </script>
 @endsection
