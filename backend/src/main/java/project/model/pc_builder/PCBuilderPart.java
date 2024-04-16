@@ -14,6 +14,7 @@ public class PCBuilderPart {
     private String name;
     private String type;
     private double price;
+    private String model;
     private String image;
     private byte discountPercentage;
     @JsonIgnoreProperties("sold")
