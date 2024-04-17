@@ -138,7 +138,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	@Cacheable(key = "#model", value = "productDetail")
+	@Cacheable(key = "#model", value = "model")
 	public Optional<Object> getByProductNameAndModel(String type, String namePath, String model) {
 		if (type == null || namePath == null || type.isEmpty() || namePath.isEmpty()) {
 			log.error("type or name is null");
