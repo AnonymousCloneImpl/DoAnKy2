@@ -279,25 +279,28 @@ const CartPage = () => {
                   </td>
                   <td className="flex w-5/12 max-lg:w-11/12">
                     <div className="w-28">
-                      <img className="h-20" src={item.image} alt={item.name}/>
+                      <img className="h-20" src={item.image} alt={item.name} />
                     </div>
-                    <div className="grid grid-rows-3 ml-4 max-md:grid-rows-1 max-md:grid-cols-3">
+                    <div className="grid grid-rows-3 ml-4 max-md:grid-rows-1 max-md:grid-cols-3 max-md:w-full">
                       <Link
                         href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}?model=${item.model.toLowerCase().replace(/ /g, '-')}`}
                         className="font-bold text-base row-span-2 max-md:col-span-2 max-md:w-full">
                         {item.name + " " + item.model}
                       </Link>
-                      <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-md text-center"
-                         onClick={() => removeItem(index)}>
-                        <FontAwesomeIcon icon={faTrashCan}/> REMOVE
-                      </b>
+                      <div className="flex cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-md text-center">
+                        <b className="ml-2 max-md:w-full text-right"
+                          onClick={() => removeItem(index)}>
+                          <FontAwesomeIcon icon={faTrashCan} />
+                        </b>
+                        <p className="ml-2 max-md:hidden">REMOVE</p>
+                      </div>
                     </div>
                   </td>
 
                   <td className="quantity w-3/12 text-center flex justify-center flex-wrap max-lg:w-full">
                     <div className="quantity-control px-10">
                       <button className="quantity-decrease" onClick={() => decreaseQuantity(index)}>
-                      <FontAwesomeIcon icon={faMinus} /></button>
+                        <FontAwesomeIcon icon={faMinus} /></button>
                       <input
                         type="number"
                         min="1"
@@ -310,7 +313,7 @@ const CartPage = () => {
                       <button className="quantity-increase" onClick={() => increaseQuantity(index)}>
                         <FontAwesomeIcon icon={faPlus} /></button>
                     </div>
-                    <div className="text-center text-red-600 font-semibold text-sm uppercase">
+                    <div className="text-center text-red-600 font-semibold text-sm uppercase max-md:hidden">
                       {item.stock} Left in Stock
                     </div>
                   </td>
@@ -319,7 +322,7 @@ const CartPage = () => {
                     <h1 className='cart-hidden-price'>Price:</h1>
                     <div className="w-full flex justify-center">
                       <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100}
-                                   type={"discount"}/>
+                        type={"discount"} />
                     </div>
                   </td>
 

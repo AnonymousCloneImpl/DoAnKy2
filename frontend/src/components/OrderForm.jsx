@@ -27,7 +27,7 @@ const OrderForm = ({
   return (
     <form className="order-form" onSubmit={handleFormSubmit}>
       <div className="flex max-md:flex-wrap">
-        <div className='w-1/2 px-20 max-md:w-full max-md:px-2'>
+        <div className='w-2/3 px-20 max-md:w-full max-md:px-2'>
           <label htmlFor="user">Customer Info</label>
           <div className='user flex justify-between w-full'>
             <span className='input-icon'><FontAwesomeIcon icon={faUser} /></span>
@@ -129,11 +129,12 @@ const OrderForm = ({
               </input>
             </div>
           </div>
+          <button className='form-btn max-md:hidden' type="submit">Confirm Order</button>
         </div>
 
         <div className='order-line'></div>
 
-        <div className='w-1/2 px-10 max-md:w-full max-md:px-2'>
+        <div className='w-1/3 px-10 max-md:w-full max-md:px-2'>
           <label htmlFor="payment-option">Payment Method</label>
           <div className="payment-option pb-5">
             <div className="payment-item w-full">
@@ -242,7 +243,7 @@ const OrderForm = ({
         </div>
       </div>
 
-      <button className='form-btn' type="submit">Confirm Order</button>
+      <button className='form-btn hidden max-md:block' type="submit">Confirm Order</button>
 
     </form>
   );
