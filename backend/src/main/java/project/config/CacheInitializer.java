@@ -2,20 +2,29 @@ package project.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.cache.CacheManager;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.Set;
 
 @Component
 public class CacheInitializer implements CommandLineRunner {
+    private final RedisTemplate<String, Object> redisTemplate;
+
     @Autowired
-    private CacheManager cacheManager;
+    public CacheInitializer(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         clearAllCaches();
     }
 
     private void clearAllCaches() {
-        cacheManager.getCacheNames().forEach(cacheName -> cacheManager.getCache(cacheName).clear());
+        Set<String> cacheKeys = redisTemplate.keys("*");
+        if (cacheKeys != null) {
+            redisTemplate.delete(cacheKeys);
+        }
     }
 }

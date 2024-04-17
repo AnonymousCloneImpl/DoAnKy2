@@ -65,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
             if (orderItem != null) {
                 orderItems.add(orderItem);
                 updateStock(item);
-                evictSingleCacheValue("productDetail", orderItem.getProduct().getModel());
+                evictSingleCacheValue("model", orderItem.getProduct().getModel());
             }
         }
         orderItemRepo.saveAll(orderItems);

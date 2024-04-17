@@ -16,16 +16,15 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public String sendEmail(String to, String subject, String body) {
+    public void sendEmail(String to, String subject, String body) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(to);
             message.setSubject(subject);
             message.setText(body);
             mailSender.send(message);
-            return "SEND EMAIL SUCCESSFULLY!";
         } catch (Exception e) {
-            return "SEND EMAIL ERROR : " + e.getMessage();
+            e.getMessage();
         }
     }
 }
