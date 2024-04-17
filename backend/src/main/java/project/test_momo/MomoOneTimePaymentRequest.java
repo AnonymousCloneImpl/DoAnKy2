@@ -40,7 +40,6 @@ public class MomoOneTimePaymentRequest {
         String hash = rawHash.toString();
         try {
             this.signature = Encode_Decode.hmacSHA256(hash, secretKey);
-            System.err.println("signature: " + this.signature);
         } catch (Exception e) {
             log.error(e.getMessage());
         }

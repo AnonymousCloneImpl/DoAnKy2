@@ -29,7 +29,7 @@ public class MomoOneTimePaymentController {
         MomoOneTimePaymentRequest paymentRequest = MomoOneTimePaymentRequest.builder()
                 .partnerCode(momoConfig.getPartnerCode())
                 .requestId(GenerateCodeUtils.getRandomId())
-                .amount(Math.round(orderData.getTotalPrice() * 24740.0 * 100))
+                .amount(Math.round(orderData.getTotalPrice() * 24740 * 100))
                 .orderId(orderData.getOrderCode())
                 .orderInfo("test")
                 .redirectUrl(momoConfig.getRedirectUrl())
