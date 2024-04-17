@@ -182,7 +182,7 @@ const OrderForm = ({
               />
               <label htmlFor="QRCODE_PAYPAL">
                 <img
-                  src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png'></img>
+                  src='https://www.paypalobjects.com/marketing/web/us/en/qr-code/QRC-landing.jpg'></img>
               </label>
               <h2 className='text-base font-semibold mt-5 ml-5'>PayPal Qr Code</h2>
             </div>

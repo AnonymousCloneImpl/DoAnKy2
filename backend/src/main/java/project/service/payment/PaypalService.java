@@ -23,10 +23,10 @@ public class PaypalService {
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
-	private PaypalUtils paymentUtils;
+	private PaypalUtils paypalUtils;
 
 	public Payment createPaypalPayment(PaypalRequestDto paypalRequestDto) {
-		Payment payment = paymentUtils.buildPayment(paypalRequestDto);
+		Payment payment = paypalUtils.buildPayment(paypalRequestDto);
 		try {
 			return payment.create(apiContext);
 		} catch (PayPalRESTException e) {
@@ -52,7 +52,7 @@ public class PaypalService {
 	public String createInvoice(OrderDto orderDto, String orderCode) {
 		String id = null;
 		try {
-			Invoice invoice = paymentUtils.buildInvoice(orderDto);
+			Invoice invoice = paypalUtils.buildInvoice(orderDto);
 			id = invoice.getId();
 			if (id != null) {
 				invoice.send(apiContext);
@@ -75,7 +75,6 @@ public class PaypalService {
 		try {
 			Image invoice = Invoice.qrCode(apiContext, id, null);
 			String data = invoice.getImage();
-			System.out.println(data);
 			paymentService.updatePaymentQrCode(id, "Create Qr Code", data);
 			return data;
 		} catch (Exception e) {

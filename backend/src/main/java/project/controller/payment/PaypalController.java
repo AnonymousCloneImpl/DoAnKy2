@@ -55,12 +55,8 @@ public class PaypalController {
 
 	@PostMapping("/get-qrcode")
 	public ResponseEntity<String> getQrCode(@RequestBody PaypalRequestDto paypalRequestDto) {
-//		boolean resultOfSend = paypalService.sendInvoice(paypalRequestDto.getPaymentCode());
-//		if (resultOfSend) {
 		String image = paypalService.createQrCode(paypalRequestDto.getPaymentCode());
 		return ResponseEntity.ok(image);
-//		}
-//		return ResponseEntity.ok(null);
 	}
 
 }

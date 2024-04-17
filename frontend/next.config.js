@@ -3,6 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
   env: {
     DOMAIN: process.env.DOMAIN,
+    PAYPAL_ID: process.env.PAYPAL_ID,
+    PAYPAL_SECRET: process.env.PAYPAL_SECRET,
   },
   images: {
     remotePatterns: [

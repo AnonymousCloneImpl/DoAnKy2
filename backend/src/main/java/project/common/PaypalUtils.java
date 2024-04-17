@@ -63,11 +63,10 @@ public class PaypalUtils {
 		invoice.setTaxCalculatedAfterDiscount(true);
 		invoice.setTotalAmount(new Currency("USD", String.valueOf(orderDto.getTotalPrice())));
 		try {
-			invoice.create(apiContext);
+			return invoice.create(apiContext);
 		} catch (PayPalRESTException e) {
 			throw new RuntimeException(e);
 		}
-		return invoice;
 	}
 
 	private PaymentTerm paymentTermBuilder() {

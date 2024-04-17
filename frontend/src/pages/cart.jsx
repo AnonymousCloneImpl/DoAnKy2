@@ -8,6 +8,7 @@ import { validEmail, validName, validPhoneNumber } from '@/utils/Validate';
 
 import FormatPrice from "@/components/FormatPrice";
 import postMethodFetcher from "@/utils/postMethod";
+import Image from "next/image";
 
 const CartPage = () => {
   const [items, setItems] = useState([]);
@@ -374,11 +375,16 @@ const CartPage = () => {
 
           <div className="order-popup" ref={formRef}>
             <div className="popup-content">
-              <span className="close-form-btn" onClick={closeForm}>
-                <FontAwesomeIcon icon={faCircleXmark} />
-              </span>
-              <img className='order-logo' src='/favico.png' alt=""></img>
-              <h1>Order Form</h1>
+                <span className="close-form-btn" onClick={closeForm}>
+                  <FontAwesomeIcon icon={faCircleXmark}/>
+                </span>
+              <Image
+                src='https://www.teksavvy.com/wp-content/themes/teksavvy/assets/svg/teksavvy-logo.svg'
+                alt=""
+                width={250}
+                height={100}
+                className="order-logo"
+              />
               <OrderForm
                 provinces={provinces}
                 districts={districts}
