@@ -51,26 +51,25 @@ public class OrderServiceImpl implements OrderService {
 	@Transactional
 	@Override
 	public Order createOrder(OrderDto orderDto) {
-		Order order = createOrderObj(orderDto);
-		BeanUtils.copyProperties(orderDto, order);
-		order.setTotalPrice(PriceUtils.roundedPrice(orderDto.getTotalPrice(), 2));
-		order.setShippingMethod(orderDto.getShippingMethod());
-		orderRepo.save(order);
-
-		List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();
-		List<OrderItem> orderItems = new ArrayList<>();
-		for (OrderItemDto item : orderItemDtoList) {
-			OrderItem orderItem = createOrderItem(order, item);
-			if (orderItem != null) {
-				orderItems.add(orderItem);
-				updateStock(item);
-				evictSingleCacheValue("model", orderItem.getProduct().getModel());
-			}
-		}
-		orderItemRepo.saveAll(orderItems);
-		paymentService.createPaymentTbl(orderDto, order);
-		return order;
-	}
+		    Order order = createOrderObj(orderDto);
+		    BeanUtils.copyProperties(orderDto, order);
+		    order.setTotalPrice(PriceUtils.roundedPrice(orderDto.getTotalPrice(), 2));
+		    order.setShippingMethod(orderDto.getShippingMethod());
+		    orderRepo.save(order);
+        List<OrderItemDto> orderItemDtoList = orderDto.getOrderItemDtoList();
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (OrderItemDto item : orderItemDtoList) {
+            OrderItem orderItem = createOrderItem(order, item);
+            if (orderItem != null) {
+                orderItems.add(orderItem);
+                updateStock(item);
+                evictSingleCacheValue("model", orderItem.getProduct().getModel());
+            }
+        }
+        orderItemRepo.saveAll(orderItems);
+        paymentService.createPaymentTbl(orderDto, order);
+        return order;
+    }
 
 	public void evictSingleCacheValue(String cacheName, String cacheKey) {
 		Objects.requireNonNull(cacheManager.getCache(cacheName)).evict(cacheKey);

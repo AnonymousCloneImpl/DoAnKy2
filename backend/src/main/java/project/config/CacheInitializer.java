@@ -9,22 +9,22 @@ import java.util.Set;
 
 @Component
 public class CacheInitializer implements CommandLineRunner {
-	private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-	@Autowired
-	public CacheInitializer(RedisTemplate<String, Object> redisTemplate) {
-		this.redisTemplate = redisTemplate;
-	}
+    @Autowired
+    public CacheInitializer(RedisTemplate<String, Object> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
-	@Override
-	public void run(String... args) {
-		clearAllCaches();
-	}
+    @Override
+    public void run(String... args) {
+        clearAllCaches();
+    }
 
-	private void clearAllCaches() {
-		Set<String> cacheKeys = redisTemplate.keys("*");
-		if (cacheKeys != null) {
-			redisTemplate.delete(cacheKeys);
-		}
-	}
+    private void clearAllCaches() {
+        Set<String> cacheKeys = redisTemplate.keys("*");
+        if (cacheKeys != null) {
+            redisTemplate.delete(cacheKeys);
+        }
+    }
 }
