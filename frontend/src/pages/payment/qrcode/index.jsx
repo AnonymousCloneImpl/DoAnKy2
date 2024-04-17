@@ -30,6 +30,8 @@ export default function QrcodePayment() {
       });
   }, [paymentCode]);
 
+
+
   if (loading) return <Loading />;
 
   return (

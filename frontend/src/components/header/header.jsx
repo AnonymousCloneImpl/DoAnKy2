@@ -164,9 +164,10 @@ export default function Header() {
         <div className="inner-header-form">
           <div className="logo-wrapper">
             <Link href="/" id="logo" className="flex">
-              <Image src="/favico.png" alt="logo" width="50" height="50" />
-              <p>QuantumTECH</p>
-              <b>.com</b>
+              {/*<Image src="/favico.png" alt="logo" width="50" height="50" />*/}
+              <Image src={'https://www.teksavvy.com/wp-content/themes/teksavvy/assets/svg/teksavvy-logo.svg'}
+                     alt="logo" width="250" height="200"
+              />
             </Link>
           </div>
           {/*       Search         */}
@@ -185,8 +186,8 @@ export default function Header() {
           <div className="main-menu-container">
             <ul className="main-menu">
               <li className="main-menu-left">
-                <Link className="main-menu-a hover:text-red-800" href="/check-order">
-                  <FontAwesomeIcon icon={faFileSignature} className="main-menu-i" />
+                <Link className="main-menu-a text-white rounded-lg hover:bg-gray-500" href="/check-order">
+                  <FontAwesomeIcon icon={faFileSignature} className="main-menu-i color-custom" />
                   Check oder</Link>
               </li>
               <li className="main-menu-right flex">
@@ -203,7 +204,7 @@ export default function Header() {
           <li>
             <Link href="/laptop" className="flex justify-center items-center h-full w-full">
               <FontAwesomeIcon icon={faLaptop} className="sub-menu-i" />
-              <p className="sub-menu-item text-xl">
+              <p className="sub-menu-item text-xl font-bold">
                 Laptop
               </p>
             </Link>
@@ -211,7 +212,7 @@ export default function Header() {
           <li>
             <button className="flex justify-center items-center w-full h-full" onClick={handleGearClick}>
               <FontAwesomeIcon icon={faKeyboard} className="sub-menu-i" />
-              <p className="sub-menu-item text-xl uppercase">Gear</p>
+              <p className="sub-menu-item text-xl uppercase font-bold">Gear</p>
             </button>
             {showGear && (
               <ul id="sub-drop">
@@ -231,7 +232,7 @@ export default function Header() {
           <li>
             <button className="flex justify-center items-center h-full w-full" onClick={handlePcPartClick}>
               <FontAwesomeIcon icon={faGears} className="sub-menu-i" />
-              <p className="sub-menu-item text-xl uppercase">
+              <p className="sub-menu-item text-xl uppercase font-bold">
                 PC Parts
               </p>
             </button>
@@ -283,7 +284,7 @@ export default function Header() {
           <li>
             <Link href="/service" className="flex justify-center items-center h-full w-full">
               <FontAwesomeIcon icon={faScrewdriverWrench} className="sub-menu-i" />
-              <p className="sub-menu-item text-xl">
+              <p className="sub-menu-item text-xl font-bold">
                 Service
               </p>
             </Link>
@@ -291,7 +292,7 @@ export default function Header() {
           <li>
             <Link href="/build-pc" className="flex justify-center items-center h-full w-full">
               <FontAwesomeIcon icon={faComputer} className="sub-menu-i" />
-              <p className="sub-menu-item text-xl">Build PC</p>
+              <p className="sub-menu-item text-xl font-bold">Build PC</p>
             </Link>
           </li>
         </ul>

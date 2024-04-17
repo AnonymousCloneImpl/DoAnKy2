@@ -198,6 +198,8 @@ const ProductPage = ({productBE}) => {
         {
           "productId": product.id,
           "quantity": quantity,
+          "productName": product.name,
+          "productModel": product.model,
           "price": product.price - product.price * product.discountPercentage / 100
         },
         ...selectedCombo.map((item) => ({

@@ -204,6 +204,11 @@
                             parentCell.append(p);
                             isInputExist = false;
                         });
+                        this.addEventListener("keydown", function(event) {
+                            if (event.keyCode === 13 || event.key === "Enter") {
+                                event.preventDefault();
+                            }
+                        });
                     }
                 });
             });

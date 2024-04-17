@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.color-custom {
+  color: #F87903 !important;
+}
+
 .border-box {
   box-sizing: border-box;
 }
@@ -11,9 +15,9 @@
   justify-content: space-between;
   align-items: center;
   padding: 5px;
-  background: black;
+  background: #444444;
   color: #fff;
-  height: 20px;
+  height: 30px;
   font-size: 12px;
 }
 
@@ -47,7 +51,7 @@ header.sticky {
 }
 
 .inner-header {
-  background: linear-gradient(to right, #FFBC06, #FFD400);
+  background: black;
   padding: 10px 0;
   width: 100%;
 }
@@ -73,7 +77,6 @@ header.sticky {
   margin-top: 5px;
   font-size: 20px;
   padding: 0 40%;
-  color: black;
   transition: all 0.25s ease-in-out;
 }
 
@@ -112,7 +115,7 @@ ul#main-menu li:hover i {
 ul#sub-menu {
   display: flex;
   justify-content: space-around;
-  background: #ffa507;
+  background: #F87903;
   cursor: pointer;
 }
 
@@ -124,7 +127,7 @@ ul#sub-menu li {
 }
 
 ul#sub-menu li:hover {
-  background: #ec9800;
+  background: #e76f00;
 }
 
 #sub-drop {
