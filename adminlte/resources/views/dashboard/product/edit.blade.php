@@ -16,14 +16,14 @@
                     @method('PUT')
                     <div class="form-row">
                         <div class="col-4 form-group mb-3">
-                            <label for="model">Model</label>
-                            <input id="model" name="model" type="text" value="{{$editItem->model}}"
-                                   class="form-control validate">
-                        </div>
-                        <div class="col form-group mb-3">
                             <label for="product_name">Product Name</label>
                             <input id="product_name" name="name" type="text" value="{{$editItem->product_name}}"
                                    class="form-control validate" required maxlength="255"/>
+                        </div>
+                        <div class="col form-group mb-3">
+                            <label for="model">Model</label>
+                            <input id="model" name="model" type="text" value="{{$editItem->model}}"
+                                   class="form-control validate">
                         </div>
                         <div class="col-1 form-group mb-3">
                             <label for="discount">Discount %</label>
@@ -46,7 +46,7 @@
 
                     <div class="form-row">
                         <div class="col form-group mb-3">
-                            <label for="price">Price</label>
+                            <label for="price">Price in $</label>
                             <input id="price" name="price" type="number" value="{{$editItem->price}}"
                                    class="form-control validate" required min="0" max="1000000000000"/>
                         </div>
@@ -87,7 +87,7 @@
                                 <div class="form-group">
                                     <label for="{{ $key }}">{{ ucfirst(preg_replace('/(?<!^)[A-Z]/', ' $0', $key)) }}</label>
                                     <input id="{{ $key }}" name="{{ $key }}" type="text" value="{{ $value }}"
-                                           class="form-control validate" readonly>
+                                           class="form-control validate" >
                                 </div>
                             @endforeach
                         @else
@@ -120,6 +120,7 @@
                     {{--                            @enderror--}}
                     {{--                        </div>--}}
                     {{--                    </div>--}}
+
                     <div class="form-row">
                         <div class="col form-group mb-3">
                             <label for="quantity">Stock</label>
@@ -146,7 +147,7 @@
 
                     <div class="form-group mb-3">
                         <label for="blog_content">Blog Content</label>
-                        <textarea id="blog_content" name="blog_content" class="form-control validate" maxlength="10000"
+                        <textarea id="blog_content" name="blog_content" class="form-control validate"
                                   rows="5">{{$editItem->blog_content}}</textarea>
                         <div class="text-danger">
                             @error('blog_content')
@@ -188,8 +189,6 @@
                     </div>
                     <div class="form-group mb-3">
                         <button type="submit" class="btn btn-primary btn-block text-uppercase" onclick="return confirm('Are you sure you want to edit this product?')">Update Now</button>
-
-                        </button>
                     </div>
                     <div class="form-group mb-3">
                         <a href="{{route('productList')}}" class="btn btn-secondary btn-block text-uppercase">Back</a>
@@ -203,8 +202,6 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-            $('#ProductDetails input').prop('readonly', false);
-
 
             $('#ProductDetails input').on('change', function () {
                 var details = {};

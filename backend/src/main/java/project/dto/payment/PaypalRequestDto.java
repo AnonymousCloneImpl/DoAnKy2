@@ -12,14 +12,15 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaypalRequestDto implements Serializable {
-    private String orderCode;
-    private double total;
-    private String currency;
-    private String method;
-    private String intent;
-    private String description;
-    private String cancelUrl = "http://localhost:8080/api/payment/paypal/cancel";
-    private String successUrl = "http://localhost:3000/payment/success/paypal";
+	private String orderCode;
+	private String paymentCode;
+	private double total;
+	private String currency;
+	private String method;
+	private String intent;
+	private String description;
+	private String cancelUrl = "http://localhost:8080/api/payment/paypal/cancel";
+	private String successUrl = "http://localhost:3000/payment/success/paypal";
 
 	/*
 		- total: Một số thực đại diện cho tổng số tiền của thanh toán. Ví dụ: 50.00.

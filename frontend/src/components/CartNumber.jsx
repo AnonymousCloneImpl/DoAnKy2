@@ -31,8 +31,8 @@ const CartIcon = () => {
 
   return (
     <>
-      <Link className="main-menu-a hover:text-red-800" href="/cart">
-        <FontAwesomeIcon icon={faCartShopping} className="main-menu-i" />
+      <Link className="main-menu-a text-white hover:bg-gray-500 rounded-lg" href="/cart">
+        <FontAwesomeIcon icon={faCartShopping} className="main-menu-i color-custom" />
         My cart
       </Link>
       <div className="cart-number-list">{value}</div>

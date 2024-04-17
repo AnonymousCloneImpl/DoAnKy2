@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { faEnvelope, faLocationDot, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -25,8 +26,8 @@ const OrderForm = ({
 }) => {
   return (
     <form className="order-form" onSubmit={handleFormSubmit}>
-      <div className="flex">
-        <div className='w-1/2 px-20'>
+      <div className="flex max-md:flex-wrap">
+        <div className='w-2/3 px-20 max-md:w-full max-md:px-2'>
           <label htmlFor="user">Customer Info</label>
           <div className='user flex justify-between w-full'>
             <span className='input-icon'><FontAwesomeIcon icon={faUser} /></span>
@@ -41,7 +42,7 @@ const OrderForm = ({
           </div>
 
           <label htmlFor="address-selects">Address</label>
-          <div className="address-selects">
+          <div className="address-selects ma">
             <select
               className="province"
               name="province"
@@ -128,11 +129,12 @@ const OrderForm = ({
               </input>
             </div>
           </div>
+          <button className='form-btn max-md:hidden' type="submit">Confirm Order</button>
         </div>
 
         <div className='order-line'></div>
 
-        <div className='w-1/2 px-10'>
+        <div className='w-1/3 px-10 max-md:w-full max-md:px-2'>
           <label htmlFor="payment-option">Payment Method</label>
           <div className="payment-option pb-5">
             <div className="payment-item w-full">
@@ -166,6 +168,23 @@ const OrderForm = ({
                   src='https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png'></img>
               </label>
               <h2 className='text-base font-semibold mt-5 ml-5'>PayPal</h2>
+            </div>
+
+            <div className="payment-item w-full">
+              <input
+                type="radio"
+                className="payment-checkbox"
+                id="QRCODE_PAYPAL"
+                name="payment"
+                value="QRCODE_PAYPAL"
+                checked={paymentMethod === 'QRCODE_PAYPAL'}
+                onChange={handleCheckedPayment}
+              />
+              <label htmlFor="QRCODE_PAYPAL">
+                <img
+                  src='https://www.paypalobjects.com/marketing/web/us/en/qr-code/QRC-landing.jpg'></img>
+              </label>
+              <h2 className='text-base font-semibold mt-5 ml-5'>PayPal Qr Code</h2>
             </div>
 
             <div className="payment-item w-full">
@@ -224,7 +243,7 @@ const OrderForm = ({
         </div>
       </div>
 
-      <button className='form-btn' type="submit">Confirm Order</button>
+      <button className='form-btn hidden max-md:block' type="submit">Confirm Order</button>
 
     </form>
   );

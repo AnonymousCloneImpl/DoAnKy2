@@ -1,8 +1,7 @@
 const CustomErrorPage = ({ statusCode }) => {
   return (
     <div>
-      <p className="text-9xl text-center mt-28">Lỗi {statusCode} rồi bạn ơi...</p>
-      <img src='/panel/pngwing.com.png' alt=""></img>
+      <img className="mx-auto" src='/panel/pngwing.com.png' alt=""></img>
     </div>
   );
 };

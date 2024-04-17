@@ -8,6 +8,7 @@ import { validEmail, validName, validPhoneNumber } from '@/utils/Validate';
 
 import FormatPrice from "@/components/FormatPrice";
 import postMethodFetcher from "@/utils/postMethod";
+import Image from "next/image";
 
 const CartPage = () => {
   const [items, setItems] = useState([]);
@@ -269,7 +270,7 @@ const CartPage = () => {
 
             <tbody>
               {items.map((item, index) => (
-                <tr key={index} className="flex flex-wrap border-t flex items-center hover:bg-gray-100 px-6 py-5">
+                <tr key={index} className="flex flex-wrap border-t items-center hover:bg-gray-100 px-6 py-5">
                   <td className="flex items-center w-1/12">
                     <input type="checkbox"
                       className="product scale-150 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
@@ -281,20 +282,23 @@ const CartPage = () => {
                     <div className="w-28">
                       <img className="h-20" src={item.image} alt={item.name} />
                     </div>
-                    <div className="flex flex-col justify-between ml-4 flex-grow">
+                    <div className="grid grid-rows-3 ml-4 max-md:grid-rows-1 max-md:grid-cols-3 max-md:w-full">
                       <Link
                         href={`/${item.type.toLowerCase()}/${item.name.toLowerCase().replace(/ /g, '-')}?model=${item.model.toLowerCase().replace(/ /g, '-')}`}
-                        className="font-bold text-base">
+                        className="font-bold text-base row-span-2 max-md:col-span-2 max-md:w-full">
                         {item.name + " " + item.model}
                       </Link>
-                      <b className="cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-sm"
-                        onClick={() => removeItem(index)}>
-                        <FontAwesomeIcon icon={faTrashCan} /> REMOVE
-                      </b>
+                      <div className="flex cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-md text-center">
+                        <b className="ml-2 max-md:w-full text-right"
+                          onClick={() => removeItem(index)}>
+                          <FontAwesomeIcon icon={faTrashCan} />
+                        </b>
+                        <p className="ml-2 max-md:hidden">REMOVE</p>
+                      </div>
                     </div>
                   </td>
 
-                  <td className="quantity w-3/12 text-center max-lg:w-full">
+                  <td className="quantity w-3/12 text-center flex justify-center flex-wrap max-lg:w-full">
                     <div className="quantity-control px-10">
                       <button className="quantity-decrease" onClick={() => decreaseQuantity(index)}>
                         <FontAwesomeIcon icon={faMinus} /></button>
@@ -310,22 +314,26 @@ const CartPage = () => {
                       <button className="quantity-increase" onClick={() => increaseQuantity(index)}>
                         <FontAwesomeIcon icon={faPlus} /></button>
                     </div>
-                    <div className="text-center text-red-600 font-semibold text-sm uppercase">
+                    <div className="text-center text-red-600 font-semibold text-sm uppercase max-md:hidden">
                       {item.stock} Left in Stock
                     </div>
                   </td>
 
                   <td className="flex text-center font-semibold text-base w-1/12 max-lg:w-6/12">
                     <h1 className='cart-hidden-price'>Price:</h1>
-                    <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100}
-                      type={"discount"} />
+                    <div className="w-full flex justify-center">
+                      <FormatPrice price={item.price - (item.price * item.discountPercentage) / 100}
+                        type={"discount"} />
+                    </div>
                   </td>
 
                   <td className="flex text-center font-semibold text-base w-2/12 max-lg:w-6/12">
                     <h1 className='cart-hidden-price'>Total:</h1>
-                    <FormatPrice
-                      price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity}
-                      type={"discount"} />
+                    <div className="w-full flex justify-center">
+                      <FormatPrice
+                        price={(item.price - (item.price * item.discountPercentage) / 100) * item.quantity}
+                        type={"discount"} />
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -367,11 +375,16 @@ const CartPage = () => {
 
           <div className="order-popup" ref={formRef}>
             <div className="popup-content">
-              <span className="close-form-btn" onClick={closeForm}>
-                <FontAwesomeIcon icon={faCircleXmark} />
-              </span>
-              <img className='order-logo' src='/favico.png' alt=""></img>
-              <h1>Order Form</h1>
+                <span className="close-form-btn" onClick={closeForm}>
+                  <FontAwesomeIcon icon={faCircleXmark}/>
+                </span>
+              <Image
+                src='https://www.teksavvy.com/wp-content/themes/teksavvy/assets/svg/teksavvy-logo.svg'
+                alt=""
+                width={250}
+                height={100}
+                className="order-logo"
+              />
               <OrderForm
                 provinces={provinces}
                 districts={districts}

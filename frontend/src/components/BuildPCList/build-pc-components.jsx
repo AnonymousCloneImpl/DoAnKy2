@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCircleCheck, faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import CustomErrorPage from "@/pages/error";
 import ComponentList from "@/components/BuildPCList/ComponentList";
@@ -119,6 +119,19 @@ function BuildPcComponents(data) {
   const [monitorDiscount, setMonitorDiscount] = useState(0);
   const [kbDiscount, setKbDiscount] = useState(0);
   const [mouseDiscount, setMouseDiscount] = useState(0);
+  //define model
+  const [cpuModel, setCpuModel] = useState("");
+  const [cpuCoolerModel, setCpuCoolerModel] = useState("");
+  const [motherBoardModel, setMotherBoardModel] = useState("");
+  const [memoryModel, setMemoryModel] = useState("");
+  const [storageModel, setStorageModel] = useState("");
+  const [gpuModel, setGpuModel] = useState("");
+  const [pcCaseModel, setPcCaseModel] = useState("");
+  const [caseFanModel, setCaseFanModel] = useState("");
+  const [psuModel, setPsuModel] = useState("");
+  const [monitorModel, setMonitorModel] = useState("");
+  const [kbModel, setKbModel] = useState("");
+  const [mouseModel, setMouseModel] = useState("");
 
 
   useEffect(() => {
@@ -212,7 +225,7 @@ function BuildPcComponents(data) {
     setSelectedProducts({ ...selectedProducts, [partType]: product.name });
     setQuantities({ ...quantities, [partType]: 1 });
     setFormVisible(false);
-    productLink = `/${product.type}/${product.name.replace(" ", "-").toLowerCase()}`
+    productLink = `/${product.type}/${product.name.replace(" ", "-").toLowerCase()}?model=${product.model}`
 
     switch (partType) {
       case 'cpu':
@@ -221,6 +234,7 @@ function BuildPcComponents(data) {
         setCpuImage(product.image);
         setCpuStock(product.stock.quantity);
         setCpuDiscount(product.discountPercentage);
+        setCpuModel(product.model);
         break;
       case 'cpuCooler':
         setCpuCoolerLink(productLink);
@@ -228,6 +242,7 @@ function BuildPcComponents(data) {
         setCpuCoolerImage(product.image);
         setCpuCoolerStock(product.stock.quantity);
         setCpuCoolerDiscount(product.discountPercentage);
+        setCpuCoolerModel(product.model);
         break;
       case 'motherBoard':
         setMotherBoardLink(productLink);
@@ -235,6 +250,7 @@ function BuildPcComponents(data) {
         setMotherBoardImage(product.image);
         setMotherBoardStock(product.stock.quantity);
         setMotherBoardDiscount(product.discountPercentage);
+        setMotherBoardModel(product.model);
         break;
       case 'memory':
         setMemoryLink(productLink);
@@ -242,6 +258,7 @@ function BuildPcComponents(data) {
         setMemoryImage(product.image);
         setMemoryStock(product.stock.quantity);
         setMemoryDiscount(product.discountPercentage);
+        setMemoryModel(product.model);
         break;
       case 'storage':
         setStorageLink(productLink);
@@ -249,6 +266,7 @@ function BuildPcComponents(data) {
         setStorageImage(product.image);
         setStorageStock(product.stock.quantity);
         setStorageDiscount(product.discountPercentage);
+        setStorageModel(product.model);
         break;
       case 'gpu':
         setGpuLink(productLink);
@@ -256,6 +274,7 @@ function BuildPcComponents(data) {
         setGpuImage(product.image);
         setGpuStock(product.stock.quantity);
         setGpuDiscount(product.discountPercentage);
+        setGpuModel(product.model);
         break;
       case 'pcCase':
         setPcCaseLink(productLink);
@@ -263,6 +282,7 @@ function BuildPcComponents(data) {
         setPcCaseImage(product.image);
         setPcCaseStock(product.stock.quantity);
         setPcCaseDiscount(product.discountPercentage);
+        setPcCaseModel(product.model);
         break;
       case 'caseFan':
         setCaseFanLink(productLink);
@@ -270,6 +290,7 @@ function BuildPcComponents(data) {
         setCaseFanImage(product.image);
         setCaseFanStock(product.stock.quantity);
         setCaseFanDiscount(product.discountPercentage);
+        setCaseFanModel(product.model);
         break;
       case 'psu':
         setPsuLink(productLink);
@@ -277,6 +298,7 @@ function BuildPcComponents(data) {
         setPsuImage(product.image);
         setPsuStock(product.stock.quantity);
         setPsuDiscount(product.discountPercentage);
+        setPsuModel(product.model);
         break;
       case 'monitor':
         setMonitorLink(productLink);
@@ -284,6 +306,7 @@ function BuildPcComponents(data) {
         setMonitorImage(product.image);
         setMonitorStock(product.stock.quantity);
         setMonitorDiscount(product.discountPercentage);
+        setMonitorModel(product.model);
         break;
       case 'keyboard':
         setKbLink(productLink);
@@ -291,6 +314,7 @@ function BuildPcComponents(data) {
         setKbImage(product.image);
         setKbStock(product.stock.quantity);
         setKbDiscount(product.discountPercentage);
+        setKbModel(product.model);
         break;
       case 'mouse':
         setMouseLink(productLink);
@@ -298,11 +322,11 @@ function BuildPcComponents(data) {
         setMouseImage(product.image);
         setMouseStock(product.stock.quantity);
         setMouseDiscount(product.discountPercentage);
+        setMouseModel(product.model);
         break;
       default:
         break;
     }
-
   };
 
   const handleRemoveProduct = (partType) => {
@@ -315,61 +339,73 @@ function BuildPcComponents(data) {
           setCpuPrice(0);
           setCpuImage('');
           setCpuStock(0);
+          setCpuModel('');
           break;
         case 'cpuCooler':
           setCpuCoolerPrice(0);
           setCpuCoolerImage('');
           setCpuCoolerStock(0);
+          setCpuCoolerModel('');
           break;
         case 'motherBoard':
           setMotherBoardPrice(0);
           setMotherBoardImage('');
           setMotherBoardStock(0);
+          setMotherBoardModel('');
           break;
         case 'memory':
           setMemoryPrice(0);
           setMemoryImage('');
           setMemoryStock(0);
+          setMemoryModel('');
           break;
         case 'storage':
           setStoragePrice(0);
           setStorageImage('');
           setStorageStock(0);
+          setStorageModel('');
           break;
         case 'gpu':
           setGpuPrice(0);
           setGpuImage('');
           setGpuStock(0);
+          setGpuModel('');
           break;
         case 'pcCase':
           setPcCasePrice(0);
           setPcCaseImage('');
           setPcCaseStock(0);
+          setPcCaseModel('');
           break;
         case 'caseFan':
           setCaseFanPrice(0);
           setCaseFanImage('');
           setCaseFanStock(0);
+          setCaseFanModel('');
           break;
         case 'psu':
           setPsuPrice(0);
           setPsuImage('');
           setPsuStock(0);
+          setPsuModel('');
           break;
         case 'monitor':
           setMonitorPrice(0);
           setMonitorImage('');
           setMonitorStock(0);
+          setMonitorModel('');
           break;
         case 'keyboard':
           setKbPrice(0);
           setKbImage('');
           setKbStock(0);
+          setKbModel('');
           break;
         case 'mouse':
           setMousePrice(0);
           setMouseImage('');
           setMouseStock(0);
+          setMouseModel('');
           break;
         default:
           break;
@@ -412,27 +448,35 @@ function BuildPcComponents(data) {
       setCpuPrice(0);
       setCpuImage('');
       setCpuStock(0);
+      setCpuModel('')
       setCpuCoolerPrice(0);
       setCpuCoolerImage('');
       setCpuCoolerStock(0);
+      setCpuCoolerModel('')
       setMotherBoardPrice(0);
       setMotherBoardImage('');
       setMotherBoardStock(0);
+      setMotherBoardModel('')
       setMemoryPrice(0);
       setMemoryImage('');
       setMemoryStock(0);
+      setMemoryModel('')
       setStoragePrice(0);
       setStorageImage('');
       setStorageStock(0);
+      setStorageModel('')
       setGpuPrice(0);
       setGpuImage('');
       setGpuStock(0);
+      setGpuModel('')
       setPcCasePrice(0);
       setPcCaseImage('');
       setPcCaseStock(0);
+      setPcCaseModel('')
       setCaseFanPrice(0);
       setCaseFanImage('');
       setCaseFanStock(0);
+      setCaseFanModel('');
       setPsuPrice(0);
       setPsuImage('');
       setPsuStock(0);
@@ -442,9 +486,11 @@ function BuildPcComponents(data) {
       setKbPrice(0);
       setKbImage('');
       setKbStock(0);
+      setKbModel('')
       setMousePrice(0);
       setMouseImage('');
       setMouseStock(0);
+      setMouseModel('');
     }
   };
 
@@ -475,6 +521,7 @@ function BuildPcComponents(data) {
                 price: product.price,
                 discountPercentage: product.discountPercentage,
                 type: type,
+                model: product.model,
                 quantity: parseInt(quantity),
                 stock: null
               };
@@ -485,6 +532,7 @@ function BuildPcComponents(data) {
       }
     });
     localStorage.setItem('itemList', JSON.stringify(cartItems));
+    console.log(cartItems);
 
     const newNotification = {
       message: 'All components have been added to the cart !',
@@ -500,13 +548,11 @@ function BuildPcComponents(data) {
   };
 
   return (
-    <div className="w-full" style={{ backgroundColor: "#EDEEF2" }}>
-      <div className="build-pc-wrapper flex justify-center pt-8 custom-width-11-12 bg-white">
-        <div className="w-full max-w-screen-xl">
-          <div className="banner w-full h-96 bg-cover bg-center mb-2"
-            style={{ backgroundImage: "url('https://smcinternational.in/extra/images/SMC%20Banner.jpg')" }}>
-            <div className="h-16 w-64 bg-black"
-              style={{ top: "59%", left: "24%", position: "absolute" }}></div>
+    <div className="w-full">
+      <div className="build-pc-wrapper flex justify-center pt-8 bg-white max-md:w-full" style={{ width: '95%' }}>
+        <div className="w-full">
+          <div className="banner w-full h-96 bg-cover bg-center mb-2 max-md:h-60 max-lg:h-48 max-sm:h-32"
+            style={{ backgroundImage: "url('/panel/build-pc-banel.jpg')" }}>
           </div>
           <div className="build-pc-header text-left mb-4">
             <h2 className="text-2xl font-bold">
@@ -528,7 +574,7 @@ function BuildPcComponents(data) {
             </button>
           </div>
 
-          <div className="flex w-full justify-end">
+          <div className="flex justify-end">
             {hasSelectedProducts && (
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-1 my-2 rounded"
@@ -536,7 +582,7 @@ function BuildPcComponents(data) {
               </button>
             )}
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-1 my-2 rounded"> Add
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-1 my-2 rounded"> Add
               all parts to cart
             </button>
           </div>
@@ -558,23 +604,22 @@ function BuildPcComponents(data) {
           <table className="w-full table-auto">
             <thead>
               <tr>
-                <th className="">Component</th>
-                <th className="">Product</th>
-                <th className="">Price</th>
-                <th className="">Quantity</th>
-                <th className=" w-2/12">Total</th>
-                <th className=""></th>
+                <th className="text-xl py-5 max-md:text-base max-md:py-2">Component</th>
+                <th className="text-xl py-5 max-md:text-base max-md:py-2">Product</th>
+                <th className="text-xl py-5 max-md:text-base max-md:py-2">Quantity</th>
+                <th className="text-xl py-5 max-md:text-base max-md:py-2">Price</th>
+                <th></th>
               </tr>
             </thead>
 
             {/* // shitttt */}
             <tbody>
               <tr>
-                <td className="border  font-bold" style={{ width: '5%' }}>CPU</td>
-                <td className="border " style={{ width: '65%' }}>
+                <td className="border px-2 font-bold" style={{ width: '5%' }}>CPU</td>
+                <td className="border w-8/12 max-md:w-10 ">
                   {selectedProducts.cpu ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={cpuImage}
                           alt="no image" />
@@ -590,36 +635,20 @@ function BuildPcComponents(data) {
                               <span>
                                 {cpuStock === 0 &&
                                   <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {cpuStock > 0 && cpuStock < 10 && <span
-                                  style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {cpuStock >= 10 &&
-                                  <span style={{ color: 'green' }}>Available</span>}
+                                {cpuStock > 0 && <span
+                                  style={{ color: 'green' }}>{cpuStock} Left In Stock</span>}
                               </span>
                             ) : null}
-                          </span>
-                          <br />
-                          <span className="ml-1">hi
                           </span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('cpu')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select CPU
                     </button>
                   )}
-                </td>
-                <td className="border text-center " style={{ width: '5%' }}>
-                  {selectedProducts.cpu ? (
-                    <span>
-                      <FormatPrice price={cpuPrice} type={"discount"} />
-                      <FormatPrice price={cpuPrice - (cpuPrice * cpuDiscount / 100)} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={cpuPrice} type={"normal"} />
-                    </span>)}
                 </td>
                 <td className="border text-center " style={{ width: '5%' }}>
                   <input type="number" min="1" value={quantities.cpu}
@@ -632,22 +661,35 @@ function BuildPcComponents(data) {
                         handleQuantityChange('cpu', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3" style={{width: '5%'}}>
-                  <FormatPrice price={(cpuPrice - cpuPrice * cpuDiscount / 100) * quantities.cpu}
+                <td className="border-b border-t text-center py-3 w-full px-2" style={{ width: '5%' }}>
+                  {selectedProducts.cpu ? (
+                    <span>
+                      <FormatPrice price={cpuPrice} />
+                      <FormatPrice price={cpuPrice - cpuPrice * cpuDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={cpuPrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
+                  <FormatPrice
+                    price={(cpuPrice - cpuPrice * cpuDiscount / 100) * quantities.cpu}
                     type={"discount"} />
                 </td>
-                <td className="border-b border-r border-t px-3 py-2 w-40" style={{ width: '15%' }}>
+                <td className="border-b border-r border-t px-3 py-2">
                   {selectedProducts.cpu && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('cpu')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -655,11 +697,11 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border  font-bold">CPU Cooler</td>
+                <td className="border px-2 font-bold">CPU Cooler</td>
                 <td className="border ">
                   {selectedProducts.cpuCooler ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={cpuCoolerImage}
                           alt="no image" />
@@ -674,35 +716,20 @@ function BuildPcComponents(data) {
                             {selectedProducts.cpuCooler ? (
                               <span>
                                 {cpuCoolerStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {cpuCoolerStock > 0 && cpuCoolerStock < 10 &&
-                                  <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {cpuCoolerStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {cpuCoolerStock > 0 &&
+                                  <span style={{ color: 'green' }}>{cpuCoolerStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('cpuCooler')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select CPU
                       Cooler
                     </button>
-                  )}
-                </td>
-                <td className="border text-center ">
-                  {selectedProducts.cpuCooler ? (
-                    <span>
-                      <FormatPrice price={cpuCoolerPrice} />
-                      <FormatPrice price={cpuCoolerPrice - cpuCoolerPrice * cpuCoolerDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={cpuCoolerPrice} type={"normal"} />
-                    </span>
                   )}
                 </td>
                 <td className="border text-center ">
@@ -716,23 +743,35 @@ function BuildPcComponents(data) {
                         handleQuantityChange('cpuCooler', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.cpuCooler ? (
+                    <span>
+                      <FormatPrice price={cpuCoolerPrice} />
+                      <FormatPrice price={cpuCoolerPrice - cpuCoolerPrice * cpuCoolerDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={cpuCoolerPrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice
                     price={(cpuCoolerPrice - cpuCoolerPrice * cpuCoolerDiscount / 100) * quantities.cpuCooler}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.cpuCooler && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('cpuCooler')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -740,11 +779,11 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border  font-bold">Motherboard</td>
+                <td className="border px-2 font-bold">Motherboard</td>
                 <td className="border ">
                   {selectedProducts.motherboard ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={motherBoardImage}
                           alt="no image" />
@@ -759,36 +798,20 @@ function BuildPcComponents(data) {
                             {selectedProducts.motherboard ? (
                               <span>
                                 {motherBoardStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {motherBoardStock > 0 && motherBoardStock < 10 &&
-                                  <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {motherBoardStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {motherBoardStock > 0 &&
+                                  <span style={{ color: 'green' }}>{motherBoardStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('motherBoard')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select
                       Motherboard
                     </button>
-                  )}
-                </td>
-                <td className="border text-center ">
-                  {selectedProducts.motherboard ? (
-                    <span>
-                      <FormatPrice price={motherBoardPrice} />
-                      <FormatPrice price={motherBoardPrice - motherBoardPrice * motherBoardDiscount / 100}
-                        type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={motherBoardPrice} type={"normal"} />
-                    </span>
                   )}
                 </td>
                 <td className="border text-center ">
@@ -802,23 +825,36 @@ function BuildPcComponents(data) {
                         handleQuantityChange('motherBoard', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.motherboard ? (
+                    <span>
+                      <FormatPrice price={motherBoardPrice} />
+                      <FormatPrice price={motherBoardPrice - motherBoardPrice * motherBoardDiscount / 100}
+                        type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={motherBoardPrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice
                     price={(motherBoardPrice - motherBoardPrice * motherBoardDiscount / 100) * quantities.motherboard}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.motherboard && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
-                        onClick={() => handleRemoveProduct('motherBoard')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        onClick={() => handleRemoveProduct('motherboard')}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -826,11 +862,11 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border  font-bold">Memory</td>
+                <td className="border px-2 font-bold">Memory</td>
                 <td className="border ">
                   {selectedProducts.memory ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={memoryImage}
                           alt="no image" />
@@ -845,34 +881,19 @@ function BuildPcComponents(data) {
                             {selectedProducts.memory ? (
                               <span>
                                 {memoryStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {memoryStock > 0 && memoryStock < 10 &&
-                                  <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {memoryStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {memoryStock > 0 &&
+                                  <span style={{ color: 'green' }}>{memoryStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('memory')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select Memory
                     </button>
-                  )}
-                </td>
-                <td className="border text-center ">
-                  {selectedProducts.memory ? (
-                    <span>
-                      <FormatPrice price={memoryPrice} />
-                      <FormatPrice price={memoryPrice - memoryPrice * memoryDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={memoryPrice} type={"normal"} />
-                    </span>
                   )}
                 </td>
                 <td className="border text-center ">
@@ -886,23 +907,35 @@ function BuildPcComponents(data) {
                         handleQuantityChange('memory', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.memory ? (
+                    <span>
+                      <FormatPrice price={memoryPrice} />
+                      <FormatPrice price={memoryPrice - memoryPrice * memoryDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={memoryPrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice
                     price={(memoryPrice - memoryPrice * memoryDiscount / 100) * quantities.memory}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.memory && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('memory')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -911,11 +944,11 @@ function BuildPcComponents(data) {
 
 
               <tr>
-                <td className="border  font-bold">Storage</td>
+                <td className="border px-2 font-bold">Storage</td>
                 <td className="border ">
                   {selectedProducts.storage ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={storageImage}
                           alt="no image" />
@@ -930,35 +963,20 @@ function BuildPcComponents(data) {
                             {selectedProducts.storage ? (
                               <span>
                                 {storageStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {storageStock > 0 && storageStock < 10 &&
-                                  <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {storageStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {storageStock > 0 &&
+                                  <span style={{ color: 'green' }}>{storageStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('storage')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select
                       Storage
                     </button>
-                  )}
-                </td>
-                <td className="border text-center ">
-                  {selectedProducts.storage ? (
-                    <span>
-                      <FormatPrice price={storagePrice} />
-                      <FormatPrice price={storagePrice - storagePrice * storageDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={storagePrice} type={"normal"} />
-                    </span>
                   )}
                 </td>
                 <td className="border text-center ">
@@ -972,23 +990,35 @@ function BuildPcComponents(data) {
                         handleQuantityChange('storage', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.storage ? (
+                    <span>
+                      <FormatPrice price={storagePrice} />
+                      <FormatPrice price={storagePrice - storagePrice * storageDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={storagePrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice
                     price={(storagePrice - storagePrice * storageDiscount / 100) * quantities.storage}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.storage && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('storage')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -996,11 +1026,11 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border  font-bold">GPU</td>
+                <td className="border px-2 font-bold">GPU</td>
                 <td className="border ">
                   {selectedProducts.gpu ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={gpuImage}
                           alt="no image" />
@@ -1015,34 +1045,19 @@ function BuildPcComponents(data) {
                             {selectedProducts.gpu ? (
                               <span>
                                 {gpuStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {gpuStock > 0 && gpuStock < 10 &&
-                                  <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {gpuStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {gpuStock > 0 &&
+                                  <span style={{ color: 'green' }}>{gpuStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('gpu')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select GPU
                     </button>
-                  )}
-                </td>
-                <td className="border text-center ">
-                  {selectedProducts.gpu ? (
-                    <span>
-                      <FormatPrice price={gpuPrice} />
-                      <FormatPrice price={gpuPrice - gpuPrice * gpuDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={gpuPrice} type={"normal"} />
-                    </span>
                   )}
                 </td>
                 <td className="border text-center ">
@@ -1056,22 +1071,34 @@ function BuildPcComponents(data) {
                         handleQuantityChange('gpu', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.gpu ? (
+                    <span>
+                      <FormatPrice price={gpuPrice} />
+                      <FormatPrice price={gpuPrice - gpuPrice * gpuDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={gpuPrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice price={(gpuPrice - gpuPrice * gpuDiscount / 100) * quantities.gpu}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.gpu && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('gpu')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -1079,11 +1106,11 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border  font-bold">PC Case</td>
+                <td className="border px-2 font-bold">PC Case</td>
                 <td className="border ">
                   {selectedProducts.pcCase ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={pcCaseImage}
                           alt="no image" />
@@ -1098,35 +1125,20 @@ function BuildPcComponents(data) {
                             {selectedProducts.pcCase ? (
                               <span>
                                 {pcCaseStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {pcCaseStock > 0 && pcCaseStock < 10 &&
-                                  <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {pcCaseStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {pcCaseStock > 0 &&
+                                  <span style={{ color: 'green' }}>{pcCaseStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('pcCase')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select PC
                       Case
                     </button>
-                  )}
-                </td>
-                <td className="border text-center ">
-                  {selectedProducts.pcCase ? (
-                    <span>
-                      <FormatPrice price={pcCasePrice} />
-                      <FormatPrice price={pcCasePrice - pcCasePrice * pcCaseDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={pcCasePrice} type={"normal"} />
-                    </span>
                   )}
                 </td>
                 <td className="border text-center ">
@@ -1140,23 +1152,35 @@ function BuildPcComponents(data) {
                         handleQuantityChange('pcCase', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.pcCase ? (
+                    <span>
+                      <FormatPrice price={pcCasePrice} />
+                      <FormatPrice price={pcCasePrice - pcCasePrice * pcCaseDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={pcCasePrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice
                     price={(pcCasePrice - pcCasePrice * pcCaseDiscount / 100) * quantities.pcCase}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.pcCase && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('pcCase')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -1165,11 +1189,11 @@ function BuildPcComponents(data) {
 
 
               <tr>
-                <td className="border  font-bold">Case Fan</td>
+                <td className="border px-2 font-bold">Case Fan</td>
                 <td className="border ">
                   {selectedProducts.caseFan ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={caseFanImage}
                           alt="no image" />
@@ -1184,35 +1208,20 @@ function BuildPcComponents(data) {
                             {selectedProducts.caseFan ? (
                               <span>
                                 {caseFanStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {caseFanStock > 0 && caseFanStock < 10 &&
-                                  <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {caseFanStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {caseFanStock > 0 &&
+                                  <span style={{ color: 'green' }}>{caseFanStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('caseFan')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select Case
                       Fan
                     </button>
-                  )}
-                </td>
-                <td className="border text-center ">
-                  {selectedProducts.caseFan ? (
-                    <span>
-                      <FormatPrice price={caseFanPrice} />
-                      <FormatPrice price={caseFanPrice - caseFanPrice * caseFanDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={caseFanPrice} type={"normal"} />
-                    </span>
                   )}
                 </td>
                 <td className="border text-center ">
@@ -1226,23 +1235,35 @@ function BuildPcComponents(data) {
                         handleQuantityChange('caseFan', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.caseFan ? (
+                    <span>
+                      <FormatPrice price={caseFanPrice} />
+                      <FormatPrice price={caseFanPrice - caseFanPrice * caseFanDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={caseFanPrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice
                     price={(caseFanPrice - caseFanPrice * caseFanDiscount / 100) * quantities.caseFan}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.caseFan && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('caseFan')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -1250,11 +1271,11 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border  font-bold">Power Supply Unit</td>
+                <td className="border px-2 font-bold">Power Supply Unit</td>
                 <td className="border ">
                   {selectedProducts.psu ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={psuImage}
                           alt="no image" />
@@ -1269,34 +1290,19 @@ function BuildPcComponents(data) {
                             {selectedProducts.psu ? (
                               <span>
                                 {psuStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {psuStock > 0 && psuStock < 10 &&
-                                  <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {psuStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {psuStock > 0 &&
+                                  <span style={{ color: 'green' }}>{psuStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('psu')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select PSU
                     </button>
-                  )}
-                </td>
-                <td className="border text-center ">
-                  {selectedProducts.psu ? (
-                    <span>
-                      <FormatPrice price={psuPrice} />
-                      <FormatPrice price={psuPrice - psuPrice * psuDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={psuPrice} type={"normal"} />
-                    </span>
                   )}
                 </td>
                 <td className="border text-center ">
@@ -1310,22 +1316,34 @@ function BuildPcComponents(data) {
                         handleQuantityChange('psu', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.psu ? (
+                    <span>
+                      <FormatPrice price={psuPrice} />
+                      <FormatPrice price={psuPrice - psuPrice * psuDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={psuPrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice price={(psuPrice - psuPrice * psuDiscount / 100) * quantities.psu}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.psu && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('psu')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -1333,11 +1351,11 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border  font-bold">Monitor</td>
+                <td className="border px-2 font-bold">Monitor</td>
                 <td className="border ">
                   {selectedProducts.monitor ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={monitorImage}
                           alt="no image" />
@@ -1352,35 +1370,20 @@ function BuildPcComponents(data) {
                             {selectedProducts.monitor ? (
                               <span>
                                 {monitorStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {monitorStock > 0 && monitorStock < 10 &&
-                                  <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {monitorStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {monitorStock > 0 &&
+                                  <span style={{ color: 'green' }}>{monitorStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('monitor')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select
                       Monitor
                     </button>
-                  )}
-                </td>
-                <td className="border text-center ">
-                  {selectedProducts.monitor ? (
-                    <span>
-                      <FormatPrice price={monitorPrice} />
-                      <FormatPrice price={monitorPrice - monitorPrice * monitorDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={monitorPrice} type={"normal"} />
-                    </span>
                   )}
                 </td>
                 <td className="border text-center ">
@@ -1394,23 +1397,35 @@ function BuildPcComponents(data) {
                         handleQuantityChange('monitor', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.monitor ? (
+                    <span>
+                      <FormatPrice price={monitorPrice} />
+                      <FormatPrice price={monitorPrice - monitorPrice * monitorDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={monitorPrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice
                     price={(monitorPrice - monitorPrice * monitorDiscount / 100) * quantities.monitor}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.monitor && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('monitor')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -1418,15 +1433,15 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border  font-bold">Keyboard</td>
-                <td className="border ">
+                <td className="border px-2 font-bold">Keyboard</td>
+                <td className="border">
                   {selectedProducts.keyboard ? (
                     <div className="flex items-center">
-                      <div className="product-info max-lg:flex max-lg:flex-wrap max-lg:justify-center">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={kbImage}
                           alt="no image" />
-                        <p className="text-center">
+                        <p>
                           <span className="ml-1 font-bold">
                             <Link target="_blank" href={kbLink}>
                               {selectedProducts.keyboard}
@@ -1438,10 +1453,8 @@ function BuildPcComponents(data) {
                               <span>
                                 {kbStock === 0 &&
                                   <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {kbStock > 0 && kbStock < 10 && <span
-                                  style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {kbStock >= 10 &&
-                                  <span style={{ color: 'green' }}>Available</span>}
+                                {kbStock > 0 &&
+                                  <span style={{ color: 'green' }}>{kbStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
@@ -1450,26 +1463,13 @@ function BuildPcComponents(data) {
                     </div>
                   ) : (
                     <button onClick={() => openForm('keyboard')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
                       <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select
                       Keyboard
                     </button>
                   )}
                 </td>
-                <td className="border text-center ">
-                  {selectedProducts.keyboard ? (
-                    <span>
-                      <FormatPrice price={kbPrice} />
-                      <FormatPrice price={kbPrice - kbPrice * kbDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={kbPrice} type={"normal"} />
-                    </span>
-                  )}
-
-                </td>
-                <td className="border text-center ">
+                <td className="border text-center">
                   <input type="number" min="1" value={quantities.keyboard}
                     onChange={(e) => {
                       if (e.target.value < 1) {
@@ -1480,22 +1480,34 @@ function BuildPcComponents(data) {
                         handleQuantityChange('keyboard', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.keyboard ? (
+                    <span>
+                      <FormatPrice price={kbPrice} />
+                      <FormatPrice price={kbPrice - kbPrice * kbDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={kbPrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice price={(kbPrice - kbPrice * kbDiscount / 100) * quantities.keyboard}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.keyboard && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('keyboard')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -1503,11 +1515,11 @@ function BuildPcComponents(data) {
               </tr>
 
               <tr>
-                <td className="border  font-bold">Mouse</td>
+                <td className="border px-2 font-bold">Mouse</td>
                 <td className="border ">
                   {selectedProducts.mouse ? (
                     <div className="flex items-center">
-                      <div className="product-info">
+                      <div className="product-info px-5 max-md:px max-lg:flex max-lg:flex-wrap max-lg:justify-center">
                         <img className="product-image"
                           src={mouseImage}
                           alt="no image" />
@@ -1522,34 +1534,19 @@ function BuildPcComponents(data) {
                             {selectedProducts.mouse ? (
                               <span>
                                 {mouseStock === 0 && <span style={{ color: 'red' }}>Out of Stock</span>}
-                                {mouseStock > 0 && mouseStock < 10 &&
-                                  <span style={{ color: 'darkorange' }}>Limited Stock left</span>}
-                                {mouseStock >= 10 && <span style={{ color: 'green' }}>Available</span>}
+                                {mouseStock > 0 &&
+                                  <span style={{ color: 'green' }}>{mouseStock} Left In Stock</span>}
                               </span>
                             ) : null}
                           </span>
-                          <br />
-                          <span className="ml-1">hi</span>
                         </p>
                       </div>
                     </div>
                   ) : (
                     <button onClick={() => openForm('mouse')}
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                      <FontAwesomeIcon className="text-xl font-semibold" icon={faPlus} /> Select Mouse
+                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 mx-5 rounded max-md:mx-1 max-md:max-w-20 max-md:text-sm max-md:flex max-md:flex-wrap max-md:justify-center">
+                      <FontAwesomeIcon className="text-xl font-semibold max-md:w-full" icon={faPlus} /> Select Mouse
                     </button>
-                  )}
-                </td>
-                <td className="border text-center ">
-                  {selectedProducts.mouse ? (
-                    <span>
-                      <FormatPrice price={mousePrice} />
-                      <FormatPrice price={mousePrice - mousePrice * mouseDiscount / 100} type={"discount"} />
-                    </span>
-                  ) : (
-                    <span>
-                      <FormatPrice price={mousePrice} type={"normal"} />
-                    </span>
                   )}
                 </td>
                 <td className="border text-center ">
@@ -1563,22 +1560,34 @@ function BuildPcComponents(data) {
                         handleQuantityChange('mouse', e.target.value);
                       }
                     }}
-                    className="w-16 px-2 py-1 border rounded" />
+                    className="w-16 px-2 py-1 border rounded max-md:w-12" />
                 </td>
-                <td className="border-b border-t text-center py-3 w-full">
+                <td className="border-b border-t text-center py-3 w-full px-2">
+                  {selectedProducts.mouse ? (
+                    <span>
+                      <FormatPrice price={mousePrice} />
+                      <FormatPrice price={mousePrice - mousePrice * mouseDiscount / 100} type={"discount"} />
+                    </span>
+                  ) : (
+                    <span>
+                      <FormatPrice price={mousePrice} type={"normal"} />
+                    </span>
+                  )}
+                  <b>
+                    Total:
+                  </b>
                   <FormatPrice price={(mousePrice - mousePrice * mouseDiscount / 100) * quantities.mouse}
                     type={"discount"} />
                 </td>
                 <td className="border-b border-r border-t px-3 py-2 w-40">
                   {selectedProducts.mouse && (
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center max-md:w-15">
                       <button
                         onClick={() => handleRemoveProduct('mouse')}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-4 px-5 rounded relative overflow-hidden"
-                        style={{ transition: "background-color 0.15s" }}
+                        className="bg-red-600 hover:bg-red-700 flex items-center text-white font-bold py-2 px-3 rounded"
                       >
-                        <span className="fill"></span>
-                        <span className="relative z-10">Remove</span>
+                        <FontAwesomeIcon icon={faTrashCan} />
+                        <span className="ml-2 max-md:hidden">Remove</span>
                       </button>
                     </div>
                   )}
@@ -1597,7 +1606,7 @@ function BuildPcComponents(data) {
                     Total Price:
                   </td>
                   <td className="text-lg font-bold bg-red-600 text-white text-right border border-white px-2 py-1">
-                    ${totalPrice}
+                    ${parseFloat(totalPrice).toFixed(2)}
                   </td>
                 </tr>
               </tbody>
@@ -1611,7 +1620,7 @@ function BuildPcComponents(data) {
               </button>
             )}
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-1 my-2 rounded"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-1 my-2 rounded"
               onClick={() => addToCart(selectedProducts, quantities, data)}> Add all parts to cart
             </button>
           </div>

@@ -70,7 +70,7 @@
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                     {{ Auth::user()->name }}
                 </a>
-                <div class="dropdown-menu dropdown-menu-right" style="left: inherit; right: 0px;">
+                <div class="dropdown-menu dropdown-menu-right" style="left: inherit; right: 0;">
                     <a href="{{ route('profile.show') }}" class="dropdown-item">
                         <i class="mr-2 fas fa-file"></i>
                         {{ __('My profile') }}
@@ -97,7 +97,7 @@
             <img src="{{ asset('images/CompanyLogo.png') }}" alt="Logo Placeholder"
                  class="brand-image img-circle elevation-3"
                  style="opacity: .8">
-            <span class="brand-text font-weight-light">Thế Giới Manh Động</span>
+            <span class="brand-text font-weight-light font-weight-bold">TekSavvy</span>
         </a>
 
         @include('layouts.navigation')
@@ -126,12 +126,28 @@
             Lorem Ipsum
         </div>
         <!-- Default to the left -->
-        <strong>Copyright &copy; 2024 <a href="/">Thế Giới Manh Động</a>.</strong> All rights reserved.
+        <strong>Copyright &copy; 2024 <a id="myLink" href="/">TekSavvy</a>.</strong> All rights reserved.
     </footer>
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lấy cổng của URL hiện tại
+        let currentPort = window.location.port;
+
+        // Cổng mới bạn muốn đổi
+        let newPort = '3000'; // Đổi thành cổng mong muốn
+
+        // Tạo URL mới với cổng mới
+        let newURL = window.location.protocol + '//' + window.location.hostname + ':' + newPort + '/';
+
+        // Cập nhật href của thẻ <a> để chuyển hướng đến URL mới với cổng đã thay đổi
+        document.getElementById('myLink').href = newURL;
+    });
+</script>
 
 
 <!-- jQuery -->

@@ -209,17 +209,17 @@ const ProductsPageByType = ({ type }) => {
         <div className="w-full mt-3">
           <ul className="grid grid-cols-9 max-md:grid-cols-6 max-sm:grid-cols-4">
             {producers?.map((producer) => (
-              <li key={producer.id} className="h-8 w-46 mb-3">
-                <div className="h-full flex items-center">
+              <li key={producer.id} className="h-10 mb-3">
+                <div className="h-full flex items-center justify-center">
                   <button
-                    className={`h-full bg-white rounded-md overflow-hidden flex justify-center items-center
+                    className={`h-full bg-white p-2 rounded-md overflow-hidden flex justify-center items-center
                                             ${filter.producer.toLowerCase() === producer.name.toLowerCase() ? "border-2 border-red-600" : ''}
                                         `}
                     onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}
                   >
                     <img
                       src={`${producer.image}`}
-                      className="h-4/6 w-11/12"
+                      className="h-full"
                       loading={"lazy"}
                       alt=""
                     />
@@ -259,7 +259,7 @@ const ProductsPageByType = ({ type }) => {
         )}
       </div>
 
-      <div className="mb-96 flex justify-center mt-9">
+      <div className="flex justify-center mt-9">
         <div className="flex">
           {Array.from({ length: 6 }, (_, i) => (
             <button key={i}

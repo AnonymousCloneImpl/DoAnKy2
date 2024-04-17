@@ -24,6 +24,8 @@ import HandleCartClick from "@/components/HandleCartClick";
 import {validEmail, validName, validPhoneNumber} from '@/utils/Validate';
 import NotificationRender from "@/components/CartNotification";
 import AddSpaceBeforeUpperCase from "@/utils/textUtils";
+import QrCode from "@/components/qr-code";
+import Image from "next/image";
 
 const ProductPage = ({productBE}) => {
   const [cartNotifications, setCartNotifications] = useState([]);
@@ -196,7 +198,10 @@ const ProductPage = ({productBE}) => {
       orderItemDtoList: [
         {
           "productId": product.id,
-          "quantity": quantity
+          "quantity": quantity,
+          "productName": product.name,
+          "productModel": product.model,
+          "price": product.price - product.price * product.discountPercentage / 100
         },
         ...selectedCombo.map((item) => ({
           productId: item.id,
@@ -207,10 +212,10 @@ const ProductPage = ({productBE}) => {
       shippingMethod,
       paymentMethod
     };
-
+    console.log(paymentMethod)
     const orderUrl = `${process.env.DOMAIN}/orders/place-order`;
     try {
-      const data = await postMethodFetcher(orderUrl, orderData)
+      const data = await postMethodFetcher(orderUrl, orderData);
       if (data !== undefined) {
         console.log(paymentMethod)
         if (paymentMethod === "COD") {
@@ -218,7 +223,11 @@ const ProductPage = ({productBE}) => {
         }
 
         if (paymentMethod === "PAYPAL") {
-          await route.push(`/payment?type=PAYPAL&price=${orderData.totalPrice}&orderCode=${data.orderCode}&paymentId=${data.paymentId}`);
+          await route.push(`/payment?type=PAYPAL&price=${orderData.totalPrice}&orderCode=${data.orderCode}`);
+        }
+
+        if (paymentMethod === "QRCODE_PAYPAL") {
+          await route.push(`/payment?type=QRCODE_PAYPAL&orderCode=${data.orderCode}&paymentCode=${data.paymentCode}`);
         }
 
         if (paymentMethod === "VNPAY") {
@@ -576,11 +585,13 @@ const ProductPage = ({productBE}) => {
                 <span className="close-form-btn" onClick={closeForm}>
                   <FontAwesomeIcon icon={faCircleXmark}/>
                 </span>
-                <img
-                  className='order-logo'
-                  src='/favico.png'
-                  alt=""></img>
-                <h1>Order Form</h1>
+                <Image
+                  src='https://www.teksavvy.com/wp-content/themes/teksavvy/assets/svg/teksavvy-logo.svg'
+                  alt=""
+                  width={250}
+                  height={100}
+                  className="order-logo"
+                />
                 <OrderForm
                   provinces={provinces}
                   districts={districts}
