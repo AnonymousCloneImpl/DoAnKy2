@@ -9,7 +9,7 @@ import com.paypal.base.rest.PayPalRESTException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.common.Paypayutils;
+import project.common.PaypayUtils;
 import project.const_.PAYMENT_METHOD;
 import project.dto.order.OrderDto;
 import project.dto.payment.PaypalRequestDto;
@@ -23,7 +23,7 @@ public class PaypalService {
 	@Autowired
 	private PaymentService paymentService;
 	@Autowired
-	private Paypayutils paymentUtils;
+	private PaypayUtils paymentUtils;
 
 	public Payment createPaypalPayment(PaypalRequestDto paypalRequestDto) {
 		Payment payment = paymentUtils.buildPayment(paypalRequestDto);

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class Paypayutils {
+public class PaypayUtils {
 	@Autowired
 	private APIContext apiContext;
 
