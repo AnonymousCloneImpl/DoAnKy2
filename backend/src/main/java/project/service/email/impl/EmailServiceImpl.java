@@ -8,7 +8,12 @@ import project.service.email.EmailService;
 
 @Service
 public class EmailServiceImpl implements EmailService {
-    private final JavaMailSender mailSender;
+	private final JavaMailSender mailSender;
+	
+	  @Autowired
+	  public EmailServiceImpl(JavaMailSender mailSender) {
+		    this.mailSender = mailSender;
+	  }
 
     @Autowired
     public EmailServiceImpl(JavaMailSender mailSender) {
