@@ -16,28 +16,28 @@ function HandleCartClick({ product, setCartNotifications }) {
       }
     })
     updatedCartItemList[existingProductIndex] = {
-      "id": product.id,
-      "image": product.image,
-      "name": product.name,
-      "model": product.model,
-      "price": product.price,
-      "discountPercentage": product.discountPercentage,
-      "type": product.type,
-      "quantity": quantity,
-      "stock": null
+      id: product.id,
+      image: product.image,
+      name: product.name,
+      model: product.model,
+      price: product.price,
+      discountPercentage: product.discountPercentage,
+      type: product.type,
+      quantity: quantity,
+      stock: null
     };
     cartItemList = updatedCartItemList;
   } else {
     cartItemList.push({
-      "id": product.id,
-      "image": product.image,
-      "name": product.name,
-      "model": product.model,
-      "price": product.price,
-      "discountPercentage": product.discountPercentage,
-      "type": product.type,
-      "quantity": 1,
-      "stock": null
+      id: product.id,
+      image: product.image,
+      name: product.name,
+      model: product.model,
+      price: product.price,
+      discountPercentage: product.discountPercentage,
+      type: product.type,
+      quantity: 1,
+      stock: null
     });
   }
 

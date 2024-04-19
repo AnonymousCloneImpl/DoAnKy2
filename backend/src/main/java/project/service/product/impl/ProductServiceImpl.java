@@ -102,13 +102,13 @@ public class ProductServiceImpl implements ProductService {
 			List<ProductSummaryDto> productSummaryDtoList = productUtils
 					.convertProductsToProductSummaryDtoList(productList);
 
-			List<Producer> producerDtos = producerService.findProducersByProductType(type);
+			List<Producer> producerDtoLs = producerService.findProducersByProductType(type);
 
 			Object filter = productUtils.getListConfiguration(type);
 
 			return StaticDataProductPage.builder()
 					.productSummaryDtoList(productSummaryDtoList)
-					.producerList(productUtils.convertProducerListToProducerDtoList(producerDtos, modelMapper))
+					.producerList(productUtils.convertProducerListToProducerDtoList(producerDtoLs, modelMapper))
 					.filter(filter)
 					.build();
 		} catch (Exception e) {

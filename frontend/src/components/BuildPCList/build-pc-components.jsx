@@ -518,10 +518,10 @@ function BuildPcComponents(data) {
                 id: product.id,
                 image: product.image,
                 name: product.name,
+                model: product.model,
                 price: product.price,
                 discountPercentage: product.discountPercentage,
                 type: type,
-                model: product.model,
                 quantity: parseInt(quantity),
                 stock: null
               };
