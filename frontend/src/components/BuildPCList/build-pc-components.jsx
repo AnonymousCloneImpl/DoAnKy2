@@ -581,10 +581,6 @@ function BuildPcComponents(data) {
                 onClick={handleRemoveAllProducts}>Start New
               </button>
             )}
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-1 my-2 rounded"> Add
-              all parts to cart
-            </button>
           </div>
           <div className="flex justify-end">
             <table style={{ width: "732px", borderCollapse: "collapse" }}>

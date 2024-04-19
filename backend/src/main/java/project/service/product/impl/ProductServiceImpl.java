@@ -66,6 +66,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public List<Product> getListPart(String type) {
+		return productRepo.getListPart(type);
+	}
+
+	@Override
 	public Page<Product> getAllBySpecification(Specification<Product> spec, Pageable pageable) {
 		return productRepo.findAll(spec, pageable);
 	}

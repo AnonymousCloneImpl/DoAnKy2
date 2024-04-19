@@ -53,7 +53,7 @@ public class OrderServiceImpl implements OrderService {
     public Order createOrder(OrderDto orderDto) {
         Order order = createOrderObj();
         BeanUtils.copyProperties(orderDto, order);
-        double totalPrice = orderDto.getTotalPrice() + orderDto.getShippingMethod().shippingPrice;
+        double totalPrice = orderDto.getTotalPrice() + orderDto.getShippingMethod().val;
         order.setTotalPrice(PriceUtils.roundedPrice(totalPrice, 2));
         order.setShippingMethod(orderDto.getShippingMethod());
         orderRepo.save(order);
