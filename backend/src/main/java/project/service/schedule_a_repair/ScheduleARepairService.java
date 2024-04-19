@@ -32,7 +32,7 @@ public class ScheduleARepairService {
             email.append("You have a repair appointment scheduled at Tek Savvy\n")
                     .append("Service type: ").append(obj.getServiceType())
                     .append("Time: ").append(obj.getScheduleTime());
-            emailService.sendEmail(obj.getCustomerEmail(), "Success Order", email.toString());
+            emailService.sendEmail(obj.getCustomerEmail(), "Success Schedule A Repair", email.toString());
         } catch (Exception e) {
             log.error("Can't send email : {}", e.getMessage());
         }

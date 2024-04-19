@@ -21,7 +21,6 @@ public class PaymentService {
 
 	public void createPaymentTbl(OrderDto orderDto, Order order) {
 		PAYMENT_METHOD paymentMethod = orderDto.getPaymentMethod();
-		System.err.println(paymentMethod);
 
 		PaymentTbl payment = PaymentTbl.builder()
 				.orderCode(order.getOrderCode())
