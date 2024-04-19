@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.common.GenerateCodeUtils;
@@ -144,6 +145,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Async
     public void sendEmail(Order order) {
         try {
             StringBuilder email = new StringBuilder();

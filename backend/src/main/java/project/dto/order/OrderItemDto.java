@@ -8,7 +8,6 @@ import java.io.Serializable;
 @Setter
 @Builder
 @NoArgsConstructor
-@ToString
 @AllArgsConstructor
 public class OrderItemDto implements Serializable {
     private Long productId;

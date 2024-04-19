@@ -1246,4 +1246,9 @@
   .close-chat-btn .svg-inline--fa {
     height: 2em !important;
   }
+
+  .service-popup {
+    width: 100%;
+  }
+
 }
