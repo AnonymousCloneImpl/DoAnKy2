@@ -162,7 +162,7 @@
                     <div id="ProductDetails" class="form-group mb-3">
                         <div id="dynamic-fields"></div>
 
-                        <input type="hidden" id="product_detail" name="product_detail"
+                        <input type="text" id="product_detail" name="product_detail"
                                placeholder="productDetailJson" value="">
                     </div>
 
@@ -568,11 +568,14 @@
             var productDetail = {};
 
             inputs.forEach(function (input) {
-                productDetail[input.dataset.label] = input.value;
+                var label = input.dataset.label;
+                var camelCaseLabel = label.replace(/\s(.)/g, function($1) { return $1.toUpperCase(); }).replace(/\s/g, '').replace(/^(.)/, function($1) { return $1.toLowerCase(); });
+                productDetail[camelCaseLabel] = input.value;
             });
 
             document.getElementById('product_detail').value = JSON.stringify(productDetail);
         }
+
 
         document.getElementById("quantity").addEventListener("click", function() {
             this.select();
