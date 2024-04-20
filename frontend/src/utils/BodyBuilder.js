@@ -9,7 +9,7 @@ export default function BodyBuilder(query) {
     "sortColumn": query?.sort === undefined ? "sold" : query?.sort === "news" ? "insertedTime" : query?.sort,
     "sortDirection": query?.dir === undefined ? "ASC" : query?.dir,
     "page": query?.page ? query?.page : 1,
-    "limit": 5
+    "limit": 15
   };
 
   if (query?.producer !== null && query?.producer !== undefined) {
