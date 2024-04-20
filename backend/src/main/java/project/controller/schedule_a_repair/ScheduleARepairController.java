@@ -16,6 +16,7 @@ public class ScheduleARepairController {
     public void createScheduleARepair(@RequestBody ScheduleRepairDto obj) {
         try {
             service.createSchedule(obj);
+            service.sendEmail(obj);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

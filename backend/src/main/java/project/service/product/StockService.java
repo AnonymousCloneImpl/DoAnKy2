@@ -9,5 +9,5 @@ public interface StockService {
 
     Stock getById(long id);
 
-    Stock save(Stock stock);
+    void save(Stock stock);
 }

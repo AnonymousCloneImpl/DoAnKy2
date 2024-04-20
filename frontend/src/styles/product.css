@@ -1055,6 +1055,10 @@
   min-height: 600px;
 }
 
+.cart-header {
+  background: linear-gradient(to right, orangered, orange);
+}
+
 @media only screen and (max-width: 600px) {
 
   .url a {
@@ -1246,4 +1250,9 @@
   .close-chat-btn .svg-inline--fa {
     height: 2em !important;
   }
+
+  .service-popup {
+    width: 100%;
+  }
+
 }

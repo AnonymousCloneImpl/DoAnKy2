@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import Link from "next/link";
+import Image from "next/image";
 
 const Service = () => {
   const [activeTab, setActiveTab] = useState("tab1");
@@ -530,7 +532,11 @@ const Service = () => {
                 <span className="close-form-btn" onClick={closeForm}>
                   <FontAwesomeIcon icon={faCircleXmark} />
                 </span>
-                <img className='order-logo' src='/favico.png'></img>
+                <Link href="/" id="logo" className="flex my-5">
+                  <Image src={'https://www.teksavvy.com/wp-content/themes/teksavvy/assets/svg/teksavvy-logo.svg'}
+                    alt="logo" width="250" height="200" className="mx-auto"
+                  />
+                </Link>
 
                 <h2 className="text-lg font-bold mb-2">Customer Information</h2>
                 <label htmlFor="fullname" className="block text-sm font-semibold text-black-900">Full

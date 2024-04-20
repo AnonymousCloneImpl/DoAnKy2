@@ -164,7 +164,6 @@ export default function Header() {
         <div className="inner-header-form">
           <div className="logo-wrapper">
             <Link href="/" id="logo" className="flex">
-              {/*<Image src="/favico.png" alt="logo" width="50" height="50" />*/}
               <Image src={'https://www.teksavvy.com/wp-content/themes/teksavvy/assets/svg/teksavvy-logo.svg'}
                      alt="logo" width="250" height="200"
               />

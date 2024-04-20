@@ -8,7 +8,6 @@ import java.io.Serializable;
 @SuperBuilder
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class PaypalRequestDto implements Serializable {

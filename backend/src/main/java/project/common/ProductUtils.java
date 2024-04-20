@@ -143,7 +143,6 @@ public class ProductUtils {
 			Blog b = blog.get();
 			blogDto.setImageList(splitStringToList(b.getImage()));
 			blogDto.setContentList(splitStringToList(b.getContent()));
-			blogDto.setId(b.getId());
 			blogDto.setHeader(b.getHeader());
 		}
 	}

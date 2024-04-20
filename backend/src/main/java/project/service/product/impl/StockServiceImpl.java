@@ -22,7 +22,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Stock save(Stock stock) {
-        return stockRepo.save(stock);
+    public void save(Stock stock) {
+        stockRepo.save(stock);
     }
 }

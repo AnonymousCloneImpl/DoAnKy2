@@ -66,6 +66,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public List<Product> getListPart(String type) {
+		return productRepo.getListPart(type);
+	}
+
+	@Override
 	public Page<Product> getAllBySpecification(Specification<Product> spec, Pageable pageable) {
 		return productRepo.findAll(spec, pageable);
 	}
@@ -102,13 +107,13 @@ public class ProductServiceImpl implements ProductService {
 			List<ProductSummaryDto> productSummaryDtoList = productUtils
 					.convertProductsToProductSummaryDtoList(productList);
 
-			List<Producer> producerDtos = producerService.findProducersByProductType(type);
+			List<Producer> producerDtoLs = producerService.findProducersByProductType(type);
 
 			Object filter = productUtils.getListConfiguration(type);
 
 			return StaticDataProductPage.builder()
 					.productSummaryDtoList(productSummaryDtoList)
-					.producerList(productUtils.convertProducerListToProducerDtoList(producerDtos, modelMapper))
+					.producerList(productUtils.convertProducerListToProducerDtoList(producerDtoLs, modelMapper))
 					.filter(filter)
 					.build();
 		} catch (Exception e) {

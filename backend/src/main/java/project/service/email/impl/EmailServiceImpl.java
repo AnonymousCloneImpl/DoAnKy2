@@ -27,7 +27,7 @@ public class EmailServiceImpl implements EmailService {
 			message.setText(body);
 			mailSender.send(message);
 		} catch (MailException e) {
-			log.warn("Error while send email to customer");
+            log.error("Error while send email to customer{}", e);
 		}
 	}
 }

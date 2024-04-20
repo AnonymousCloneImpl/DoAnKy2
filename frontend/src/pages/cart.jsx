@@ -252,13 +252,13 @@ const CartPage = () => {
   return (
     <div style={{ margin: "0 auto" }} className="w-11/12">
       <div className="container mx-auto mt-10">
-        <div className="bg-white flex justify-between pb-8">
-          <h1 className="font-semibold text-3xl uppercase">Shopping Cart</h1>
-          <h2 className="font-semibold text-2xl uppercase">{items.length} Items</h2>
+        <div className="cart-header flex justify-between mb-5 px-5 py-2">
+          <h1 className="font-semibold text-white text-2xl uppercase tracking-wide">Shopping Cart</h1>
+          <h1 className="font-semibold text-white text-2xl uppercase tracking-wide">{items.length} Items</h1>
         </div>
         <div className="flex shadow-md flex-col md:flex-row">
           <table className="w-3/4 bg-white px-10 py-5 max-lg:w-full">
-            <thead className="cart-thead flex text-xl text-700 pb-5 font-semibold uppercase text-center">
+            <thead className="cart-thead flex text-xl pt-5 font-semibold uppercase text-center">
               <tr className="w-full flex">
                 <th className="w-1/12"></th>
                 <th className="w-5/12 flex flex-start">Product Details</th>
@@ -288,7 +288,7 @@ const CartPage = () => {
                         className="font-bold text-base row-span-2 max-md:col-span-2 max-md:w-full">
                         {item.name + " " + item.model}
                       </Link>
-                      <div className="flex cursor-pointer font-semibold hover:text-indigo-600 text-red-600 text-md text-center">
+                      <div className="flex cursor-pointer font-semibold text-red-600 hover:text-red-900 text-md text-center">
                         <b className="ml-2 max-md:w-full text-right"
                           onClick={() => removeItem(index)}>
                           <FontAwesomeIcon icon={faTrashCan} />
@@ -350,7 +350,7 @@ const CartPage = () => {
 
             <div className="border-t mt-20">
               <button
-                className="bg-indigo-600 font-semibold hover:bg-red-700 py-3 text-sm text-white uppercase w-full"
+                className="bg-indigo-600 font-semibold hover:bg-red-600 py-3 text-sm text-white uppercase w-full"
                 onClick={openForm}> Submit Order
               </button>
             </div>
@@ -375,9 +375,9 @@ const CartPage = () => {
 
           <div className="order-popup" ref={formRef}>
             <div className="popup-content">
-                <span className="close-form-btn" onClick={closeForm}>
-                  <FontAwesomeIcon icon={faCircleXmark}/>
-                </span>
+              <span className="close-form-btn" onClick={closeForm}>
+                <FontAwesomeIcon icon={faCircleXmark} />
+              </span>
               <Image
                 src='https://www.teksavvy.com/wp-content/themes/teksavvy/assets/svg/teksavvy-logo.svg'
                 alt=""

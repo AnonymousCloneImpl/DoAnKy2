@@ -8,7 +8,6 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@ToString
 public class SearchRequestDto implements Serializable {
     private String column;
     private String value;
