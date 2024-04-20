@@ -48,10 +48,10 @@ const HomePageSlider = () => {
 
       <div className="absolute top-1/2 transform -translate-y-1/2 flex items-center justify-between w-full">
         <button onClick={prevSlide} className="text-white focus:outline-none h-20 w-20">
-          <FontAwesomeIcon icon={faChevronLeft} className="text-5xl" />
+          <FontAwesomeIcon icon={faChevronLeft} className="text-3xl" />
         </button>
         <button onClick={nextSlide} className="text-white focus:outline-none h-20 w-20">
-          <FontAwesomeIcon icon={faChevronRight} className="text-5xl" />
+          <FontAwesomeIcon icon={faChevronRight} className="text-3xl" />
         </button>
       </div>
 

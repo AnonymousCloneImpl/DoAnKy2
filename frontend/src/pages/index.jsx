@@ -54,10 +54,12 @@ export default function Home() {
           </p>
           <span className="w-32 border border-b-black"></span>
         </div>
-        <ProductListComponent productData={laptopData.productSummaryDtoList}
+        <ProductListComponent
+          productData={laptopData.productSummaryDtoList}
           type={"laptop"}
           renderFromHomePage={false}
           setCartNotifications={setCartNotifications}
+          needSlider={true}
         />
       </div>
 
@@ -107,30 +109,12 @@ export default function Home() {
           </p>
           <span className="w-48 h-0 border border-t-black"></span>
         </div>
-        <ProductListComponent productData={laptopData.productSummaryDtoList}
+        <ProductListComponent
+          productData={laptopData.productSummaryDtoList}
           type={"laptop"}
           renderFromHomePage={true}
           setCartNotifications={setCartNotifications}
-        />
-      </div>
-
-      <div
-        className="h-1/4 flex flex-wrap justify-center mt-10 rounded-2xl"
-        style={{
-          background: 'linear-gradient(rgb(0, 0, 0), rgb(138, 5, 5)) 0% 0% / cover',
-          width: '95%'
-        }}
-      >
-        <div className="h-20 w-full mt-5 flex flex-wrap justify-center">
-          <p className="text-5xl w-full text-center text-white">
-            LAPTOP GAMING
-          </p>
-          <span className="w-36 h-0 border border-t-black"></span>
-        </div>
-        <ProductListComponent productData={laptopData.productSummaryDtoList}
-          type={"laptop"}
-          renderFromHomePage={true}
-          setCartNotifications={setCartNotifications}
+          needSlider={true}
         />
       </div>
 
@@ -178,9 +162,11 @@ export default function Home() {
           </p>
           <span className="w-36 h-0 border border-t-black"></span>
         </div>
-        <ProductListComponent productData={headphoneData.productSummaryDtoList}
+        <ProductListComponent
+          productData={headphoneData.productSummaryDtoList}
           renderFromHomePage={true}
           setCartNotifications={setCartNotifications}
+          needSlider={true}
         />
       </div>
 
@@ -196,9 +182,11 @@ export default function Home() {
           </p>
           <span className="w-20 h-0 border border-t-black"></span>
         </div>
-        <ProductListComponent productData={mouseData.productSummaryDtoList}
+        <ProductListComponent
+          productData={mouseData.productSummaryDtoList}
           renderFromHomePage={true}
           setCartNotifications={setCartNotifications}
+          needSlider={true}
         />
       </div>
 

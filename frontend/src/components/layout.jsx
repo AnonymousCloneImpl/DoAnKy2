@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @next/next/no-img-element */
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import { useEffect, useRef, useState } from "react";
@@ -79,7 +77,6 @@ export default function Layout({ children }) {
       chatBox.scrollTop = chatBox.scrollHeight;
     }
   }
-
 
   return (
     <div>

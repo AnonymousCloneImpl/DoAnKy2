@@ -37,8 +37,8 @@ const ProductsPageByType = ({ type }) => {
   // Paging
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPage, setTotalPage] = useState(1);
-  const [elementPerPage, setElementPerPage] = useState();
-  const [totalElement, setTotalElement] = useState();
+  const [elementPerPage, setElementPerPage] = useState(0);
+  const [totalElement, setTotalElement] = useState(0);
 
   const page = router.query.page || 1;
 
@@ -194,8 +194,12 @@ const ProductsPageByType = ({ type }) => {
           </p>
         </div>
         <div className="mb-8">
-          <ProductCardComponent productData={topSeller} type={"laptop"}
-            setCartNotifications={setCartNotifications} />
+          <ProductCardComponent
+            productData={topSeller}
+            type={"laptop"}
+            setCartNotifications={setCartNotifications}
+            needSlider={true}
+          />
         </div>
         <div className="h-3">
 
@@ -213,8 +217,8 @@ const ProductsPageByType = ({ type }) => {
                 <div className="h-full flex items-center justify-center">
                   <button
                     className={`h-full bg-white p-2 rounded-md overflow-hidden flex justify-center items-center
-                                            ${filter.producer.toLowerCase() === producer.name.toLowerCase() ? "border-2 border-red-600" : ''}
-                                        `}
+                      ${filter.producer.toLowerCase() === producer.name.toLowerCase() ? "border-2 border-red-600" : ''}
+                    `}
                     onClick={() => handleProducerClick({ name: producer.name.toLowerCase() })}
                   >
                     <img
