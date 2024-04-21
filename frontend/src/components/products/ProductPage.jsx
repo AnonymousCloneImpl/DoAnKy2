@@ -1,6 +1,6 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBoxArchive,
   faCaretDown,
@@ -16,20 +16,21 @@ import {
 import Link from "next/link";
 import Head from "next/head";
 import FormatPrice from "@/components/FormatPrice";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import postMethodFetcher from "@/utils/postMethod";
 import QuantityControl from "@/components/QuantityControl";
 import OrderForm from '@/components/OrderForm';
 import HandleCartClick from "@/components/HandleCartClick";
-import {validEmail, validName, validPhoneNumber} from '@/utils/Validate';
+import { validEmail, validName, validPhoneNumber } from '@/utils/Validate';
 import NotificationRender from "@/components/CartNotification";
 import AddSpaceBeforeUpperCase from "@/utils/textUtils";
 import QrCode from "@/components/qr-code";
 import Image from "next/image";
 
-const ProductPage = ({productBE}) => {
+const ProductPage = ({ productBE }) => {
   const [cartNotifications, setCartNotifications] = useState([]);
   const product = productBE;
+  console.log(productBE);
 
   // set product image----------------------------------------------------------------------------------------------
   const [mainImg, setMainImg] = useState('');
@@ -52,9 +53,9 @@ const ProductPage = ({productBE}) => {
 
   // set choose product configuration----------------------------------------------------------------------------------------------
   const activeBtn = async (modelName) => {
-    const {model, ...query} = route.query;
+    const { model, ...query } = route.query;
     await new Promise((resolve) => {
-      route.push({pathname: route.pathname, query: {...query, model: modelName.toLowerCase().replaceAll(" ", "-")}}, undefined, {
+      route.push({ pathname: route.pathname, query: { ...query, model: modelName.toLowerCase().replaceAll(" ", "-") } }, undefined, {
         shallow: true,
         scroll: false
       });
@@ -275,11 +276,11 @@ const ProductPage = ({productBE}) => {
         <div className="product-box">
           <div className="left-box">
             <div className="main-img" onClick={openImgPopup}>
-              <img src={mainImg} alt="Main Image"/>
+              <img src={mainImg} alt="Main Image" />
             </div>
 
             <div className={`img-popup ${isPopupOpen ? 'open' : ''}`} onClick={closePopup}>
-              <img src={mainImg} alt="Main Image"/>
+              <img src={mainImg} alt="Main Image" />
             </div>
 
             <div className="sub-img-list">
@@ -289,7 +290,7 @@ const ProductPage = ({productBE}) => {
                   className={`sub-img-item ${index === activeIndex ? 'active' : ''}`}
                   onClick={() => handleClick(index)}
                 >
-                  <img src={imgSrc} alt={`Sub-Image ${index + 1}`}/>
+                  <img src={imgSrc} alt={`Sub-Image ${index + 1}`} />
                 </div>
               ))}
             </div>
@@ -298,7 +299,7 @@ const ProductPage = ({productBE}) => {
             <div className="service">
               <div className="service-item">
                 <div className="service-item-child">
-                  <FontAwesomeIcon className="service-icon" icon={faRotate}/>
+                  <FontAwesomeIcon className="service-icon" icon={faRotate} />
                   <div>
                     <p>Commitment to 1 for 1 exchange within <b className='service-b'>30
                       Days</b> for product defects.</p>
@@ -306,7 +307,7 @@ const ProductPage = ({productBE}) => {
                   </div>
                 </div>
                 <div className="service-item-child">
-                  <FontAwesomeIcon className="service-icon" icon={faShieldCat}/>
+                  <FontAwesomeIcon className="service-icon" icon={faShieldCat} />
                   <div>
                     <p><b className='service-b'>12 Month</b> warranty at manufacturer&apos;s
                       warranty centers</p>
@@ -318,7 +319,7 @@ const ProductPage = ({productBE}) => {
               <div className="service-line"></div>
 
               <div className="service-item service-bottom">
-                <FontAwesomeIcon className="service-icon" icon={faBoxArchive}/>
+                <FontAwesomeIcon className="service-icon" icon={faBoxArchive} />
                 <div className="item-combo">
                   <b>Product set includes:</b>
                   <p>Box, Instructions, SIM card, Case, MicroUSB cable</p>
@@ -334,7 +335,7 @@ const ProductPage = ({productBE}) => {
                   <p>{content}</p>
                   {product?.blog?.imageList.length > index && (
                     <div className="content-img">
-                      <img src={product?.blog?.imageList[index]} alt={`Image ${index}`}/>
+                      <img src={product?.blog?.imageList[index]} alt={`Image ${index}`} />
                     </div>
                   )}
                 </div>
@@ -342,7 +343,7 @@ const ProductPage = ({productBE}) => {
             </div>
             <button onClick={toggleContent} className="collapse-button">
               {expanded ? 'Collapse' : 'Expand'}
-              <FontAwesomeIcon icon={expanded ? faCaretUp : faCaretDown} className="collapse-chevron"/>
+              <FontAwesomeIcon icon={expanded ? faCaretUp : faCaretDown} className="collapse-chevron" />
             </button>
           </div>
 
@@ -355,19 +356,19 @@ const ProductPage = ({productBE}) => {
 
               <div className="right-box-top-child">
                 <div className="ratings">
-                  <FontAwesomeIcon className="star-icon" icon={faStar}/>
-                  <FontAwesomeIcon className="star-icon" icon={faStar}/>
-                  <FontAwesomeIcon className="star-icon" icon={faStar}/>
-                  <FontAwesomeIcon className="star-icon" icon={faStar}/>
-                  <FontAwesomeIcon className="star-icon" icon={faStarHalfStroke}/>
+                  <FontAwesomeIcon className="star-icon" icon={faStar} />
+                  <FontAwesomeIcon className="star-icon" icon={faStar} />
+                  <FontAwesomeIcon className="star-icon" icon={faStar} />
+                  <FontAwesomeIcon className="star-icon" icon={faStar} />
+                  <FontAwesomeIcon className="star-icon" icon={faStarHalfStroke} />
                   <p>100 Evaluate</p>
                 </div>
 
                 <div className="flex my-3 w-2/5">
                   <div className='mr-2'>
-                    <FormatPrice price={discountedPrice * quantity} type={"discount"}/>
+                    <FormatPrice price={discountedPrice * quantity} type={"discount"} />
                   </div>
-                  <FormatPrice price={product.price * quantity}/>
+                  <FormatPrice price={product.price * quantity} />
                 </div>
 
                 <div className="product-price-ratio">
@@ -401,21 +402,21 @@ const ProductPage = ({productBE}) => {
                   <QuantityControl
                     initialQuantity={1} maxQuantity={productBE.stock.quantity}
                     onChange={handleQuantityChange} quantity={quantity}
-                    setQuantity={setQuantity}/>
+                    setQuantity={setQuantity} />
                 </div>
                 <div className="left-in-stock">{product.stock.quantity} Left In Stock</div>
 
                 <div className="btn-box">
                   <button
                     className="cart-btn"
-                    onClick={() => HandleCartClick({product, setCartNotifications})}>
-                    <FontAwesomeIcon icon={faCartShopping}/> Add to Cart
+                    onClick={() => HandleCartClick({ product, setCartNotifications })}>
+                    <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                   </button>
                   <button
                     className={`buy-btn ${isSoldOut ? 'disabled-btn' : ''}`}
                     onClick={openForm}
                     disabled={isSoldOut}>
-                    {isSoldOut ? 'Out of Stock' : <><FontAwesomeIcon icon={faCreditCard}/> Buy
+                    {isSoldOut ? 'Out of Stock' : <><FontAwesomeIcon icon={faCreditCard} /> Buy
                       Now</>}
                   </button>
                 </div>
@@ -435,7 +436,7 @@ const ProductPage = ({productBE}) => {
                   {Object.entries(JSON.parse(product.details)).map(([key, value]) => (
                     <tr key={key}>
                       <td>
-                        <AddSpaceBeforeUpperCase str={key}/>
+                        <AddSpaceBeforeUpperCase str={key} />
                       </td>
                       <td>{value}</td>
                     </tr>
@@ -459,8 +460,8 @@ const ProductPage = ({productBE}) => {
                     <div className="flex pl-5 w-full">
                       <div className='mr-2'><FormatPrice
                         price={discountedPrice * quantity}
-                        type={"discount"}/></div>
-                      <FormatPrice price={product.price * quantity}/>
+                        type={"discount"} /></div>
+                      <FormatPrice price={product.price * quantity} />
                     </div>
                     <div className="accessories-price-ratio">
                       <p>{`Down ${product.discountPercentage}%`}</p>
@@ -479,11 +480,11 @@ const ProductPage = ({productBE}) => {
                           type="checkbox"
                           className="product mr-5 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded dark:border-gray-600"
                           onChange={() => handleCheckboxChange(item.id)}
-                          checked={checkedItems.includes(item.id)}/>
+                          checked={checkedItems.includes(item.id)} />
                       </div>
 
                       <div className="recommended-accessories-img">
-                        <img src={item.image} alt="First Image"/>
+                        <img src={item.image} alt="First Image" />
                       </div>
                       <div className="recommended-accessories-content">
                         <Link
@@ -495,9 +496,9 @@ const ProductPage = ({productBE}) => {
                           <div className='mr-2'>
                             <FormatPrice
                               price={item.price - (item.price * item.discountPercentage / 100)}
-                              type={"discount"}/>
+                              type={"discount"} />
                           </div>
-                          <FormatPrice price={item.price}/>
+                          <FormatPrice price={item.price} />
                         </div>
                         <div className="accessories-price-ratio">
                           <p>{`Down ${item.discountPercentage}%`}</p>
@@ -515,14 +516,14 @@ const ProductPage = ({productBE}) => {
                   <div className="w-3/4 flex justify-center items-center">
                     <h1 className="mr-3 font-bold">Total Price:</h1>
                     <div className='mr-3'>
-                      <FormatPrice price={totalPrice} type={"discount"}/>
+                      <FormatPrice price={totalPrice} type={"discount"} />
                     </div>
-                    <FormatPrice price={totalPrice}/>
+                    <FormatPrice price={totalPrice} />
                   </div>
                 </div>
                 <div className="buy-recommend">
                   <button className="buy-recommend-btn" onClick={openForm}>
-                    <FontAwesomeIcon icon={faCreditCard}/> Buy Now
+                    <FontAwesomeIcon icon={faCreditCard} /> Buy Now
                   </button>
                 </div>
               </div>
@@ -541,7 +542,7 @@ const ProductPage = ({productBE}) => {
               <li key={index} className="similar-product-item">
                 <div className="similar-product-item-content">
                   <div className="similar-product-img">
-                    <img src={item.image} alt="First Image"/>
+                    <img src={item.image} alt="First Image" />
                   </div>
                   <div className="similar-product-content">
                     <Link
@@ -553,9 +554,9 @@ const ProductPage = ({productBE}) => {
                       <div className='mr-2'>
                         <FormatPrice
                           price={item.price - (item.price * item.discountPercentage / 100)}
-                          type={"discount"}/>
+                          type={"discount"} />
                       </div>
-                      <FormatPrice price={item.price}/>
+                      <FormatPrice price={item.price} />
                     </div>
                     <div className="similar-product-price-ratio">
                       <p>{`Down ${item.discountPercentage}%`}</p>
@@ -565,7 +566,7 @@ const ProductPage = ({productBE}) => {
                         product: item,
                         setCartNotifications
                       })}>
-                        <FontAwesomeIcon icon={faCartShopping}/> Add to Cart
+                        <FontAwesomeIcon icon={faCartShopping} /> Add to Cart
                       </button>
                     </div>
                   </div>
@@ -583,7 +584,7 @@ const ProductPage = ({productBE}) => {
             <div className="order-popup" ref={formRef}>
               <div className="popup-content">
                 <span className="close-form-btn" onClick={closeForm}>
-                  <FontAwesomeIcon icon={faCircleXmark}/>
+                  <FontAwesomeIcon icon={faCircleXmark} />
                 </span>
                 <Image
                   src='https://www.teksavvy.com/wp-content/themes/teksavvy/assets/svg/teksavvy-logo.svg'
@@ -619,7 +620,7 @@ const ProductPage = ({productBE}) => {
           </>
         )}
 
-        <NotificationRender cartNotifications={cartNotifications}/>
+        <NotificationRender cartNotifications={cartNotifications} />
 
       </div>
     );
