@@ -122,6 +122,7 @@ public class ProductUtils {
 		String[] comboTypes = {"mouse", "keyboard", "headphone"};
 
 		for (String type : comboTypes) {
+			if (type.equalsIgnoreCase(productDto.getType())) continue;
 			Product p = productRepo.findMostPurchaseByType(type);
 			if (p != null) productList.add(p);
 		}
@@ -163,6 +164,7 @@ public class ProductUtils {
 		for (Product p : productList) {
 			sp = new SimilarProductDto();
 			BeanUtils.copyProperties(p, sp);
+
 			Stock stock = stockService.findByProductId(p.getId());
 			if (stock != null) {
 				StockDto stockDto = createStockDto(stock, p.getId());
@@ -182,11 +184,18 @@ public class ProductUtils {
 			String hardDrive = getNodeValueIgnoreCase(rootNode, "storage");
 			String cpu = getNodeValueIgnoreCase(rootNode, "cpu");
 			String graphicsCard = getNodeValueIgnoreCase(rootNode, "gpu");
+			String connection = getNodeValueIgnoreCase(rootNode, "connection");
+			String sensitivity = getNodeValueIgnoreCase(rootNode, "sensitivity");
+			String generation = getNodeValueIgnoreCase(rootNode, "generation");
+
 			detailTab = new StringBuilder();
-			detailTab.append(ram).append(" | ")
-					.append(hardDrive).append(" | ")
-					.append(cpu).append(" | ")
-					.append(graphicsCard);
+			if (ram != null)  detailTab.append(ram).append(" | ");
+			if (hardDrive != null) detailTab.append(hardDrive).append(" | ");
+			if (cpu != null) detailTab.append(cpu).append(" | ");
+			if (graphicsCard != null) detailTab.append(graphicsCard);
+			if (connection != null) detailTab.append(connection);
+			if (sensitivity != null) detailTab.append(sensitivity);
+			if (generation != null) detailTab.append(generation);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

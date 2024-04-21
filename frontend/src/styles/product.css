@@ -196,32 +196,35 @@
   border-radius: 5px;
 }
 
-.product-model {
-  display: flex;
-  align-items: center;
-  margin: 2px 0;
-}
-
 .model {
   font-size: 20px;
   font-weight: 700;
 }
 
+.product-model {
+  display: block;
+  align-items: center;
+  margin: 2px 0;
+}
+
 .pmodel {
-  height: 30px;
+  height: auto;
   font-size: 15px;
   font-weight: 500;
   border: 1px solid rgb(0, 0, 0);
   background: #ffffff;
   text-align: center;
   margin-right: 10px;
+  margin-bottom: 10px;
   cursor: pointer;
   padding: 2px 5px;
+  display: inline-block;
+  word-wrap: break-word;
 }
 
 .pmodel.active {
   color: #FF9200;
-  border: 1.5px solid #FF9200;
+  border: 2px solid #FF9200;
 }
 
 .quantity-input::-webkit-inner-spin-button,
@@ -1253,6 +1256,10 @@
 
   .service-popup {
     width: 100%;
+  }
+
+  .pmodel {
+    width: 290px;
   }
 
 }
