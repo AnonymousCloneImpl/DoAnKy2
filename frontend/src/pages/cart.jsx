@@ -11,10 +11,41 @@ import postMethodFetcher from "@/utils/postMethod";
 import Image from "next/image";
 
 const CartPage = () => {
+
   const [items, setItems] = useState([]);
   const body = useMemo(() => ({
     "cartItemList": []
   }), []);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5;
+  const totalPages = Math.ceil(items.length / pageSize);
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = Math.min(startIndex + pageSize - 1, items.length - 1);
+  const currentItems = items.slice(startIndex, endIndex + 1);
+
+  const goToPage = (page) => {
+    setCurrentPage(page);
+  };
+
+  const renderPagination = () => {
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(
+        <div className="mb-5">
+          <button
+            key={i}
+            className={`mx-1 px-3 py-1 rounded-lg border ${currentPage === i ? 'bg-indigo-600 text-white' : 'bg-white text-blue-500'}`}
+            onClick={() => goToPage(i)}
+          >
+            {i}
+          </button>
+        </div>
+      );
+    }
+    return pages;
+  };
 
   useEffect(() => {
     const storedItemList = localStorage.getItem('itemList');
@@ -269,7 +300,7 @@ const CartPage = () => {
             </thead>
 
             <tbody>
-              {items.map((item, index) => (
+              {currentItems.map((item, index) => (
                 <tr key={index} className="flex flex-wrap border-t items-center hover:bg-gray-100 px-6 py-5">
                   <td className="flex items-center w-1/12">
                     <input type="checkbox"
@@ -358,7 +389,7 @@ const CartPage = () => {
         </div>
 
         <div>
-          <Link href="/" className="flex font-semibold text-indigo-600 text-base uppercase my-10">
+          <Link href="/" className="flex font-semibold text-indigo-600 text-base uppercase mt-5">
             <svg className="fill-current mr-2 text-indigo-600 w-4" viewBox="0 0 448 512">
               <path
                 d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
@@ -366,6 +397,10 @@ const CartPage = () => {
             Continue Shopping
           </Link>
         </div>
+      </div>
+
+      <div className="flex justify-center my-5">
+        {renderPagination()}
       </div>
 
       {/* FORM ORDER */}
