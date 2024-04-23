@@ -35,6 +35,9 @@ public interface PaymentTblRepository extends JpaRepository<PaymentTbl, Long> {
 
 	PaymentTbl findByOrderCode(@Param("orderCode") String orderCode);
 
+	@Query("SELECT p.paymentLink FROM PaymentTbl p WHERE p.paymentCode = :paymentId")
+	String findPaymentLinkByPaymentId(@Param("paymentId") String paymentId);
+
 	@Query("Select p.paymentMethod from PaymentTbl p " +
 			"join Order o on p.orderCode = o.orderCode " +
 			"where o.orderCode = :code")

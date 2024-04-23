@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import Image from "next/image";
 
-export default function QrCode({image}) {
+export default function QrCode({image, data}) {
   return (
     <div>
       <div className="w-9/12 mx-auto my-10 max-lg:w-11/12">
@@ -13,7 +13,7 @@ export default function QrCode({image}) {
           </div>
           <div className="ml-5">
             <h1 className="font-bold text-lg">Top up your balance directly using paypal payment</h1>
-            <p className="font-medium">Dcoin deposit automatically linked to PayPal, completed instantly, 8% fee</p>
+            <p className="font-medium">Dcoin deposit automatically linked to PayPal, completed instantly, {data.tax}% fee</p>
           </div>
         </div>
 
@@ -21,9 +21,9 @@ export default function QrCode({image}) {
 
         <div className="my-2">
           <ul className="flex justify-around tex-center font-bold">
-            <li>Price: 100</li>
-            <li>Transaction Fees: 8 (8%)</li>
-            <li>Total: 108</li>
+            <li>Price: {data.price}</li>
+            <li>Transaction Fees: {data.tax}%</li>
+            <li>Total: {(parseFloat(data.price) + parseFloat(data.price) * parseFloat(data.tax) / 100).toFixed(2)}</li>
           </ul>
         </div>
 

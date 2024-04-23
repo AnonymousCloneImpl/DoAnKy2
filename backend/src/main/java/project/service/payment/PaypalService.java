@@ -14,6 +14,7 @@ import project.const_.PAYMENT_METHOD;
 import project.dto.order.OrderDto;
 import project.dto.payment.PaypalRequestDto;
 import project.entity.payment.PaymentTbl;
+import project.model.QrCodeResponse;
 
 @Service
 @Slf4j(topic = "PAYPAL-SERVICE")
@@ -71,16 +72,24 @@ public class PaypalService {
 		return id;
 	}
 
-	public String createQrCode(String id) {
+	public QrCodeResponse createQrCode(String id) {
+		QrCodeResponse qrCodeResponse = new QrCodeResponse();
 		try {
-			Image invoice = Invoice.qrCode(apiContext, id, null);
-			String data = invoice.getImage();
-			paymentService.updatePaymentQrCode(id, "Create Qr Code", data);
-			return data;
+			String qrCode = paymentService.getPaymentLink(id);
+			if (qrCode == null) {
+				Image invoice = Invoice.qrCode(apiContext, id, null);
+				qrCode = invoice.getImage();
+			}
+			Invoice invoice1 = Invoice.get(apiContext, id);
+			qrCodeResponse.setQrCode(qrCode);
+			qrCodeResponse.setPrice(invoice1.getTotalAmount().getValue());
+			qrCodeResponse.setTax(invoice1.getItems().getFirst().getTax().getPercent());
+			paymentService.updatePaymentQrCode(id, "Create Qr Code", qrCode);
+			return qrCodeResponse;
 		} catch (Exception e) {
 			log.error("Error while create QR Code!");
 		}
-		return null;
+		return qrCodeResponse;
 	}
 
 }

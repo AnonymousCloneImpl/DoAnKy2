@@ -16,7 +16,7 @@ const productType = [
   "monitor",
   "keyboard",
   "mouse",
-  "headphone"
+  "headphone",
 ];
 
 const ProductsPageRoute = () => {

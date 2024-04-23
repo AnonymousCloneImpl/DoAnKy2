@@ -73,10 +73,10 @@ const ProductsPageByType = ({ type }) => {
 
   const { data, loading, error } = useSWR([ProductPageCategoryDataApi, body],
     () => fetchAPIPost(ProductPageCategoryDataApi, body), {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false
-  }
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
   );
 
   useEffect(() => {

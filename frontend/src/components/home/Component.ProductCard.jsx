@@ -67,7 +67,7 @@ export default function ProductCardComponent({productData, setCartNotifications,
           </div>
           <div className="h-52 w-full max-lg:h-40">
             <Link
-              href={`/${product.type.toLowerCase()}/${product?.name?.toLowerCase().replace(/\s/g, "-")}?model=${product.model.toLowerCase().replace(/\s/g, "-")}`}
+              href={`/${product.type.replaceAll(" ", "-").toLowerCase()}/${product?.name?.toLowerCase().replace(/\s/g, "-")}?model=${product.model.toLowerCase().replace(/\s/g, "-")}`}
               className="flex items-center justify-center w-full h-full"
             >
               <div

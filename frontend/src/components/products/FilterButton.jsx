@@ -215,31 +215,21 @@ export default function FilterButton({ filterValue, filter, setFilter, pageType 
 
   const handleConnectionTypeClick = async ({ value }) => {
     setShowConnectionOption(false);
-    if (query.connect === value.toLowerCase()) {
-      const { connect, ...newQuery } = query;
-      await new Promise((resolve) => {
-        router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, {
-          shallow: true,
-          scroll: false
-        });
-        resolve();
+    const { connect, ...newQuery } = query;
+    await new Promise((resolve) => {
+      router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, {
+        shallow: true,
+        scroll: false
       });
+      resolve();
+    });
+    if (query.connect === value.toLowerCase()) {
       setConnectionSelect(false);
       setFilter(prevState => ({
         ...prevState,
-        connect: ''
+        connection: ''
       }))
     } else {
-      if (query.connect) {
-        const { connect, ...newQuery } = query;
-        await new Promise((resolve) => {
-          router.push({ pathname: router.pathname, query: { ...newQuery } }, undefined, {
-            shallow: true,
-            scroll: false
-          });
-          resolve();
-        });
-      }
       await new Promise((resolve) => {
         router.push({
           pathname: router.pathname,
@@ -250,7 +240,7 @@ export default function FilterButton({ filterValue, filter, setFilter, pageType 
       setConnectionSelect(true);
       setFilter(prevState => ({
         ...prevState,
-        connect: value
+        connection: value
       }))
     }
   };
@@ -493,7 +483,7 @@ export default function FilterButton({ filterValue, filter, setFilter, pageType 
                   }}
                 >
                   {filterValue.displayFilter?.map((p, index) => {
-                    if (p.replace(/"/g, '') === filter.display) {
+                    if (p.replace(/"/g, '') === filter.display.replace("-", " ")) {
                       return (
                         <div key={index}
                           className="bg-red-100 border-2 border-red-600 w-24 h-8 mr-2 ml-2 rounded-lg">
@@ -560,7 +550,7 @@ export default function FilterButton({ filterValue, filter, setFilter, pageType 
                       }}
                     >
                       {filterValue.connection?.map((p, index) => {
-                        if (p.replace(/"/g, '') === filter.display) {
+                        if (p.replace(/"/g, '').toLowerCase() === filter.connection.toLowerCase()) {
                           return (
                             <div key={index}
                               className="bg-red-100 border-2 border-red-600 w-24 h-8 mr-2 ml-2 rounded-lg">

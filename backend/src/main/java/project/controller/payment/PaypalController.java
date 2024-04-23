@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.dto.payment.CheckoutDto;
 import project.dto.payment.PaypalRequestDto;
+import project.model.QrCodeResponse;
 import project.service.order.OrderService;
 import project.service.payment.PaymentService;
 import project.service.payment.PaypalService;
@@ -54,9 +55,9 @@ public class PaypalController {
 	}
 
 	@PostMapping("/get-qrcode")
-	public ResponseEntity<String> getQrCode(@RequestBody PaypalRequestDto paypalRequestDto) {
-		String image = paypalService.createQrCode(paypalRequestDto.getPaymentCode());
-		return ResponseEntity.ok(image);
+	public ResponseEntity<QrCodeResponse> getQrCode(@RequestBody PaypalRequestDto paypalRequestDto) {
+		QrCodeResponse qrCodeResponse = paypalService.createQrCode(paypalRequestDto.getPaymentCode());
+		return ResponseEntity.ok(qrCodeResponse);
 	}
 
 }
