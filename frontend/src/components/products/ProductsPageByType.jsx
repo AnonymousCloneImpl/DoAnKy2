@@ -51,7 +51,7 @@ const ProductsPageByType = ({ type }) => {
   useEffect(() => {
     const handleResize = () => {
       const newLimit =
-        window.innerWidth >= 1280 || (window.innerWidth >= 640 && window.innerWidth <=  1023)
+        window.innerWidth >= 1280 || (window.innerWidth >= 640 && window.innerWidth <= 1023)
           ? 15
           : 16;
       setLimit(newLimit);

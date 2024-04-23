@@ -10,7 +10,7 @@ const ProductDetailPage = () => {
   const router = useRouter();
   const query = router.query;
 
-  const type = query.type;
+  const type = query?.type?.replaceAll("-", " ");
   const name = query.name;
   const model = query.model;
 

@@ -1,5 +1,5 @@
 
-export default function BodyBuilder({query, limit}) {
+export default function BodyBuilder({ query, limit }) {
   let body = {
     "searchRequestDtoList": [
       {
