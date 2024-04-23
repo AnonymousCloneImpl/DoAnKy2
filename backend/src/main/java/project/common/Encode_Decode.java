@@ -16,7 +16,8 @@ public class Encode_Decode {
 		StringBuilder sb = new StringBuilder(bytes.length * 2);
 		Formatter formatter = new Formatter(sb);
 		for (byte b : bytes) {
-			formatter.format("%02x", b);
+//			formatter.format("%02x", b);
+			sb.append(String.format("%02x", b));
 		}
 		return sb.toString();
 	}

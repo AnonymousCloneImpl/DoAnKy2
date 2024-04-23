@@ -1,4 +1,5 @@
-export default function BodyBuilder(query) {
+
+export default function BodyBuilder({query, limit}) {
   let body = {
     "searchRequestDtoList": [
       {
@@ -9,7 +10,7 @@ export default function BodyBuilder(query) {
     "sortColumn": query?.sort === undefined ? "sold" : query?.sort === "news" ? "insertedTime" : query?.sort,
     "sortDirection": query?.dir === undefined ? "ASC" : query?.dir,
     "page": query?.page ? query?.page : 1,
-    "limit": 15
+    "limit": limit
   };
 
   if (query?.producer !== null && query?.producer !== undefined) {

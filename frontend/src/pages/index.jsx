@@ -190,7 +190,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="category-hompage w-full flex justify-center flex-wrap pb-4 mt-10 rounded-xl"
+      <div className="w-full flex justify-center flex-wrap pb-4 mt-10 rounded-xl mb-10"
         style={{
           background: '#FBC303',
           width: '95%'

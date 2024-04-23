@@ -44,10 +44,30 @@ const ProductsPageByType = ({ type }) => {
 
   const [body, setBody] = useState({});
 
+  const defaultLimit = window.innerWidth >= 1280 || (window.innerWidth >= 640 && window.innerWidth <= 1024) ? 15 : 16;
+
+  const [limit, setLimit] = useState(defaultLimit);
+
   useEffect(() => {
-    const bodyBuilder = BodyBuilder(query);
-    setBody(bodyBuilder)
-  }, [query]);
+    const handleResize = () => {
+      const newLimit =
+        window.innerWidth >= 1280 || (window.innerWidth >= 640 && window.innerWidth <=  1023)
+          ? 15
+          : 16;
+      setLimit(newLimit);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const body = BodyBuilder({ query, limit });
+    setBody(body)
+  }, [limit, query]);
 
   const ProductPageCategoryDataApi = `${process.env.DOMAIN}/search/searchByCondition`;
 

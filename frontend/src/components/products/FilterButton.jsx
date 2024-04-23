@@ -672,10 +672,10 @@ const PriceRangeSlider = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
       >
         {({ handles, tracks }) => (
           <div>
-            {handles.map(handle => (
+            {handles.map((handle, index) => (
               <div
                 {...handle.props}
-                key={1}
+                key={index}
                 className="h-8 w-8 bg-white border-2 border-gray-300 rounded-full z-10"
               >
                 <div className="h-4 w-4 m-2 bg-blue-500 rounded-full" />
