@@ -35,7 +35,7 @@ const CartPage = () => {
       pages.push(
         <button
           key={i}
-          className={`mx-1 px-3 py-1 rounded-lg border ${currentPage === i ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
+          className={`mx-1 mb-5 px-3 py-1 rounded-lg border-2 ${currentPage === i ? 'bg-indigo-600 text-white' : 'bg-white text-blue-500'}`}
           onClick={() => goToPage(i)}
         >
           {i}

@@ -1,10 +1,10 @@
 
-export default function BodyBuilder({query, limit}) {
+export default function BodyBuilder({ query, limit }) {
   let body = {
     "searchRequestDtoList": [
       {
         "column": "type",
-        "value": query?.type
+        "value": query?.type.replaceAll("-", " ")
       }
     ],
     "sortColumn": query?.sort === undefined ? "sold" : query?.sort === "news" ? "insertedTime" : query?.sort,

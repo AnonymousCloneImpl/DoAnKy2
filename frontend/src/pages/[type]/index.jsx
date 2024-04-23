@@ -4,13 +4,14 @@ import ProductsPageByType from "@/components/products/ProductsPageByType";
 const productType = [
   "laptop",
   "cpu",
-  "cpuCooler",
+  "cpu cooler",
   "motherboard",
+  "power supply unit",
   "memory",
   "storage",
   "gpu",
-  "pcCase",
-  "caseFan",
+  "pc case",
+  "case fan",
   "psu",
   "monitor",
   "keyboard",
@@ -21,7 +22,7 @@ const productType = [
 const ProductsPageRoute = () => {
   const router = useRouter();
 
-  const type = router.query.type?.replace("-", "") || null;
+  const type = router.query.type?.replaceAll("-", " ") || null;
   if (type !== null) {
     for (let i = 0; i < productType.length; i++) {
       if (productType[i].toLowerCase() === type.toLowerCase()) {

@@ -15,7 +15,7 @@ export default function ComponentList({ data, currentComponent, handleSelectProd
           </div>
           <div className="flex-grow">
             <div className="font-semibold">
-              <Link target="_blank" href={`/${item.type}/${item.name.replace(" ", "-").toLowerCase()}`}>
+              <Link target="_blank" href={`/${item.type.replaceAll(" ", "-").toLowerCase()}/${item.name.replaceAll(" ", "-").toLowerCase()}?model=${item.model.toLowerCase()}`}>
                 {item.name}
               </Link>
             </div>

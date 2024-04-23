@@ -225,7 +225,7 @@ function BuildPcComponents(data) {
     setSelectedProducts({ ...selectedProducts, [partType]: product.name });
     setQuantities({ ...quantities, [partType]: 1 });
     setFormVisible(false);
-    productLink = `/${product.type}/${product.name.replace(" ", "-").toLowerCase()}?model=${product.model}`
+    productLink = `/${product.type.replace(" ", "-").toLowerCase()}/${product.name.replace(" ", "-").toLowerCase()}?model=${product.model}`
 
     switch (partType) {
       case 'cpu':
@@ -621,7 +621,7 @@ function BuildPcComponents(data) {
                           alt="no image" />
                         <p>
                           <span className="ml-1 font-bold">
-                            <Link href={cpuLink}>
+                            <Link target="_blank" href={cpuLink}>
                               {selectedProducts.cpu}
                             </Link>
                           </span>
