@@ -4,7 +4,7 @@ export default function BodyBuilder({query, limit}) {
     "searchRequestDtoList": [
       {
         "column": "type",
-        "value": query?.type
+        "value": query?.type.replaceAll("-", " ")
       }
     ],
     "sortColumn": query?.sort === undefined ? "sold" : query?.sort === "news" ? "insertedTime" : query?.sort,
@@ -19,7 +19,7 @@ export default function BodyBuilder({query, limit}) {
       "value": query?.producer
     });
   }
-
+  console.log(query?.type)
   if (query?.ram !== null && query?.ram !== undefined) {
     body.searchRequestDtoList.push({
       "column": "ram",
@@ -60,8 +60,8 @@ export default function BodyBuilder({query, limit}) {
 
   if (query?.connect !== null && query?.connect !== undefined) {
     body.searchRequestDtoList.push({
-      "column": "mouseConnectType",
-      "value": query?.connect
+      "column": "connection",
+      "value": query?.connect.charAt(0).toUpperCase() + query?.connect.slice(1)
     });
   }
 

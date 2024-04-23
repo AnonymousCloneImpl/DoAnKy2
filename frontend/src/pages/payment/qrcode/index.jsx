@@ -10,6 +10,7 @@ export default function QrcodePayment() {
   const paymentCode = router.query.paymentCode;
 
   const [qrCodeImage, setQrCodeImage] = useState(null);
+  const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,7 +24,8 @@ export default function QrcodePayment() {
       }
     })
       .then((response) => {
-        setQrCodeImage('data:image/png;base64,' + response.data);
+        setQrCodeImage('data:image/png;base64,' + response.data.qrCode);
+        setData(response.data);
         setLoading(false);
         checkResult();
       })
@@ -56,7 +58,7 @@ export default function QrcodePayment() {
   if (loading) return <Loading />;
 
   return (
-    <QrCode image={qrCodeImage} />
+    <QrCode image={qrCodeImage} data={data} />
   )
 
 }

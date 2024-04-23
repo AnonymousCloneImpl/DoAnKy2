@@ -6,6 +6,7 @@ const productType = [
   "cpu",
   "cpuCooler",
   "motherboard",
+  "powerSupplyUnit",
   "memory",
   "storage",
   "gpu",
@@ -15,12 +16,13 @@ const productType = [
   "monitor",
   "keyboard",
   "mouse",
+  "headphone",
 ];
 
 const ProductsPageRoute = () => {
   const router = useRouter();
 
-  const type = router.query.type?.replace("-", "") || null;
+  const type = router.query.type?.replaceAll("-", "") || null;
   if (type !== null) {
     for (let i = 0; i < productType.length; i++) {
       if (productType[i].toLowerCase() === type.toLowerCase()) {

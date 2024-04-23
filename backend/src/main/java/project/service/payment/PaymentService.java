@@ -58,4 +58,8 @@ public class PaymentService {
 		paymentRepo.updatePaymentLink(paymentCode, status, qrCode, LocalDateTime.now());
 	}
 
+	public String getPaymentLink(String paymentCode) {
+		return paymentRepo.findPaymentLinkByPaymentId(paymentCode);
+	}
+
 }
