@@ -33,15 +33,13 @@ const CartPage = () => {
     const pages = [];
     for (let i = 1; i <= totalPages; i++) {
       pages.push(
-        <div className="mb-5">
-          <button
-            key={i}
-            className={`mx-1 px-3 py-1 rounded-lg border ${currentPage === i ? 'bg-indigo-600 text-white' : 'bg-white text-blue-500'}`}
-            onClick={() => goToPage(i)}
-          >
-            {i}
-          </button>
-        </div>
+        <button
+          key={i}
+          className={`mx-1 px-3 py-1 rounded-lg border ${currentPage === i ? 'bg-blue-500 text-white' : 'bg-white text-blue-500'}`}
+          onClick={() => goToPage(i)}
+        >
+          {i}
+        </button>
       );
     }
     return pages;
@@ -320,7 +318,7 @@ const CartPage = () => {
                         {item.name + " " + item.model}
                       </Link>
                       <div className="flex cursor-pointer font-semibold text-red-600 hover:text-red-900 text-md text-center">
-                        <b className="ml-2 max-md:w-full text-right"
+                        <b className="max-md:w-full text-right"
                           onClick={() => removeItem(index)}>
                           <FontAwesomeIcon icon={faTrashCan} />
                         </b>
