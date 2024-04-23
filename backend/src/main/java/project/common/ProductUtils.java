@@ -92,15 +92,15 @@ public class ProductUtils {
 		Object filter = null;
 		if (type.equalsIgnoreCase("laptop")) {
 			filter = LaptopFilter.builder()
-					.displayList(productRepo.findConfigurationType("screenSize"))
-					.cpuList(productRepo.findConfigurationType("cpuType"))
-					.ramList(productRepo.findConfigurationType("ram"))
+					.displayList(productRepo.findConfigurationType("screenSize", "Laptop"))
+					.cpuList(productRepo.findConfigurationType("cpuType", "Laptop"))
+					.ramList(productRepo.findConfigurationType("ram", "Laptop"))
 					.build();
 		}
 
 		if (type.equalsIgnoreCase("mouse")) {
 			filter = MouseFilter.builder()
-					.connection(productRepo.findConfigurationType("connection"))
+					.connection(productRepo.findConfigurationType("connection", "Mouse"))
 					.build();
 		}
 		return filter;
@@ -189,7 +189,7 @@ public class ProductUtils {
 			String generation = getNodeValueIgnoreCase(rootNode, "generation");
 
 			detailTab = new StringBuilder();
-			if (ram != null)  detailTab.append(ram).append(" | ");
+			if (ram != null) detailTab.append(ram).append(" | ");
 			if (hardDrive != null) detailTab.append(hardDrive).append(" | ");
 			if (cpu != null) detailTab.append(cpu).append(" | ");
 			if (graphicsCard != null) detailTab.append(graphicsCard);

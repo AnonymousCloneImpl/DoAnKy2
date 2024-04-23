@@ -11,7 +11,7 @@ import "slick-carousel/slick/slick-theme.css";
 export default function ProductCardComponent({productData, setCartNotifications, needSlider}) {
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: false,
     speed: 500,
     slidesToShow: 5,
@@ -22,6 +22,7 @@ export default function ProductCardComponent({productData, setCartNotifications,
       {
         breakpoint: 1280,
         settings: {
+          dots: true,
           slidesToShow: 4,
           slidesToScroll: 4,
           swipe: true,
@@ -30,6 +31,7 @@ export default function ProductCardComponent({productData, setCartNotifications,
       {
         breakpoint: 1024,
         settings: {
+          dots: true,
           slidesToShow: 3,
           slidesToScroll: 3,
           swipe: true,
@@ -38,6 +40,7 @@ export default function ProductCardComponent({productData, setCartNotifications,
       {
         breakpoint: 768,
         settings: {
+          dots: true,
           slidesToShow: 3,
           slidesToScroll: 3,
           swipe: true,
@@ -46,6 +49,7 @@ export default function ProductCardComponent({productData, setCartNotifications,
       {
         breakpoint: 640,
         settings: {
+          dots: true,
           slidesToShow: 2,
           slidesToScroll: 2,
           swipe: true,
@@ -68,7 +72,7 @@ export default function ProductCardComponent({productData, setCartNotifications,
             >
               <div
                 style={{
-                  height: '80%',
+                  height: '100%',
                   width: '80%',
                   backgroundImage: `url(${product.image})`,
                   backgroundSize: 'cover',

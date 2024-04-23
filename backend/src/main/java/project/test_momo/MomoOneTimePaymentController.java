@@ -19,57 +19,58 @@ import java.util.Objects;
 @CrossOrigin(origins = "*")
 @Slf4j(topic = "MOMO_PAYMENT")
 public class MomoOneTimePaymentController {
-    @Autowired
-    private MomoConfig momoConfig;
+	@Autowired
+	private MomoConfig momoConfig;
 
-    @PostMapping("/create")
-    public ResponseEntity<String> createPayment(@RequestBody MomoOrderData orderData) {
-        String jsonData = "{\"user\": \"luu\"}";
+	@PostMapping("/create")
+	public ResponseEntity<String> createPayment(@RequestBody MomoOrderData orderData) {
+		String jsonData = "{\"user\": \"luu\"}";
+		System.out.println(Math.round(orderData.getTotalPrice() * 24740));
+		MomoOneTimePaymentRequest paymentRequest = MomoOneTimePaymentRequest.builder()
+				.partnerCode(momoConfig.getPartnerCode())
+				.requestId(GenerateCodeUtils.getRandomId())
+				.amount(Math.round(orderData.getTotalPrice() * 24740))
+				.orderId(orderData.getOrderCode())
+				.orderInfo("test")
+				.redirectUrl(momoConfig.getRedirectUrl())
+				.ipnUrl(momoConfig.getIpnUrl())
+				.requestType("captureWallet")
+				.extraData(Encode_Decode.encode64(jsonData))
+				.lang(LANG.VN.val)
+				.autoCapture(true)
+				.build();
 
-        MomoOneTimePaymentRequest paymentRequest = MomoOneTimePaymentRequest.builder()
-                .partnerCode(momoConfig.getPartnerCode())
-                .requestId(GenerateCodeUtils.getRandomId())
-                .amount(Math.round(orderData.getTotalPrice() * 24740 * 100))
-                .orderId(orderData.getOrderCode())
-                .orderInfo("test")
-                .redirectUrl(momoConfig.getRedirectUrl())
-                .ipnUrl(momoConfig.getIpnUrl())
-                .requestType("captureWallet")
-                .extraData(Encode_Decode.encode64(jsonData))
-                .lang(LANG.VN.val)
-                .autoCapture(true)
-                .build();
+		String signature = paymentRequest.makeSignature(momoConfig.getAccessKey(), momoConfig.getSecretKey());
+		System.err.println(paymentRequest);
 
-        String signature = paymentRequest.makeSignature(momoConfig.getAccessKey(), momoConfig.getSecretKey());
-        System.err.println(paymentRequest);
+		MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+		body.add("partnerCode", paymentRequest.getPartnerCode());
+		body.add("storeId", paymentRequest.getPartnerCode());
+		body.add("requestType", paymentRequest.getRequestType());
+		body.add("ipnUrl", paymentRequest.getIpnUrl());
+		body.add("redirectUrl", paymentRequest.getRedirectUrl());
+		body.add("orderId", paymentRequest.getOrderId());
+		body.add("amount", paymentRequest.getAmount());
+		body.add("lang", paymentRequest.getLang());
+		body.add("orderInfo", paymentRequest.getOrderInfo());
+		body.add("requestId", paymentRequest.getRequestId());
+		body.add("extraData", paymentRequest.getExtraData());
+		body.add("signature", signature);
 
-        MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-        body.add("partnerCode", paymentRequest.getPartnerCode());
-        body.add("requestId", paymentRequest.getRequestId());
-        body.add("amount", paymentRequest.getAmount());
-        body.add("orderId", paymentRequest.getOrderId());
-        body.add("orderInfo", paymentRequest.getOrderInfo());
-        body.add("redirectUrl", paymentRequest.getRedirectUrl());
-        body.add("ipnUrl", paymentRequest.getIpnUrl());
-        body.add("requestType", paymentRequest.getRequestType());
-        body.add("extraData", paymentRequest.getExtraData());
-        body.add("lang", paymentRequest.getLang());
-        body.add("signature", signature);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<?> httpEntity = new HttpEntity<>(body, httpHeaders);
 
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<?> httpEntity = new HttpEntity<>(body, httpHeaders);
-
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<MomoOneTimePaymentResponse> res =
-                    restTemplate.exchange(momoConfig.getPaymentUrl(),
-                            HttpMethod.POST, httpEntity, MomoOneTimePaymentResponse.class);
-            return ResponseEntity.ok(Objects.requireNonNull(res.getBody()).toString());
-        } catch (HttpClientErrorException.BadRequest ex) {
-            String responseBody = ex.getResponseBodyAsString();
-            log.error("Error response from Momo: {}", responseBody);
-        }
-        return ResponseEntity.ofNullable("");
-    }
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			ResponseEntity<MomoOneTimePaymentResponse> res =
+					restTemplate.exchange(momoConfig.getPaymentUrl(),
+							HttpMethod.POST, httpEntity, MomoOneTimePaymentResponse.class);
+			return ResponseEntity.ok(Objects.requireNonNull(res.getBody()).toString());
+		} catch (HttpClientErrorException.BadRequest ex) {
+			String responseBody = ex.getResponseBodyAsString();
+			log.error("Error response from Momo: {}", responseBody);
+		}
+		return ResponseEntity.ofNullable("");
+	}
 }

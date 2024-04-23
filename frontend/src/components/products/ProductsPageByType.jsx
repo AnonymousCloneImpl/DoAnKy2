@@ -44,10 +44,30 @@ const ProductsPageByType = ({ type }) => {
 
   const [body, setBody] = useState({});
 
+  const defaultLimit = window.innerWidth >= 1280 || (window.innerWidth >= 640 && window.innerWidth <= 1024) ? 15 : 16;
+
+  const [limit, setLimit] = useState(defaultLimit);
+
   useEffect(() => {
-    const bodyBuilder = BodyBuilder(query);
-    setBody(bodyBuilder)
-  }, [query]);
+    const handleResize = () => {
+      const newLimit =
+        window.innerWidth >= 1280 || (window.innerWidth >= 640 && window.innerWidth <=  1023)
+          ? 15
+          : 16;
+      setLimit(newLimit);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const body = BodyBuilder({ query, limit });
+    setBody(body)
+  }, [limit, query]);
 
   const ProductPageCategoryDataApi = `${process.env.DOMAIN}/search/searchByCondition`;
 
@@ -212,8 +232,8 @@ const ProductsPageByType = ({ type }) => {
         </div>
         <div className="w-full mt-3">
           <ul className="grid grid-cols-9 max-md:grid-cols-6 max-sm:grid-cols-4">
-            {producers?.map((producer) => (
-              <li key={producer.id} className="h-10 mb-3">
+            {producers?.map((producer, index) => (
+              <li key={index} className="h-10 mb-3">
                 <div className="h-full flex items-center justify-center">
                   <button
                     className={`h-full bg-white p-2 rounded-md overflow-hidden flex justify-center items-center
