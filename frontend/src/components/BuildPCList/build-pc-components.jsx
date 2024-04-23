@@ -225,7 +225,7 @@ function BuildPcComponents(data) {
     setSelectedProducts({ ...selectedProducts, [partType]: product.name });
     setQuantities({ ...quantities, [partType]: 1 });
     setFormVisible(false);
-    productLink = `/${product.type.replace(" ", "-").toLowerCase()}/${product.name.replace(" ", "-").toLowerCase()}?model=${product.model}`
+    productLink = `/${product.type.replace(" ", "-").toLowerCase()}/${product.name.replaceAll(" ", "-").toLowerCase()}?model=${product.model}`
 
     switch (partType) {
       case 'cpu':
