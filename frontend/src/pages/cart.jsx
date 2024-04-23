@@ -293,7 +293,7 @@ const CartPage = () => {
                           onClick={() => removeItem(index)}>
                           <FontAwesomeIcon icon={faTrashCan} />
                         </b>
-                        <p className="ml-2 max-md:hidden">REMOVE</p>
+                        <p onClick={() => removeItem(index)} className="ml-2 max-md:hidden">REMOVE</p>
                       </div>
                     </div>
                   </td>

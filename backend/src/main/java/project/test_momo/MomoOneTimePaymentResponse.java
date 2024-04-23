@@ -18,7 +18,6 @@ public class MomoOneTimePaymentResponse {
     private int resultCode;
     private String payUrl;
     private String deeplink;
-    private String qrCodeUrl;
     private String applink;
     private String deeplinkMiniApp;
     private String signature;

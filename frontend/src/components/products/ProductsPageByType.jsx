@@ -53,10 +53,10 @@ const ProductsPageByType = ({ type }) => {
 
   const { data, loading, error } = useSWR([ProductPageCategoryDataApi, body],
     () => fetchAPIPost(ProductPageCategoryDataApi, body), {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false
-    }
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false
+  }
   );
 
   useEffect(() => {
@@ -170,7 +170,7 @@ const ProductsPageByType = ({ type }) => {
   };
 
   return (
-    <div 
+    <div
       style={{
         margin: "auto",
         width: '95%'
@@ -212,8 +212,8 @@ const ProductsPageByType = ({ type }) => {
         </div>
         <div className="w-full mt-3">
           <ul className="grid grid-cols-9 max-md:grid-cols-6 max-sm:grid-cols-4">
-            {producers?.map((producer) => (
-              <li key={producer.id} className="h-10 mb-3">
+            {producers?.map((producer, index) => (
+              <li key={index} className="h-10 mb-3">
                 <div className="h-full flex items-center justify-center">
                   <button
                     className={`h-full bg-white p-2 rounded-md overflow-hidden flex justify-center items-center
