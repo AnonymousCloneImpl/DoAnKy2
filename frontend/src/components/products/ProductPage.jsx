@@ -30,7 +30,6 @@ import Image from "next/image";
 const ProductPage = ({ productBE }) => {
   const [cartNotifications, setCartNotifications] = useState([]);
   const product = productBE;
-  console.log(productBE);
 
   // set product image----------------------------------------------------------------------------------------------
   const [mainImg, setMainImg] = useState('');

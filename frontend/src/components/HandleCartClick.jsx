@@ -17,7 +17,7 @@ function HandleCartClick({ product, setCartNotifications }) {
     })
     updatedCartItemList[existingProductIndex] = {
       id: product.id,
-      image: product.image,
+      image: product.image === undefined ? product.imageList[0] : product.image,
       name: product.name,
       model: product.model,
       price: product.price,
@@ -30,7 +30,7 @@ function HandleCartClick({ product, setCartNotifications }) {
   } else {
     cartItemList.push({
       id: product.id,
-      image: product.image,
+      image: product.image === undefined ? product.imageList[0] : product.image,
       name: product.name,
       model: product.model,
       price: product.price,
